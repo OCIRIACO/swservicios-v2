@@ -1,0 +1,86 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li> 
+                <li class="breadcrumb-item active" aria-current="page">Cliente</li>
+            </ol>
+        </nav>
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+            <div>
+                <h5 class="mg-b-3">No.Cliente # {{lblecodcliente}}</h5>
+                <span class="tx-sm text-muted">Registro: {{lblfhfecharegistro}}</span>
+            </div>
+        </div><!-- card-header -->
+        <div class="card-body">
+
+            <div class="component mb-2">
+                <div class="demo-btn-group">
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()"><i
+                            class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <h6 class="mt-3 mb-2 text-primary">+ Razón social</h6>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="form-label">Razón social</label>
+                        <br>
+                        <label class="form-label">{{lbltrazonsocial}}</label>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="form-label">RFC</label>
+                        <br>
+                        <label class="form-label">{{lbltrfc}}</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xl-12">
+                    <h6 class="mt-3 mb-2 text-primary">+ Direcciones</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm mg-b-0">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Cp</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Colonia</th>
+                            <th scope="col">Calle</th>
+                            <th scope="col">N° exterior</th>
+                            <th scope="col">N° interior</th>
+                        </tr>
+                        <tbody>
+                            <tr *ngFor="let dato of arrdatosDireccion; let i = index">
+                                <td>{{i+ 1 }}</td>
+                                <td>{{dato.ecodigopostal}}</td>
+                                <td>{{dato.tentidadfederativa}}</td>
+                                <td>{{dato.tmunicipio}}</td>
+                                <td>{{dato.tcolonia}}</td>
+                                <td>{{dato.tcalle}}</td>
+                                <td>{{dato.tnumexterior}}</td>
+                                <td>{{dato.tnuminterior}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div><!-- content-body -->

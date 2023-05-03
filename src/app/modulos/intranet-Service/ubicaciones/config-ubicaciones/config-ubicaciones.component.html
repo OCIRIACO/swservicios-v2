@@ -1,0 +1,204 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Configuración ubicaciones</li>
+
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+
+<form [formGroup]="FormUbicaciones">
+    <div class="content-body">
+        <div class="card card-invoice">
+            <div class="card-header">
+                <div>
+                    <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
+                    <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+                </div>
+
+            </div><!-- card-header -->
+            <div class="card-body">
+                <div class='component mg-b-10'>
+                    <div class="btn-toolbar" role="group">
+                        <div class="btn-group mr-5" role="group">
+                            <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary"><i
+                                    class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                        </div>
+                        <div class="demo-btn-group mr-2">
+                            <button type="button" class="btn btn-xs btn-primary"
+                                (click)="e_guardar(FormUbicaciones.value)"><i
+                                    class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
+                        </div>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="component mg-t-20">
+                    <div class="row row-xs">
+                        <div class="col-sm">
+                            <div class="pd-y-10 pd-x-20 ">
+                                <div id="jstree">
+                                </div>
+                            </div>
+                        </div>
+    
+    
+                        <div class="col-sm mg-t-10 mg-sm-t-0">
+                            <div class="pd-y-10 pd-x-20 ">
+                                <!--botones-->
+                                <!--<div class="row">
+                                    <div class='component mg-b-20'>
+                                        <div class="demo-btn-group">
+                                            <button type="button" class="btn btn-xs btn-primary"
+                                                (click)="e_guardar(FormUbicaciones.value)"><i
+                                                    class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>-->
+    
+                                <div class="row row-xs">
+                                    <div class='col-sm-12'>
+                                        <div class='form-group'>
+                                            <label for="tpath">Ruta: {{tpath}}</label>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="row row-xs" *ngIf="divecodZona">
+                                    <div class='col-sm-2 form-group'>
+                                        <label for="ecodzona">ecodzona</label>
+                                        <input class="form-control form-control-sm" id="ecodzona" formControlName="ecodzona"
+                                            name="ubicacion[ecodzona]" size="30" type="text" oninput="this.value = this.value.toUpperCase()"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ecodzona.errors }" />
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.ecodzona.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.ecodzona.errors.required">Zona es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="row row-xs">
+    
+                                    <div class='col-sm-2 form-group' *ngIf="divecoddetubicacion">
+                                        <label for="ecoddetubicacion">ecoddetubicacion</label>
+                                        <input class="form-control form-control-sm" id="ecoddetubicacion"
+                                            formControlName="ecoddetubicacion" name="ubicacion[ecoddetubicacion]" size="30"
+                                            type="text" oninput="this.value = this.value.toUpperCase()" maxlength="4"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ecoddetubicacion.errors }" />
+                                    </div>
+    
+                                    <div class='col-sm-2 form-group'>
+                                        <label for="tbloque">Bloque</label>
+                                        <input class="form-control form-control-sm" id="tbloque" formControlName="tbloque"
+                                            name="ubicacion[tbloque]" size="30" type="text" oninput="this.value = this.value.toUpperCase()" maxlength="4"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.tbloque.errors }" />
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.tbloque.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.tbloque.errors.required">Bloque es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class='col-sm-2 form-group'>
+                                        <label for="efilas">Filas</label>
+                                        <input class="form-control form-control-sm" id="efilas" formControlName="efilas"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.efilas.errors }"
+                                            name="ubicacion[efilas]" size="30" type="text" oninput="this.value = this.value.toUpperCase()" maxlength="2" />
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.efilas.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.efilas.errors.required">Filas es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class='col-sm-2 form-group'>
+                                        <label for="ebahias">Bahias</label>
+                                        <input class="form-control form-control-sm" id="ebahias" formControlName="ebahias"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ebahias.errors }"
+                                            name="ubicacion[ebahias]" size="30" type="text" oninput="this.value = this.value.toUpperCase()" maxlength="2" />
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.ebahias.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.ebahias.errors.required">Bahias es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-2 form-group'>
+                                        <label for="ealturas">Alturas</label>
+                                        <input class="form-control form-control-sm" id="ealturas" formControlName="ealturas"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ealturas.errors }"
+                                            name="ubicacion[ealturas]" size="30" type="text" oninput="this.value = this.value.toUpperCase()" maxlength="2" />
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.ealturas.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.ealturas.errors.required">Alturas es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-4 form-group'>
+                                        <label for="testado">Estado</label>
+                                        <select class="custom-select form-control-sm" id="testado" formControlName="testado"
+                                            [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.testado.errors }"
+                                            name="ubicaciona[testado]">
+                                            <option value="SELECCIONAR" selected>SELECCIONAR</option>
+                                            <option value="VIGENTE">VIGENTE</option>
+                                            <option value="NO VIGENTE">NO VIGENTE</option>
+                                        </select>
+                                        <div *ngIf="submitUbicacion && getFormUbicaciones.testado.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="getFormUbicaciones.testado.errors.required">Estado es requerido
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div class="row row-xs">
+                                <div class="table-responsive">
+                                    <table id="tblubicaciones" class="table table-sm mg-b-0">
+                                        <tr>
+                                            <th scope="col" colspan="2">Accciones</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Bloque</th>
+                                            <th scope="col">Filas</th>
+                                            <th scope="col">Bahias</th>
+                                            <th scope="col">Alturas</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Fecha registro</th>
+                                        </tr>
+                                        <tbody>
+                                            <tr *ngFor="let dato of datosConsultaDetUbicaciones; let i = index">
+                                                <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                        (click)="e_editar(dato)"><i
+                                                            class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                                </td>
+                                                <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                        (click)="e_eliminar(dato)"><i
+                                                            class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                                </td>
+                                                <td>{{i }}</td>
+                                                <td>{{dato.tbloque }}</td>
+                                                <td>{{dato.efilas }}</td>
+                                                <td>{{dato.ebahias }}</td>
+                                                <td>{{dato.ealturas }}</td>
+                                                <td>{{dato.testado }}</td>
+                                                <td>{{dato.fhfecharegistro }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,100 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Usuario(s)</li>
+
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+            <div>
+                <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
+                <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+            </div>
+
+        </div><!-- card-header -->
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class='component mg-b-10'>
+                    <div class="btn-toolbar" role="group">
+                        <div class="btn-group mr-5" role="group">
+                            <button type="button" class="btn btn-xs btn-primary" (click)="e_regresar()"><i
+                                    class=" fas fa-outdent mg-r-5 fa-1x "></i>Regresar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class='component'>
+                    <hr>
+                </div>
+              
+                <div class="component mg-b-20 mg-t-10">
+                    {{lblpath}}
+                </div>
+
+                <div class="col-sm-6">
+
+                    <form [formGroup]="formUsuarioPendientes">
+                        <div class='component mg-b-20'>
+                            <div class="btn-toolbar" role="group">
+                                <div class="btn-group mr-5" role="group">
+                                    <button type="button" class="btn btn-xs btn-primary"
+                                        (click)="e_agregar(formUsuarioPendientes)">
+                                        <i class="fas fa-plus mg-r-5 fa-1x"></i>Agregar
+                                        usuario(s)</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <div class="outer-div">
+                                <div class="grid-wrapper" id="gridUsuario">
+                                    <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUusuario"
+                                        class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
+                                        [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
+                                        [defaultColDef]="defaultColDef" [rowData]="dataUsuario">
+                                    </ag-grid-angular>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-sm-6">
+                    <form [formGroup]="formUsuarioAsignados">
+                        <div class='component mg-b-20'>
+                            <div class="btn-toolbar" role="group">
+                                <div class="btn-group mr-5" role="group">
+                                    <button type="button" class="btn btn-xs btn-primary"
+                                        (click)="e_eliminar(formUsuarioAsignados)">
+                                        <i class="fas fa-minus mg-r-5 fa-1x"></i>
+                                        Eliminar usuario(s)</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outer-div">
+                            <div class="grid-wrapper" id="gridUsuario">
+                                <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUusuario"
+                                    class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
+                                    [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs_asignados"
+                                    [defaultColDef]="defaultColDef" [rowData]="dataUsuarioAsignados">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

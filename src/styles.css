@@ -1,0 +1,173 @@
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+.jstree-default a.jstree-search {
+  color: #e53c35;
+}
+
+
+.chat-item.nav-item.nav-item-v1 {
+  padding: 0px !important;
+}
+
+.nav-link.with-sub.with-sub-v1 {
+  padding: 0px !important;
+}
+
+.nav-link.with-sub.with-sub-v1 {
+  padding: 12px !important;
+}
+
+/*.table-hover>tbody>tr:hover>td,
+.table-hover>tbody>tr:hover>th {
+  background-color: #CFF5FF;
+}*/
+
+.myfooter {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 5.5rem;
+  /* Footer height */
+}
+
+
+hr {
+  margin-top: 0.1rem !important;
+  margin-bottom: 0.1rem !important;
+}
+
+
+#vista_contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+
+/*---------- Estilos de  vista area ------------*/
+.tblBahiaContFila {
+  color: #222;
+  font: 14px Tahoma, Helvetica, Arial, Sans-Serif;
+  text-shadow: 0px 2px 3px #555;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tblBahiaCont-altura {
+  padding: 1px 1px 1px 1px;
+  height: 142px;
+  width: 85px !important;
+  font: 11px Tahoma, Helvetica, Arial, Sans-Serif;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: bold;
+  position: static;
+}
+
+.tblDatoVistaBien {
+  width: 100%;
+  border: solid white;
+  border-collapse: collapse;
+}
+
+.datosVistaBien {
+  width: 100%;
+}
+
+
+.form-group.required .control-label:after {
+  content: "*";
+  color: red;
+}
+
+
+.required:before {
+  content: "*\00a0" !important;
+  color: red !important;
+}
+
+/*------------------------------------------------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+/*body {
+  font-family: 'Segoe UI', sans-serif;
+  ;
+  font-size: 1rem;
+  line-height: 1.6;
+  height: 100%;
+}*/
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+}
+
+.login-form {
+  width: 350px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  padding: 2rem;
+  /*background: #ffffff;*/
+}
+
+.form-input {
+  background: #fafafa;
+  border: 1px solid #eeeeee;
+  padding: 12px;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-button {
+  background: #e53c35;
+  border: 1px solid #ddd;
+  color: #ffffff;
+  padding: 10px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.form-button:hover {
+  background: #e53c35;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-footer {
+  text-align: center;
+}
+
+
+
+.pull-right {
+  text-align: center;
+ }
+
+ /*.mydashboar{
+  background-image: url("assets/images/logistico2.jpg");
+  background-size:     cover;                     
+    background-repeat:   no-repeat;
+ }*/

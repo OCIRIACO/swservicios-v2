@@ -1,0 +1,53 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Consulta servicio(s) carga</li>
+            </ol>
+        </nav>
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+            <div>
+                <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
+                <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+            </div>
+            <!--<div class="btn-group-invoice">
+                <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
+                        data-feather="save"></i> Guardar</a>
+            </div>-->
+        </div><!-- card-header -->
+        <div class="card-body">
+            <div class="component mb-2">
+                <div class="demo-btn-group">
+                  <button type="button" class="btn btn-xs btn-primary" (click)="e_nuevo()"><i
+                      class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+                </div>
+              </div>
+              <hr>
+
+            <div class="row">
+                <div class="col-sm-12">
+                   <p></p>
+                    <div class="table-responsive">
+                        <div class="outer-div">
+                            <div class="grid-wrapper" id="myGrid">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid" class="ag-theme-alpine"
+                                    [pagination]="true" [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"    
+                                    [defaultColDef]="defaultColDef" [rowData]="rowData" 
+                                    [enableCellTextSelection]="true"
+                                    >
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- card-body -->
+    </div> <!-- card -->
+</div><!-- content-body -->

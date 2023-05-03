@@ -1,0 +1,848 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Entrada(s)</li>
+            </ol>
+        </nav>
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+
+
+    <div class="card card-invoice">
+        <div class="card-header">
+            <div>
+                <h5 class="mg-b-3">Transacción # {{lbletransaccion}}</h5>
+                <span class="tx-sm text-muted">Registro: {{lblfhfecharegistro}}</span>
+            </div>
+            <!--<div class="btn-group-invoice">
+            <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
+                data-feather="save"></i>Guardar</a>
+          </div>-->
+        </div><!-- card-header -->
+        <div class="card-body">
+            <div class="alert alert-success" role="alert" *ngIf="divAlerta">
+                Bien(es) Ingresado(s) en su totalidad en almancen destino
+            </div>
+
+            <div class="component mb-2">
+                <div class="demo-btn-group">
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitudEntrada.value)"
+                        title="Guardar" [disabled]="tingresoTotal == 'SI'"
+                        [style.cursor]=" tingresoTotal == 'SI' ? 'not-allowed' : '' "
+                        [style.pointer-events]=" tingresoTotal == 'SI' ? 'all !important' : '' ">
+                        <i class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
+                            class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_nuevo()"><i
+                            class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="FormSolicitudEntrada">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="form-label required">RFC</label>
+                            <select class="custom-select form-control-sm select2 select2-hidden-accessible" id="trfc"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosClientes" [ngValue]="dato.ecliente"
+                                    [value]="dato.ecliente">
+                                    {{dato.trfc}}
+                                </option>
+                            </select>
+                            <input type="hidden" id="ecliente" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                                formControlName="ecliente"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.ecliente.errors }">
+                            <div *ngIf="submitGuardar && fcontacto.ecliente.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.ecliente.errors.required">RFC es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="form-label required">Dirección</label>
+                            <select class="custom-select form-control-sm" id="edireccion" name="carga[edireccion]"
+                                formControlName="edireccion"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.edireccion.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosDirecciones" [ngValue]="dato.edireccion">
+                                    {{dato.tcalle}},{{dato.tcolonia}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitGuardar && fcontacto.edireccion.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.edireccion.errors.required">Dirección es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Método de pago</label>
+                            <select class="custom-select form-control-sm" id="emetodopago" name="carga[emetodopago]"
+                                formControlName="emetodopago"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.emetodopago.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosMetodoPago" [value]="dato.emetodopago">
+                                    {{dato.tdescripcion}}
+                                </option>
+                            </select>
+
+                            <div *ngIf="submitGuardar && fcontacto.emetodopago.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.emetodopago.errors.required">Método de pago es requerido</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Banco</label>
+                            <select class="custom-select form-control-sm" id="ebanco" name="carga[ebanco]"
+                                formControlName="ebanco"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.ebanco.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosBancos" [value]="dato.ebanco">
+                                    {{dato.tbanco}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitGuardar && fcontacto.ebanco.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.ebanco.errors.required">Banco es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Cfdi</label>
+                            <select class="custom-select form-control-sm" id="ecfdi" name="carga[ecfdi]"
+                                formControlName="ecfdi"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.ecfdi.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosCfdi" [ngValue]="dato.ecfdi">
+                                    {{dato.tdescripcion}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitGuardar && fcontacto.ecfdi.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.ecfdi.errors.required">Cfdi es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Cuenta</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="ecuenta" name="bien[ecuenta]"
+                                maxlength="4" [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.ecuenta.errors }"
+                                size="4" formControlName="ecuenta">
+                            <div *ngIf="submitGuardar && fcontacto.ecuenta.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.ecuenta.errors.required">Cuenta es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Moneda</label>
+                            <select class="custom-select form-control-sm" id="tmoneda" name="bien[tmoneda]"
+                                formControlName="tmoneda"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.tmoneda.errors }">
+                                <option value="" selected>SELECCIONAR</option>
+                                <option value="MXN">PESO</option>
+                                <option value="USD">DOLAR</option>
+                            </select>
+                            <div *ngIf="submitGuardar && fcontacto.tmoneda.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.tmoneda.errors.required">Moneda es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Contaco</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Fecha de servicio</label>
+                            <input class="form-control form-control-sm" type="date" id="fhfechaservicio"
+                                name="bien[fhfechaservicio]" formControlName="fhfechaservicio"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.fhfechaservicio.errors }">
+                            <div *ngIf="submitGuardar && fcontacto.fhfechaservicio.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.fhfechaservicio.errors.required">* Fecha de servicio requerido
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Correo</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="tcorreo" name="bien[tcorreo]"
+                                formControlName="tcorreo"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.tcorreo.errors }">
+                            <div *ngIf="submitGuardar && fcontacto.tcorreo.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.tcorreo.errors.required">* Correo es requerido</div>
+                                <div *ngIf="fcontacto.tcorreo.errors.pattern">Correo no valido: correo@dominio.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Teléfono</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="ttelefono" maxlength="10"
+                                placeholder="3141234567" name="bien[ttelefono]"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.ttelefono.errors }"
+                                formControlName="ttelefono">
+                            <div *ngIf="submitGuardar && fcontacto.ttelefono.errors" class="invalid-feedback">
+                                <div *ngIf="fcontacto.ttelefono.errors.required">* Teléfono es requerido</div>
+                                <div *ngIf="fcontacto.ttelefono.errors.pattern">Teléfono no valido 1234567890 (10
+                                    digitos).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Referencia</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="treferencia"
+                                name="bien[treferencia]" formControlName="treferencia">
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+                <div class="row">
+                    <!--Fin Contacto-->
+                    <!--Carga(s)-->
+                    <div *ngIf="divCarga" class="col-sm-12">
+                        <form [formGroup]="FormDatosBien">
+                            <div class="">
+                                <div class='row gutters'>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)/Biene(s)</h6>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class='col-sm-2' *ngIf="divecodCarga">
+                                            <div class='form-group'>
+                                                <label for="idsequence"></label>
+                                                <input class="form-control form-control-sm" id="idsequence"
+                                                    name="carga[idsequence]" formControlName="idsequence" #textField1
+                                                    size="30" type="hidden" #idsequence />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-2'>
+                                            <div class='form-group'>
+                                                <label class="form-label required" for="eguia"></label>
+                                                <input class="form-control form-control-sm" id="eguia"
+                                                    name="carga[eguia]" formControlName="eguia" size="30"
+                                                    type="hidden" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class='col-sm-2'>
+                                            <div class='form-group'>
+                                                <label class="form-label required" for="ttramite">Trámite</label>
+                                                <select class="custom-select form-control-sm" id="ttramite"
+                                                    name="carga[ttramite]" formControlName="ttramite"
+                                                    [ngClass]="{ 'is-invalid': submitBien && fbien.ttramite.errors }">
+                                                    <option *ngFor="let dato of datosTramite" [ngValue]="dato.ttramite"
+                                                        [selected]="dato.ttramite == null">
+                                                        {{dato.tdescripcion}}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitBien && fbien.ttramite.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="fbien.ttramite.errors.required">Trámite es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-2'>
+                                            <div class='form-group'>
+                                                <label class="form-label required" for="ttipocarga">Carga</label>
+                                                <select class="custom-select form-control-sm" id="ttipocarga"
+                                                    name="carga[ttipocarga]" formControlName="ttipocarga"
+                                                    [ngClass]="{ 'is-invalid': submitBien && fbien.ttipocarga.errors }"
+                                                    (ngModelChange)="onChangeTipoCarga($event)">
+                                                    <option value="null" selected>SELECCIONAR</option>
+                                                    <option value="CONTENERIZADA">COTENERIZADA</option>
+                                                    <option value="LCL">LCL</option>
+                                                    <option value="NINGUNO">NINGUNO</option>
+                                                </select>
+                                                <div *ngIf="submitBien && fbien.ttipocarga.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="fbien.ttipocarga.errors.required">Carga es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class='col-sm-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ecodembalaje">Embalaje</label>
+                                            <select class="custom-select form-control-sm" id="ecodembalaje"
+                                                name="carga[ecodembalaje]" (change)="onChangeEmbalajeBien($event)"
+                                                formControlName="ecodembalaje"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.ecodembalaje.errors }">
+                                                <option *ngFor="let dato of datosEmbalaje"
+                                                    [ngValue]="dato.ecodembalaje">
+                                                    {{dato.tnombre}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitBien && fbien.ecodembalaje.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fbien.ecodembalaje.errors.required">Embalaje es requerido
+                                                </div>
+                                            </div>
+                                            <input class="form-control form-control-sm" id="tembalaje"
+                                                name="carga[tembalaje]" size="30" type="hidden"
+                                                formControlName="tembalaje" />
+
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ecodnaviera">Naviera</label>
+                                            <select class="custom-select form-control-sm" id="ecodnaviera"
+                                                name="carga[ecodnaviera]" (change)="onChangeNaviera($event)"
+                                                formControlName="ecodnaviera"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.ecodnaviera.errors }">
+                                                <option *ngFor="let dato of datosNaviera" [value]="dato.ecodnaviera">
+                                                    {{dato.tnombre}}
+                                                </option>
+                                                <option value="0" selected>SELECCIONAR</option>
+                                            </select>
+                                            <input class="form-control form-control-sm" id="tnaviera"
+                                                name="carga[tnaviera]" size="30" type="hidden"
+                                                formControlName="tnaviera" />
+
+                                            <div *ngIf="submitBien && fbien.tnaviera.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.tnaviera.errors.required">Naviera es requerido</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="tmarcas">Contenedor</label>
+                                            <input class="form-control form-control-sm" id="tmarcas"
+                                                name="carga[tmarcas]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="tmarcas"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.tmarcas.errors }"
+                                                maxlength="11" />
+                                            <div *ngIf="submitBien && fbien.tmarcas.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.tmarcas.errors.required">Contenedor es requerido</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ttipocontenedor">Tipo
+                                                contenedor</label>
+                                            <select class="custom-select form-control-sm" id="ttipocontenedor"
+                                                name="carga[ttipocontenedor]" formControlName="ttipocontenedor"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.ttipocontenedor.errors }">
+                                                <option *ngFor="let dato of datosTipoContenedor" [ngValue]="dato.id"
+                                                    [selected]="dato.id == null">
+                                                    {{dato.ttipo}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitBien && fbien.ttipocontenedor.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fbien.ttipocontenedor.errors.required">Tpo. cont es
+                                                    requerido</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="tsellos">Sello(s)</label>
+                                            <input class="form-control form-control-sm" id="tsellos"
+                                                name="carga[tsellos]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="tsellos"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.tsellos.errors }" />
+                                            <div *ngIf="submitBien && fbien.tsellos.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.tsellos.errors.required">Sello(s) es requerido</div>
+                                                <div *ngIf="fbien.tsellos.errors.pattern">Sello(s) captura no valido
+                                                    Ejemplo:sello1/sello2/sello3.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="epesoneto">Peso neto</label>
+                                            <input class="form-control form-control-sm" id="epesoneto"
+                                                name="carga[epesoneto]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="epesoneto"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.epesoneto.errors }" />
+                                            <div *ngIf="submitBien && fbien.epesoneto.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.epesoneto.errors.required">Peso neto es requerido
+                                                </div>
+                                                <div *ngIf="fbien.epesoneto.errors?.['number']">Peso neto valor
+                                                    numerico!
+                                                </div>
+                                                <div *ngIf="fbien.epesoneto.errors?.['precision']">Peso neto maximo 2
+                                                    decimales
+                                                    numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="epesobruto">Peso bruto</label>
+                                            <input class="form-control form-control-sm" id="epesobruto"
+                                                name="carga[epesobruto]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="epesobruto"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.epesobruto.errors }" />
+                                            <div *ngIf="submitBien && fbien.epesobruto.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.epesobruto.errors.required">Peso bruto es requerido
+                                                </div>
+                                                <div *ngIf="fbien.epesobruto.errors?.['number']">Peso bruto valor
+                                                    numerico!
+                                                </div>
+                                                <div *ngIf="fbien.epesobruto.errors?.['precision']">Peso bruto maximo 2
+                                                    decimales
+                                                    numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ebultos">Bultos</label>
+                                            <input class="form-control form-control-sm" id="ebultos"
+                                                name="carga[ebultos]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="ebultos"
+                                                [ngClass]="{ 'is-invalid': submitBien && fbien.ebultos.errors }" />
+                                            <div *ngIf="submitBien && fbien.ebultos.errors" class="invalid-feedback">
+                                                <div *ngIf="fbien.ebultos.errors.required">Bultos es requerido</div>
+                                                <div *ngIf="fbien.ebultos.errors?.['number']">Bultos valor numerico!
+                                                </div>
+                                                <div *ngIf="fbien.ebultos.errors?.['precision']">Bultos maximo 2
+                                                    decimales
+                                                    numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-1'>
+                                        <div class='form-group'>
+                                            <br>
+                                            <!--<button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                        (click)="e_datosBien(FormDatosBien.value)">Agregar</button>-->
+                                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                (click)="e_agregarBien(FormDatosBien.value)"
+                                                [disabled]="tingresoTotal == 'SI'"
+                                                [style.cursor]=" tingresoTotal == 'SI' ? 'not-allowed' : '' "
+                                                [style.pointer-events]=" tingresoTotal == 'SI' ? 'all !important' : '' "><i
+                                                    class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm mg-b-0">
+                                    <tr>
+                                        <th scope="col" colspan="3">Accciones</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">No.Guía</th>
+                                        <th scope="col">Trámite</th>
+                                        <th scope="col">Carga</th>
+                                        <th scope="col">Embalaje</th>
+                                        <th scope="col">Naviera</th>
+                                        <th scope="col">Contenedor</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Sello(s)</th>
+                                        <th scope="col">Peso neto</th>
+                                        <th scope="col">Peso bruto</th>
+                                        <th scope="col">Bultos</th>
+                                        <th scope="col">Mercancia(s)</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr *ngFor="let dato of listDatosCarga; let i = index">
+                                            <td>
+                                                <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                    (click)="e_eliminarBien(dato)" [disabled]="dato.texistencia == 'SI'"
+                                                    title="Eliminar"
+                                                    [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
+                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' "><i
+                                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i></button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                    (click)="e_editarBien(dato)" [disabled]="dato.texistencia == 'SI'"
+                                                    title="Editar"
+                                                    [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
+                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' "><i
+                                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i></button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-xs btn btn-success btn-brand-02"
+                                                    title="Ingresada"
+                                                    [style.display]=" dato.texistencia == 'SI' ? 'block' : 'none' "><i
+                                                        class="fas fa-check-circle mg-r-5 fa-1.5x "></i></button>
+                                            </td>
+                                            <td>{{i+ 1 }}</td>
+                                            <td>{{dato.eguia}}</td>
+                                            <td>{{dato.ttramite}}</td>
+                                            <td>{{dato.ttipocarga}}</td>
+                                            <td>{{dato.tembalaje}}</td>
+                                            <td>{{dato.tnaviera}}</td>
+                                            <td>{{dato.tmarcas}}</td>
+                                            <td>{{dato.ttipocontenedor}}</td>
+                                            <td>{{dato.tsellos}}</td>
+                                            <td>{{dato.epesoneto}}</td>
+                                            <td>{{dato.epesobruto}}</td>
+                                            <td>{{dato.ebultos}}</td>
+                                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                    (click)="e_mercancias(dato)">Mercancias
+                                                    [ + ]</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!--Fin Carga(s)-->
+                    <!--Mercancia(s)-->
+                    <div *ngIf="divMercancia" class="col-sm-12">
+                        <form [formGroup]="FormDatosDetalleBien">
+                            <div class="">
+                                <div class='row gutters'>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)</h6>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mg-b-0">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">No.Guía</th>
+                                                <th scope="col">Trámite</th>
+                                                <th scope="col">Embalaje</th>
+                                                <th scope="col">Naviera</th>
+                                                <th scope="col">Contenedor</th>
+                                                <th scope="col">Tipo</th>
+                                                <th scope="col">Peso neto</th>
+                                                <th scope="col">Peso bruto</th>
+                                                <th scope="col">Bultos</th>
+                                                <th scope="col">Mercancia(s)</th>
+                                            </tr>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{datosBien.idsequence }}</td>
+                                                    <td>{{datosBien.eguia}}</td>
+                                                    <td>{{datosBien.ttramite}}</td>
+                                                    <td>{{datosBien.tembalaje}}</td>
+                                                    <td>{{datosBien.tnaviera}}</td>
+                                                    <td>{{datosBien.tmarcas}}</td>
+                                                    <td>{{datosBien.ttipocontenedor}}</td>
+                                                    <td>{{datosBien.epesoneto}}</td>
+                                                    <td>{{datosBien.epesobruto}}</td>
+                                                    <td>{{datosBien.ebultos}}</td>
+                                                    <td><button type="button"
+                                                            class="btn btn-xs btn-primary btn-brand-02"
+                                                            (click)="e_carga(datosBien)">Mercancias
+                                                            [ - ]</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mt-3 mb-2 text-primary">+ Detalle(s) mercancia(s)</h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class='col-sm-2' *ngIf="divDetalleBien">
+                                        <div class='form-group'>
+                                            <label for="idSequenceDetalleBien"></label>
+                                            <input class="form-control form-control-sm" id="idSequenceDetalleBien"
+                                                name="mercancia[idSequenceDetalleBien]" size="99" type="hidden"
+                                                formControlName="idSequenceDetalleBien" size="99"
+                                                #idSequenceDetalleBien />
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-2' *ngIf="divDetalleBien">
+                                        <div class='form-group'>
+                                            <label for="edetalleguia"></label>
+                                            <input class="form-control form-control-sm" id="edetalleguia"
+                                                name="mercancia[edetalleguia]" size="99" type="hidden"
+                                                formControlName="edetalleguia" size="99" #edetalleguia />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='row gutters'>
+
+
+
+
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="tfacturas">Factura</label>
+                                            <input class="form-control form-control-sm" id="tfacturas"
+                                                name="mercancia[tfacturas]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="tfacturas"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.tfacturas.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.tfacturas.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.tfacturas.errors.required">Factura es requerido
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="tmarcas">Marcas</label>
+                                            <input class="form-control form-control-sm" id="tmarcas"
+                                                name="mercancia[tmarcas]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="tmarcas"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.tmarcas.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.tmarcas.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.tmarcas.errors.required">Marca es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="tdescripcion">Descripcion</label>
+                                            <input class="form-control form-control-sm" id="tdescripcion"
+                                                name="mercancia[tdescripcion]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="tdescripcion"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.tdescripcion.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.tdescripcion.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.tdescripcion.errors.required">Descripcion es
+                                                    requerido</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ecantidad">Bultos</label>
+                                            <input class="form-control form-control-sm" id="ecantidad"
+                                                name="mercancia[ecantidad]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="ecantidad"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.ecantidad.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.ecantidad.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.ecantidad.errors.required">Cantidad es
+                                                    requerido
+                                                </div>
+                                                <div *ngIf="fdetallebien.ecantidad.errors?.['number']">Cantidad valor
+                                                    numerico!</div>
+                                                <div *ngIf="fdetallebien.ecantidad.errors?.['precision']">Cantidad
+                                                    maximo 2
+                                                    decimales numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="epesobruto">Peso Bruto</label>
+                                            <input class="form-control form-control-sm" id="epesobruto"
+                                                name="mercancia[epesobruto]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="epesobruto"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.epesobruto.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.epesobruto.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.epesobruto.errors.required">Peso bruto es
+                                                    requerido
+                                                </div>
+                                                <div *ngIf="fdetallebien.epesobruto.errors?.['number']">Peso bruto valor
+                                                    numerico!</div>
+                                                <div *ngIf="fdetallebien.epesobruto.errors?.['precision']">Peso bruto
+                                                    maximo
+                                                    2 decimales numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="epesoneto">Peso neto</label>
+                                            <input class="form-control form-control-sm" id="epesoneto"
+                                                name="mercancia[epesoneto]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="epesoneto"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.epesoneto.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.epesoneto.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.epesoneto.errors.required">Peso neto es
+                                                    requerido
+                                                </div>
+                                                <div *ngIf="fdetallebien.epesoneto.errors?.['number']">Peso neto valor
+                                                    numerico!</div>
+                                                <div *ngIf="fdetallebien.epesoneto.errors?.['precision']">Peso neto
+                                                    maximo 2 decimales
+                                                    numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="evolumen">Volumen</label>
+                                            <input class="form-control form-control-sm" id="evolumen"
+                                                name="mercancia[evolumen]" size="30" type="text"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                formControlName="evolumen"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.evolumen.errors }" />
+                                            <div *ngIf="submitDetalleBien && fdetallebien.evolumen.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.evolumen.errors.required">Volumen es requerido
+                                                </div>
+                                                <div *ngIf="fdetallebien.evolumen.errors?.['number']">Volumen valor
+                                                    numerico!</div>
+                                                <div *ngIf="fdetallebien.evolumen.errors?.['precision']">Volumen
+                                                    maximo 2 decimales
+                                                    numerico!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='col-sm-2'>
+                                        <div class='form-group'>
+                                            <label class="form-label required" for="ecodembalaje">Embalaje</label>
+                                            <select class="custom-select form-control-sm" id="ecodembalaje"
+                                                name="mercancia[ecodembalaje]"
+                                                (change)="onChangeEmbalajeDetalleBien($event)"
+                                                formControlName="ecodembalaje"
+                                                [ngClass]="{ 'is-invalid': submitDetalleBien && fdetallebien.ecodembalaje.errors }"
+                                                >
+                                                <option *ngFor="let dato of datosEmbalaje"
+                                                    [ngValue]="dato.ecodembalaje"
+                                                    [selected]="dato.ecodembalaje == null"
+
+                                                    >
+                                                    {{dato.tnombre}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitDetalleBien && fdetallebien.ecodembalaje.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="fdetallebien.ecodembalaje.errors.required">Embalaje es
+                                                    requerido
+                                                </div>
+                                            </div>
+                                            <input class="form-control form-control-sm" id="tembalaje"
+                                                name="mercancia[tembalaje]" size="30" type="hidden"
+                                                formControlName="tembalaje" />
+
+                                        </div>
+                                    </div>
+                                    <div class='col-xl-1'>
+                                        <div class='form-group'>
+                                            <br>
+                                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                (click)="e_agregarDetalleBien(FormDatosDetalleBien.value)"><i
+                                                    class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm mg-b-0">
+                                    <tr>
+                                        <th scope="col" colspan="2">Accciones</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">No.Detalle guia</th>
+                                        <th scope="col">Factura</th>
+                                        <th scope="col">Marcas</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Bultos</th>
+                                        <th scope="col">Peso bruto</th>
+                                        <th scope="col">Peso neto</th>
+                                        <th scope="col">Volumen</th>
+                                        <th scope="col">Embaljes</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr *ngFor="let dato of  listDetallesBien; let i = index">
+                                            <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
+                                                    class="btn btn-xs btn-primary btn-brand-02" title="Eliminar"
+                                                    [disabled]="texistencia == 'SI'"
+                                                    [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
+                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i
+                                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                            </td>
+                                            <td><button type="button" (click)="e_editarDetalleBien(dato)"
+                                                    class="btn btn-xs btn-primary btn-brand-02" title="Editar"
+                                                    [disabled]="texistencia == 'SI'"
+                                                    [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
+                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i
+                                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                            </td>
+                                            <td> {{ i+ 1 }}</td>
+                                            <td> {{dato.edetalleguia }}</td>
+                                            <td> {{dato.tfacturas}}</td>
+                                            <td> {{dato.tmarcas}}</td>
+                                            <td> {{dato.tdescripcion}}</td>
+                                            <td> {{dato.ecantidad}}</td>
+                                            <td> {{dato.epesobruto}}</td>
+                                            <td> {{dato.epesoneto}}</td>
+                                            <td> {{dato.evolumen}}</td>
+                                            <td> {{dato.tembalaje}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <!--Fin Mercancia(s)-->
+                </div><!-- row -->
+                <br>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <label class="nopadding clrlbl"> Carácter restante:
+                                {{reglaLenght.length}}/{{maxCaracteres}}</label>
+                        </div>
+                        <div class='form-group'>
+                            <textarea id="tobservaciones"
+                                placeholder="Por favor ingrese un máximo de {{maxCaracteres}} caracteres"
+                                [maxlength]="maxCaracteres" [(ngModel)]="reglaLenght"
+                                oninput="this.value = this.value.toUpperCase()" name="tobservaciones"
+                                formControlName="tobservaciones" rows="4" style="width:100%;">
+                  </textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- card-body -->
+    </div> <!-- card -->
+</div><!-- content-body -->

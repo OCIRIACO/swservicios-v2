@@ -1,0 +1,95 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Servicio(s) a la carga</li>
+
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="content-bod">
+                <div class="card card-invoice">
+                    <div class="card-header">
+                        <h6 class="card-title mg-b-0">Solicitud(es) servicio(s) a la carga</h6>
+                    </div>
+
+                   
+
+                    <div class="card-body pd-xl-25">
+
+                        <div class='component mg-b-10'>
+                            <div class="btn-toolbar" role="group">
+                                <div class="btn-group mr-5" role="group">
+                                    <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary" ><i class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='component'>
+                            <hr>
+                        </div>
+
+                        <div class='col-sm-12 tx-left mg-t-10 mg-b-20'>
+                            <span> + Opciones de busqueda </span>
+                        </div>
+
+                        <div class="mg-b-50">
+                            <div class='d-flex'>
+                                <div class="custom-control custom-radio mg-l-15">
+                                    <input type="radio" id="rdpendiente" name="tbusqueda" value="PENDIENTE"
+                                        class="custom-control-input" (click)="e_opcion($event)">
+                                    <label class="custom-control-label" for="rdpendiente">PENDIENTE(S)</label>
+                                </div>
+
+                                <div class="custom-control custom-radio mg-l-15">
+                                    <input type="radio" id="rdguia" name="tbusqueda" value="AUTORIZADA"
+                                        class="custom-control-input" (click)="e_opcion($event)">
+                                    <label class="custom-control-label" for="rdguia">AUTORIZADA(S)</label>
+                                </div>
+
+                                <div class="custom-control custom-radio mg-l-15">
+                                    <input type="radio" id="rdrechazada" name="tbusqueda" value="RECHAZADA"
+                                        class="custom-control-input" (click)="e_opcion($event)">
+                                    <label class="custom-control-label" for="rdrechazada">RECHAZADA(S)</label>
+                                </div>
+
+                                <div class="custom-control custom-radio mg-l-15">
+                                    <input type="radio" id="rdcancelada" name="tbusqueda" value="CANCELADA"
+                                        class="custom-control-input" (click)="e_opcion($event)">
+                                    <label class="custom-control-label" for="rdcancelada">CANCELADA(S)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <div class="row">
+                            <div class="table-responsive">
+                                <div class="outer-div">
+                                    <div class="grid-wrapper" id="myGrid">
+                                        <ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid"
+                                            class="ag-theme-alpine" [pagination]="true"
+                                            [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
+                                            [defaultColDef]="defaultColDef" [rowData]="rowData"
+                                            [enableCellTextSelection]="true"
+                                            >
+                                            
+                                        </ag-grid-angular>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

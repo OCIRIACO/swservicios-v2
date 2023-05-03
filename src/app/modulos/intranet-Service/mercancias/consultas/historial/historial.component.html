@@ -1,0 +1,256 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Historial</li>
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+
+
+    <div class="card-body">
+        <div class='component mg-b-10'>
+            <div class="btn-toolbar" role="group">
+                <div class="btn-group mr-5" role="group">
+                    <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary" ><i class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                </div>
+            </div>
+        </div>
+       <hr>
+        <div class="component mg-t-10">
+            <form [formGroup]="FormBusqueda">
+                <div class="component">
+
+                    <div class='component mg-b-20'>
+                        <div class="demo-btn-group">
+                            <button type="button" class="btn btn-xs btn-primary"
+                                (click)="e_buscar(FormBusqueda.value)"><i class="fas fa-search mg-r-5 fa-1x"></i>Busqueda</button>
+                        </div>
+                    </div>
+                    <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" [placeholder]="PlaceholderBusqueda"
+                        id="tvalor" name="busqueda[tvalor]" formControlName="tvalor"
+                        [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tvalor.errors }">
+
+                    <div *ngIf="submitBusqueda && fbusqueda.tvalor.errors" class="invalid-feedback">
+                        <div *ngIf="fbusqueda.tvalor.errors.required">Ingresa tu número de guía
+                        </div>
+                    </div>
+                    <div class='col-sm-12 tx-left mg-t-5'>
+                        <span>{{informativo}}</span>
+                    </div>
+
+                </div>
+                <div class='col-sm-12 tx-right mg-t-15'>
+                    <a [routerLink]="[]" (click)="e_opcionesBusqueda()"><span>{{lblopcionesBusqueda}}</span></a>
+                </div>
+                <div class='d-flex' *ngIf="divOpcionesBusqueda">
+
+                    <div class="custom-control custom-radio mg-l-15">
+                        <input type="radio" id="tmarca" formControlName="tbusqueda" name="tbusqueda" value="MARCA"
+                            class="custom-control-input"
+                            [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tbusqueda.errors }" 
+                            (click)="e_radioOpciones($event)"  [(ngModel)]="selectedBusqueda" >
+                        <label class="custom-control-label" for="tmarca">Marca</label>
+                    </div>
+
+                    <div class="custom-control custom-radio mg-l-15">
+                        <input type="radio" id="eguia" formControlName="tbusqueda" name="tbusqueda" value="GUIA"
+                            class="custom-control-input"
+                            [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tbusqueda.errors }"
+                            (click)="e_radioOpciones($event)"  [(ngModel)]="selectedBusqueda" >
+                        <label class="custom-control-label" for="eguia">Número guia</label>
+                    </div>
+
+                    <div class="custom-control custom-radio mg-l-15">
+                        <input type="radio" id="efolioweb" formControlName="tbusqueda" name="tbusqueda" value="FOLIOWEB"
+                            class="custom-control-input"
+                            [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tbusqueda.errors }"
+                            (click)="e_radioOpciones($event)"  [(ngModel)]="selectedBusqueda" >
+                        <label class="custom-control-label" for="efolioweb">Folio Web</label>
+                    </div>
+                    
+                    
+                </div>
+                <div *ngIf="submitBusqueda && fbusqueda.tbusqueda.errors" class="invalid-feedback d-flex">
+                    <div *ngIf="fbusqueda.tbusqueda.errors.required">Seleccionar el tipo de busqueda
+                    </div>
+                </div>
+            </form>
+
+            <div class="component mg-t-50">
+                <div class="table-responsive">
+
+                    <table class="table table-sm  table table-hover mg-b-0">
+                        <tr>
+                            <th scope="col"> Ver </th>
+                            <th scope="col"> Idguia </th>
+                            <th scope="col"> Tipocarga </th>
+                            <th scope="col"> Trámite </th>
+                            <th scope="col"> Naviera </th>
+                            <th scope="col"> Tipo contendor </th>
+                            <th scope="col"> Embalaje </th>
+                            <th scope="col"> Marcas </th>
+                            <th scope="col"> Peso recibido </th>
+                            <th scope="col"> Cantidad recibido </th>
+                            <th scope="col"> Fecha entrada </th>
+                            <th scope="col"> Fecha salida </th>
+                            <th scope="col"> Movimiento </th>
+                        </tr>
+
+                        <tbody>
+                            <tr *ngFor="let dato of listbienes; let i = index">
+                                <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                        (click)="e_verdetalle(dato)">[+]</button></td>
+                                <td> {{dato.eguia }} </td>
+                                <td> {{dato.ttipocarga }} </td>
+                                <td> {{dato.ttramite }} </td>
+                                <td> {{dato.tnaviera }} </td>
+                                <td> {{dato.ttipocontendor }} </td>
+                                <td> {{dato.tembalaje }} </td>
+                                <td> {{dato.tmarcas }} </td>
+                                <td> {{dato.epesorecibido }} </td>
+                                <td> {{dato.ecantidadrecibido }} </td>
+                                <td> {{dato.fhfechaentrada }} </td>
+                                <td> {{dato.fhfechasalida }} </td>
+                                <td> {{dato.tmovimiento }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!------------------------------------------------------------------------>
+            <div *ngIf="divPanels" class="component  mg-t-50">
+                <ul class="nav nav-line" id="myTab5" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="movimientos-tab" data-toggle="tab" href="#movimientos" role="tab"
+                            aria-controls="movimientos" aria-selected="false">Movimientos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="sellos-tab" data-toggle="tab" href="#sellos" role="tab"
+                            aria-controls="sellos" aria-selected="false">Sellos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="detbienes-tab" data-toggle="tab" href="#detbienes" role="tab"
+                            aria-controls="detbienes" aria-selected="true">Detalle Mercancia</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mg-t-20" id="myTabContent5">
+                    <div class="tab-pane fade active show" id="movimientos" role="tabpanel"
+                        aria-labelledby="movimientos-tab">
+                        <div class="table-responsive">
+                            <table class="table table-sm  table table-hover mg-b-0">
+                                <tr>
+                                    <th scope="col"> # </th>
+                                    <th scope="col"> Tipocarga </th>
+                                    <th scope="col"> Trámite </th>
+                                    <th scope="col"> Naviera </th>
+                                    <th scope="col"> Tipo contendor </th>
+                                    <th scope="col"> Embalaje </th>
+                                    <th scope="col"> Marcas </th>
+                                    <th scope="col"> Peso manifestado </th>
+                                    <th scope="col"> Peso recibido </th>
+                                    <th scope="col"> Peso liberado </th>
+                                    <th scope="col"> Peso entregado </th>
+                                    <th scope="col"> Cantidad manifestado </th>
+                                    <th scope="col"> Cantidad recibido </th>
+                                    <th scope="col"> Cantidad liberado </th>
+                                    <th scope="col"> Cantidad entregado </th>
+                                    <th scope="col"> Fecha entrada </th>
+                                    <th scope="col"> Fecha salida </th>
+                                    <th scope="col"> Movimiento </th>
+                                    <th scope="col"> Posición </th>
+                                    <th scope="col"> Zona </th>
+                                    <th scope="col"> Usuario </th>
+                                    <th scope="col"> Fecha registro </th>
+                                </tr>
+                                <tbody>
+                                    <tr *ngFor="let dato of movimientos; let i = index">
+                                        <td> {{ i + 1}} </td>
+                                        <td> {{ dato.ttipocarga }} </td>
+                                        <td> {{ dato.ttramite }} </td>
+                                        <td> {{ dato.tnombrecorto }} </td>
+                                        <td> {{ dato.ttipocontenedor }} </td>
+                                        <td> {{ dato.embalaje }} </td>
+                                        <td> {{ dato.tmarcas }} </td>
+                                        <td> {{ dato.epesomanifestado }} </td>
+                                        <td> {{ dato.epesorecibido }} </td>
+                                        <td> {{ dato.epesoliberado }} </td>
+                                        <td> {{ dato.epesoentregado }} </td>
+                                        <td> {{ dato.ecantidadmanifestado }} </td>
+                                        <td> {{ dato.ecantidadrecibido }} </td>
+                                        <td> {{ dato.ecantidadliberado }} </td>
+                                        <td> {{ dato.ecantidadentregado }} </td>
+                                        <td> {{ dato.fhfechaentrada }} </td>
+                                        <td> {{ dato.fhfechasalida }} </td>
+                                        <td> {{ dato.tmovimiento }} </td>
+                                        <td> {{ dato.tposicion }} </td>
+                                        <td> {{ dato.tdescripcion }} </td>
+                                        <td> {{ dato.usuario }} </td>
+                                        <td> {{ dato.fhfecharegistro }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="sellos" role="tabpanel" aria-labelledby="sellos-tab">
+
+                        <table class="table table-sm  table table-hover mg-b-0">
+                            <tr>
+                                <th scope="col"> # </th>
+                                <th scope="col"> Sello </th>
+                                <th scope="col"> Tipo </th>
+                            </tr>
+                            <tbody>
+                                <tr *ngFor="let dato of sellos; let i = index">
+                                    <td> {{ i + 1}} </td>
+                                    <td> {{dato.tsello }} </td>
+                                    <td> {{dato.ttiposello }} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tab-pane fade " id="detbienes" role="tabpanel" aria-labelledby="detbienes-tab">
+                        <div class="table-responsive">
+                            <table class="table table-sm  table table-hover mg-b-0">
+                                <tr>
+                                    <th scope="col"> # </th>
+                                    <th scope="col"> Marcas </th>
+                                    <th scope="col"> Descripcion </th>
+                                    <th scope="col"> Pesobruto </th>
+                                    <th scope="col"> Pesoneto </th>
+                                    <th scope="col"> Cantidad </th>
+                                    <th scope="col"> Volumen </th>
+                                    <th scope="col"> Posicion </th>
+                                </tr>
+                                <tbody>
+                                    <tr *ngFor="let dato of detallebienes; let i = index">
+                                        <td> {{ i + 1}} </td>
+                                        <td> {{ dato.tmarcas }} </td>
+                                        <td> {{ dato.tdescripcion }} </td>
+                                        <td> {{ dato.epesobruto }} </td>
+                                        <td> {{ dato.epesoneto }} </td>
+                                        <td> {{ dato.ecantidad }} </td>
+                                        <td> {{ dato.evolumen }} </td>
+                                        <td> {{ dato.tposicion }} </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!------------------------------------------------------------------------>
+
+        </div>
+    </div>
+</div>

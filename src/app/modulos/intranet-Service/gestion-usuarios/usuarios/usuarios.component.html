@@ -1,0 +1,170 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+        </div><!-- card-header -->
+        <div class="card-body">
+            <div class="component mg-b-10">
+                <div class="btn-toolbar" role="group">
+                    <div class="btn-group mr-5" role="group">
+                        <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary" ><i class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                    </div>
+                    
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-xs btn-primary pull-right"
+                            (click)="e_guardar(formUsuario.value)">
+                            <li class=" fas fa-save mg-r-5 fa-1.5x"></li>Guardar
+                        </button>
+                    </div>
+
+                    <div class="btn-group mr-2" role="group">
+                        <button type="button" class="btn btn-xs btn-primary"  (click)="e_nuevo()" ><i class="fas fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="formUsuario"  class="mg-t-10">
+                <div class="row"   >
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Nombre completo</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="tnombre"
+                                formControlName="tnombre"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.tnombre.errors}"
+                                name="usuario[tnombre]">
+                            <div *ngIf="submitGuardar && frmUsuario.tnombre.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.tnombre.errors.required">* Nombre es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Direccion</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="tdireccion"
+                                formControlName="tdireccion"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.tdireccion.errors}"
+                                name="usuario[tdireccion]">
+                            <div *ngIf="submitGuardar && frmUsuario.tdireccion.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.tdireccion.errors.required">* Direccion es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="ttelefono"
+                                formControlName="ttelefono"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.ttelefono.errors}"
+                                name="usuario[ttelefono]">
+                            <div *ngIf="submitGuardar && frmUsuario.ttelefono.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.ttelefono.errors.required">* Teléfono es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Correo</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="tcorreo"
+                                formControlName="tcorreo"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.tcorreo.errors}"
+                                name="usuario[tcorreo]">
+                            <div *ngIf="submitGuardar && frmUsuario.tcorreo.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.tcorreo.errors.required">* Correo es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="custom-select form-control-sm" id="testado" name="usuario[testado]"
+                                formControlName="testado"
+                                [ngClass]="{ 'is-invalid': submitGuardar && frmUsuario.testado.errors }">
+                                <option value="VIGENTE">VIGENTE</option>
+                                <option value="NO VIGENTE">NO VIGENTE</option>
+                            </select>
+                            <div *ngIf="submitGuardar && frmUsuario.testado.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.testado.errors.required">* Estado es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Usuario</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="tusuario"
+                                formControlName="tusuario"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.tusuario.errors}"
+                                name="usuario[tusuario]">
+                            <div *ngIf="submitGuardar && frmUsuario.tusuario.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.tusuario.errors.required">* Correo es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="tpassword"
+                                formControlName="tpassword"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.tpassword.errors}"
+                                name="usuario[tpassword]">
+                            <div *ngIf="submitGuardar && frmUsuario.tpassword.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.tpassword.errors.required">* Password es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-2" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">ecodusuario</label>
+                            <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()" id="ecodusuario"
+                                formControlName="ecodusuario"
+                                [ngClass]="{'is-invalid': submitGuardar && frmUsuario.ecodusuario.errors}"
+                                name="usuario[ecodusuario]">
+                            <div *ngIf="submitGuardar && frmUsuario.ecodusuario.errors" class="invalid-feedback">
+                                <div *ngIf="frmUsuario.ecodusuario.errors.required">* ecodusuario es requerido</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <div class="outer-div">
+                            <div class="grid-wrapper" id="gridUusuario">
+                                <ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="gridUusuario"
+                                    class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
+                                    [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
+                                    [defaultColDef]="defaultColDef" [rowData]="rowData">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

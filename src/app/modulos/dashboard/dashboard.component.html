@@ -1,0 +1,91 @@
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div>
+        <a href="../index.html" class="sidebar-logo"><span>Operaciones</span></a>
+      </div>
+    </div><!-- sidebar-header -->
+    <div id="dpSidebarBody" class="sidebar-body">
+      <ul class="nav nav-sidebar">
+        <li class="nav-label"><label class="content-label"></label></li>
+        <li class="nav-item" [style.display]="opCustumer.length > 0 ? 'block' : 'none'">
+          <a [routerLink]="" (click)="e_operaciones('customer')" class="nav-link with-sub"><i
+              data-feather="box"></i>Operaciones</a>
+        </li>
+        <li class="nav-item" [style.display]="opIntranet.length > 0 ? 'block' : 'none'">
+          <a [routerLink]="" (click)="e_operaciones('intranet')" class="nav-link with-sub"><i
+              data-feather="box"></i>Intranet</a>
+        </li>
+
+      </ul>
+    </div><!-- sidebar-body -->
+  </div><!-- sidebar -->
+
+  <div class="content mydashboar" >
+    <div class="header header-chat">
+      <div class="header-left">
+        <a id="menuMain" href="" class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="feather feather-menu">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg></a>
+        <a id="menuBack" href="" class="burger-menu d-none"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" class="feather feather-arrow-left">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg></a>
+
+      </div><!-- header-left -->
+      <div class="header-right">
+
+        <div class="dropdown dropdown-loggeduser">
+          <a href="" class="dropdown-link" data-toggle="dropdown">
+            <div class="avatar avatar-sm avatar-online">
+              <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
+            </div><!-- avatar -->
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu-header">
+              <div class="media align-items-center">
+                <div class="avatar avatar-online">
+                  <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
+                </div><!-- avatar -->
+                <div class="media-body mg-l-10">
+                  <h6>{{lblUsuario}}</h6>
+                  <span>{{lbltperfil}}</span>
+                </div>
+              </div><!-- media -->
+            </div>
+            <div class="dropdown-menu-body">
+              <!--<a href="" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
+                <a href="" class="dropdown-item"><i data-feather="edit-2"></i> Edit Profile</a>
+                <a href="" class="dropdown-item"><i data-feather="briefcase"></i> Account Settings</a>
+                <a href="" class="dropdown-item"><i data-feather="shield"></i> Privacy Settings</a>-->
+              <a [routerLink]="[]" class="dropdown-item" (click)="e_cerrarSesion()"><i data-feather="log-out"></i>
+                Cerrar
+                sesión</a>
+            </div>
+          </div><!-- dropdown-menu -->
+        </div>
+      </div><!-- header-right -->
+    </div><!-- header -->
+
+    <router-outlet ></router-outlet>
+  </div><!-- content -->
+
+  <footer>
+    <div class="pull-right">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <p><span class="margin-right-10">©2022 Todos los derechos reservados.
+              Desarrollado por <a href="https://www.linkedin.com/company/syntaxyz/" rel="external" class="entiri">Syntaxyz</a></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>

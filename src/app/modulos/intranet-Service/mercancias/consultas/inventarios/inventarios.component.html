@@ -1,0 +1,95 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Inventarios</li>
+            </ol>
+        </nav>
+        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+        </div><!-- card-header -->
+        <div class="card-body">
+            <div class='component mg-b-10'>
+                <div class="btn-toolbar" role="group">
+                    <div class="btn-group mr-5" role="group">
+                        <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary" ><i class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                    </div>
+                </div>
+            </div>
+           <hr>
+
+            <div class="component  mg-t-10">
+                <form [formGroup]="FormBusqueda">
+                    <div class="row row-sm">
+                        <div class='form-group form-group col-sm-2'>
+                            <span class="tx-danger">*</span><label for="ttipobusqueda">INVENTARIO</label>
+                            <select class="custom-select form-control-sm" id="ttipobusqueda"
+                                name="busqueda[ttipobusqueda]" formControlName="ttipobusqueda"
+                                [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.ttipobusqueda.errors }" (change)="e_tipoBusqueda(FormBusqueda.value)" >
+                                <option value="ENTRADAS">ENTRADAS</option>
+                                <option value="SALIDAS">SALIDAS</option>
+                                <option value="EXISTENCIAS">EXISTENCIAS</option>
+                            </select>
+                            <div *ngIf="submitBusqueda && fbusqueda.ttipobusqueda.errors" class="invalid-feedback">
+                                <div *ngIf="fbusqueda.ttipobusqueda.errors.required">*Tipo Inventario es requerido</div>
+                            </div>
+                        </div>
+                        <div class='form-group form-group col-sm-2' *ngIf="divFechas" >
+                            <span class="tx-danger">*</span><label for="fhfechainicio">FECHA INICIO</label>
+                            <input type="date" class="custom-select form-control-sm" placeholder="" id="fhfechainicio"
+                                name="busqueda[fhfechainicio]" formControlName="fhfechainicio"
+                                [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechainicio.errors }">
+                            <div *ngIf="submitBusqueda && fbusqueda.fhfechainicio.errors" class="invalid-feedback">
+                                <div *ngIf="fbusqueda.fhfechainicio.errors.required">*Fecha Inicio es requerido</div>
+                            </div>
+                        </div>
+                        <div class='form-group form-group col-sm-2' *ngIf="divFechas" >
+                            <span class="tx-danger">*</span><label for="fhfechafin">FECHA FIN</label>
+                            <input type="date" class="custom-select form-control-sm" placeholder="" id="fhfechafin"
+                                name="busqueda[fhfechafin]" formControlName="fhfechafin"
+                                [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechafin.errors }">
+                            <div *ngIf="submitBusqueda && fbusqueda.fhfechafin.errors" class="invalid-feedback">
+                                <div *ngIf="fbusqueda.fhfechafin.errors.required">*Fecha Fin es requerido</div>
+                            </div>
+                        </div>
+
+                       
+
+                    </div>
+                </form>
+                <div class="row row-sm">
+                    <div class='form-group form-group col-sm-2'>
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-xs btn-primary pull-right"
+                                (click)="e_buscar(FormBusqueda.value)">
+                                <li class=" fas fa-search fa-1x mg-r-5"></li>Busqueda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="outer-div">
+                <div class="grid-wrapper" id="myGrid">
+                    <ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid" class="ag-theme-alpine"
+                        [pagination]="true" 
+                        [paginationPageSize]="paginationPageSize" 
+                        [columnDefs]="columnDefs"     
+                        [gridOptions]="gridOptions"
+                        [defaultColDef]="defaultColDef" 
+                        [enableCellTextSelection]="true"
+                        [rowData]="rowData"  >
+                    </ag-grid-angular>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

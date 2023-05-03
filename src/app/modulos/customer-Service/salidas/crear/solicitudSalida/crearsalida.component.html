@@ -1,0 +1,374 @@
+<div class="content-header">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+        
+        <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Crear servicio(s) salida</li>
+      </ol>
+    </nav>
+  </div>
+</div><!-- content-header -->
+<div class="content-body">
+  <div class="card card-invoice">
+    <div class="card-header">
+      <div>
+        <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
+        <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+      </div>
+      <!--<div class="btn-group-invoice">
+              <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
+                  data-feather="save"></i>Guardar</a>
+            </div>-->
+    </div><!-- card-header -->
+    <div class="card-body">
+
+      <div class="component mb-2">
+        <div class="demo-btn-group">
+          <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
+              class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+          <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitudSalida.value)"><i
+              class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+        </div>
+      </div>
+      <hr>
+      <form [formGroup]="FormSolicitudSalida">
+        <div class="row">
+          <div class="col-xl-12">
+            <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="form-label required">RFC</label>
+              <select class="custom-select form-control-sm select2 select2-hidden-accessible" id="trfc"
+                style="width: 100%;" tabindex="-1" aria-hidden="true">
+                <option value="">SELECCIONAR</option>
+                <option *ngFor="let dato of datosClientes" [ngValue]="dato.ecliente" [value]="dato.ecliente">
+                  {{dato.trfc}}
+                </option>
+              </select>
+              <input type="hidden" id="ecliente" style="width: 100%;" tabindex="-1" aria-hidden="true"
+                formControlName="ecliente" [ngClass]="{ 'is-invalid': submitGuardar && fguardar.ecliente.errors }">
+              <div *ngIf="submitGuardar && fguardar.ecliente.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.ecliente.errors.required">RFC es requerido</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="form-label required">Dirección</label>
+              <select class="custom-select form-control-sm" id="edireccion" name="carga[edireccion]"
+                formControlName="edireccion" [ngClass]="{ 'is-invalid': submitGuardar && fguardar.edireccion.errors }">
+                <option value="">SELECCIONAR</option>
+                <option *ngFor="let dato of datosDirecciones" [ngValue]="dato.edireccion">
+                  {{dato.tcalle}},{{dato.tcolonia}}
+                </option>
+              </select>
+              <div *ngIf="submitGuardar && fguardar.edireccion.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.edireccion.errors.required">Dirección es requerido</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xl-12">
+            <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Método de pago</label>
+              <select class="custom-select form-control-sm" id="emetodopago" name="carga[emetodopago]"
+                formControlName="emetodopago"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.emetodopago.errors }">
+                <option value="">SELECCIONAR</option>
+                <option *ngFor="let dato of datosMetodoPago" [ngValue]="dato.emetodopago">
+                  {{dato.tdescripcion}}
+                </option>
+              </select>
+
+              <div *ngIf="submitGuardar && fguardar.emetodopago.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.emetodopago.errors.required">Método de pago es requerido</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Banco</label>
+              <select class="custom-select form-control-sm" id="ebanco" name="carga[ebanco]" formControlName="ebanco"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.ebanco.errors }">
+                <option value="">SELECCIONAR</option>
+                <option *ngFor="let dato of datosBancos" [ngValue]="dato.ebanco">
+                  {{dato.tbanco}}
+                </option>
+              </select>
+              <div *ngIf="submitGuardar && fguardar.ebanco.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.ebanco.errors.required">Banco es requerido</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Cfdi</label>
+              <select class="custom-select form-control-sm" id="ecfdi" name="carga[ecfdi]" formControlName="ecfdi"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.ecfdi.errors }">
+                <option value="" selected>SELECCIONAR</option>
+                <option *ngFor="let dato of datosCfdi" [ngValue]="dato.ecfdi">
+                  {{dato.tdescripcion}}
+                </option>
+              </select>
+              <div *ngIf="submitGuardar && fguardar.ecfdi.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.ecfdi.errors.required">Cfdi es requerido</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Cuenta</label>
+              <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()"
+                id="ecuenta" name="bien[ecuenta]" maxlength="4" placeholder="0000"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.ecuenta.errors }" size="4"
+                formControlName="ecuenta">
+              <div *ngIf="submitGuardar && fguardar.ecuenta.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.ecuenta.errors.required">Cuenta es requerido</div>
+                <div *ngIf="fguardar.ecuenta.errors?.['number']">Cuenta valor numérico!</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Moneda</label>
+              <select class="custom-select form-control-sm" id="tmoneda" name="bien[tmoneda]" formControlName="tmoneda"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.tmoneda.errors }">
+                <option value="" selected>SELECCIONAR</option>
+                <option value="MXN">PESO</option>
+                <option value="USD">DOLAR</option>
+              </select>
+              <div *ngIf="submitGuardar && fguardar.tmoneda.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.tmoneda.errors.required">Moneda es requerido</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xl-12">
+            <h6 class="mt-3 mb-2 text-primary">+ Contacto</h6>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Fecha de servicio</label>
+              <input class="form-control form-control-sm" type="date" id="fhfechaservicio" name="bien[fhfechaservicio]"
+                formControlName="fhfechaservicio" [min]="nowFechaServicio"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.fhfechaservicio.errors }">
+              <div *ngIf="submitGuardar && fguardar.fhfechaservicio.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.fhfechaservicio.errors.required">* Fecha de servicio requerido
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Correo</label>
+              <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()"
+                id="tcorreo" name="bien[tcorreo]" formControlName="tcorreo"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.tcorreo.errors }">
+              <div *ngIf="submitGuardar && fguardar.tcorreo.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.tcorreo.errors.required">* Correo es requerido</div>
+                <div *ngIf="fguardar.tcorreo.errors.pattern">Correo no valido: correo@dominio.com</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label class="form-label required">Teléfono</label>
+              <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()"
+                id="ttelefono" name="bien[ttelefono]" maxlength="10" placeholder="3141234567"
+                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.ttelefono.errors }" formControlName="ttelefono">
+              <div *ngIf="submitGuardar && fguardar.ttelefono.errors" class="invalid-feedback">
+                <div *ngIf="fguardar.ttelefono.errors.required">* Teléfono es requerido
+                </div>
+                <div *ngIf="fguardar.ttelefono.errors.pattern">Teléfono no valido 1234567890 (10
+                  digitos).
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label>Referencia</label>
+              <input class="form-control form-control-sm" type="text" oninput="this.value = this.value.toUpperCase()"
+                id="treferencia" name="bien[treferencia]" formControlName="treferencia">
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <form [formGroup]="FormBusqueda">
+          <div class="row">
+            <div class="col-xl-12">
+              <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)</h6>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="form-label required">Valor</label>
+              <div class="input-group">
+                <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm"
+                  aria-describedby="btnBuscar" id="tvalor" formControlName="tvalor" name="tvalor"
+                  [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tvalor.errors }">
+                <div class="input-group-append">
+                  <button class="btn btn-xs btn-primary" type="button" id="btnBuscar"
+                    (click)="e_buscar(FormBusqueda.value)"><i class="fas fa-search mg-r-5 fa-1.5x"></i>Buscar</button>
+                </div>
+
+                <div *ngIf="submitBusqueda && fbusqueda.tvalor.errors" class="invalid-feedback">
+                  <div *ngIf="fbusqueda.tvalor.errors.required">Ingresa el valor a buscar
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-sm-7 mb-4">
+              <label class="form-label required">Tipo busqueda</label>
+              <div class="d-flex">
+                <div class="custom-control custom-radio mg-l-15">
+                  <input type="radio" id="tmarca" formControlName="tbusqueda" name="tbusqueda" value="MARCA"
+                    class="custom-control-input"
+                    [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tbusqueda.errors }"
+                    [(ngModel)]="selectedBusqueda">
+                  <label class="custom-control-label" for="tmarca">Marca</label>
+                </div>
+
+                <div class="custom-control custom-radio mg-l-15">
+                  <input type="radio" id="eguia" formControlName="tbusqueda" name="tbusqueda" value="GUIA"
+                    class="custom-control-input"
+                    [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tbusqueda.errors }"
+                    [(ngModel)]="selectedBusqueda">
+                  <label class="custom-control-label" for="eguia">Número guia</label>
+                </div>
+
+              </div>
+            </div>
+            <div *ngIf="submitBusqueda && fbusqueda.tbusqueda.errors" class="invalid-feedback d-flex">
+              <div *ngIf="fbusqueda.tbusqueda.errors.required">Seleccionar el tipo de busqueda
+              </div>
+            </div>
+            <div class='col-sm-12 tx-left mg-t-4 mb-4'>
+              <span style="color: #ed1b24">{{informativo}}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div *ngIf="divBienes">
+              <div class="col-xl-12 mt-4 mb-4">
+                <div class="table-responsive">
+                  <table class="table table-sm mg-b-0">
+                    <tr>
+                      <th scope="col">Accciones</th>
+                      <th scope="col">#</th>
+                      <th scope="col">Guía</th>
+                      <th scope="col">Tipo carga</th>
+                      <th scope="col">Trámite</th>
+                      <th scope="col">Tpo. cont</th>
+                      <th scope="col">Marcas</th>
+                      <th scope="col">Peso bruto</th>
+                      <th scope="col">Peso neto</th>
+                      <th scope="col">Bultos</th>
+                      <th scope="col">Volumen</th>
+                      <th scope="col">Embalaje</th>
+                    </tr>
+                    <tbody>
+                      <tr *ngFor="let dato of datosBien; let i = index">
+                        <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                            (click)="e_agregar(dato)"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button> </td>
+                        <td> {{ i + 1}} </td>
+                        <td> {{ dato.eguia }}</td>
+                        <td> {{ dato.ttipocarga }}</td>
+                        <td> {{ dato.ttramite}} </td>
+                        <td> {{ dato.ttipocontenedor}} </td>
+                        <td> {{ dato.tmarcas }} </td>
+                        <td> {{ dato.epesobruto }} </td>
+                        <td> {{ dato.epesoneto }} </td>
+                        <td> {{ dato.ecantidad }} </td>
+                        <td> {{ dato.evolumen }} </td>
+                        <td> {{ dato.tembalaje }} </td>
+                      </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr>
+        <div class="row ">
+          <div class="col-xl-12  ">
+            <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s) agregado(s)</h6>
+          </div>
+        </div>
+        <div class="col-xl-12 mt-4 mb-4">
+          <div class="table-responsive">
+            <table class="table table-sm mg-b-0">
+              <tr>
+                <th scope="col">Accciones</th>
+                <th scope="col">#</th>
+                <th scope="col">Guía</th>
+                <th scope="col">Tipo carga</th>
+                <th scope="col">Trámite</th>
+                <th scope="col">Tpo. cont</th>
+                <th scope="col">Marcas</th>
+                <th scope="col">Peso bruto</th>
+                <th scope="col">Peso neto</th>
+                <th scope="col">Bultos</th>
+                <th scope="col">Volumen</th>
+                <th scope="col">Embalaje</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let dato of bienesLiberar; let i = index">
+                  <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02" (click)="e_eliminar(dato)"><i
+                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
+                  <td> {{ i + 1}} </td>
+                  <td> {{ dato.eguia }}</td>
+                  <td> {{ dato.ttipocarga }}</td>
+                  <td> {{ dato.ttramite}} </td>
+                  <td> {{ dato.ttipocontenedor}} </td>
+                  <td> {{ dato.tmarcas }} </td>
+                  <td> {{ dato.epesobruto }} </td>
+                  <td> {{ dato.epesoneto }} </td>
+                  <td> {{ dato.ecantidad }} </td>
+                  <td> {{ dato.evolumen }} </td>
+                  <td> {{ dato.tembalaje }} </td>
+                </tr>
+            </table>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xl-12">
+            <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
+          </div>
+          <div class="col-xl-12">
+            <div class="row">
+              <label class="nopadding clrlbl"> Carácter restante: {{reglaLenght.length}}/{{maxCaracteres}}</label>
+            </div>
+            <div class='form-group'>
+              <textarea id="tobservaciones" placeholder="Por favor ingrese un máximo de {{maxCaracteres}} caracteres"
+                [maxlength]="maxCaracteres" [(ngModel)]="reglaLenght" oninput="this.value = this.value.toUpperCase()"
+                name="tobservaciones" formControlName="tobservaciones" rows="4" style="width:100%;">
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div><!-- content-body -->

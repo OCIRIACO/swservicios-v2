@@ -1,0 +1,227 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cliente</li>
+            </ol>
+        </nav>
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+            <div>
+                <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
+                <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+            </div>
+            <!--<div class="btn-group-invoice">
+                <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
+                    data-feather="save"></i>Guardar</a>
+              </div>-->
+        </div><!-- card-header -->
+        <div class="card-body">
+
+            <div class="component mb-2">
+                <div class="demo-btn-group">
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormCliente.value)"><i
+                            class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="FormCliente">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Razón social</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="ecodcliente"
+                                formControlName="ecodcliente" name="ecodcliente"
+                                >
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Razón social</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trazonsocial"
+                                formControlName="trazonsocial" name="trazonsocial"
+                                [ngClass]="{ 'is-invalid': submitCliente && frmCliente.trazonsocial.errors }"
+                                maxlength="25">
+                            <div *ngIf="submitCliente && frmCliente.trazonsocial.errors" class="invalid-feedback">
+                                <div *ngIf="frmCliente.trazonsocial.errors.required">Razón social es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">RFC</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trfc" formControlName="trfc"
+                                name="trfc" maxlength="13"
+                                [ngClass]="{ 'is-invalid': submitCliente && frmCliente.trfc.errors }">
+                            <div *ngIf="submitCliente && frmCliente.trfc.errors" class="invalid-feedback">
+                                <div *ngIf="frmCliente.trfc.errors.required">RFC es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <form [formGroup]="FormDireccion">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Dirección</h6>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+
+                        <div class="form-group">
+                            <label class="form-label">Cp</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="ecodigopostal"
+                                (change)="e_consultaCp($event)" formControlName="ecodigopostal"
+                                name="direccion[ecodigopostal]" maxlength="5"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.ecodigopostal.errors }">
+                            <div *ngIf="submitDireccion && frmdireccion.ecodigopostal.errors" class="invalid-feedback">
+                                <div *ngIf="frmdireccion.ecodigopostal.errors.required">Cp es requerido</div>
+                                <div *ngIf="frmdireccion.ecodigopostal.errors?.['number']">Cp valor numerico!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tentidadfederativa"
+                                formControlName="tentidadfederativa" name="tentidadfederativa"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tentidadfederativa.errors }"
+                                readonly>
+                            <div *ngIf="submitDireccion && frmdireccion.tentidadfederativa.errors"
+                                class="invalid-feedback">
+                                <div *ngIf="frmdireccion.tentidadfederativa.errors.required">Estado es requerido</div>
+                            </div>
+                            <input type="hidden" class="form-control form-control-sm" id="eestado"
+                                formControlName="eestado" name="eestado">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Municipio</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tmunicipio"
+                                formControlName="tmunicipio" name="tmunicipio"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tmunicipio.errors }"
+                                readonly>
+                            <div *ngIf="submitDireccion && frmdireccion.tmunicipio.errors" class="invalid-feedback">
+                                <div *ngIf="frmdireccion.tmunicipio.errors.required">Municipio es requerido</div>
+                            </div>
+                            <input type="hidden" class="form-control form-control-sm" id="emunicipio"
+                                formControlName="emunicipio" name="emunicipio">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Colonia</label>
+                            <select class="custom-select form-control-sm" id="tcolonia" formControlName="tcolonia"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tcolonia.errors }">
+                                <option value="" selected>SELECCIONAR</option>
+                                <option *ngFor="let dato of arrdatosColonia" [ngValue]="dato.ecolonia">
+                                    {{dato.tcolonia}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitDireccion && frmdireccion.tcolonia.errors" class="invalid-feedback">
+                                <div *ngIf="frmdireccion.tcolonia.errors.required">Colonia es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label">Calle</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tcalle" formControlName="tcalle"
+                                name="tcalle"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tcalle.errors }">
+                            <div *ngIf="submitDireccion && frmdireccion.tcalle.errors" class="invalid-feedback">
+                                <div *ngIf="frmdireccion.tcalle.errors.required">Calle es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label class="form-label">N° exterior</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnumexterior"
+                                formControlName="tnumexterior" name="tnumexterior"
+                                [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tnumexterior.errors }">
+                            <div *ngIf="submitDireccion && frmdireccion.tnumexterior.errors" class="invalid-feedback">
+                                <div *ngIf="frmdireccion.tnumexterior.errors.required">N° exterior</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label class="form-label">N° interior</label>
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnuminterior"
+                                formControlName="tnuminterior" name="tnuminterior">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            
+                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="ecoddireccion"
+                                formControlName="ecoddireccion" name="ecoddireccion">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1 ">
+                        <div class='form-group mt-4'>
+                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                (click)="e_agregarDireccion(FormDireccion.value)"><i
+                                    class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-sm mg-b-0">
+                    <tr>
+                        <th scope="col" colspan="2">Accciones</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Cp</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Municipio</th>
+                        <th scope="col">Colonia</th>
+                        <th scope="col">Calle</th>
+                        <th scope="col">N° exterior</th>
+                        <th scope="col">N° interior</th>
+                    </tr>
+                    <tbody>
+                        <tr *ngFor="let dato of arrdatosDireccion; let i = index">
+                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                    (click)="e_eliminarDireccion(dato)"><i
+                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button></td>
+                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                    (click)="e_editarDireccion(dato)"><i
+                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                            </td>
+                            <td>{{i+ 1 }}</td>
+                            <td>{{dato.ecoddireccion}}</td>
+                            <td>{{dato.ecodigopostal}}</td>
+                            <td>{{dato.testado}}</td>
+                            <td>{{dato.tmunicipio}}</td>
+                            <td>{{dato.tcolonia}}</td>
+                            <td>{{dato.tcalle}}</td>
+                            <td>{{dato.tnumexterior}}</td>
+                            <td>{{dato.tnuminterior}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div><!-- content-body -->

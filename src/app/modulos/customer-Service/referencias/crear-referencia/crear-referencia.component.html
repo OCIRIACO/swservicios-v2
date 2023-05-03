@@ -1,0 +1,193 @@
+<div class="content-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+
+                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Referencia(s)</li>
+            </ol>
+        </nav>
+    </div>
+</div><!-- content-header -->
+<div class="content-body">
+    <div class="card card-invoice">
+        <div class="card-header">
+        </div><!-- card-header -->
+
+        <div class="card-body">
+            <div class="component mb-2">
+                <div class="demo-btn-group">
+                    <button type="button" class="btn btn-xs btn-primary" title="Consultar"><i
+                            class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+                    <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(formsolicitud.value)"><i
+                            class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+                </div>
+            </div>
+            <hr>
+            <form [formGroup]="formsolicitud">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Referencia</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Referencia</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="treferencia"
+                                name="referencia[treferencia]" maxlength="10" placeholder="AAA-0001"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.treferencia.errors }" size="15"
+                                formControlName="treferencia">
+                            <div *ngIf="submitGuardar && fguardar.treferencia.errors" class="invalid-feedback">
+                                <div *ngIf="fguardar.treferencia.errors.required">Referencia es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Puerto</label>
+                            <select class="custom-select form-control-sm select2 select2-hidden-accessible" id="tpuerto"
+                                style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of puertosList" [ngValue]="dato.eestacion"
+                                    [value]="dato.eestacion">
+                                    {{dato.tdescripcion}}
+                                </option>
+                            </select>
+                            <input type="hidden" id="epuerto" style="width: 100%;" aria-hidden="true"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.epuerto.errors }"
+                                formControlName="epuerto">
+                            <div *ngIf="submitGuardar && fguardar.epuerto.errors" class="invalid-feedback">
+                                <div *ngIf="fguardar.epuerto.errors.required">Puerto es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Agente</label>
+                            <!--<input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="eagente" 
+                                maxlength="50" placeholder="AGENTE"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eagente.errors }" size="4"
+                                formControlName="eagente">-->
+
+                            <select class="custom-select form-control-sm" id="eagente" formControlName="eagente"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eagente.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosAgentesAduanalesList" [ngValue]="dato.eagente"
+                                    [selected]="dato.eagente == null">
+                                    {{dato.tdescripcion}}
+                                </option>
+                            </select>
+
+                            <div *ngIf="submitGuardar && fguardar.eagente.errors" class="invalid-feedback">
+                                <div *ngIf="fguardar.eagente.errors.required">Agente es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Año</label>
+                            <input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="eanio" maxlength="4"
+                                placeholder="2023" [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eanio.errors }"
+                                size="4" formControlName="eanio">
+                            <div *ngIf="submitGuardar && fguardar.eanio.errors" class="invalid-feedback">
+                                <div *ngIf="fguardar.eanio.errors.required">Año es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="form-label required">Aduana</label>
+                            <!--<input class="form-control form-control-sm" type="text"
+                                oninput="this.value = this.value.toUpperCase()" id="eaduana" maxlength="4"
+                                placeholder="2023"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eaduana.errors }" size="4"
+                                formControlName="eaduana">-->
+
+                            <select class="custom-select form-control-sm" id="eaduana" formControlName="eaduana"
+                                [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eaduana.errors }">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let dato of datosAduanasList" [ngValue]="dato.eaduana"
+                                    [selected]="dato.eaduana == null">
+                                    {{dato.tdescripcion}}
+                                </option>
+                            </select>
+
+
+
+                            <div *ngIf="submitGuardar && fguardar.eaduana.errors" class="invalid-feedback">
+                                <div *ngIf="fguardar.eaduana.errors.required">Aduana es requerido</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <!--<div class="row">
+                    <div class="col-xl-12">
+                        <h6 class="mt-3 mb-2 text-primary">+ Documentos</h6>
+                    </div>
+                    <div class="col-sm-12">
+
+                        <ul class="nav nav-line" id="myTab5" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="documentos-tab" data-toggle="tab" href="#documentos"
+                                    role="tab" aria-controls="documentos" aria-selected="false">documentos</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content mg-t-20" id="tabdocumentos">
+                            <div class="tab-pane fade active show" id="documentos" role="tabpanel"
+                                aria-labelledby="documentos-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped jambo_table bulk_action" id="tblDocumentoGeneral">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Descripción</th>
+                                                <th scope="col">Archivo</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span id="tdanexo">Anexos</span> 
+                                                </td>
+                                                <td><i class="fa fa-file-pdf-o fa-lg"></i></td>
+                                                <td><input type="file" id="fileanexo" ttipo="earchivoanexo"
+                                                        (change)="e_adjuntarFile($event)" accept="application/pdf"></td>
+                                                <td><input type="hidden" value="" name="" id="earchivoanexo"
+                                                        class="itemsFile"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span id="tdcomprobantes">Comprobantes</span> </td>
+                                                <td><i class="fa fa-file-pdf-o fa-lg"></i></td>
+                                                <td><input type="file" id="filecomprobante" ttipo="earchivocomprobante"
+                                                        (change)="e_adjuntarFile($event)" accept="application/pdf"></td>
+                                                <td><input type="hidden" value="" name="" id="earchivocomprobante"
+                                                        class="itemsFile">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Otros</td>
+                                                <td><i class="fa fa-file-pdf-o fa-lg"></i></td>
+                                                <td><input type="file" id="fileotros" ttipo="earchivootros"
+                                                        (change)="e_adjuntarFile($event)" accept="application/pdf"></td>
+                                                <td><input type="hidden" value="" name="" id="earchivootros"
+                                                        class="itemsFile"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </form>
+        </div>
+    </div>
+</div><!-- content-body -->
