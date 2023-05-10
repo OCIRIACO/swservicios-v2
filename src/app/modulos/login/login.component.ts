@@ -1,7 +1,7 @@
 //import { importType, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 
-import { UntypedFormGroup, UntypedFormControl, Validator, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validator, Validators, FormGroup, FormControl } from '@angular/forms';
 import { classApiLogin } from '../../serviciosRest/api/api.service.login'
 import { IniciarSesion, Login, RootObject } from '../../modelos/longin.interfase'
 import { Router } from '@angular/router'
@@ -14,13 +14,12 @@ import { IdatosResponse } from '../../modelos/reponse.login.interfase'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   datos: any = {};
   mensaje: string = '';
 
 
-  loginForm = new UntypedFormGroup({
-    usuario: new UntypedFormControl('', Validators.required),
+  loginForm = new FormGroup({
+    usuario: new FormControl(),
     password: new UntypedFormControl('', Validators.required)
   })
 
@@ -49,6 +48,8 @@ export class LoginComponent implements OnInit {
 
 
     let ttoken: any
+
+    console.log(form.usuario);
 
     datologin = { usuario: form.usuario, password: form.password };
     datoIniciarsession = { login: datologin };

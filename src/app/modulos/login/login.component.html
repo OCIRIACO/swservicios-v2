@@ -5,19 +5,26 @@
 
 <div class="wrap contentVideo">
     <form class="login-form" action="" [formGroup]="loginForm" (ngSubmit)="e_longin(loginForm.value)">
-        <div class="form-header">
+        <div class="form-header" style="color: white;">
             <h3>Inicio de Sesión</h3>
         </div>
-        <!--Email Input-->
-        <div class="form-group">
-            <input type="text" class="form-input" placeholder="usuario" id="usuario" type="usuario"
-                formControlName="usuario">
-        </div>
-        <!--Password Input-->
-        <div class="form-group">
-            <input type="password" class="form-input" placeholder="password" id="password" name="password"
-                formControlName="password">
-        </div>
+
+        <mat-form-field class="input-login form-input">
+            <mat-label>Usuario</mat-label>
+            <input
+                matInput
+                formControlName="usuario"
+                placeholder="jose@outlook.com o jcarranza"
+            >
+        </mat-form-field>
+        <mat-form-field class="input-login form-input">
+            <mat-label>Password</mat-label>
+            <input matInput
+                formControlName="password"
+                type="password"
+            >
+        </mat-form-field>
+        <div>&nbsp;</div>
         <!--Login Button-->
         <div class="form-group">
             <button type="submit" class="btn btn-primary ms-auto btn-block">
@@ -36,7 +43,3 @@
         </div>
     </form>
 </div>
-
-
-
-<!--/.wrap-->
