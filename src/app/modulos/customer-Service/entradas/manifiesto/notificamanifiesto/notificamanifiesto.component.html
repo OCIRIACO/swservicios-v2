@@ -23,17 +23,23 @@
         </div>-->
     </div><!-- card-header -->
     <div class="card-body">
-      <div class="component mb-2">
-        <div class="demo-btn-group">
+      <form [formGroup]="FormSolicitudEntrada" #formSolicitud="ngForm"
+        (ngSubmit)="e_guardar(FormSolicitudEntrada.value)">
+        <div class="component mb-2">
+          <div class="demo-btn-group">
 
-          <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
-              class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-          <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitudEntrada.value)"><i
-              class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+            <button class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
+                class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+
+            <!--<button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitudEntrada.value)"><i
+                class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+            -->
+
+            <button class="btn btn-xs btn-primary"><i class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+
+          </div>
         </div>
-      </div>
-      <hr>
-      <form [formGroup]="FormSolicitudEntrada">
+        <hr>
         <div class="row">
           <div class="col-xl-12">
             <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
@@ -77,37 +83,53 @@
             <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
           </div>
           <div class="col-sm-2">
-            <mat-form-field appearance="fill">
+
+            <!--
+
+                <mat-form-field >
+                  <mat-label>Forma de pago</mat-label>
+                  <mat-select formControlName="emetodopago" [ngClass]="{  'form-unsubmitted': !ngForm.submitted }" required>
+                    <mat-option>Seleccionar</mat-option>
+                    <mat-option *ngFor="let formaPago of datosMetodoPago" [value]="formaPago.emetodopago">
+                      {{formaPago.tdescripcion}}
+                    </mat-option>
+                  </mat-select>
+                  <div *ngIf="submitGuardar && fcontacto.emetodopago.errors" class="invalid-feedback">
+                    <div *ngIf="fcontacto.emetodopago.errors.required">Método de pago es requerido</div>
+                  </div>
+
+
+                  <mat-error *ngIf="ngForm.submitted">
+                    Método de pago es requerido
+                  </mat-error>
+
+            </mat-form-field>
+
+            -->
+
+
+            <mat-form-field>
               <mat-label>Forma de pago</mat-label>
-              <mat-select>
-                <mat-option>Seleccionar</mat-option>
+              <mat-select name="emetodopago" [ngModel]="datosSolitudEntrada.emetodopago" required #emetodopago="ngModel"
+                [ngModelOptions]="{standalone: true}">
+                <mat-option>SELECCIONAR</mat-option>
                 <mat-option *ngFor="let formaPago of datosMetodoPago" [value]="formaPago.emetodopago">
                   {{formaPago.tdescripcion}}
                 </mat-option>
               </mat-select>
+              <mat-error
+                *ngIf="emetodopago.hasError('required') || formSolicitud.submitted && emetodopago.invalid">Método de
+                pago es requerido</mat-error>
             </mat-form-field>
-            <!--
-              <div class="form-group">
-              <label class="form-label required">Forma de pago</label>
-              <select class="custom-select form-control-sm" id="emetodopago" name="carga[emetodopago]"
-                formControlName="emetodopago"
-                [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.emetodopago.errors }">
-                <option value="">SELECCIONAR</option>
-                <option *ngFor="let dato of datosMetodoPago" [ngValue]="dato.emetodopago">
-                  {{dato.tdescripcion}}
-                </option>
-              </select>
 
-              <div *ngIf="submitGuardar && fcontacto.emetodopago.errors" class="invalid-feedback">
-                <div *ngIf="fcontacto.emetodopago.errors.required">Método de pago es requerido</div>
-              </div>
 
-            </div>
-            -->
+
+
+
 
           </div>
           <div class="col-sm-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field>
               <mat-label>Método de pago</mat-label>
               <mat-select>
                 <mat-option value="1">PUE</mat-option>
@@ -115,17 +137,20 @@
               </mat-select>
             </mat-form-field>
           </div>
+
           <div class="col-sm-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field>
               <mat-label>Banco</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let banco of datosBancos"
-                  [value]="banco.ebanco"
-                >
+              <mat-select name="ebanco" [ngModel]="datosSolitudEntrada.ebanco" required #ebanco="ngModel"
+                [ngModelOptions]="{standalone: true}">
+                <mat-option>SELECCIONAR</mat-option>
+                <mat-option *ngFor="let banco of datosBancos" [value]="banco.ebanco">
                   {{banco.tbanco}}
                 </mat-option>
               </mat-select>
+              <mat-error
+                *ngIf="ebanco.hasError('required') || formSolicitud.submitted && ebanco.invalid">Banco es
+                requerido</mat-error>
             </mat-form-field>
             <!--
             <div class="form-group">
@@ -144,16 +169,17 @@
             -->
           </div>
           <div class="col-sm-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field>
               <mat-label>CFDI</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let usoCfdi of datosCfdi"
-                  [value]="usoCfdi.ecfdi"
-                >
+              <mat-select name="ecfdi" [ngModel]="datosSolitudEntrada.ecfdi" required #ecfdi="ngModel"
+                [ngModelOptions]="{standalone: true}">
+                <mat-option>SELECCIONAR</mat-option>
+                <mat-option *ngFor="let usoCfdi of datosCfdi" [value]="usoCfdi.ecfdi">
                   {{usoCfdi.tdescripcion}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="ecfdi.hasError('required') || formSolicitud.submitted && ecfdi.invalid">Cfdi es
+                requerido</mat-error>
             </mat-form-field>
             <!--
               <div class="form-group">
@@ -174,14 +200,12 @@
           </div>
 
           <div class="col-sm-2">
-            <mat-form-field class="example-full-width">
+            <mat-form-field>
               <mat-label>Cuenta</mat-label>
-              <input
-                matInput
-                placeholder=""
-                oninput="this.value = this.value.toUpperCase()"
-                maxlength="4"
-              >
+              <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4"
+              name="ecuenta" [ngModel]="datosSolitudEntrada.ecuenta" required #ecuenta="ngModel"
+              [ngModelOptions]="{standalone: true}"  size="4">
+              <mat-error *ngIf="formSolicitud.submitted">Método de pago es requerido</mat-error>
             </mat-form-field>
             <!--
               <div class="form-group">
@@ -199,12 +223,15 @@
           </div>
 
           <div class="col-sm-2">
-            <mat-form-field appearance="fill">
+            <mat-form-field>
               <mat-label>Método de pago</mat-label>
-              <mat-select>
+              <mat-select name="tmoneda" [ngModel]="datosSolitudEntrada.tmoneda" required #tmoneda="ngModel"
+              [ngModelOptions]="{standalone: true}" >
+                <mat-option>SELECCIONAR</mat-option>
                 <mat-option value="MXN">PESO</mat-option>
                 <mat-option value="USD">DOLAR</mat-option>
               </mat-select>
+              <mat-error *ngIf="tmoneda.hasError('required') || formSolicitud.submitted && tmoneda.invalid">Moneda es requerido</mat-error>
             </mat-form-field>
             <!--
               <div class="form-group">
@@ -383,7 +410,7 @@
                       <label class="form-label required" for="ttipocontenedor">Tpo. cont</label>
                       <select class="custom-select form-control-sm" id="ttipocontenedor" name="carga[ttipocontenedor]"
                         formControlName="ttipocontenedor" readonly
-                        [ngClass]="{ 'is-invalid': submitBien && f.ttipocontenedor.errors }"  >
+                        [ngClass]="{ 'is-invalid': submitBien && f.ttipocontenedor.errors }">
                         <option *ngFor="let dato of datosTipoContenedor" [ngValue]="dato.id"
                           [selected]="dato.id == null">
                           {{dato.ttipo}}
@@ -398,8 +425,8 @@
                     <div class='form-group'>
                       <label class="form-label required" for="tsellos">Sello(s)</label>
                       <input class="form-control form-control-sm" id="tsellos" name="carga[tsellos]" size="30"
-                        type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tsellos" [readonly]="isReadonly"
-                        [ngClass]="{ 'is-invalid': submitBien && f.tsellos.errors }" />
+                        type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tsellos"
+                        [readonly]="isReadonly" [ngClass]="{ 'is-invalid': submitBien && f.tsellos.errors }" />
                       <div *ngIf="submitBien && f.tsellos.errors" class="invalid-feedback">
                         <div *ngIf="f.tsellos.errors.required">Sello(s) es requerido</div>
                         <div *ngIf="f.tsellos.errors.pattern">Sello(s) captura no valido Ejemplo:sello1/sello2/sello3.

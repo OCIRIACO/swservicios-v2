@@ -1,6 +1,8 @@
 import { Component, ElementRef, HostListener, NgModule, OnInit, ViewChild } from '@angular/core';
 
-import { FormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validator, Validators, FormsModule, NgForm, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms'
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validator, Validators, FormsModule, NgForm, ValidatorFn, AbstractControl, ValidationErrors, FormGroup, FormControl } from '@angular/forms'
+
+
 import { Router } from '@angular/router';
 import { IdatosCarga } from 'src/app/modelos/datoscarga.interfase';
 import { IdatosMercancia } from 'src/app/modelos/datosmercancias.interfase';
@@ -20,6 +22,23 @@ import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 
+
+export class solicitudEntrada {
+  public ecliente          !: string;                 
+  public edireccion        !: string;                   
+  public emetodopago       !: string;                    
+  public ebanco            !: string;               
+  public ecfdi             !: string;              
+  public ecuenta           !: string;                
+  public tmoneda           !: string;                
+  public fhfechaservicio   !: string;                        
+  public tcorreo           !: string;  
+  public ttelefono         !: string; 
+  public treferencia       !: string; 
+  public tobservaciones    !: string;    
+}
+
+
 @Component({
   selector: 'app-notificamanifiesto',
   templateUrl: './notificamanifiesto.component.html',
@@ -31,8 +50,13 @@ import { Observable, of } from 'rxjs';
 
 export class NotificamanifiestoComponent implements OnInit {
 
+  userDetails = { countryId: '' }
+
+
   @ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
   @ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
+
+
 
   //Textarea *comentarion
   maxCaracteres: number = 150
@@ -152,27 +176,34 @@ export class NotificamanifiestoComponent implements OnInit {
   });
 
 
-  FormSolicitudEntrada = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('', Validators.required),
-    tmoneda: new UntypedFormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('',
+  FormSolicitudEntrada = new FormGroup({
+    ecliente: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl(null, Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('', Validators.required),
+    tmoneda: new FormControl('', Validators.required),
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('',
       [
         Validators.required,
         Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
       ]
     ),
-    ttelefono: new UntypedFormControl('', [Validators.required,
+    ttelefono: new FormControl('', [Validators.required,
     Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
     ]),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
   })
+
+
+  //Instanciar nueva entrada
+  datosSolitudEntrada =  new solicitudEntrada();
+
+
+
 
   datosNaviera: any;
   datosEmbalaje: any;
@@ -195,6 +226,7 @@ export class NotificamanifiestoComponent implements OnInit {
     private router: Router,
     private serviceDatosUsuario: serviceDatosUsuario,
     private apiCliente: apiCliente,
+    private formBuilder: FormBuilder
   ) {
     this.listDatosCarga = [];
     this.listDetallesBien = [];
@@ -205,6 +237,8 @@ export class NotificamanifiestoComponent implements OnInit {
     this.datosTramite = []
 
   }
+
+
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
   canDeactivate(): Observable<boolean> | boolean {
@@ -245,6 +279,11 @@ export class NotificamanifiestoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+
+
+
 
     //Date
     const datePipe = new DatePipe('en-Us');
@@ -872,6 +911,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
     // stop y valido
     if (this.FormSolicitudEntrada.invalid) {
+      console.log(this.FormSolicitudEntrada.invalid)
       return;
     }
 

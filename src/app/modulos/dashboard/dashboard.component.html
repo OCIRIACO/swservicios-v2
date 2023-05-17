@@ -1,91 +1,165 @@
+<!--<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Menu">
+      <mat-icon>menu</mat-icon>
+  </button>
+  <span>MENU</span>
+  <span class="toolbar-item-spacer"></span>
+  <button mat-icon-button matTooltip="Like">
+      <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Share">
+      <mat-icon>share</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Notifications">
+      <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
+      <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+      <button mat-menu-item routerLink="#">
+          <mat-icon>person</mat-icon><span>Mi cuenta</span>
+      </button>
+    
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="#">
+          <mat-icon>exit_to_app</mat-icon>Salir
+      </button>
+  </mat-menu>
+</mat-toolbar>
+
+
+<mat-sidenav-container class="app-container">
+  <mat-sidenav #sidenav mode="side" [class.mat-elevation-z4]="true" class="app-sidenav">
+      <mat-nav-list>
+          <mat-list-item routerLink="#">
+              <mat-icon>dashboard</mat-icon><span>Dashboard</span>
+          </mat-list-item>
+          <mat-expansion-panel [class.mat-elevation-z0]="true">
+              <mat-expansion-panel-header>
+                  Mobile Phone
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                  <a mat-list-item routerLink="#">
+                      <mat-icon>apple</mat-icon><span>iOS</span>
+                  </a>
+                  <a mat-list-item routerLink="#">
+                      <mat-icon>android</mat-icon><span>Android</span>
+                  </a>
+              </mat-nav-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel [class.mat-elevation-z0]="true">
+              <mat-expansion-panel-header>
+                  Frameworks
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                  <a mat-list-item routerLink="#">Spring</a>
+                  <a mat-list-item routerLink="#">Hibernate</a>
+                  <a mat-list-item routerLink="#">Struts</a>
+              </mat-nav-list>
+          </mat-expansion-panel>
+      </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <router-outlet>
+          <div class="app-sidenav-content">
+              Components open here
+          </div>
+      </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+-->
+
+
 <body>
 
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div>
-        <a href="../index.html" class="sidebar-logo"><span>Operaciones</span></a>
-      </div>
-    </div><!-- sidebar-header -->
-    <div id="dpSidebarBody" class="sidebar-body">
-      <ul class="nav nav-sidebar">
-        <li class="nav-label"><label class="content-label"></label></li>
-        <li class="nav-item" [style.display]="opCustumer.length > 0 ? 'block' : 'none'">
-          <a [routerLink]="" (click)="e_operaciones('customer')" class="nav-link with-sub"><i
-              data-feather="box"></i>Operaciones</a>
-        </li>
-        <li class="nav-item" [style.display]="opIntranet.length > 0 ? 'block' : 'none'">
-          <a [routerLink]="" (click)="e_operaciones('intranet')" class="nav-link with-sub"><i
-              data-feather="box"></i>Intranet</a>
-        </li>
-
-      </ul>
-    </div><!-- sidebar-body -->
-  </div><!-- sidebar -->
-
-  <div class="content mydashboar" >
-    <div class="header header-chat">
-      <div class="header-left">
-        <a id="menuMain" href="" class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" class="feather feather-menu">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg></a>
-        <a id="menuBack" href="" class="burger-menu d-none"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" class="feather feather-arrow-left">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg></a>
-
-      </div><!-- header-left -->
-      <div class="header-right">
-
-        <div class="dropdown dropdown-loggeduser">
-          <a href="" class="dropdown-link" data-toggle="dropdown">
-            <div class="avatar avatar-sm avatar-online">
-              <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
-            </div><!-- avatar -->
-          </a>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-menu-header">
-              <div class="media align-items-center">
-                <div class="avatar avatar-online">
-                  <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
-                </div><!-- avatar -->
-                <div class="media-body mg-l-10">
-                  <h6>{{lblUsuario}}</h6>
-                  <span>{{lbltperfil}}</span>
-                </div>
-              </div><!-- media -->
-            </div>
-            <div class="dropdown-menu-body">
-              <!--<a href="" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
-                <a href="" class="dropdown-item"><i data-feather="edit-2"></i> Edit Profile</a>
-                <a href="" class="dropdown-item"><i data-feather="briefcase"></i> Account Settings</a>
-                <a href="" class="dropdown-item"><i data-feather="shield"></i> Privacy Settings</a>-->
-              <a [routerLink]="[]" class="dropdown-item" (click)="e_cerrarSesion()"><i data-feather="log-out"></i>
-                Cerrar
-                sesión</a>
-            </div>
-          </div><!-- dropdown-menu -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div>
+          <a href="../index.html" class="sidebar-logo"><span>Operaciones</span></a>
         </div>
-      </div><!-- header-right -->
-    </div><!-- header -->
-
-    <router-outlet ></router-outlet>
-  </div><!-- content -->
-
-  <footer>
-    <div class="pull-right">
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <p><span class="margin-right-10">©2022 Todos los derechos reservados.
-              Desarrollado por <a href="https://www.linkedin.com/company/syntaxyz/" rel="external" class="entiri">Syntaxyz</a></span>
-          </p>
+      </div><!-- sidebar-header -->
+      <div id="dpSidebarBody" class="sidebar-body">
+        <ul class="nav nav-sidebar">
+          <li class="nav-label"><label class="content-label"></label></li>
+          <li class="nav-item" [style.display]="opCustumer.length > 0 ? 'block' : 'none'">
+            <a [routerLink]="" (click)="e_operaciones('customer')" class="nav-link with-sub"><i
+                data-feather="box"></i>Operaciones</a>
+          </li>
+          <li class="nav-item" [style.display]="opIntranet.length > 0 ? 'block' : 'none'">
+            <a [routerLink]="" (click)="e_operaciones('intranet')" class="nav-link with-sub"><i
+                data-feather="box"></i>Intranet</a>
+          </li>
+  
+        </ul>
+      </div><!-- sidebar-body -->
+    </div><!-- sidebar -->
+  
+    <div class="content mydashboar" >
+      <div class="header header-chat">
+        <div class="header-left">
+          <a id="menuMain" href="" class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" class="feather feather-menu">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg></a>
+          <a id="menuBack" href="" class="burger-menu d-none"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" class="feather feather-arrow-left">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg></a>
+  
+        </div><!-- header-left -->
+        <div class="header-right">
+  
+          <div class="dropdown dropdown-loggeduser">
+            <a href="" class="dropdown-link" data-toggle="dropdown">
+              <div class="avatar avatar-sm avatar-online">
+                <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
+              </div><!-- avatar -->
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-menu-header">
+                <div class="media align-items-center">
+                  <div class="avatar avatar-online">
+                    <img src="assets/images/default-avatar.svg" class="rounded-circle" alt="">
+                  </div><!-- avatar -->
+                  <div class="media-body mg-l-10">
+                    <h6>{{lblUsuario}}</h6>
+                    <span>{{lbltperfil}}</span>
+                  </div>
+                </div><!-- media -->
+              </div>
+              <div class="dropdown-menu-body">
+                <!--<a href="" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
+                  <a href="" class="dropdown-item"><i data-feather="edit-2"></i> Edit Profile</a>
+                  <a href="" class="dropdown-item"><i data-feather="briefcase"></i> Account Settings</a>
+                  <a href="" class="dropdown-item"><i data-feather="shield"></i> Privacy Settings</a>-->
+                <a [routerLink]="[]" class="dropdown-item" (click)="e_cerrarSesion()"><i data-feather="log-out"></i>
+                  Cerrar
+                  sesión</a>
+              </div>
+            </div><!-- dropdown-menu -->
+          </div>
+        </div><!-- header-right -->
+      </div><!-- header -->
+  
+      <router-outlet ></router-outlet>
+    </div><!-- content -->
+  
+    <footer>
+      <div class="pull-right">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <p><span class="margin-right-10">©2022 Todos los derechos reservados.
+                Desarrollado por <a href="https://www.linkedin.com/company/syntaxyz/" rel="external" class="entiri">Syntaxyz</a></span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-</body>
+    </footer>
+  </body>
