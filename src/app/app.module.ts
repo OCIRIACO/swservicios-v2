@@ -86,7 +86,8 @@ import { RegistrarComponent } from './modulos/registrar/registrar.component';
 import { CrearReferenciaComponent } from './modulos/customer-Service/referencias/crear-referencia/crear-referencia.component';
 import { ConsultarReferenciasComponent } from './modulos/customer-Service/referencias/consultar-referencias/consultar-referencias.component';
 
-import { MatIconModule } from '@angular/material/icon';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider'; 
@@ -95,6 +96,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 import {MatListModule} from '@angular/material/list'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import { MatTableModule } from '@angular/material/table'  
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -190,8 +194,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSidenavModule,
     MatListModule,
     MatExpansionModule,
-
-    
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatCardModule
   ],
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},

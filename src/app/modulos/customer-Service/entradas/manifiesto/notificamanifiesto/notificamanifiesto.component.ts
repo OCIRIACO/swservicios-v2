@@ -14,7 +14,7 @@ import { ApiServiceManifiesto } from 'src/app/serviciosRest/Customer/solicitudEn
 import Swal from 'sweetalert2';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
-
+import { MatTable } from '@angular/material/table';
 
 import * as $ from 'jquery';
 import 'select2';
@@ -24,19 +24,37 @@ import { Observable, of } from 'rxjs';
 
 
 export class solicitudEntrada {
-  public ecliente          !: string;                 
-  public edireccion        !: string;                   
-  public emetodopago       !: string;                    
-  public ebanco            !: string;               
-  public ecfdi             !: string;              
-  public ecuenta           !: string;                
-  public tmoneda           !: string;                
-  public fhfechaservicio   !: string;                        
-  public tcorreo           !: string;  
-  public ttelefono         !: string; 
-  public treferencia       !: string; 
-  public tobservaciones    !: string;    
+  public ecliente          !: any;
+  public edireccion        !: any;
+  public emetodopago       !: any;
+  public ebanco            !: any;
+  public ecfdi             !: any;
+  public ecuenta           !: any;
+  public tmoneda           !: any;
+  public fhfechaservicio   !: any;
+  public tcorreo           !: any;
+  public ttelefono         !: any;
+  public treferencia       !: any;
+  public tobservaciones    !: any;
 }
+
+export class bienes {
+  public idsequence        !: any;
+  public tembalaje         !: any;
+  public ecodembalaje      !: any;
+  public tnaviera          !: any;
+  public ecodnaviera       !: any;
+  public tmarcas           !: any;
+  public ttipocontenedor   !: any;
+  public epesoneto         !: any;
+  public epesobruto        !: any;
+  public ebultos           !: any;
+  public ttramite          !: any;
+  public ttipocarga        !: any;
+  public tsellos           !: any;
+
+}
+
 
 
 @Component({
@@ -44,18 +62,18 @@ export class solicitudEntrada {
   templateUrl: './notificamanifiesto.component.html',
   styleUrls: ['./notificamanifiesto.component.css',
 
-
   ]
 })
 
 export class NotificamanifiestoComponent implements OnInit {
 
+
+
+
+
   userDetails = { countryId: '' }
-
-
   @ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
   @ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
-
 
 
   //Textarea *comentarion
@@ -200,8 +218,9 @@ export class NotificamanifiestoComponent implements OnInit {
 
 
   //Instanciar nueva entrada
-  datosSolitudEntrada =  new solicitudEntrada();
+  datosSolitudEntrada = new solicitudEntrada();
 
+  datosBienes =  new bienes();
 
 
 
