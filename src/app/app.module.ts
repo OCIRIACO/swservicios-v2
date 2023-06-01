@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modulos/login/login.component';
-
 import { ReactiveFormsModule, FormsModule}  from '@angular/forms' // Validar Formularios // post
 import { HttpClientModule} from '@angular/common/http';
 import { DashboardComponent } from './modulos/dashboard/dashboard.component';
@@ -99,6 +98,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 import { MatTableModule } from '@angular/material/table'  
 import { MatCardModule } from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
+import { MatFormFieldModule } from "@angular/material/form-field";
+import {NgFor, AsyncPipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -197,7 +199,11 @@ import { MatCardModule } from '@angular/material/card';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    NgFor,
+    AsyncPipe
   ],
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},
