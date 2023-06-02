@@ -136,8 +136,8 @@ export class NotificamanifiestoComponent implements OnInit {
     ])
   })
 
-  FormDatosDetalleBien = new UntypedFormGroup({
-    econtadorRowBien: new UntypedFormControl(0, null),
+  FormDatosDetallesBien = new UntypedFormGroup({
+    econtadorRow: new UntypedFormControl(0, null),
     tfactura: new UntypedFormControl('', Validators.required),
     tmarcas: new UntypedFormControl('', Validators.required),
     tdescripcion: new UntypedFormControl('', Validators.required),
@@ -161,8 +161,8 @@ export class NotificamanifiestoComponent implements OnInit {
   });
 
   FormSolicitudEntrada = new FormGroup({
-    trfc: new FormControl('', Validators.required),
-    ecliente: new FormControl('', Validators.required),
+    //trfc: new FormControl('', Validators.required),
+    ecliente: new FormControl(undefined, Validators.required),
     edireccion: new FormControl('', Validators.required),
     emetodopago: new FormControl(null, Validators.required),
     ebanco: new FormControl('', Validators.required),
@@ -257,7 +257,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
   onChangeDetalleBien(event: any) {
     let dato = event.target.options[event.target.options.selectedIndex].text;
-    this.FormDatosDetalleBien.get('tembalaje')?.setValue(dato);
+    this.FormDatosDetallesBien.get('tembalaje')?.setValue(dato);
   }
 
   onChangeNaviera(event: any) {
@@ -475,8 +475,8 @@ export class NotificamanifiestoComponent implements OnInit {
   }
 
   OnHumanSelected(dato: any) {
-    //console.log('### Trigger');
-    //console.log(SelectedHuman);
+    console.log('### Trigger');
+    console.log(dato);
     this.datosDirecciones = dato.direcciones
 
   }
@@ -564,9 +564,7 @@ export class NotificamanifiestoComponent implements OnInit {
             } else {
               this.datosBien.detallesbien = value.detallesbien;
             }
-
           }
-
           //Eliminar
           this.bienes.splice(index, 1);
         }
@@ -763,7 +761,7 @@ export class NotificamanifiestoComponent implements OnInit {
   //////////////////////////////////////////////////// DETALLES DE BIEN /////////////////////////////////////////////////////////////
 
   // convenience getter for easy access to form fields
-  //get fmercancia() { return this.FormDatosDetalleBien.controls; }
+  //get fmercancia() { return this.FormDatosDetallesBien.controls; }
 
 
   //agregar Detalles del bien
@@ -779,41 +777,68 @@ export class NotificamanifiestoComponent implements OnInit {
     console.log(this.datosBien);
 
     console.log('*Detalles bienes');
-    console.log(this.FormDatosDetalleBien)
+    console.log(this.FormDatosDetallesBien)
 
     // stop here if form is invalid
-    if (this.FormDatosDetalleBien.invalid) {
+    if (this.FormDatosDetallesBien.invalid) {
       console.log('error.');
       return;
     }
 
 
     let datosDetallesBien: any = {}
-    datosDetallesBien.econtadorRowBien = this.FormDatosDetalleBien.value.econtadorRowBien;
-    datosDetallesBien.tfactura = this.FormDatosDetalleBien.value.tfactura;
-    datosDetallesBien.tmarcas = this.FormDatosDetalleBien.value.tmarcas;
-    datosDetallesBien.tdescripcion = this.FormDatosDetalleBien.value.tdescripcion;
-    datosDetallesBien.ecantidad = this.FormDatosDetalleBien.value.ecantidad;
-    datosDetallesBien.epesobruto = this.FormDatosDetalleBien.value.epesobruto;
-    datosDetallesBien.epesoneto = this.FormDatosDetalleBien.value.epesoneto;
-    datosDetallesBien.evolumen = this.FormDatosDetalleBien.value.evolumen;
-    datosDetallesBien.ecodembalaje = this.FormDatosDetalleBien.value.ecodembalaje;
+    datosDetallesBien.econtadorRow = this.FormDatosDetallesBien.value.econtadorRow;
+    datosDetallesBien.tfactura = this.FormDatosDetallesBien.value.tfactura;
+    datosDetallesBien.tmarcas = this.FormDatosDetallesBien.value.tmarcas;
+    datosDetallesBien.tdescripcion = this.FormDatosDetallesBien.value.tdescripcion;
+    datosDetallesBien.ecantidad = this.FormDatosDetallesBien.value.ecantidad;
+    datosDetallesBien.epesobruto = this.FormDatosDetallesBien.value.epesobruto;
+    datosDetallesBien.epesoneto = this.FormDatosDetallesBien.value.epesoneto;
+    datosDetallesBien.evolumen = this.FormDatosDetallesBien.value.evolumen;
+    datosDetallesBien.ecodembalaje = this.FormDatosDetallesBien.value.ecodembalaje;
 
+    //Nombre embalaje
+    this.datosEmbalaje.forEach((valor: any, index: any) => {
+      if (valor.ecodembalaje == datosDetallesBien.ecodembalaje) {
+        datosDetallesBien.tembalaje = valor.tnombre;
+      }
+    });
+
+    //Eliminar el registro del arreglo
+    //Lo reemplazar por uno nuevo id
+    if (datosDetallesBien.econtadorRow != 0) {
+      this.listDetallesBien.forEach((value: any, index: any) => {
+        if (value.econtadorRow == datosDetallesBien.econtadorRow) {
+          //Eliminar
+          this.listDetallesBien.splice(index, 1);
+        }
+      })
+    }
+
+
+    //Crear un nuevo identificador row.
+    datosDetallesBien.econtadorRow = this.contadorRowBien;
+
+    //Agregar
     this.listDetallesBien.push(datosDetallesBien);
 
+    //Agregar el detalle en el bien correspondiente.
     this.bienes.forEach((value: any, index: any) => {
-
       if (value.econtadorRowBien == this.datosBien.econtadorRowBien) {
         this.bienes[index].detallesbien = this.listDetallesBien;
       }
-
     });
 
+    //Contador++
+    this.contadorRowBien++;
+
     //Reset
-    this.FormDatosDetalleBien.reset();
+    this.FormDatosDetallesBien.reset();
 
+    //Nuevo
+    this.FormDatosDetallesBien.get('econtadorRow')!.setValue(0);
 
-    //console.log(this.FormDatosDetalleBien)
+    //console.log(this.FormDatosDetallesBien)
 
 
     //this.bienes[dato.idsequence].bienes = this.listDetallesBien;
@@ -886,10 +911,10 @@ export class NotificamanifiestoComponent implements OnInit {
     this.submitDetalleBien = false;
 
     // RESET
-    // this.FormDatosDetalleBien.reset();
+    // this.FormDatosDetallesBien.reset();
 
     //Reset Form
-    this.FormDatosDetalleBien = new UntypedFormGroup({
+    this.FormDatosDetallesBien = new UntypedFormGroup({
       idSequenceDetalleBien: new UntypedFormControl('', null),
       tfactura: new UntypedFormControl('', Validators.required),
       tmarcas: new UntypedFormControl('', Validators.required),
@@ -935,7 +960,7 @@ export class NotificamanifiestoComponent implements OnInit {
     //this.submitted = false
 
     //Cargas los datos
-    //this.datosBien = datos
+    this.datosBien = datos
 
 
     //En caso de que el bien ya tenga cargado los detalles del bien se pinta  entonces !!!
@@ -956,44 +981,43 @@ export class NotificamanifiestoComponent implements OnInit {
     this.listDetallesBien.forEach((value: any, index: any) => {
       if (value == dato) {
         this.listDetallesBien.splice(index, 1);
-        this.FormDatosDetalleBien.get('idSequenceDetalleBien')?.setValue(this.listDetallesBien.length);
+        this.FormDatosDetallesBien.get('idSequenceDetalleBien')?.setValue(this.listDetallesBien.length);
       }
     });
   }
 
   //Editar el detalles del bien
-  e_editarDetalleBien(dato: any) {
+  e_editarDetalleBien(datos: any) {
 
     // Set value del sequence
-    this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
+    //this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
 
-
-
-    this.FormDatosDetalleBien = new UntypedFormGroup({
-      tfactura: new UntypedFormControl(dato.tfactura, Validators.required),
-      tmarcas: new UntypedFormControl(dato.tmarcas, Validators.required),
-      tdescripcion: new UntypedFormControl(dato.tdescripcion, Validators.required),
-      ecantidad: new UntypedFormControl(dato.ecantidad, [Validators.required,
+    this.FormDatosDetallesBien = new UntypedFormGroup({
+      econtadorRow: new UntypedFormControl(datos.econtadorRow, null),
+      tfactura: new UntypedFormControl(datos.tfactura, Validators.required),
+      tmarcas: new UntypedFormControl(datos.tmarcas, Validators.required),
+      tdescripcion: new UntypedFormControl(datos.tdescripcion, Validators.required),
+      ecantidad: new UntypedFormControl(datos.ecantidad, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
       ]),
-      epesobruto: new UntypedFormControl(dato.epesobruto, [Validators.required,
+      epesobruto: new UntypedFormControl(datos.epesobruto, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
       ]),
-      epesoneto: new UntypedFormControl(dato.epesoneto, [Validators.required,
+      epesoneto: new UntypedFormControl(datos.epesoneto, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
       ]),
-      evolumen: new UntypedFormControl(dato.evolumen, [Validators.required,
+      evolumen: new UntypedFormControl(datos.evolumen, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
       ]),
-      ecodembalaje: new UntypedFormControl(dato.ecodembalaje, Validators.required)
+      ecodembalaje: new UntypedFormControl(datos.ecodembalaje, Validators.required)
     });
 
 
-    /*this.FormDatosDetalleBien = new FormGroup({
+    /*this.FormDatosDetallesBien = new FormGroup({
       idSequenceDetalleBien: new FormControl('', null),
       tfactura: new FormControl('', Validators.required),
       tmarcas: new FormControl('', Validators.required),
@@ -1035,17 +1059,18 @@ export class NotificamanifiestoComponent implements OnInit {
   //////////////////////////////////// CONTACTO /////////////////////////////////////////
 
   // convenience getter for easy access to form fields
-  get fcontacto() { return this.FormSolicitudEntrada.controls; }
+  //get fcontacto() { return this.FormSolicitudEntrada.controls; }
 
 
-  e_guardar(datos: any) {
+  e_guardar() {
 
     //captador de conveniencia para un fácil acceso a los campos de formulario
-    this.submitGuardar = true;
+    //this.submitGuardar = true;
+    console.log(this.FormSolicitudEntrada)
 
     // stop y valido
     if (this.FormSolicitudEntrada.invalid) {
-      console.log(this.FormSolicitudEntrada.invalid)
+      console.log('*error');
       return;
     }
 
@@ -1079,21 +1104,10 @@ export class NotificamanifiestoComponent implements OnInit {
 
       this.bienes.forEach((dato: any, index: any) => {
 
-        //clear
         listaMercancias = []
         listaSellos = []
-        estado = 'OK!'   // validar el detalle
+        estado = 'OK!'
 
-        // Validaciones
-        /*
-        if (!dato['detallesbien']) {
-          estado = 'ERROR!'
-          mensaje = 'CAPTURAR EL DETALLE DE LAS MERCANCIAS PARA CARGA:' + dato.ttipocarga + ' MARCA:' + dato.tmarcas;
-          //console.log('Error')
-        }
-        */
-
-        // Validar el detalle
         if (estado == 'ERROR!') {
 
           let alerta: any = {};
@@ -1163,28 +1177,28 @@ export class NotificamanifiestoComponent implements OnInit {
         //Datos del usuaro por [local storage]
         let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
-
-        datosManifiesto = {
-          ecliente: datos.ecliente,
-          edireccion: datos.edireccion,
-          emetodopago: datos.emetodopago,
-          ebanco: datos.ebanco,
-          ecfdi: datos.ecfdi,
-          ecuenta: datos.ecuenta,
-          tmoneda: datos.tmoneda,
-          ttiposolicitud: 'ENTRADA',
-          tcorreo: datos.tcorreo,
-          ttelefono: datos.ttelefono,
-          treferencia: datos.treferencia,
-          fhfechaservicio: datos.fhfechaservicio,
-          tobservaciones: datos.tobservaciones,
-          ecodusuario: datosUsuario.ecodusuario,
-          bienes: listaCarga
-        }
-
-
-        datosParametros = { orden: datosManifiesto }
-
+        /*
+          datosManifiesto = {
+            ecliente: this.FormSolicitudEntrada.value.ecliente,
+            edireccion: this.FormSolicitudEntrada.value.edireccion,
+            emetodopago: this.FormSolicitudEntrada.value.emetodopago,
+            ebanco: this.FormSolicitudEntrada.value.ebanco,
+            ecfdi: this.FormSolicitudEntrada.value.ecfdi,
+            ecuenta: this.FormSolicitudEntrada.value.ecuenta,
+            tmoneda: this.FormSolicitudEntrada.value.tmoneda,
+            ttiposolicitud: 'ENTRADA',
+            tcorreo: this.FormSolicitudEntrada.value.tcorreo,
+            ttelefono: this.FormSolicitudEntrada.value.ttelefono,
+            treferencia: this.FormSolicitudEntrada.value.treferencia,
+            fhfechaservicio: this.FormSolicitudEntrada.value.fhfechaservicio,
+            tobservaciones: this.FormSolicitudEntrada.value.tobservaciones,
+            ecodusuario: datosUsuario.ecodusuario,
+            bienes: listaCarga
+          }
+  
+  
+          datosParametros = { orden: datosManifiesto }
+     */
 
 
         let alerta: any = {};
@@ -1197,12 +1211,12 @@ export class NotificamanifiestoComponent implements OnInit {
         this.alertaConfirm(alerta, (confirmed: boolean) => {
           if (confirmed == true) {
             this.enotificarManifiesto(datosParametros);
-            // //console.log(datosParametros)
           }
         });
 
       }
     }
+
 
   }
 

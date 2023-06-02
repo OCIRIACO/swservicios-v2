@@ -20,7 +20,9 @@
       <div class="demo-btn-group">
         <button class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
             class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-        <button class="btn btn-xs btn-primary"><i class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+        <!--<button class="btn btn-xs btn-primary"><i class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>-->
+        <button type="submit" class="btn btn-xs btn-primary btn-brand-02" (click)="e_guardar()"><i
+            class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
       </div>
     </div>
 
@@ -34,14 +36,14 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>RFC</mat-label>
-          <input type="text" formControlName="trfc" name="trfc" matInput [formControl]="myControl"
-            [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" class="full-width" [displayWith]="AutoCompleteDisplay">
+          <input type="text"  matInput [formControl]="myControl" formControlName="ecliente" 
+            [matAutocomplete]="auto" required >
+          <mat-autocomplete #auto="matAutocomplete"  [displayWith]="AutoCompleteDisplay">
             <mat-option (click)="OnHumanSelected(dato)" *ngFor="let dato of filteredOptions  | async " [value]="dato">
               {{dato.trfc}}
             </mat-option>
           </mat-autocomplete>
-          <mat-error *ngIf="FormSolicitudEntrada.controls['trfc'].errors?.required">RFC es requerido</mat-error>
+          <mat-error *ngIf="FormSolicitudEntrada.controls['ecliente'].errors!.required">RFC es requerido</mat-error>
         </mat-form-field>
 
         <!--<div class="form-group">
@@ -63,7 +65,7 @@
       <div class="col-sm-3">
         <mat-form-field class="full-width">
           <mat-label>Dirección</mat-label>
-          <mat-select formControlName="edireccion" name="edireccion">
+          <mat-select formControlName="edireccion" name="edireccion" required>
             <mat-option>SELECCIONAR</mat-option>
             <mat-option *ngFor="let dato of datosDirecciones" [value]="dato.edireccion">
               {{dato.tcalle}},{{dato.tcolonia}}
@@ -97,7 +99,7 @@
       <div class="col-md-2">
         <mat-form-field class="full-width">
           <mat-label>Forma de pago</mat-label>
-          <mat-select formControlName="emetodopago" name="emetodopago">
+          <mat-select formControlName="emetodopago" name="emetodopago" required>
             <mat-option>SELECCIONAR</mat-option>
             <mat-option *ngFor="let formaPago of datosMetodoPago" [value]="formaPago.emetodopago">
               {{formaPago.tdescripcion}}
@@ -120,7 +122,7 @@
       <div class="col-md-2">
         <mat-form-field class="full-width">
           <mat-label>Banco</mat-label>
-          <mat-select formControlName="ebanco" name="ebanco">
+          <mat-select formControlName="ebanco" name="ebanco" required>
             <mat-option>SELECCIONAR</mat-option>
             <mat-option *ngFor="let banco of datosBancos" [value]="banco.ebanco">
               {{banco.tbanco}}
@@ -134,7 +136,7 @@
       <div class="col-md-2">
         <mat-form-field class="full-width">
           <mat-label>CFDI</mat-label>
-          <mat-select formControlName="ecfdi" name="ecfdi">
+          <mat-select formControlName="ecfdi" name="ecfdi" required>
             <mat-option>SELECCIONAR</mat-option>
             <mat-option *ngFor="let usoCfdi of datosCfdi" [value]="usoCfdi.ecfdi">
               {{usoCfdi.tdescripcion}}
@@ -149,7 +151,7 @@
         <mat-form-field class="full-width">
           <mat-label>Cuenta</mat-label>
           <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4"
-            formControlName="ecuenta" name="ecuenta" size="4">
+            formControlName="ecuenta" name="ecuenta" size="4" required>
           <!--<mat-error *ngIf="formSolicitud.submitted">Cuenta es requerido</mat-error>-->
           <mat-error *ngIf="FormSolicitudEntrada.controls['ecuenta'].errors?.required">Cuenta es requerido</mat-error>
 
@@ -158,7 +160,7 @@
       <div class="col-md-2">
         <mat-form-field class="full-width">
           <mat-label>Moneda</mat-label>
-          <mat-select formControlName="tmoneda" name="tmoneda">
+          <mat-select formControlName="tmoneda" name="tmoneda" required>
             <mat-option>SELECCIONAR</mat-option>
             <mat-option value="MXN">PESO</mat-option>
             <mat-option value="USD">DOLAR</mat-option>
@@ -181,22 +183,19 @@
       <div class="col-md-3">
         <mat-form-field class="full-width">
           <mat-label>Fecha de servicio</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fhfechaservicio" name="fhfechaservicio">
+          <input matInput [matDatepicker]="picker" formControlName="fhfechaservicio" name="fhfechaservicio" required>
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="FormSolicitudEntrada.controls['fhfechaservicio'].errors?.required">Fecha servicio es
             requerido</mat-error>
-
         </mat-form-field>
-
-
       </div>
       <div class="col-md-3">
         <mat-form-field class="full-width">
           <mat-label>Correo</mat-label>
           <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="256"
-            formControlName="tcorreo" name="tcorreo">
+            formControlName="tcorreo" name="tcorreo" required>
           <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
             es
             requerido</mat-error>-->
@@ -208,7 +207,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width">
           <mat-label>Teléfono</mat-label>
-          <input matInput placeholder="" maxlength="10" formControlName="ttelefono" name="ttelefono">
+          <input matInput placeholder="" maxlength="10" formControlName="ttelefono" name="ttelefono" required>
           <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
             es
             requerido</mat-error>-->
@@ -223,7 +222,7 @@
         <mat-form-field class="full-width">
           <mat-label>Referencia</mat-label>
           <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="10"
-            formControlName="ttelefono" name="treferencia">
+            formControlName="treferencia" name="treferencia">
         </mat-form-field>
       </div>
     </div>
@@ -563,7 +562,7 @@
 
       <!--Detalle(s)-->
       <div *ngIf="divMercancia" class="col-sm-12">
-        <form [formGroup]="FormDatosDetalleBien">
+        <form [formGroup]="FormDatosDetallesBien">
           <div class='row'>
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)</h6>
@@ -604,6 +603,14 @@
               <h6 class="mt-3 mb-2 text-primary">+ Detalle(s) mercancia(s)</h6>
             </div>
           </div>
+
+          <div class="row">
+            <div class='col-md-3 col-xs-3'>
+              <input class="form-control form-control-sm" id="econtadorRow" name="econtadorRow"
+                formControlName="econtadorRow" size="30" type="text" />
+            </div>
+          </div>
+
           <div class='row'>
 
             <!--<div class='col-xl-1' *ngIf="divDetalleBien">
@@ -620,7 +627,7 @@
                 <mat-label>Factura</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="tfactura" name="tfactura" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['tfactura'].errors?.required">Factura es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['tfactura'].errors?.required">Factura es
                   requerido</mat-error>
               </mat-form-field>
               <!--<div class='form-group'>
@@ -638,7 +645,7 @@
                 <mat-label>Marcas</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" formControlName="tmarcas"
                   name="tmarcas" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['tmarcas'].errors?.required">Marca es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['tmarcas'].errors?.required">Marca es
                   requerido</mat-error>
               </mat-form-field>
               <!--<div class='form-group'>
@@ -656,7 +663,7 @@
                 <mat-label>Descripción</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="tdescripcion" name="tdescripcion" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['tdescripcion'].errors?.required">Descripción es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['tdescripcion'].errors?.required">Descripción es
                   requerido</mat-error>
               </mat-form-field>
 
@@ -675,9 +682,12 @@
                 <mat-label>Bultos</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="ecantidad" name="ecantidad" required>
-                  <mat-error *ngIf="FormDatosDetalleBien.controls['ecantidad'].errors?.required">Cantidad es requerido</mat-error>
-                  <mat-error *ngIf="FormDatosDetalleBien.controls['ecantidad'].errors?.['number']">Cantidad valor numerico!</mat-error>
-                  <mat-error *ngIf="FormDatosDetalleBien.controls['ecantidad'].errors?.['precision']">Cantidad maximo 2 decimales numerico!</mat-error>
+                <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.required">Cantidad es
+                  requerido</mat-error>
+                <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['number']">Cantidad valor
+                  numerico!</mat-error>
+                <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['precision']">Cantidad maximo 2
+                  decimales numerico!</mat-error>
 
               </mat-form-field>
               <!--<div class='form-group'>
@@ -701,11 +711,12 @@
                 <mat-label>Peso Bruto</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="epesobruto" name="epesobruto" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesobruto'].errors?.required">Peso bruto es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.required">Peso bruto es
                   requerido</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
                   numerico!</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesobruto'].errors?.['precision']">Peso bruto maximo 2
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['precision']">Peso bruto maximo
+                  2
                   decimales</mat-error>
               </mat-form-field>
               <!--<div class='form-group'>
@@ -727,11 +738,11 @@
                 <mat-label>Peso neto</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="epesoneto" name="epesoneto" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesoneto'].errors?.required">Peso neto es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.required">Peso neto es
                   requerid</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesoneto'].errors?.['number']">Peso neto valor
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['number']">Peso neto valor
                   numerico!</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['epesoneto'].errors?.['precision']">Peso neto maximo 2
+                <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['precision']">Peso neto maximo 2
                   decimales numerico!</mat-error>
               </mat-form-field>
               <!--<div class='form-group'>
@@ -752,11 +763,11 @@
                 <mat-label>Volumen</mat-label>
                 <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                   formControlName="evolumen" name="evolumen" required>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['evolumen'].errors?.required">Volumen es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.required">Volumen es
                   requerido</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['evolumen'].errors?.['number']">Volumen valor
+                <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['number']">Volumen valor
                   numerico!</mat-error>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['evolumen'].errors?.['precision']">Volumen maximo 2
+                <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['precision']">Volumen maximo 2
                   decimales
                   numerico!</mat-error>
               </mat-form-field>
@@ -783,7 +794,7 @@
                     {{dato.tnombre}}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="FormDatosDetalleBien.controls['ecodembalaje'].errors?.required">Embalaje es
+                <mat-error *ngIf="FormDatosDetallesBien.controls['ecodembalaje'].errors?.required">Embalaje es
                   requerido</mat-error>
               </mat-form-field>
               <!--<div class='form-group'>
@@ -808,9 +819,9 @@
             <div class='col-xl-1'>
               <div class='form-group'>
                 <button type="submit" class="btn btn-xs btn-primary btn-brand-02" (click)="e_agregarDetalleBien()"><i
-                  class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
+                    class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
                 <!--<button type="button" class="btn btn-xs btn-primary btn-brand-02"
-                  (click)="e_agregarDetalleBien(FormDatosDetalleBien.value)"><i
+                  (click)="e_agregarDetalleBien(FormDatosDetallesBien.value)"><i
                     class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
               </div>
             </div>
@@ -828,7 +839,7 @@
                   <th scope="col">Peso bruto</th>
                   <th scope="col">Peso neto</th>
                   <th scope="col">Volumen</th>
-                  <th scope="col">Embaljes</th>
+                  <th scope="col">Embalajes</th>
                 </tr>
                 <tbody>
                   <tr *ngFor="let dato of  listDetallesBien; let i = index">
@@ -839,7 +850,7 @@
                         class="btn btn-xs btn-primary btn-brand-02"><i
                           class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button></td>
                     <td> {{i+ 1 }}</td>
-                    <td> {{dato.tfacturas}}</td>
+                    <td> {{dato.tfactura}}</td>
                     <td> {{dato.tmarcas}}</td>
                     <td> {{dato.tdescripcion}}</td>
                     <td> {{dato.ecantidad}}</td>

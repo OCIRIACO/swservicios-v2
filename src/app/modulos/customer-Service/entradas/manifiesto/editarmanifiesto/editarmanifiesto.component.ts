@@ -909,7 +909,7 @@ export class EditarmanifiestoComponent implements OnInit {
         //console.log('Actualizando...');
 
         this.listDetallesBien[dato.idSequenceDetalleBien].edetalleguia = datosDetalleBien.edetalleguia;
-        this.listDetallesBien[dato.idSequenceDetalleBien].tfacturas = datosDetalleBien.tfacturas;
+        this.listDetallesBien[dato.idSequenceDetalleBien].tfactura = datosDetalleBien.tfacturas;
         this.listDetallesBien[dato.idSequenceDetalleBien].tmarcas = datosDetalleBien.tmarcas;
         this.listDetallesBien[dato.idSequenceDetalleBien].tdescripcion = datosDetalleBien.tdescripcion;
         this.listDetallesBien[dato.idSequenceDetalleBien].ecantidad = datosDetalleBien.ecantidad;

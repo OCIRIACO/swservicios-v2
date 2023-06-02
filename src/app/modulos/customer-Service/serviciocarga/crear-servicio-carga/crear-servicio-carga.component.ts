@@ -718,7 +718,7 @@ export class CrearServicioCargaComponent implements OnInit {
       if (Boolean(this.listDetallesBien[dato.idSequenceDetalleBien]) == true) {
         ////console.log('Actualizando...');
 
-        this.listDetallesBien[dato.idSequenceDetalleBien].tfacturas = datosDetalleBien.tfacturas;
+        this.listDetallesBien[dato.idSequenceDetalleBien].tfactura = datosDetalleBien.tfacturas;
         this.listDetallesBien[dato.idSequenceDetalleBien].tmarcas = datosDetalleBien.tmarcas;
         this.listDetallesBien[dato.idSequenceDetalleBien].tdescripcion = datosDetalleBien.tdescripcion;
         this.listDetallesBien[dato.idSequenceDetalleBien].ecantidad = datosDetalleBien.ecantidad;
