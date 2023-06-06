@@ -21,7 +21,8 @@
       "dom"
     ],
     "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

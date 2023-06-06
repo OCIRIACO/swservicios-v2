@@ -34,19 +34,19 @@ export interface IparametrosEditar {
 
 export interface Imanifiesto {
     ecliente:number,
-    edireccion:number,
-    emetodopago:number,
-    ebanco: number,
-    ecfdi:number,
-    ecuenta:number,
-    tmoneda:string,
-    ttiposolicitud: string;
-    tcorreo: string;
-    ttelefono: string
-    treferencia: string
-    fhfechaservicio:string
-    tobservaciones:string
-    ecodusuario: number
+    edireccion:number ,
+    emetodopago:number  ,
+    ebanco: number  ,
+    ecfdi:number  ,
+    ecuenta?:number  ,
+    tmoneda:string  ,
+    ttiposolicitud: string  ;
+    tcorreo: string  ;
+    ttelefono: string  ,
+    treferencia: string  ,
+    fhfechaservicio:string  ,
+    tobservaciones:string  ,
+    ecodusuario: number  ,
     bienes: Array<Imercancias>
 }
 
@@ -70,7 +70,6 @@ export interface Imercancias {
 
 
 }
-
 
 export interface Idetallemercancias {
     tfactura: string,
