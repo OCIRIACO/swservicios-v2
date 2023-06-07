@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -37,7 +40,7 @@
                     <div class="btn-toolbar" role="group"  >
 
                         <div class="btn-group mr-1" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" [disabled]="lblestatus == 'RECHAZADA'"
+                            <button mat-raised-button color="primary" [disabled]="lblestatus == 'RECHAZADA'"
                                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
                                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : 'block' "
                                 [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' "
@@ -45,12 +48,12 @@
                         </div>
 
                         <div class="btn-group mr-1" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()"><i
+                            <button mat-raised-button color="primary" (click)="e_consulta()"><i
                                     class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
                         </div>
 
                         <div class="btn-group ml-5" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" (click)="e_autorizar()"
+                            <button mat-raised-button color="primary" (click)="e_autorizar()"
                                 [disabled]="lblestatus == 'AUTORIZADA'"
                                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : 'block' "
                                 [style.cursor]=" lblestatus == 'AUTORIZADA' ? 'not-allowed' : '' "
@@ -58,7 +61,7 @@
                                 <i class="fas fa-check mg-r-5 fa-1x"></i>Autorizar solicitud</button>
                         </div>
                         <div class="btn-group ml-1" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" (click)="e_rechazar()"
+                            <button mat-raised-button color="primary" (click)="e_rechazar()"
                                 [disabled]="lblestatus == 'RECHAZADA'"
                                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : 'block' "
                                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
@@ -67,7 +70,7 @@
                         </div>
 
                         <div class="btn-group ml-1" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" (click)="e_cancelar()"
+                            <button mat-raised-button color="primary" (click)="e_cancelar()"
                                 [disabled]="lblestatus == 'RECHAZADA'"
                                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : 'block' "
                                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "

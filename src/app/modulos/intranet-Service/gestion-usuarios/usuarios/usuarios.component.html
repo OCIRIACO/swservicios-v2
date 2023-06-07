@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -30,7 +33,7 @@
                     </div>
 
                     <div class="btn-group mr-2" role="group">
-                        <button type="button" class="btn btn-xs btn-primary"  (click)="e_nuevo()" ><i class="fas fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+                        <button mat-raised-button color="primary"  (click)="e_nuevo()" ><i class="fas fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
                     </div>
                 </div>
             </div>

@@ -53,7 +53,7 @@ export class NotificamanifiestoComponent implements OnInit {
   //changeCountMercancia = 0;
 
   //Otros's
-  bienes: any;
+  bienes: any = [];
   carga: any;
   datosBien: any = {};
   listDetallesBienNew: any;
@@ -861,9 +861,9 @@ export class NotificamanifiestoComponent implements OnInit {
         console.log(JSON.stringify(this.datosManifiesto));
 
 
-        //datosParametros = { orden: datosManifiesto }
+        datosParametros = { orden: this.datosManifiesto }
 
-        /*
+        
         
                 let alerta: any = {};
         
@@ -878,7 +878,7 @@ export class NotificamanifiestoComponent implements OnInit {
                   }
                 });
         
-        */
+        
 
       }
     }

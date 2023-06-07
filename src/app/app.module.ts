@@ -101,6 +101,10 @@ import { MatCardModule } from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {NgFor, AsyncPipe} from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+ 
 
 @NgModule({
   declarations: [
@@ -202,6 +206,9 @@ import {NgFor, AsyncPipe} from '@angular/common';
     MatCardModule,
     MatAutocompleteModule,
     MatFormFieldModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatProgressBarModule,
     NgFor,
     AsyncPipe
   ],

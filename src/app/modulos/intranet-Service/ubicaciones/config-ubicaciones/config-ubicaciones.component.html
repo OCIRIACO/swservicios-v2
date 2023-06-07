@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -30,8 +33,8 @@
                             <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary"><i
                                     class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
                         </div>
-                        <div class="demo-btn-group mr-2">
-                            <button type="button" class="btn btn-xs btn-primary"
+                        <div class="button-row mr-2">
+                            <button mat-raised-button color="primary"
                                 (click)="e_guardar(FormUbicaciones.value)"><i
                                     class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
                         </div>
@@ -54,8 +57,8 @@
                                 <!--botones-->
                                 <!--<div class="row">
                                     <div class='component mg-b-20'>
-                                        <div class="demo-btn-group">
-                                            <button type="button" class="btn btn-xs btn-primary"
+                                        <div class="button-row">
+                                            <button mat-raised-button color="primary"
                                                 (click)="e_guardar(FormUbicaciones.value)"><i
                                                     class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
                                         </div>
@@ -173,11 +176,11 @@
                                         </tr>
                                         <tbody>
                                             <tr *ngFor="let dato of datosConsultaDetUbicaciones; let i = index">
-                                                <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                <td><button type="button" mat-raised-button color="primary"
                                                         (click)="e_editar(dato)"><i
                                                             class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
                                                 </td>
-                                                <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                <td><button type="button" mat-raised-button color="primary"
                                                         (click)="e_eliminar(dato)"><i
                                                             class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
                                                 </td>

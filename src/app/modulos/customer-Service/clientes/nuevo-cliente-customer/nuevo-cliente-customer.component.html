@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -25,11 +28,11 @@
         <div class="card-body">
 
             <div class="component mb-2">
-                <div class="demo-btn-group">
-                    <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
+                <div class="button-row">
+                    <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><i
                         class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
                         
-                    <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormCliente.value)"><i
+                    <button mat-raised-button color="primary" (click)="e_guardar(FormCliente.value)"><i
                             class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
                 </div>
             </div>
@@ -165,7 +168,7 @@
                     </div>
                     <div class="col-sm-1 ">
                         <div class='form-group mt-4'>
-                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                            <button type="button" mat-raised-button color="primary"
                                 (click)="e_agregarDireccion(FormDireccion.value)"><i
                                     class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
                         </div>
@@ -188,10 +191,10 @@
                     </tr>
                     <tbody>
                         <tr *ngFor="let dato of arrdatosDireccion; let i = index">
-                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                            <td><button type="button" mat-raised-button color="primary"
                                     (click)="e_eliminarDireccion(dato)"><i
                                         class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button></td>
-                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                            <td><button type="button" mat-raised-button color="primary"
                                     (click)="e_editarDireccion(dato)"><i
                                         class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
                             </td>

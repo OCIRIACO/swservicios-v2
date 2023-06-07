@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -24,12 +27,12 @@
     </div><!-- card-header -->
     <div class="card-body">
       <div class="component mg-b-15">
-        <div class="demo-btn-group">
-          <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitudServicios.value)"><i
+        <div class="button-row">
+          <button mat-raised-button color="primary" (click)="e_guardar(FormSolicitudServicios.value)"><i
               class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
-          <button type="button" class="btn btn-xs btn-primary" (click)="e_consultar()"><i
+          <button mat-raised-button color="primary" (click)="e_consultar()"><i
               class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-          <button type="button" class="btn btn-xs btn-primary" (click)="e_nuevo()"><i
+          <button mat-raised-button color="primary" (click)="e_nuevo()"><i
               class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
         </div>
       </div>
@@ -294,7 +297,7 @@
             </div>
             <div class="col-sm-2 mt-4">
               <div class="form-group mt-1">
-                <button type="button" class="btn btn-xs btn-primary" (click)="e_agregarServicio(FormServicios.value)"><i
+                <button mat-raised-button color="primary" (click)="e_agregarServicio(FormServicios.value)"><i
                     class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
               </div>
             </div>
@@ -316,7 +319,7 @@
                 </tr>
                 <tbody>
                   <tr *ngFor="let dato of servicios; let i = index">
-                    <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                    <td> <button type="button" mat-raised-button color="primary"
                         (click)="e_eliminar_servicio(dato)"><i
                           class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
                     <td> {{ i + 1}} </td>
@@ -404,7 +407,7 @@
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of arrDatosBienes; let i = index">
-                        <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                        <td> <button type="button" mat-raised-button color="primary"
                             (click)="e_agregar(dato)"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.ttipocarga }}</td>
@@ -446,7 +449,7 @@
               </tr>
               <tbody>
                 <tr *ngFor="let dato of bienesServicios; let i = index">
-                  <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02" (click)="e_eliminar(dato)"><i
+                  <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><i
                         class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
                   <td> {{ i + 1}} </td>
                   <td> {{ dato.eguia }}</td>

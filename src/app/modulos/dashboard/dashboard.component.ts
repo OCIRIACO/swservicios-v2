@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ApiServiceMenu } from 'src/app/serviciosRest/Intranet/menu/api.service.menu'
 import { classApiLogin } from '../../serviciosRest/api/api.service.login'
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { GlobalConstants } from 'src/app/modelos/global';
 import { serviceCatalogos } from 'src/app/service/service.catalogos'
 import { Router } from '@angular/router';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 
 @Component({
@@ -28,13 +29,26 @@ export class DashboardComponent implements OnInit {
   opCustumer: Array<any> = []
   opIntranet: Array<any> = []
 
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
+
+
   constructor(
     private dataService: classApiLogin,
     private serviceDatosUsuario: serviceDatosUsuario,
     private apiMenu: ApiServiceMenu,
     private serviceCatalogos: serviceCatalogos,
-    private router: Router
-  ) { }
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+  ) { 
+
+    this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    // tslint:disable-next-line: deprecation
+    this.mobileQuery.addListener(this._mobileQueryListener);
+
+  }
 
   ngOnInit(): void {
     //console.log( localStorage.getItem("token") );
@@ -83,6 +97,14 @@ export class DashboardComponent implements OnInit {
 
 
 
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectorRef.detectChanges();
+  }
+  
 
   e_cerrarSesion() {
     this.dataService.cerrarSesion();

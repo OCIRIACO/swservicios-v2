@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -29,7 +32,7 @@
                 <div class='component mg-b-10'>
                     <div class="btn-toolbar" role="group">
                         <div class="btn-group mr-5" role="group">
-                            <button type="button" class="btn btn-xs btn-primary" (click)="e_regresar()"><i
+                            <button mat-raised-button color="primary" (click)="e_regresar()"><i
                                     class=" fas fa-outdent mg-r-5 fa-1x "></i>Regresar</button>
                         </div>
                     </div>
@@ -48,7 +51,7 @@
                         <div class='component mg-b-20'>
                             <div class="btn-toolbar" role="group">
                                 <div class="btn-group mr-5" role="group">
-                                    <button type="button" class="btn btn-xs btn-primary" 
+                                    <button mat-raised-button color="primary" 
                                     (click)="e_agregarClienteDirecto(formClienteDirecto)">
                                         <i class="fas fa-plus mg-r-5 fa-1x"></i>Agregar
                                         Cliente(s)</button>
@@ -75,7 +78,7 @@
                     <div class='component mg-b-20'>
                         <div class="btn-toolbar" role="group">
                             <div class="btn-group mr-5" role="group">
-                                <button type="button" class="btn btn-xs btn-primary" (click)="e_eliminarClienteDirecto(formClienteAsignados)" >
+                                <button mat-raised-button color="primary" (click)="e_eliminarClienteDirecto(formClienteAsignados)" >
                                     <i class="fas fa-minus mg-r-5 fa-1x"></i>
                                     Eliminar Cliente(s)</button>
                             </div>

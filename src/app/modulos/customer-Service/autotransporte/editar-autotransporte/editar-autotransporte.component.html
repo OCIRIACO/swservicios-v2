@@ -1,4 +1,7 @@
-<div class="content-header">
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
     <div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -32,15 +35,15 @@
               </div>
 
             <div class="component mb-2">
-                <div class="demo-btn-group">
-                    <button type="button" class="btn btn-xs btn-primary" (click)="e_guardar(FormSolicitud.value)"
+                <div class="button-row">
+                    <button mat-raised-button color="primary" (click)="e_guardar(FormSolicitud.value)"
                         title="Guardar" [disabled]="tingresoTotal == 'SI'"
                         [style.cursor]=" tingresoTotal == 'SI' ? 'not-allowed' : '' "
                         [style.pointer-events]=" tingresoTotal == 'SI' ? 'all !important' : '' ">
-                        <i class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
-                    <button type="button" class="btn btn-xs btn-primary" (click)="e_consulta()" title="Consultar"><i
+                        Guardar</button>
+                    <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><i
                             class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-                    <button type="button" class="btn btn-xs btn-primary" (click)="e_nuevo()"><i
+                    <button mat-raised-button color="primary" (click)="e_nuevo()"><i
                             class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
 
                 </div>
@@ -299,7 +302,7 @@
                         </div>
                         <div class="col-sm-2 mt-4">
                             <div class="form-group mt-1">
-                                <button type="button" class="btn btn-xs btn-primary"
+                                <button mat-raised-button color="primary"
                                     (click)="e_agregarServicio(FormServicios.value)"><i
                                         class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
                             </div>
@@ -323,7 +326,7 @@
                                 </tr>
                                 <tbody>
                                     <tr *ngFor="let dato of servicios; let i = index">
-                                        <td> <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                        <td> <button type="button" mat-raised-button color="primary"
                                                 (click)="e_eliminar_servicio(dato)"><i
                                                     class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
                                         <td> {{ i + 1}} </td>
@@ -597,9 +600,9 @@
                                     <div class='col-sm-1'>
                                         <div class='form-group'>
                                             <br>
-                                            <!--<button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                            <!--<button type="button" mat-raised-button color="primary"
                         (click)="e_datosBien(FormDatosBien.value)">Agregar</button>-->
-                                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                            <button type="button" mat-raised-button color="primary"
                                                 (click)="e_agregarBien(FormDatosBien.value)"
                                                 [disabled]="tingresoTotal == 'SI'"
                                                 [style.cursor]=" tingresoTotal == 'SI' ? 'not-allowed' : '' "
@@ -628,7 +631,7 @@
                                     <tbody>
                                         <tr *ngFor="let dato of listDatosCarga; let i = index">
                                             <td>
-                                                <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                <button type="button" mat-raised-button color="primary"
                                                     (click)="e_eliminarBien(dato)" [disabled]="dato.texistencia == 'SI'"
                                                     title="Eliminar"
                                                     [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
@@ -636,7 +639,7 @@
                                                         class="fas fa-trash-alt mg-r-5 fa-1.5x"></i></button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                                <button type="button" mat-raised-button color="primary"
                                                     (click)="e_editarBien(dato)" [disabled]="dato.texistencia == 'SI'"
                                                     title="Editar"
                                                     [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
@@ -659,7 +662,7 @@
                                             <td>{{dato.epesoneto}}</td>
                                             <td>{{dato.epesobruto}}</td>
                                             <td>{{dato.ebultos}}</td>
-                                            <td><button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                            <td><button type="button" mat-raised-button color="primary"
                                                     (click)="e_mercancias(dato)">Mercancias
                                                     [ + ]</button></td>
                                         </tr>
@@ -706,7 +709,7 @@
                                                     <td>{{datosBien.epesobruto}}</td>
                                                     <td>{{datosBien.ebultos}}</td>
                                                     <td><button type="button"
-                                                            class="btn btn-xs btn-primary btn-brand-02"
+                                                            mat-raised-button color="primary"
                                                             (click)="e_carga(datosBien)">Mercancias
                                                             [ - ]</button></td>
                                                 </tr>
@@ -901,7 +904,7 @@
                                     <div class='col-xl-1'>
                                         <div class='form-group'>
                                             <br>
-                                            <button type="button" class="btn btn-xs btn-primary btn-brand-02"
+                                            <button type="button" mat-raised-button color="primary"
                                                 (click)="e_agregarDetalleBien(FormDatosDetalleBien.value)"><i
                                                     class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
                                         </div>
@@ -926,14 +929,14 @@
                                     <tbody>
                                         <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                             <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
-                                                    class="btn btn-xs btn-primary btn-brand-02" title="Eliminar"
+                                                    mat-raised-button color="primary" title="Eliminar"
                                                     [disabled]="texistencia == 'SI'"
                                                     [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
                                                     [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i
                                                         class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
                                             </td>
                                             <td><button type="button" (click)="e_editarDetalleBien(dato)"
-                                                    class="btn btn-xs btn-primary btn-brand-02" title="Editar"
+                                                    mat-raised-button color="primary" title="Editar"
                                                     [disabled]="texistencia == 'SI'"
                                                     [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
                                                     [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i

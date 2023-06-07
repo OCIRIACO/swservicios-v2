@@ -280,7 +280,10 @@
           </div>
         </div><!-- header-right -->
       </div><!-- header -->
-      <div class="content-header">
+      <div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
+            <div class="content-header">
         <div>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -312,7 +315,7 @@
           <p class="mg-b-25">Bootstrap includes several predefined button styles, each serving its own semantic purpose, with a few extras thrown in for more control.</p>
 
           <div class="card card-body pd-lg-25">
-            <div class="demo-btn-group">
+            <div class="button-row">
               <button type="button" class="btn btn-primary">Primary</button>
               <button type="button" class="btn btn-secondary">Secondary</button>
               <button type="button" class="btn btn-success">Success</button>
@@ -321,7 +324,7 @@
               <button type="button" class="btn btn-info">Info</button>
               <button type="button" class="btn btn-light">Light</button>
               <button type="button" class="btn btn-dark">Dark</button>
-            </div><!-- demo-btn-group -->
+            </div><!-- button-row -->
           </div>
         </div>
 
@@ -330,7 +333,7 @@
           <p class="mg-b-25">In need of a button, but not the hefty background colors they bring? Replace the default modifier classes with the <code>.btn-outline-*</code> ones to remove all background images and colors on any button.</p>
 
           <div class="card card-body pd-lg-25">
-            <div class="demo-btn-group">
+            <div class="button-row">
               <button type="button" class="btn btn-outline-primary">Primary</button>
               <button type="button" class="btn btn-outline-secondary">Secondary</button>
               <button type="button" class="btn btn-outline-success">Success</button>
@@ -339,7 +342,7 @@
               <button type="button" class="btn btn-outline-info">Info</button>
               <button type="button" class="btn btn-outline-light">Light</button>
               <button type="button" class="btn btn-outline-dark">Dark</button>
-            </div><!-- demo-btn-group -->
+            </div><!-- button-row -->
           </div>
         </div>
 
@@ -348,8 +351,8 @@
           <p class="mg-b-25">Button can have additional sizes like larger or smaller buttons.</p>
 
           <div class="card card-body pd-lg-25">
-            <div class="demo-btn-group">
-              <button type="button" class="btn btn-xs btn-primary">Extra Small</button>
+            <div class="button-row">
+              <button mat-raised-button color="primary">Extra Small</button>
               <button type="button" class="btn btn-sm btn-primary">Small</button>
               <button type="button" class="btn btn-primary">Normal</button>
               <button type="button" class="btn btn-lg btn-primary">Large Button</button>

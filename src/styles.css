@@ -1,173 +1,224 @@
-@import "ag-grid-community/dist/styles/ag-grid.css";
-@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-
-.jstree-default a.jstree-search {
-  color: #e53c35;
-}
-
-
-.chat-item.nav-item.nav-item-v1 {
-  padding: 0px !important;
-}
-
-.nav-link.with-sub.with-sub-v1 {
-  padding: 0px !important;
-}
-
-.nav-link.with-sub.with-sub-v1 {
-  padding: 12px !important;
-}
-
-/*.table-hover>tbody>tr:hover>td,
-.table-hover>tbody>tr:hover>th {
-  background-color: #CFF5FF;
-}*/
-
-.myfooter {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  height: 5.5rem;
-  /* Footer height */
-}
-
-
-hr {
-  margin-top: 0.1rem !important;
-  margin-bottom: 0.1rem !important;
-}
-
-
-#vista_contenedor {
-  display: flex;
-  justify-content: center;
-}
-
-
-/*---------- Estilos de  vista area ------------*/
-.tblBahiaContFila {
-  color: #222;
-  font: 14px Tahoma, Helvetica, Arial, Sans-Serif;
-  text-shadow: 0px 2px 3px #555;
-  text-align: center;
-  vertical-align: middle;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.tblBahiaCont-altura {
-  padding: 1px 1px 1px 1px;
-  height: 142px;
-  width: 85px !important;
-  font: 11px Tahoma, Helvetica, Arial, Sans-Serif;
-  text-align: center;
-  vertical-align: middle;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: bold;
-  position: static;
-}
-
-.tblDatoVistaBien {
-  width: 100%;
-  border: solid white;
-  border-collapse: collapse;
-}
-
-.datosVistaBien {
-  width: 100%;
-}
+.navbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .navbar {
+    z-index: 2;
+  }
+  
+  .navbar-brand {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .navbar-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .navbar-is-mobile .navbar {
+    position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+  }
+  
+  .navbar-sidenav-container {
+    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+             causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+    flex: 1;
+  }
+  
+  .navbar-is-mobile .navbar-sidenav-container {
+    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+             `<body>` to be our scrolling element for mobile layouts. */
+    flex: 1 0 auto;
+  }
+  
+  /*Set sidenav width*/
+  
+  mat-sidenav {
+    min-width: 180px !important;
+    border-right: 1px solid #eee;
+    box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
+    /* background-color:rgb(63, 81, 181); */
+  }
+  
+  /* Set height of wrapper to stop content from moving up & down */
+  
+  .progress-bar-container {
+    height: 5px;
+  }
+  
+  a.mat-list-item.active {
+    background: rgba(0, 0, 0, .04);
+  }
+  
+  #push-bottom {
+    position: absolute;
+    bottom: 0;
+  }
 
 
-.form-group.required .control-label:after {
-  content: "*";
-  color: red;
-}
+  /*---------------------------------------------------*/
 
 
-.required:before {
-  content: "*\00a0" !important;
-  color: red !important;
-}
+  @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-/*------------------------------------------------------------------------*/
-
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
 }
 
-html {
-  height: 100%;
-}
-
-/*body {
-  font-family: 'Segoe UI', sans-serif;
-  ;
-  font-size: 1rem;
-  line-height: 1.6;
-  height: 100%;
-}*/
-
-.wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fafafa;
-}
-
-.login-form {
-  width: 350px;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  padding: 2rem;
-  /*background: #ffffff;*/
-}
-
-.form-input {
-  background: #fafafa;
-  border: 1px solid #eeeeee;
-  padding: 12px;
+.full-width {
   width: 100%;
 }
 
-.form-group {
-  margin-bottom: 1rem;
+.container {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.form-button {
-  background: #e53c35;
-  border: 1px solid #ddd;
-  color: #ffffff;
-  padding: 10px;
-  width: 100%;
-  text-transform: uppercase;
+.spinner {
+  left: 49%;
+  position: fixed !important;
+  top: 15%;
+  z-index: 9999;
 }
 
-.form-button:hover {
-  background: #e53c35;
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.form-footer {
+.text-center {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
 
+.login-container {
+  height: 80vh;
+}
 
-.pull-right {
-  text-align: center;
- }
+.login-actions {
+  margin-left: unset !important;
+}
 
- /*.mydashboar{
-  background-image: url("assets/images/logistico2.jpg");
-  background-size:     cover;                     
-    background-repeat:   no-repeat;
- }*/
+.mat-list-item,
+.mat-menu-item {
+  font-size: 14px !important;
+}
+
+.command-wrapper button {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.mat-dialog-title {
+  margin: 0 !important;
+}
+
+.mat-column-actions {
+  flex: 0 0 60px;
+}
+
+.mat-table .mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.mat-table td.mat-cell a:hover {
+  text-decoration: underline;
+}
+
+.mat-table td.mat-cell:first-child,
+.mat-table td.mat-footer-cell:first-child,
+.mat-table th.mat-header-cell:first-child {
+  padding-left: 20px !important;
+}
+
+.mat-table td.mat-cell:last-child,
+.mat-table td.mat-footer-cell:last-child,
+.mat-table th.mat-header-cell:last-child {
+  padding-right: 10px !important;
+}
+
+.mat-table .mat-cell a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.no-records {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.refresh-button {
+  margin-top: 8px !important;
+}
+
+.no-records .mat-icon {
+  width: 130px;
+  height: 130px;
+  font-size: 130px;
+  color: #c7c7c7;
+}
+
+p .mat-icon {
+  vertical-align: middle;
+}
+
+.mat-slide-toggle.full-width {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.mat-tooltip {
+  font-size: 14px;
+}
+
+.fixed-fab {
+  position: fixed !important;
+  right: 2%;
+  bottom: 3%;
+}
+
+/* Highlight on hover */
+.submitted-timesheet-day:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected),
+/* Highlight */
+.submitted-timesheet-day>div:not(.mat-calendar-body-selected) {
+  border-radius: 999px;
+  background-color: rgba(14, 152, 5, 0.25);
+}
+
+.table-wrapper {
+  overflow: auto;
+  height: calc(100vh - 270px);
+  max-height: 450px;
+  /* padding: 10px 5px; */
+}
+
+.animate {
+  animation-name: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/*----------------------------------------*/
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
