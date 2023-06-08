@@ -20,9 +20,7 @@
       <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
         <section>
           <div class="button-row">
-            <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><i
-                class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-            <!--<button class="btn btn-xs btn-primary">Guardar</button>-->
+            <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar">Consultar</button>
             <button mat-raised-button color="primary">Guardar</button>
           </div>
         </section>
@@ -34,7 +32,6 @@
             <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
           </div>
           <div class="col-sm-3">
-
             <mat-form-field class="example-full-width">
               <mat-label>RFC</mat-label>
               <input type="text" matInput name="cliente" ngModel #cliente="ngModel" [matAutocomplete]="auto" required>
@@ -855,7 +852,7 @@
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of  listDetallesBien; let i = index">
-                        <td><button type="button" (click)="e_eliminarMercancia(dato)" mat-raised-button
+                        <td><button type="button" (click)="e_eliminarDetalleBien(dato)" mat-raised-button
                             color="primary"><i class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button></td>
                         <td><button type="button" (click)="e_editarDetalleBien(dato)" mat-raised-button
                             color="primary"><i class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button></td>
@@ -898,7 +895,6 @@
           </div>
         </div>
       </form>
-
     </mat-card>
   </div>
 </div>

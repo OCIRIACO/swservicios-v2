@@ -333,7 +333,7 @@ export class NotificamanifiestoComponent implements OnInit {
         //this.rowData =  response
 
         this.options = response.data;
-        console.log(this.options);
+        //console.log(this.options);
 
         //Auto complete
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -375,13 +375,7 @@ export class NotificamanifiestoComponent implements OnInit {
   }
 
   AutoCompleteDisplay(item: any) {
-    /*if (item && item.trfc) {
-      return item.trfc.toLowerCase();
-    } else {
-      return item
-    }*/
     return item ? item.trfc : undefined;
-
   }
 
   /// ALERTAS
@@ -672,7 +666,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
   }
 
-  e_eliminarMercancia(dato: any) {
+  e_eliminarDetalleBien(dato: any) {
 
     this.listDetallesBien.forEach((value: any, index: any) => {
       if (value == dato) {
