@@ -19,3 +19,7 @@
 .input-login {
     width: 100%;
   }
+
+mat-card{
+    width: fit-content;
+}

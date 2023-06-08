@@ -89,22 +89,23 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
-import {MatDividerModule} from '@angular/material/divider'; 
-import {MatMenuModule} from '@angular/material/menu'; 
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatSidenavModule} from '@angular/material/sidenav'; 
-import {MatListModule} from '@angular/material/list'; 
-import {MatExpansionModule} from '@angular/material/expansion'; 
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import { MatTableModule } from '@angular/material/table'  
+import {MatDividerModule} from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table'
 import { MatCardModule } from '@angular/material/card';
-import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {NgFor, AsyncPipe} from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from "@angular/material/progress-bar";
- 
+import { MatGridListModule } from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -209,6 +210,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     MatButtonModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatGridListModule,
     NgFor,
     AsyncPipe
   ],
