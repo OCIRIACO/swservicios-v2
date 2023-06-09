@@ -84,11 +84,6 @@ export class EditarmanifiestoComponent implements OnInit {
   datosCfdi: any
   datosTramite: any
 
-  //Submit's
-  //submitted = false;
-  //submitBien = false;
-  //submitDetalleBien = false;
-  //submitGuardar = false;
 
   //Contador rows tables
   contadorRowBien: number = 1;
@@ -101,9 +96,8 @@ export class EditarmanifiestoComponent implements OnInit {
   //Forms's
   FormDatosBien = new FormGroup({
     econtadorRowBien: new FormControl(0, null),
-    //tembalaje: new FormControl('', Validators.required),
+    eguia: new FormControl(0, Validators.required),
     ecodembalaje: new FormControl('', Validators.required),
-    //tnaviera: new FormControl('', Validators.required),
     ecodnaviera: new FormControl('', Validators.required),
     tmarcas: new FormControl('', Validators.required),
     ttipocontenedor: new FormControl('', Validators.required),
@@ -425,24 +419,36 @@ export class EditarmanifiestoComponent implements OnInit {
 
 
       //Detalle(s) Bien(es)
-      let listDetallesBien : any = [];
+      let listDetallesBien: any = [];
       dato.detallesbien.forEach((datoDetalle: any, index: any) => {
 
+        //Nombre embalaje
+        this.datosEmbalaje.forEach((valor: any, index: any) => {
+          if (valor.ecodembalaje == datoDetalle.ecodembalaje) {
+            datoDetalle.tembalaje = valor.tnombre;
+          }
+        });
+
         let datosDetallesBien = {
-                econtadorRow  : this.contadorRowBien,   
-                edetalleguia  : datoDetalle.edetalleguia,                     
-                tfactura      : datoDetalle.tfactura,                    
-                tmarcas       : datoDetalle.tmarcas,                   
-                tdescripcion  : datoDetalle.tdescripcion,                        
-                ecantidad     : datoDetalle.ecantidad,                     
-                epesobruto    : datoDetalle.epesobruto,                      
-                epesoneto     : datoDetalle.epesoneto,                     
-                evolumen      : datoDetalle.evolumen,                    
-                ecodembalaje  : datoDetalle.ecodembalaje,                        
+          econtadorRow: this.contadorRowBien,
+          edetalleguia: datoDetalle.edetalleguia,
+          tfactura: datoDetalle.tfacturas,
+          tmarcas: datoDetalle.tmarcas,
+          tdescripcion: datoDetalle.tdescripcion,
+          ecantidad: datoDetalle.ecantidad,
+          epesobruto: datoDetalle.epesobruto,
+          epesoneto: datoDetalle.epesoneto,
+          evolumen: datoDetalle.evolumen,
+          ecodembalaje: datoDetalle.ecodembalaje,
+          tembalaje: datoDetalle.tembalaje,
+
         };
 
         listDetallesBien.push(datosDetallesBien);
-      
+
+        //Contador
+        this.contadorRowBien++;
+
       })
 
 
@@ -462,7 +468,7 @@ export class EditarmanifiestoComponent implements OnInit {
       });
 
       //Sellos(s)
-      let sellos : any = [];
+      let sellos: any = [];
       dato.sellos.forEach((datosello: any, index: any) => {
         sellos.push(datosello['tsello']);
       });
@@ -490,6 +496,9 @@ export class EditarmanifiestoComponent implements OnInit {
 
       this.bienes.push(bienes);
 
+      //Contador
+      this.contadorRowBien++;
+
     });
 
   }
@@ -510,9 +519,6 @@ export class EditarmanifiestoComponent implements OnInit {
 
   }
 
-  AutoCompleteDisplay(item: any) {
-    return item ? item.trfc : undefined;
-  }
 
   OnHumanSelected(dato: any) {
     console.log('*Dato rfc');
@@ -642,6 +648,8 @@ export class EditarmanifiestoComponent implements OnInit {
 
     //Crear un nuevo identificador row
     this.datosBien.econtadorRowBien = this.contadorRowBien;
+    this.datosBien.eguia = this.FormDatosBien.value.eguia;
+
 
     //Agregar
     this.bienes.push(this.datosBien);
@@ -652,8 +660,9 @@ export class EditarmanifiestoComponent implements OnInit {
     //Reset
     this.FormDatosBien.reset();
 
-    //Nuevo
+    //Reset items
     this.FormDatosBien.get('econtadorRowBien')!.setValue(0);
+    this.FormDatosBien.get('eguia')!.setValue(0);
 
     console.log('*Bienes')
     console.log(this.bienes);
@@ -678,9 +687,8 @@ export class EditarmanifiestoComponent implements OnInit {
     //Item's
     this.FormDatosBien = new FormGroup({
       econtadorRowBien: new FormControl(datos.econtadorRowBien, null),
-      // tembalaje: new FormControl(datos.tembalaje, Validators.required),
+      eguia: new FormControl(datos.eguia, null),
       ecodembalaje: new FormControl(datos.ecodembalaje, Validators.required),
-      // tnaviera: new FormControl(datos.tnaviera, Validators.required),
       ecodnaviera: new FormControl(datos.ecodnaviera, Validators.required),
       tmarcas: new FormControl(datos.tmarcas, Validators.required),
       ttipocontenedor: new FormControl(datos.ttipocontenedor, Validators.required),
@@ -866,7 +874,7 @@ export class EditarmanifiestoComponent implements OnInit {
       console.log('*error');
       return;
     }
-
+    console.log('*Solicitud');
     console.log(solicitud);
 
 
@@ -909,16 +917,16 @@ export class EditarmanifiestoComponent implements OnInit {
           if (dato['detallesbien']) {
             dato['detallesbien'].forEach((datomercancias: any, index: any) => {
               mercancia = {
-                edetalleguia: 0,
-                tfacturas: datomercancias['tfactura'],
-                ecodpropietario: datomercancias['ecodpropietario'],
-                tmarcas: datomercancias['tmarcas'],
-                tdescripcion: datomercancias['tdescripcion'],
-                ecantidad: datomercancias['ecantidad'],
-                epesobruto: datomercancias['epesobruto'],
-                epesoneto: datomercancias['epesoneto'],
-                ecodembalaje: datomercancias['ecodembalaje'],
-                evolumen: datomercancias['evolumen'],
+                edetalleguia: datomercancias.edetalleguia,
+                tfacturas: datomercancias.tfactura,
+                ecodpropietario: datomercancias.ecodpropietario,
+                tmarcas: datomercancias.tmarcas,
+                tdescripcion: datomercancias.tdescripcion,
+                ecantidad: datomercancias.ecantidad,
+                epesobruto: datomercancias.epesobruto,
+                epesoneto: datomercancias.epesoneto,
+                ecodembalaje: datomercancias.ecodembalaje,
+                evolumen: datomercancias.evolumen,
               }
 
               listaMercancias.push(mercancia);
@@ -939,16 +947,16 @@ export class EditarmanifiestoComponent implements OnInit {
           })
 
           carga = {
-            eguia: 0,
-            ttipocarga: dato['ttipocarga'],
-            ttramite: dato['ttramite'],
-            ecodnaviera: dato['ecodnaviera'],
-            ttipocontenedor: dato['ttipocontenedor'],
-            ecodembalaje: dato['ecodembalaje'],
-            tmarcas: dato['tmarcas'],
-            epesobruto: dato['epesobruto'],
-            epesoneto: dato['epesoneto'],
-            ecantidad: dato['ebultos'],
+            eguia: dato.eguia,
+            ttipocarga: dato.ttipocarga,
+            ttramite: dato.ttramite,
+            ecodnaviera: dato.ecodnaviera,
+            ttipocontenedor: dato.ttipocontenedor,
+            ecodembalaje: dato.ecodembalaje,
+            tmarcas: dato.tmarcas,
+            epesobruto: dato.epesobruto,
+            epesoneto: dato.epesoneto,
+            ecantidad: dato.ebultos,
             sellos: listaSellos,
             detallesbien: listaMercancias
           }
@@ -964,9 +972,19 @@ export class EditarmanifiestoComponent implements OnInit {
         //Datos del usuaro por [local storage]
         let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+        //Parche buscar el id del cliente por el RFC
+        this.datosClientes.forEach((dato: any, valor: any) => {
+      
+
+          if (dato.trfc == solicitud.value.cliente) {
+            solicitud.value.cliente = dato.ecliente;
+          }
+        })
+
+
         this.datosManifiesto = {
-          etransaccion: 0,
-          ecliente: solicitud.value.cliente.ecliente,
+          etransaccion: this.etransaccion,
+          ecliente: solicitud.value.cliente,
           edireccion: solicitud.value.edireccion,
           emetodopago: solicitud.value.emetodopago,
           ebanco: solicitud.value.ebanco,
@@ -1003,6 +1021,7 @@ export class EditarmanifiestoComponent implements OnInit {
         this.alertaConfirm(alerta, (confirmed: boolean) => {
           if (confirmed == true) {
             this.enotificarManifiesto(datosParametros);
+            //console.log(JSON.stringify(this.datosManifiesto));
           }
         });
 
@@ -1019,7 +1038,7 @@ export class EditarmanifiestoComponent implements OnInit {
     let text = '';
     let success: boolean
 
-    this.apiManifiesto.postNotifcaManifiesto(datos).subscribe(
+    this.apiManifiesto.postRectificaUnManifiesto(datos).subscribe(
       (response) => {
 
         if (response.data) {
@@ -1031,6 +1050,15 @@ export class EditarmanifiestoComponent implements OnInit {
             }
           })
         }
+
+        if (response.errors) {
+          success = false
+          response.errors.forEach((dato: any, index: any) => {
+            //console.log(dato.attributes.text)
+            text += dato.attributes.text + '\n'
+          })
+        }
+
 
         alerta['text'] = text;
         alerta['tipo'] = (success == true ? "success" : "error");

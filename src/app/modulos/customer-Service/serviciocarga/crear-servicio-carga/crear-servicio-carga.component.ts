@@ -7,7 +7,7 @@ import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.c
 import { Idetallemercancias, Imanifiesto, Imercancias, Iparametros, Isellos } from 'src/app/modelos/solicitudEntradas/notificamanifiesto.interfase';
 import { IdatosMercancia } from 'src/app/modelos/datosmercancias.interfase';
 import { Router } from '@angular/router';
-import { FormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validator, Validators, FormsModule, NgForm, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms'
+import { FormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validator, Validators, FormsModule, NgForm, ValidatorFn, AbstractControl, ValidationErrors, FormControl } from '@angular/forms'
 import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/solicitudServicios/api.service.servicios'
 
 import * as $ from 'jquery';
@@ -15,6 +15,7 @@ import 'select2';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 
 
@@ -172,7 +173,7 @@ export class CrearServicioCargaComponent implements OnInit {
   })
 
 
-  FormSolicitudEntrada = new UntypedFormGroup({
+  FormSolicitudServiciosCarga = new UntypedFormGroup({
     ecliente: new UntypedFormControl('', Validators.required),
     edireccion: new UntypedFormControl('', Validators.required),
     emetodopago: new UntypedFormControl('', Validators.required),
@@ -198,19 +199,17 @@ export class CrearServicioCargaComponent implements OnInit {
     tobservaciones: new UntypedFormControl('', null)
   })
 
-
-
+  //Autocomplete
+  controlFormRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpciones?: Observable<any>;
 
 
   datosNaviera: any;
   datosEmbalaje: any;
   datosTipoContenedor: any;
-
   inputvalue = "";
-
   lbletransaccion = '';
-
-
   keyword = "name"
 
   // Arreglo datos del cliente que van ser llenado del API's
@@ -383,8 +382,17 @@ export class CrearServicioCargaComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
-        ////console.log(response);
+       
+
+
+        this.opcionesRfc = response.data;
+        //console.log(this.options);
+
+        //Auto complete
+        this.filtrarOpciones = this.controlFormRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
       }
     )
 
@@ -415,6 +423,35 @@ export class CrearServicioCargaComponent implements OnInit {
 
 
   }
+
+
+  
+  //////// Autocomplete /////////
+
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
+    }
+
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
+
+  }
+
+
+  OnHumanSelected(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServiciosCarga.get('cliente')?.setValue(dato);
+
+  }
+
 
   /// ALERTAS
   alerta(datos: any) {
@@ -881,7 +918,7 @@ export class CrearServicioCargaComponent implements OnInit {
   //////////////////////////////////// CONTACTO /////////////////////////////////////////
 
   // convenience getter for easy access to form fields
-  get fcontacto() { return this.FormSolicitudEntrada.controls; }
+  get fcontacto() { return this.FormSolicitudServiciosCarga.controls; }
 
 
   e_guardar(datos: any) {
@@ -893,7 +930,7 @@ export class CrearServicioCargaComponent implements OnInit {
     this.submitGuardar = true;
 
     // stop y valido
-    if (this.FormSolicitudEntrada.invalid) {
+    if (this.FormSolicitudServiciosCarga.invalid) {
       ////console.log('error.');
       return;
     }
@@ -1117,7 +1154,7 @@ export class CrearServicioCargaComponent implements OnInit {
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
     //console.log(datos)
-    this.FormSolicitudEntrada.controls.ecliente.setValue(datos.ecliente);
+    this.FormSolicitudServiciosCarga.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {

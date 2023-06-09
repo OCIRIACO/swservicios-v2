@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import * as $ from 'jquery';
 import 'select2';
@@ -8,11 +8,12 @@ import { GlobalConstants } from 'src/app/modelos/global';
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import { classApiCatalogo } from 'src/app/serviciosRest/api/api.service.catalogos';
 
-
+import { serviceCatalogos } from 'src/app/service/service.catalogos';
 import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/solicitudServicios/api.service.servicios'
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 
 
@@ -32,9 +33,9 @@ export class CrearServiciosComponent implements OnInit {
   unSaved: boolean = true;
 
   //Selected true or false
-  ngSelectTipoServicio: string = ""
-  ngSelectServicios: string = ""
-  ngSelectServicioEspecifico: string = ""
+  //ngSelectTipoServicio: string = ""
+  //ngSelectServicios: string = ""
+  //ngSelectServicioEspecifico: string = ""
 
   //Now DATE
   now: any;
@@ -62,8 +63,8 @@ export class CrearServiciosComponent implements OnInit {
 
   // Submit's 
   submitBusqueda = false
-  submitGuardar = false
-  submitServicios = false
+  ///submitGuardar = false
+  //submitServicios = false
 
   //Datos bien (Array)
   datosBien: Array<any> = [];
@@ -80,34 +81,40 @@ export class CrearServiciosComponent implements OnInit {
   //Informativos
   informativo: string = ''
 
+  //Autocomplete
+  controlRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpcionesRfc?: Observable<any>;
+
+
   //Form's
-  FormBusqueda = new UntypedFormGroup({
-    tvalor: new UntypedFormControl('', Validators.required),
-    tbusqueda: new UntypedFormControl('', Validators.required)
+  FormBusqueda = new FormGroup({
+    tvalor: new FormControl('', Validators.required),
+    tbusqueda: new FormControl('', Validators.required)
   })
 
 
-  FormSolicitudServicios = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('', Validators.required),
-    tmoneda: new UntypedFormControl('', Validators.required),
+  FormSolicitudServicios = new FormGroup({
+    trfc: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl('', Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('', Validators.required),
+    tmoneda: new FormControl('', Validators.required),
     // ttipocarga: new FormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('', Validators.required),
-    ttelefono: new UntypedFormControl('', Validators.required),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('', Validators.required),
+    ttelefono: new FormControl('', Validators.required),
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
   })
 
 
-  FormServicios = new UntypedFormGroup({
-    etipomercancia: new UntypedFormControl(null, Validators.required),
-    etiposervicio: new UntypedFormControl(null, Validators.required),
-    etiposolicitud: new UntypedFormControl(null, Validators.required),
+  FormServicios = new FormGroup({
+    etipomercancia: new FormControl('', Validators.required),
+    etiposervicio: new FormControl('', Validators.required),
+    etiposolicitud: new FormControl('', Validators.required),
   })
 
   constructor(
@@ -116,6 +123,8 @@ export class CrearServiciosComponent implements OnInit {
     private apiCatalogos: classApiCatalogo,
     private apiServiceSolicitudServicios: apiServiceSolicitudServicios,
     private router: Router,
+    private serviceCatalogos: serviceCatalogos,
+
   ) { }
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
@@ -133,6 +142,7 @@ export class CrearServiciosComponent implements OnInit {
     const datePipe = new DatePipe('en-Us');
     this.now = datePipe.transform(new Date(), 'yyyy-MM-dd');
 
+    /*
     //Configurar select2
     $('#ecliente').on('eValorCliente', (ev, dato) => {
       this.e_procesarDirecciones(dato)
@@ -152,24 +162,30 @@ export class CrearServiciosComponent implements OnInit {
       }
       $('#ecliente').trigger('eValorCliente', parametros);
     });
-
+     */
     ///////////////////////////////////
 
     //Catalogo de metodo de pago
-    this.apiCatalogos.GetMetodoPago().subscribe(data => {
+    /*this.apiCatalogos.GetMetodoPago().subscribe(data => {
       this.datosMetodoPago = data;
-    })
+    })*/
+    this.datosMetodoPago = this.serviceCatalogos.catalogoMetodoPago
+
 
     //Catalogo de Bancos
-    this.apiCatalogos.GetBancos().subscribe(data => {
+    /*this.apiCatalogos.GetBancos().subscribe(data => {
       this.datosBancos = data;
-    })
+    })*/
+    this.datosBancos = this.serviceCatalogos.catalogoBancos
+
 
 
     //Catalogo de metodo de pago
-    this.apiCatalogos.GetCfdi().subscribe(data => {
+    /*this.apiCatalogos.GetCfdi().subscribe(data => {
       this.datosCfdi = data;
-    })
+    })*/
+    this.datosCfdi = this.serviceCatalogos.catalogoCfdi
+
 
 
     //Consultar los clientes
@@ -180,8 +196,16 @@ export class CrearServiciosComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
-        ////console.log(response);
+
+        //Auto complete
+        this.opcionesRfc = response.data;
+
+        this.filtrarOpcionesRfc = this.controlRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
+
+
       }
     )
 
@@ -200,6 +224,32 @@ export class CrearServiciosComponent implements OnInit {
         //console.log(response);
       }
     )
+
+  }
+
+
+  //////// Autocomplete /////////
+
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
+    }
+
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
+
+  }
+
+
+  e_seleccionarRfc(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
   }
 
@@ -247,10 +297,10 @@ export class CrearServiciosComponent implements OnInit {
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
     //console.log(datos)
-    this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
+    this.FormSolicitudServicios.controls.trfc.setValue(datos.trfc);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
-      if (dato.ecliente == datos.ecliente) {
+      if (dato.trfc == datos.trfc) {
         //console.log(dato.direcciones)
         this.datosDirecciones = dato.direcciones
       }
@@ -396,10 +446,10 @@ export class CrearServiciosComponent implements OnInit {
 
 
     //Validamos el Forms
-    this.submitGuardar = true;
+    //this.submitGuardar = true;
     // Stop en caso de detectar error
     if (this.FormSolicitudServicios.invalid) {
-      //console.log('error.');
+      console.log('error.');
       return;
     }
     //console.log(this.bienesLiberar);
@@ -635,15 +685,17 @@ export class CrearServiciosComponent implements OnInit {
     this.arrtiposolicitud = []
 
     //Seleccionar primera posicio (reset)
-    this.ngSelectTipoServicio = ""
-    this.ngSelectServicios = ""
-    this.ngSelectServicioEspecifico = ""
+    //this.ngSelectTipoServicio = ""
+    //this.ngSelectServicios = ""
+    //this.ngSelectServicioEspecifico = ""
 
 
     this.arratipoServicios = datos.data
   }
   //Onchage tipo servicio
   e_onChangeTipoServicio(datos: any) {
+
+    console.log(datos);
 
     //Ocultar especificacion del servicio
     this.divServicioEspecifico = false
@@ -653,12 +705,12 @@ export class CrearServiciosComponent implements OnInit {
     //this.arrtiposolicitud = []
 
     //Seleccionar primera posicio (reset)
-    this.ngSelectServicios = ""
-    this.ngSelectServicioEspecifico = ""
+    //this.ngSelectServicios = ""
+    //this.ngSelectServicioEspecifico = ""
 
 
-    if (datos.childs) {
-      datos.childs.forEach((dato: any, valor: any) => {
+    if (datos.value.childs) {
+      datos.value.childs.forEach((dato: any, valor: any) => {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
@@ -678,14 +730,14 @@ export class CrearServiciosComponent implements OnInit {
     //console.log(datos.servicios.length)
     this.arrtiposolicitud = []
 
-    if (datos.childs) {
-      if (datos.childs.length > 0) {
+    if (datos.value.childs) {
+      if (datos.value.childs.length > 0) {
 
-        this.ngSelectServicioEspecifico = ''
+        //this.ngSelectServicioEspecifico = ''
 
         //Mostrar especificacion del servicio
         this.divServicioEspecifico = true
-        datos.childs.forEach((dato: any, valor: any) => {
+        datos.value.childs.forEach((dato: any, valor: any) => {
           this.arrtiposolicitud.push(dato)
         })
       }
@@ -703,20 +755,17 @@ export class CrearServiciosComponent implements OnInit {
   }
 
   //Agregar servicio(s)
-  get fservicios() { return this.FormServicios.controls; }
+  //get fservicios() { return this.FormServicios.controls; }
 
-  e_agregarServicio(datos: any) {
+  e_agregarServicio(datos: NgForm) {
+
+    // Stop en caso de detectar error
+    if (datos.invalid) {
+      return;
+    }
 
     console.log('Servicios');
     console.log(datos);
-
-    //Validamos el Forms
-    this.submitServicios = true;
-    // Stop en caso de detectar error
-    if (this.FormServicios.invalid) {
-      //console.log('error.');
-      return;
-    }
 
     //servicios argregados
     console.log('Servicios agregados')
@@ -727,9 +776,9 @@ export class CrearServiciosComponent implements OnInit {
 
     if (this.servicios.length > 0) {
       this.servicios.forEach((servicio: any, valor: any) => {
-          if (datos.etiposolicitud.eservicio == servicio.eservicio){
-            exitencia = 'SI';
-          }
+        if (datos.value.etiposolicitud.eservicio == servicio.eservicio) {
+          exitencia = 'SI';
+        }
 
       })
     }
@@ -743,30 +792,37 @@ export class CrearServiciosComponent implements OnInit {
 
       let datoservicios = {}
 
-      if (datos.etiposolicitud > 0) {
+      if (datos.value.etiposolicitud > 0) {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud:datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       } else {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud:datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       }
 
       this.servicios.push(datoservicios)
 
-      this.FormServicios = new UntypedFormGroup({
-        etipomercancia: new UntypedFormControl(null, Validators.required),
-        etiposervicio: new UntypedFormControl(null, Validators.required),
-        etiposolicitud: new UntypedFormControl(null, Validators.required),
-      })
+      /*this.FormServicios = new FormGroup({
+        etipomercancia: new FormControl(null, Validators.required),
+        etiposervicio: new FormControl(null, Validators.required),
+        etiposolicitud: new FormControl(null, Validators.required),
+      })*/
+
+      //Reset
+      this.FormServicios.reset();
+
     }
+
+
+
 
   }
 
