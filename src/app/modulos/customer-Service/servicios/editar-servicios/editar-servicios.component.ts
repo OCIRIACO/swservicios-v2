@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import { GlobalConstants } from 'src/app/modelos/global';
@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { serviceCatalogos } from 'src/app/service/service.catalogos'
 import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -16,6 +17,9 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./editar-servicios.component.css']
 })
 export class EditarServiciosComponent implements OnInit {
+
+  @ViewChild('solicitudForm') ngformsolicitud: NgForm;
+
 
   //Textarea *comentarion
   maxCaracteres: number = 150
@@ -64,6 +68,12 @@ export class EditarServiciosComponent implements OnInit {
   //Informativos
   informativo: string = ''
 
+  //Autocomplete
+  controlRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpcionesRfc?: Observable<any>;
+
+
   //Radio Button
   selectedBusqueda = "MARCA"
 
@@ -74,36 +84,36 @@ export class EditarServiciosComponent implements OnInit {
 
 
   //Form's
-  FormBusqueda = new UntypedFormGroup({
-    tvalor: new UntypedFormControl('', Validators.required),
-    tbusqueda: new UntypedFormControl('', Validators.required)
+  FormBusqueda = new FormGroup({
+    tvalor: new FormControl('', Validators.required),
+    tbusqueda: new FormControl('', Validators.required)
   })
 
 
-  FormSolicitudServicios = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('', Validators.required),
-    tmoneda: new UntypedFormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('', Validators.required),
-    ttelefono: new UntypedFormControl('', Validators.required),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
+  FormSolicitudServicios = new FormGroup({
+    trfc: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl('', Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('', Validators.required),
+    tmoneda: new FormControl('', Validators.required),
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('', Validators.required),
+    ttelefono: new FormControl('', Validators.required),
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
 
   })
 
-  FormServicios = new UntypedFormGroup({
-    etipomercancia: new UntypedFormControl(null, Validators.required),
-    etiposervicio: new UntypedFormControl(null, Validators.required),
-    etiposolicitud: new UntypedFormControl(null, Validators.required),
+  FormServicios = new FormGroup({
+    etipomercancia: new FormControl(null, Validators.required),
+    etiposervicio: new FormControl(null, Validators.required),
+    etiposolicitud: new FormControl(null, Validators.required),
   })
 
   //Folio web 
-  auxEsolitud: number = 0 // Variable que se llenara al realizar la peticion y NO VA SER MODIFICADA
+  etransaccion: number = 0 // Variable que se llenara al realizar la peticion y NO VA SER MODIFICADA
 
   //Label's
   lbletransaccion: string = ''
@@ -137,8 +147,14 @@ export class EditarServiciosComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
-        ////console.log(response);
+        
+        //Auto complete
+        this.opcionesRfc = response.data;
+
+        this.filtrarOpcionesRfc = this.controlRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
       }
     )
     ///////////////////////////////////////////////////////////
@@ -156,10 +172,11 @@ export class EditarServiciosComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
 
     //Cosnultar la solicitud web de salida del bien(es)
-    this.e_consultaSolicitud(this.id);
+    this.e_consultarTransaccion(this.id);
 
     //// Configurar el select2
 
+    /*
     $('#ecliente').on('eValorCliente', (ev, dato) => {
       ////console.log('Datos:'+dato)
       this.e_procesarDirecciones(dato)
@@ -180,7 +197,7 @@ export class EditarServiciosComponent implements OnInit {
       }
       $('#ecliente').trigger('eValorCliente', parametros);
     });
-
+*/
     //Consultar los tipos de servicios
     let parametroServicios = {
       tunidad: "ALMACEN",
@@ -196,6 +213,32 @@ export class EditarServiciosComponent implements OnInit {
         //console.log(response);
       }
     )
+
+  }
+
+
+  //////// Autocomplete /////////
+
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
+    }
+
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
+
+  }
+
+
+  e_seleccionarRfc(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
   }
 
@@ -319,15 +362,6 @@ export class EditarServiciosComponent implements OnInit {
     if (agregados == true) {
       this.informativo = 'LA MERCANCIA(BIEN) YA SE ENCUENTRA AGREGADO';
     } else {
-
-      // Preparar
-      /*datosbien.eguia = datos.eguia
-      datosbien.ttipocarga = datos.ttipocarga;
-      datosbien.ttramite = datos.ttramite;
-      datosbien.ttipocontenedor = datos.ttipocontenedor;
-      datosbien.tmarcas = datos.tmarcas;
-      datosbien.epesorecibido = datos.epesorecibido;
-      datosbien.ecantidadrecibido = datos.ecantidadrecibido;*/
 
       //Preparara el reporte para visualizar las cargas a liberar
       this.bienesServicios.push(datos);
@@ -465,7 +499,7 @@ export class EditarServiciosComponent implements OnInit {
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
       Isolicitud = {
-        etransaccion: this.auxEsolitud,
+        etransaccion: this.etransaccion,
         ecliente: datos.ecliente,
         edireccion: datos.edireccion,
         ttiposolicitud: 'SERVICIO',
@@ -564,7 +598,7 @@ export class EditarServiciosComponent implements OnInit {
   }
 
   //Cosnultar la solicitud web de salida del bien(es)
-  e_consultaSolicitud(datos: any) {
+  e_consultarTransaccion(datos: any) {
     let Iparametros: any;
     Iparametros = {
       etransaccion: datos
@@ -574,7 +608,7 @@ export class EditarServiciosComponent implements OnInit {
       data => {
         //this.bienesServicios = data.mercancias
         //console.log(data.mercancias)
-        this.e_procesarConsultaSolicitud(data)
+        this.e_procesarDatos(data)
       }
     )
 
@@ -582,32 +616,39 @@ export class EditarServiciosComponent implements OnInit {
   }
 
   ////////// Procesar Datos (parseo) /////
-  e_procesarConsultaSolicitud(datos: any) {
+  e_procesarDatos(datos: any) {
 
-    this.auxEsolitud = datos.etransaccion  // Valor que no va cambiar nunca
+    console.log('*Solicitud');
+    console.log(datos);
+
+    this.etransaccion = datos.etransaccion  // Valor que no va cambiar nunca
 
     //Label's informativos para el usuario nada mas
     this.lbletransaccion = datos.etransaccion
     this.lblfhfecharegistro = datos.fhfecharegistro
 
-    this.FormSolicitudServicios = new UntypedFormGroup({
-      ecliente: new UntypedFormControl(datos.ecliente, Validators.required),
-      edireccion: new UntypedFormControl(datos.edireccion, Validators.required),
-      emetodopago: new UntypedFormControl(datos.emetodopago, Validators.required),
-      ebanco: new UntypedFormControl(datos.ebanco, Validators.required),
-      ecfdi: new UntypedFormControl(datos.ecfdi, Validators.required),
-      ecuenta: new UntypedFormControl(datos.ecuenta, Validators.required),
-      tmoneda: new UntypedFormControl(datos.tmoneda, Validators.required),
-      fhfechaservicio: new UntypedFormControl(datos.fhfechaservicio, Validators.required),
-      tcorreo: new UntypedFormControl(datos.tcorreo, Validators.required),
-      ttelefono: new UntypedFormControl(datos.ttelefono, Validators.required),
-      treferencia: new UntypedFormControl(datos.treferencia, null),
-      tobservaciones: new UntypedFormControl(datos.tobservaciones, null)
-    })
+   let solicitud = {
+      trfc            : datos.trfc,            
+      edireccion      : datos.edireccion,                  
+      emetodopago     : datos.emetodopago,                   
+      ebanco          : datos.ebanco,              
+      ecfdi           : datos.ecfdi,             
+      ecuenta         : datos.ecuenta,               
+      tmoneda         : datos.tmoneda,               
+      fhfechaservicio : datos.fhfechaservicio,                       
+      tcorreo         : datos.tcorreo,               
+      ttelefono       : datos.ttelefono,                 
+      treferencia     : datos.treferencia,                   
+      tobservaciones  : datos.tobservaciones,                      
+    }
+
+    this.ngformsolicitud.form.setValue(solicitud)
 
     //Extraer todos los bienes a liberar amparador en la solicitud
     //this.bienesServicios = datos.mercancias
     this.bienesServicios = datos.bienes
+
+    console.log(this.bienesServicios);
 
 
     //Servicios
@@ -615,11 +656,12 @@ export class EditarServiciosComponent implements OnInit {
 
 
     // Change select2 
-    $('.select2').val(datos.ecliente).trigger('change');
+    /*$('.select2').val(datos.ecliente).trigger('change');
     let parametros = {
       ecliente: datos.ecliente
     }
     $('#ecliente').trigger('eValorCliente', parametros);
+    */
     /////////////////////////////////////////////////////
 
   }
@@ -627,7 +669,7 @@ export class EditarServiciosComponent implements OnInit {
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
     //console.log(datos)
-    this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
+    this.FormSolicitudServicios.controls.trfc.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
@@ -661,15 +703,15 @@ export class EditarServiciosComponent implements OnInit {
   //agregar servicios
   get fservicios() { return this.FormServicios.controls; }
 
-  e_agregarServicio(datos: any) {
+  e_agregarServicio(datos: NgForm) {
 
     console.log('Servicios');
     console.log(datos);
 
     //Validamos el Forms
-    this.submitServicios = true;
+    //this.submitServicios = true;
     // Stop en caso de detectar error
-    if (this.FormServicios.invalid) {
+    if (datos.invalid) {
       //console.log('error.');
       return;
     }
@@ -683,7 +725,7 @@ export class EditarServiciosComponent implements OnInit {
 
     if (this.servicios.length > 0) {
       this.servicios.forEach((servicio: any, valor: any) => {
-        if (datos.etiposolicitud.eservicio == servicio.eservicio) {
+        if (datos.value.etiposolicitud.eservicio == servicio.eservicio) {
           exitencia = 'SI';
         }
 
@@ -699,28 +741,28 @@ export class EditarServiciosComponent implements OnInit {
 
       let datoservicios = {}
 
-      if (datos.etiposolicitud > 0) {
+      if (datos.value.etiposolicitud > 0) {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud: datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       } else {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud: datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       }
 
       this.servicios.push(datoservicios)
 
-      this.FormServicios = new UntypedFormGroup({
-        etipomercancia: new UntypedFormControl(null, Validators.required),
-        etiposervicio: new UntypedFormControl(null, Validators.required),
-        etiposolicitud: new UntypedFormControl(null, Validators.required),
+      this.FormServicios = new FormGroup({
+        etipomercancia: new FormControl(null, Validators.required),
+        etiposervicio: new FormControl(null, Validators.required),
+        etiposolicitud: new FormControl(null, Validators.required),
       })
     }
 
@@ -751,8 +793,8 @@ export class EditarServiciosComponent implements OnInit {
     this.ngSelectServicioEspecifico = ""
 
 
-    if (datos.childs) {
-      datos.childs.forEach((dato: any, valor: any) => {
+    if (datos.value.childs) {
+      datos.value.childs.forEach((dato: any, valor: any) => {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
@@ -772,14 +814,14 @@ export class EditarServiciosComponent implements OnInit {
     //console.log(datos.servicios.length)
     this.arrtiposolicitud = []
 
-    if (datos.childs) {
-      if (datos.childs.length > 0) {
+    if (datos.value.childs) {
+      if (datos.value.childs.length > 0) {
 
         this.ngSelectServicioEspecifico = ''
 
         //Mostrar especificacion del servicio
         this.divServicioEspecifico = true
-        datos.childs.forEach((dato: any, valor: any) => {
+        datos.value.childs.forEach((dato: any, valor: any) => {
           this.arrtiposolicitud.push(dato)
         })
       }

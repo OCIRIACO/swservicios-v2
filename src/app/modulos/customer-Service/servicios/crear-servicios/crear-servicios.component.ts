@@ -437,9 +437,8 @@ export class CrearServiciosComponent implements OnInit {
 
   get fguardar() { return this.FormSolicitudServicios.controls; }
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
-    //console.log(datos);
 
     //Alerta
     let alerta: any = {};
@@ -448,11 +447,13 @@ export class CrearServiciosComponent implements OnInit {
     //Validamos el Forms
     //this.submitGuardar = true;
     // Stop en caso de detectar error
-    if (this.FormSolicitudServicios.invalid) {
+    if (solicitud.invalid) {
       console.log('error.');
+      console.log(solicitud);
       return;
     }
     //console.log(this.bienesLiberar);
+    console.log(solicitud);
 
     // Preparar los datos para el envio al API
 
@@ -555,25 +556,33 @@ export class CrearServiciosComponent implements OnInit {
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+        //Parche buscar el id del cliente por el RFC
+        this.datosClientes.forEach((dato: any, valor: any) => {
+          if (dato.trfc == solicitud.value.trfc) {
+            solicitud.value.cliente = dato.ecliente;
+          }
+        })
+
       Isolicitud = {
-        ecliente: datos.ecliente,
-        edireccion: datos.edireccion,
-        emetodopago: datos.emetodopago,
-        ebanco: datos.ebanco,
-        ecfdi: datos.ecfdi,
-        ecuenta: datos.ecuenta,
-        tmoneda: datos.tmoneda,
+        ecliente: solicitud.value.cliente,
+        edireccion: solicitud.value.edireccion,
+        emetodopago: solicitud.value.emetodopago,
+        ebanco: solicitud.value.ebanco,
+        ecfdi: solicitud.value.ecfdi,
+        ecuenta: solicitud.value.ecuenta,
+        tmoneda: solicitud.value.tmoneda,
         ttiposolicitud: 'SERVICIO',
-        tcorreo: datos.tcorreo,
-        ttelefono: datos.ttelefono,
-        fhfechaservicio: datos.fhfechaservicio,
-        treferencia: datos.treferencia,
-        tobservaciones: datos.tobservaciones,
+        tcorreo: solicitud.value.tcorreo,
+        ttelefono: solicitud.value.ttelefono,
+        fhfechaservicio: solicitud.value.fhfechaservicio,
+        treferencia: solicitud.value.treferencia,
+        tobservaciones: solicitud.value.tobservaciones,
         ecodusuario: datosUsuario.ecodusuario,
         servicios: arrServivios,
         bienes: arrBienes
       }
 
+      console.log(JSON.stringify(Isolicitud));
 
 
 

@@ -974,8 +974,6 @@ export class EditarmanifiestoComponent implements OnInit {
 
         //Parche buscar el id del cliente por el RFC
         this.datosClientes.forEach((dato: any, valor: any) => {
-      
-
           if (dato.trfc == solicitud.value.cliente) {
             solicitud.value.cliente = dato.ecliente;
           }
