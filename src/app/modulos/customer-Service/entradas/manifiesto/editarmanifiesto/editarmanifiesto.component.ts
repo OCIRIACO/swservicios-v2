@@ -501,6 +501,9 @@ export class EditarmanifiestoComponent implements OnInit {
 
     });
 
+
+    console.log(this.bienes);
+
   }
 
   //////// OTROS /////////

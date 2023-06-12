@@ -1,9 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/solicitudServicios/api.service.servicios';
 import { Router } from '@angular/router';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { RenderAcciones } from './render-acciones';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
+export interface Post {
+  folioweb: number,
+  tipoSolicitud: string,
+  correoprogramo: string,
+  fecharegistro: string,
+  programo: string,
+  totalcargas: number,
+  tipocarga: string,
+  testatus: string
+}
 
 @Component({
   selector: 'app-consultar-autotransporte',
@@ -12,141 +24,40 @@ import { RenderAcciones } from './render-acciones';
 })
 export class ConsultarAutotransporteComponent implements OnInit {
 
-  
-
 
   //Path base
   directorio: string = GlobalConstants.pathCustomer;
 
-  datosConsultaPeriodo?: any;
-  showContent?: boolean;
-
-  //Configuraciones para la tabla
-  gridApi: any;
-  gridColumnApi: any;
-  columnDefs: any
-  rowData: any
-  defaultColDef: any
-  paginationPageSize: any;
-  frameworkComponents: any
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  displayedColumns: string[] = ['acciones', 'folioweb', 'tipoSolicitud', 'correoprogramo', 'fecharegistro', 'programo', 'totalcargas', 'tipocarga', 'testatus'];
+  dataSource = new MatTableDataSource<Post>([]);
 
   constructor(
     private router: Router,
     private apiServicios: apiServiceSolicitudServicios,
   ) {
 
-    this.columnDefs = [
-      {
-        headerName: 'Acciones',
-        cellRendererFramework: RenderAcciones,
-        width: 100,
-
-      },
-      {
-        field: 'folioweb',
-        width: 100,
-        headerName: 'Transacción',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'testatus',
-        width: 25,
-        headerName: 'Estatus',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'tipoSolicitud',
-        width: 25,
-        headerName: 'Tipo solicitud',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'correoprogramo',
-        width: 25,
-        headerName: 'Correo',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'fecharegistro',
-        width: 25,
-        headerName: 'Fecha registro',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'programo',
-        width: 25,
-        headerName: 'Programado',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'totalcargas',
-        width: 25,
-        headerName: 'Total bienes',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'tipocarga',
-        width: 25,
-        headerName: 'Tipo',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      }
-    ];
-
-
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 200,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-    };
-
-    this.paginationPageSize = 0
 
   }
 
   ngOnInit(): void {
 
-    this.rowData = []
 
     //Parametros
     let parametros = {}
 
     parametros = {
-      tunidadnegocio :"LOGISTICO",
-      toperacion:"TRANSPORTE"
+      tunidadnegocio: "LOGISTICO",
+      toperacion: "TRANSPORTE"
     }
 
     //POST
     this.apiServicios.postConsultarSolicitudesServicios(parametros).subscribe(
       (response) => {
-        this.e_procesar_datos(response)
-        //this.rowData =  response
-        //console.log(response);
-
+        this.dataSource.data = response as Post[];
+        this.dataSource.paginator = this.paginator;
       }
     )
-
-  }
-
-  e_procesar_datos(datos: any) {
-
-    let datoSolEntradas: Array<any> = [];
-    datos.forEach((dato: any, index: any) => {
-      dato.editar = 8
-      datoSolEntradas.push(dato);
-
-    })
-
-    this.rowData = datoSolEntradas
   }
 
   //Redireccionar para crear una nueva solicitud
@@ -154,4 +65,15 @@ export class ConsultarAutotransporteComponent implements OnInit {
     this.router.navigate(['dashboard/customer/transporte/nuevo']);
   }
 
+  //Detalle
+  e_detalles(etransaccion: number) {
+    //console.log(etransaccion)
+    this.router.navigate(['dashboard/customer/transporte/detalle', etransaccion]);  // nativo
+  }
+
+  //Editar
+  e_editar(etransaccion: number) {
+    //console.log(etransaccion)
+    this.router.navigate(['dashboard/customer/transporte/editar', etransaccion]);  // nativo
+  }
 }

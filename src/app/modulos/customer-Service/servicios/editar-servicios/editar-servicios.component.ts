@@ -147,7 +147,7 @@ export class EditarServiciosComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        
+
         //Auto complete
         this.opcionesRfc = response.data;
 
@@ -386,10 +386,10 @@ export class EditarServiciosComponent implements OnInit {
   get fguardar() { return this.FormSolicitudServicios.controls; }
 
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
-    //console.log('guardar');
-    //console.log(this.bienesServicios);
+    console.log('*Guardar');
+    console.log(solicitud);
 
     //Alerta
     let alerta: any = {};
@@ -401,8 +401,8 @@ export class EditarServiciosComponent implements OnInit {
     //Validamos el Forms
     this.submitGuardar = true;
     // Stop en caso de detectar error
-    if (this.FormSolicitudServicios.invalid) {
-      //console.log('error.');
+    if (solicitud.invalid) {
+      console.log('error.');
       return;
     }
 
@@ -498,21 +498,32 @@ export class EditarServiciosComponent implements OnInit {
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+
+      //Parche buscar el id del cliente por el RFC
+      console.log('*Cliente')
+      console.log(this.datosClientes)
+
+      this.datosClientes.forEach((dato: any, valor: any) => {
+        if (dato.trfc == solicitud.value.trfc) {
+          solicitud.value.cliente = dato.ecliente;
+        }
+      })
+
       Isolicitud = {
         etransaccion: this.etransaccion,
-        ecliente: datos.ecliente,
-        edireccion: datos.edireccion,
+        ecliente: solicitud.value.cliente,
+        edireccion: solicitud.value.edireccion,
         ttiposolicitud: 'SERVICIO',
-        tcorreo: datos.tcorreo,
-        ttelefono: datos.ttelefono,
-        fhfechaservicio: datos.fhfechaservicio,
-        treferencia: datos.treferencia,
-        emetodopago: datos.emetodopago,
-        ebanco: datos.ebanco,
-        ecfdi: datos.ecfdi,
-        ecuenta: datos.ecuenta,
-        tmoneda: datos.tmoneda,
-        tobservaciones: datos.tobservaciones,
+        tcorreo: solicitud.value.tcorreo,
+        ttelefono: solicitud.value.ttelefono,
+        fhfechaservicio: solicitud.value.fhfechaservicio,
+        treferencia: solicitud.value.treferencia,
+        emetodopago: solicitud.value.emetodopago,
+        ebanco: solicitud.value.ebanco,
+        ecfdi: solicitud.value.ecfdi,
+        ecuenta: solicitud.value.ecuenta,
+        tmoneda: solicitud.value.tmoneda,
+        tobservaciones: solicitud.value.tobservaciones,
         ecodusuario: datosUsuario.ecodusuario,
         servicios: arrServivios,
         bienes: arrBienes
@@ -526,6 +537,8 @@ export class EditarServiciosComponent implements OnInit {
 
       this.alertaConfirm(alerta, (confirmed: boolean) => {
         if (confirmed == true) {
+          //console.log(JSON.stringify(Isolicitud));
+
           this.e_actualizarSolicitudServicio(Isolicitud);
         }
       });
@@ -627,19 +640,19 @@ export class EditarServiciosComponent implements OnInit {
     this.lbletransaccion = datos.etransaccion
     this.lblfhfecharegistro = datos.fhfecharegistro
 
-   let solicitud = {
-      trfc            : datos.trfc,            
-      edireccion      : datos.edireccion,                  
-      emetodopago     : datos.emetodopago,                   
-      ebanco          : datos.ebanco,              
-      ecfdi           : datos.ecfdi,             
-      ecuenta         : datos.ecuenta,               
-      tmoneda         : datos.tmoneda,               
-      fhfechaservicio : datos.fhfechaservicio,                       
-      tcorreo         : datos.tcorreo,               
-      ttelefono       : datos.ttelefono,                 
-      treferencia     : datos.treferencia,                   
-      tobservaciones  : datos.tobservaciones,                      
+    let solicitud = {
+      trfc: datos.trfc,
+      edireccion: datos.edireccion,
+      emetodopago: datos.emetodopago,
+      ebanco: datos.ebanco,
+      ecfdi: datos.ecfdi,
+      ecuenta: datos.ecuenta,
+      tmoneda: datos.tmoneda,
+      fhfechaservicio: datos.fhfechaservicio,
+      tcorreo: datos.tcorreo,
+      ttelefono: datos.ttelefono,
+      treferencia: datos.treferencia,
+      tobservaciones: datos.tobservaciones,
     }
 
     this.ngformsolicitud.form.setValue(solicitud)

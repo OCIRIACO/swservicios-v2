@@ -1,3 +1,8 @@
+
+.button-row .mat-button-base {
+  margin-right: 5px;
+}
+
 .navbar-spacer {
     flex: 1 1 auto;
   }
@@ -218,7 +223,3 @@ p .mat-icon {
 
 /*----------------------------------------*/
 
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
-}

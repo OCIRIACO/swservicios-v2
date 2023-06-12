@@ -29,10 +29,8 @@
 
             <div class="component mb-2">
                 <div class="button-row">
-                    <button mat-raised-button color="primary" (click)="e_guardar(FormCliente.value)"><i
-                            class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
-                    <button mat-raised-button color="primary" (click)="e_consulta()"><i
-                            class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+                    <button mat-raised-button color="primary" (click)="e_guardar(FormCliente.value)">Guardar</button>
+                    <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>Consultar</button>
                 </div>
             </div>
             <hr>
@@ -211,11 +209,9 @@
                     <tbody>
                         <tr *ngFor="let dato of arrdatosDireccion; let i = index">
                             <td><button type="button" mat-raised-button color="primary"
-                                    (click)="e_eliminarDireccion(dato)"><i
-                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button></td>
+                                    (click)="e_eliminarDireccion(dato)"><mat-icon>delete</mat-icon>Eliminar</button></td>
                             <td><button type="button" mat-raised-button color="primary"
-                                    (click)="e_editarDireccion(dato,i)"><i
-                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                    (click)="e_editarDireccion(dato,i)">Editar</button>
                             </td>
                             <td>{{i+ 1 }}</td>
                             <td>{{dato.ecodigopostal}}</td>

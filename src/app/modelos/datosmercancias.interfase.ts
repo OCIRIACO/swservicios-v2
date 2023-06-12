@@ -1,6 +1,6 @@
 export interface IdatosMercancia {
     edetalleguia: number;
-    tfactura: string;
+    tfacturas: string;
     tmarcas: string;
     tdescripcion: string;
     ecantidad: number;

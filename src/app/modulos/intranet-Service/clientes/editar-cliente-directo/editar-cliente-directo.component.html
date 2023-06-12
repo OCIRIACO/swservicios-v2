@@ -205,11 +205,9 @@
                     <tbody>
                         <tr *ngFor="let dato of arrdatosDireccion; let i = index">
                             <td><button type="button" mat-raised-button color="primary"
-                                    (click)="e_eliminarDireccion(dato)"><i
-                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button></td>
+                                    (click)="e_eliminarDireccion(dato)"><mat-icon>delete</mat-icon>Eliminar</button></td>
                             <td><button type="button" mat-raised-button color="primary"
-                                    (click)="e_editarDireccion(dato)"><i
-                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                    (click)="e_editarDireccion(dato)">Editar</button>
                             </td>
                             <td>{{i+ 1 }}</td>
                             <td>{{dato.ecoddireccion}}</td>

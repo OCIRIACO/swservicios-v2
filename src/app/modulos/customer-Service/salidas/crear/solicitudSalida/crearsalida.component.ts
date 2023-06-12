@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { ApiServiceSolicituSalida } from 'src/app/serviciosRest/Customer/solicitudSalidas/api.service.salidas';
 import { Isolicitud, Ibienes, IdetalleBienes } from 'src/app/modelos/solicitudSalidas/solicitudSalida.inteface'
@@ -12,6 +12,7 @@ import 'select2';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crearsalida',
@@ -26,6 +27,20 @@ export class CrearsalidaComponent implements OnInit {
     private serviceDatosUsuario: serviceDatosUsuario,
     private apiCliente: apiCliente,
   ) { }
+
+
+  //Tipos de busqueda bien(es)
+  tiposBusqueda = [
+    {
+      ttipo: "GUIA",
+    },
+    {
+      ttipo: "MARCA",
+    }
+  ];
+
+  tbusqueda: string = 'GUIA'
+
 
   //Textarea *comentarion
   maxCaracteres: number = 150
@@ -44,9 +59,9 @@ export class CrearsalidaComponent implements OnInit {
   directorio: string = GlobalConstants.pathCustomer;
 
   //Form's
-  FormBusqueda = new UntypedFormGroup({
-    tvalor: new UntypedFormControl('', Validators.required),
-    tbusqueda: new UntypedFormControl('', Validators.required)
+  FormBusquedaBien = new FormGroup({
+    tvalor: new FormControl('', Validators.required),
+    tbusqueda: new FormControl('', null)
   })
 
   //RegExr's
@@ -54,36 +69,36 @@ export class CrearsalidaComponent implements OnInit {
   regNumerico: string = '^[+-]?([0-9]*[.])?[0-9]+$'
 
 
-  FormSolicitudSalida = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('',
+  FormSolicitudServicios = new FormGroup({
+    trfc: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl('', Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('',
       [
         Validators.required,
         this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       ]
 
     ),
-    tmoneda: new UntypedFormControl('', Validators.required),
+    tmoneda: new FormControl('', Validators.required),
     // ttipocarga: new FormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('',
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('',
       [
         Validators.required,
         Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
       ]
     ),
-    ttelefono: new UntypedFormControl('',
+    ttelefono: new FormControl('',
       [
         Validators.required,
         Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
       ]
     ),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
   })
 
   //Radio Button
@@ -114,6 +129,13 @@ export class CrearsalidaComponent implements OnInit {
   // Arreglo datos del cliente que van ser llenado del API's
   datosClientes: any
   datosDirecciones: any
+
+  //Autocomplete
+  controlRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpcionesRfc?: Observable<any>;
+
+
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
   canDeactivate(): Observable<boolean> | boolean {
@@ -179,10 +201,41 @@ export class CrearsalidaComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
-        ////console.log(response);
+
+        //Auto complete
+        this.opcionesRfc = response.data;
+
+        this.filtrarOpcionesRfc = this.controlRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
       }
     )
+
+  }
+
+  //////// Autocomplete /////////
+
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
+    }
+
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
+
+  }
+
+
+  e_seleccionarRfc(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
   }
 
@@ -238,7 +291,7 @@ export class CrearsalidaComponent implements OnInit {
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
     //console.log(datos)
-    this.FormSolicitudSalida.controls.ecliente.setValue(datos.ecliente);
+    this.FormSolicitudServicios.controls.trfc.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
@@ -249,51 +302,40 @@ export class CrearsalidaComponent implements OnInit {
   }
 
   ///////// Busqueda /////////
-  get fbusqueda() { return this.FormBusqueda.controls; }
+  get fbusqueda() { return this.FormBusquedaBien.controls; }
 
-  e_buscar(datos: any) {
+  e_buscarInformacionBien(datos: NgForm) {
+
+    console.log('*Busqueda');
+    console.log(datos);
 
     //Oculto el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
-
     this.informativo = ''
 
-    //Validamos el Forms
-    this.submitBusqueda = true;
-
-    // Stop en caso de detectar error
-    if (this.FormBusqueda.invalid) {
+    if (datos.invalid) {
       //console.log('error.');
       return;
     }
 
-    //Consumir el microservicio
-    this.apiSalidas.postValidarSalidaBienes(datos).subscribe(
+    //Consumir el metodo
+    let parametros = {
+      tbusqueda: datos.value.tbusqueda,
+      tvalor: datos.value.tvalor
+    }
+    this.apiSalidas.postValidarSalidaBienes(parametros).subscribe(
       (response) => {
-        //console.log(response);
-        /*if (response.success == false) {
-          this.informativo = response.errors[0].detail;
-        } else {
-          this.divBienes = true;
-          //this.datosBien = response.data;
-          this.e_procesarBusqueda(response)
-        }*/
 
         if (response.data) {
           this.divBienes = true;
           this.e_procesarBusqueda(response)
         }
 
-
         if (response.errors) {
-          //success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
             this.informativo += dato.attributes.text + '\n'
           })
         }
-
-
       }
     )
 
@@ -331,11 +373,11 @@ export class CrearsalidaComponent implements OnInit {
 
   ///////// Generar Solicitud de Salida /////////
 
-  get fguardar() { return this.FormSolicitudSalida.controls; }
+  get fguardar() { return this.FormSolicitudServicios.controls; }
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
-    //console.log(datos);
+    console.log(solicitud);
 
     //Alerta
     let alerta: any = {};
@@ -346,7 +388,7 @@ export class CrearsalidaComponent implements OnInit {
     //Validamos el Forms
     this.submitGuardar = true;
     // Stop en caso de detectar error
-    if (this.FormSolicitudSalida.invalid) {
+    if (solicitud.invalid) {
       //console.log('error.');
       return;
     }
@@ -423,40 +465,49 @@ export class CrearsalidaComponent implements OnInit {
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+      //Parche buscar el id del cliente por el RFC
+      this.datosClientes.forEach((dato: any, valor: any) => {
+        if (dato.trfc == solicitud.value.trfc) {
+          solicitud.value.cliente = dato.ecliente;
+        }
+      })
+
+
 
       Isolicitud = {
-        ecliente: datos.ecliente,
-        edireccion: datos.edireccion,
-        emetodopago: datos.emetodopago,
-        ebanco: datos.ebanco,
-        ecfdi: datos.ecfdi,
-        ecuenta: datos.ecuenta,
-        tmoneda: datos.tmoneda,
+        ecliente: solicitud.value.cliente,
+        edireccion: solicitud.value.edireccion,
+        emetodopago: solicitud.value.emetodopago,
+        ebanco: solicitud.value.ebanco,
+        ecfdi: solicitud.value.ecfdi,
+        ecuenta: solicitud.value.ecuenta,
+        tmoneda: solicitud.value.tmoneda,
         ttiposolicitud: 'SALIDA',
-        tcorreo: datos.tcorreo,
-        ttelefono: datos.ttelefono,
-        fhfechaservicio: datos.fhfechaservicio,
-        tobservaciones: datos.tobservaciones,
-        treferencia: datos.treferencia,
+        tcorreo: solicitud.value.tcorreo,
+        ttelefono: solicitud.value.ttelefono,
+        fhfechaservicio: solicitud.value.fhfechaservicio,
+        tobservaciones: solicitud.value.tobservaciones,
+        treferencia: solicitud.value.treferencia,
         ecodusuario: datosUsuario.ecodusuario,
         bienes: arrBienes
       }
+      console.log(Isolicitud);
 
 
       //Consumir el servicio api
       let text = '';
       let success: boolean
 
-     // Confirmar la programacion
+      // Confirmar la programacion
 
-     alerta['text'] = '¿ DESEA CONTINUAR ? ';
-     alerta['tipo'] = 'question';
-     alerta['footer'] = 'SALIDA';
+      alerta['text'] = '¿ DESEA CONTINUAR ? ';
+      alerta['tipo'] = 'question';
+      alerta['footer'] = 'SALIDA';
 
       this.alertaConfirm(alerta, (confirmed: boolean) => {
         if (confirmed == true) {
 
-        //Inicia el llamado
+          //Inicia el llamado
           this.apiSalidas.postCrearSolicitudSalida(Isolicitud).subscribe(
             (response) => {
 
@@ -477,7 +528,7 @@ export class CrearsalidaComponent implements OnInit {
                 success = false
                 response.errors.forEach((dato: any, index: any) => {
                   text += dato.attributes.text + '\n'
-                
+
                 })
 
                 console.log(text)
@@ -536,7 +587,7 @@ export class CrearsalidaComponent implements OnInit {
       //console.log(datos);
 
       //Reset
-      this.FormBusqueda.reset();
+      this.FormBusquedaBien.reset();
 
     }
 

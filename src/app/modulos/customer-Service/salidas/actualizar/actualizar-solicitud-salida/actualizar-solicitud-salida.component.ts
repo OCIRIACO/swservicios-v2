@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { classApiCatalogo } from 'src/app/serviciosRest/api/api.service.catalogos';
 import { Iparametros } from 'src/app/modelos/solicitudSalidas/consultarSolicitudSalidas'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceSolicituSalida } from 'src/app/serviciosRest/Customer/solicitudSalidas/api.service.salidas'
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { Isolicitud, Ibienes, IdetalleBienes } from 'src/app/modelos/solicitudSalidas/actualizarSolicitudSalida'
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.c
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-actualizar-solicitud-salida',
@@ -21,6 +22,8 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./actualizar-solicitud-salida.component.css']
 })
 export class ActualizarSolicitudSalidaComponent implements OnInit {
+
+  @ViewChild('solicitudForm') ngformsolicitud: NgForm;
 
   //Textarea *comentarion
   maxCaracteres: number = 150
@@ -67,39 +70,63 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
   submitBusqueda = false
   submitGuardar = false
 
+
+  //RegExr's
+  regNumericLogitud: string = '^\\d+(?:\\.\\d{0,2})?$'
+  regNumerico: string = '^[+-]?([0-9]*[.])?[0-9]+$'
+
+
   //Form's
-  FormBusqueda = new UntypedFormGroup({
-    tvalor: new UntypedFormControl('', Validators.required),
-    tbusqueda: new UntypedFormControl('', Validators.required)
+  FormBusqueda = new FormGroup({
+    tvalor: new FormControl('', Validators.required),
+    tbusqueda: new FormControl('', Validators.required)
   })
 
 
-  FormSolicitudSalida = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('', Validators.required),
-    tmoneda: new UntypedFormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('',
+  FormSolicitudServicios = new FormGroup({
+    trfc: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl('', Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('',
+      [
+        Validators.required,
+        this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      ]
+
+    ),
+    tmoneda: new FormControl('', Validators.required),
+    // ttipocarga: new FormControl('', Validators.required),
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('',
       [
         Validators.required,
         Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
       ]
     ),
-    ttelefono: new UntypedFormControl('', Validators.required),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
+    ttelefono: new FormControl('',
+      [
+        Validators.required,
+        Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
+      ]
+    ),
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
   })
 
   //Folio web 
-  auxEsolitud: number = 0 // Variable que se llenara al realizar la peticion y NO VA SER MODIFICADA
+  etransaccion: number = 0 // Variable que se llenara al realizar la peticion y NO VA SER MODIFICADA
 
   //Label's
   lbletransaccion: string = ''
   lblfhfecharegistro: string = ''
+
+  //Autocomplete
+  controlRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpcionesRfc?: Observable<any>;
+
 
   constructor(private serviceCatalogos: serviceCatalogos,
     private route: ActivatedRoute,
@@ -109,6 +136,18 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     private serviceDatosUsuario: serviceDatosUsuario,
 
   ) { }
+
+
+  // true o false validador regex
+  regexValidador(regex: RegExp, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (!control.value) {
+        return null as any;
+      }
+      const valid = regex.test(control.value);
+      return valid ? null as any : error;
+    };
+  }
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
   canDeactivate(): Observable<boolean> | boolean {
@@ -134,8 +173,14 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
-        ////console.log(response);
+
+        //Auto complete
+        this.opcionesRfc = response.data;
+
+        this.filtrarOpcionesRfc = this.controlRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
       }
     )
     ///////////////////////////////////////////////////////////
@@ -160,7 +205,7 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
 
     //// Configurar el select2
 
-    $('#ecliente').on('eValorCliente', (ev, dato) => {
+   /* $('#ecliente').on('eValorCliente', (ev, dato) => {
       ////console.log('Datos:'+dato)
       this.e_procesarDirecciones(dato)
     });
@@ -179,7 +224,33 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
         ecliente: dato_rfc
       }
       $('#ecliente').trigger('eValorCliente', parametros);
-    });
+    });*/
+
+  }
+
+
+  //////// Autocomplete /////////
+
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
+    }
+
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
+
+  }
+
+
+  e_seleccionarRfc(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
   }
 
@@ -244,26 +315,44 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
   ////////// Procesar Datos (parseo) /////
   e_procesarConsultaSolicitud(datos: any) {
 
-    this.auxEsolitud = datos.etransaccion  // Valor que no va cambiar nunca
+    this.etransaccion = datos.etransaccion  // Valor que no va cambiar nunca
 
     //Label's informativos para el usuario nada mas
     this.lbletransaccion = datos.etransaccion
     this.lblfhfecharegistro = datos.fhfecharegistro
 
-    this.FormSolicitudSalida = new UntypedFormGroup({
-      ecliente: new UntypedFormControl(datos.ecliente, Validators.required),
-      edireccion: new UntypedFormControl(datos.edireccion, Validators.required),
-      emetodopago: new UntypedFormControl(datos.emetodopago, Validators.required),
-      ebanco: new UntypedFormControl(datos.ebanco, Validators.required),
-      ecfdi: new UntypedFormControl(datos.ecfdi, Validators.required),
-      ecuenta: new UntypedFormControl(datos.ecuenta, Validators.required),
-      tmoneda: new UntypedFormControl(datos.tmoneda, Validators.required),
-      fhfechaservicio: new UntypedFormControl(datos.fhfechaservicio, Validators.required),
-      tcorreo: new UntypedFormControl(datos.tcorreo, Validators.required),
-      ttelefono: new UntypedFormControl(datos.ttelefono, Validators.required),
-      treferencia: new UntypedFormControl(datos.treferencia, null),
-      tobservaciones: new UntypedFormControl(datos.tobservaciones, null)
-    })
+    let solicitud = {
+        trfc             : datos.trfc,            
+        edireccion       : datos.edireccion,                  
+        emetodopago      : datos.emetodopago,                   
+        ebanco           : datos.ebanco,              
+        ecfdi            : datos.ecfdi,             
+        ecuenta          : datos.ecuenta,               
+        tmoneda          : datos.tmoneda,               
+        fhfechaservicio  : datos.fhfechaservicio,                       
+        tcorreo          : datos.tcorreo,               
+        ttelefono        : datos.ttelefono,                 
+        treferencia      : datos.treferencia,                   
+        tobservaciones   : datos.tobservaciones,                      
+    }
+
+    this.ngformsolicitud.form.setValue(solicitud)
+
+
+    /*this.FormSolicitudServicios = new FormGroup({
+      ecliente: new FormControl(datos.ecliente, Validators.required),
+      edireccion: new FormControl(datos.edireccion, Validators.required),
+      emetodopago: new FormControl(datos.emetodopago, Validators.required),
+      ebanco: new FormControl(datos.ebanco, Validators.required),
+      ecfdi: new FormControl(datos.ecfdi, Validators.required),
+      ecuenta: new FormControl(datos.ecuenta, Validators.required),
+      tmoneda: new FormControl(datos.tmoneda, Validators.required),
+      fhfechaservicio: new FormControl(datos.fhfechaservicio, Validators.required),
+      tcorreo: new FormControl(datos.tcorreo, Validators.required),
+      ttelefono: new FormControl(datos.ttelefono, Validators.required),
+      treferencia: new FormControl(datos.treferencia, null),
+      tobservaciones: new FormControl(datos.tobservaciones, null)
+    })*/
 
     //Extraer todos los bienes a liberar amparador en la solicitud
     //this.arrDatosBienesLiberar = datos.mercancias
@@ -397,10 +486,10 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
 
   ///////// Generar Solicitud de Salida /////////
 
-  get fguardar() { return this.FormSolicitudSalida.controls; }
+  get fguardar() { return this.FormSolicitudServicios.controls; }
 
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
     //console.log('guardar');
     //console.log(this.arrDatosBienesLiberar);
@@ -412,7 +501,7 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     //Validamos el Forms
     this.submitGuardar = true;
     // Stop en caso de detectar error
-    if (this.FormSolicitudSalida.invalid) {
+    if (solicitud.invalid) {
       //console.log('error.');
       return;
     }
@@ -491,26 +580,34 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     //Datos del usuaro por [local storage]
     let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+    //Parche buscar el id del cliente por el RFC
+    this.datosClientes.forEach((dato: any, valor: any) => {
+      if (dato.trfc == solicitud.value.trfc) {
+        solicitud.value.cliente = dato.ecliente;
+      }
+    })
+
+
     Isolicitud = {
-      etransaccion: this.auxEsolitud,
-      ecliente: datos.ecliente,
-      edireccion: datos.edireccion,
+      etransaccion: this.etransaccion,
+      ecliente: solicitud.value.cliente,
+      edireccion: solicitud.value.edireccion,
       ttiposolicitud: 'SALIDA',
-      tcorreo: datos.tcorreo,
-      ttelefono: datos.ttelefono,
-      fhfechaservicio: datos.fhfechaservicio,
-      treferencia: datos.treferencia,
-      emetodopago: datos.emetodopago,
-      ebanco: datos.ebanco,
-      ecfdi: datos.ecfdi,
-      ecuenta: datos.ecuenta,
-      tmoneda: datos.tmoneda,
+      tcorreo: solicitud.value.tcorreo,
+      ttelefono: solicitud.value.ttelefono,
+      fhfechaservicio: solicitud.value.fhfechaservicio,
+      treferencia: solicitud.value.treferencia,
+      emetodopago: solicitud.value.emetodopago,
+      ebanco: solicitud.value.ebanco,
+      ecfdi: solicitud.value.ecfdi,
+      ecuenta: solicitud.value.ecuenta,
+      tmoneda: solicitud.value.tmoneda,
       ecodusuario: datosUsuario.ecodusuario,
-      tobservaciones: datos.tobservaciones,
+      tobservaciones: solicitud.value.tobservaciones,
       bienes: arrBienes
     }
 
-    //console.log(JSON.stringify(Isolicitud));
+    console.log(JSON.stringify(Isolicitud));
 
 
     //Consumir el servicio api
@@ -520,8 +617,8 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     // Confirmar la programacion
 
     alerta['text'] = '¿ DESEA CONTINUAR ? ';
-     alerta['tipo'] = 'question';
-     alerta['footer'] = 'SALIDA';
+    alerta['tipo'] = 'question';
+    alerta['footer'] = 'SALIDA';
 
 
     this.alertaConfirm(alerta, (confirmed: boolean) => {
@@ -595,7 +692,7 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
     //console.log(datos)
-    this.FormSolicitudSalida.controls.ecliente.setValue(datos.ecliente);
+    //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {

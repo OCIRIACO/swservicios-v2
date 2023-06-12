@@ -473,7 +473,7 @@ export class CrearServiciosComponent implements OnInit {
     //BIENES
     if (this.bienesServicios.length == 0) {
       estado = 'ERROR!'
-      mensaje += 'NO SE DETECTA NINGÚNBIEN PARA ESTA OPERACIÓN\n';
+      mensaje += 'NO SE DETECTA NINGÚN BIEN PARA ESTA OPERACIÓN\n';
     }
 
     //SERVICIOS

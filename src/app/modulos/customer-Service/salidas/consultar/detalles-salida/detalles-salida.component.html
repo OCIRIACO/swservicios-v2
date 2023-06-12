@@ -42,9 +42,8 @@
               [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
               [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' " (click)="e_imprimir()"><i
                 class="fas fa-print mg-r-5 fa-1.5x"></i>Imprimir</button>
-            <button mat-raised-button color="primary" (click)="e_consulta()">Consultar</button>
-            <button mat-raised-button color="primary" (click)="e_nuevo()"><i
-                class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+            <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>Consultar</button>
+            <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>Nuevo</button>
           </div>
         </div>
       </div>
@@ -55,30 +54,30 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Transacción</label>
+           <mat-label>Transacción</mat-label>
             <br>
-            <label class="form-label">{{lbletransaccion}}</label>
+           <mat-label>{{lbletransaccion}}</mat-label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Fecha de solicitud</label>
+           <mat-label>Fecha de solicitud</mat-label>
             <br>
-            <label class="form-label">{{lblfhfecharegistro}}</label>
+           <mat-label>{{lblfhfecharegistro}}</mat-label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Tipo de Solicitud</label>
+           <mat-label>Tipo de Solicitud</mat-label>
             <br>
-            <label class="form-label">{{lblttiposolicitud}}</label>
+           <mat-label>{{lblttiposolicitud}}</mat-label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Estado de solicitud</label>
+           <mat-label>Estado de solicitud</mat-label>
             <br>
-            <label class="form-label">{{lblestatus}}</label>
+           <mat-label>{{lblestatus}}</mat-label>
           </div>
         </div>
       </div>
@@ -89,32 +88,32 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Programada</label>
+           <mat-label>Programada</mat-label>
             <br>
-            <label class="form-label">{{lblusuarioprogramo}}</label>
+           <mat-label>{{lblusuarioprogramo}}</mat-label>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">Perfil</label>
+           <mat-label>Perfil</mat-label>
             <br>
-            <label class="form-label">{{lblusuarioperfil}}</label>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="form-group">
-            <label class="form-label">{{lblusuarioInterno}}</label>
-            <br>
-            <label class="form-label">{{lblusuarioautoriza}}</label>
+           <mat-label>{{lblusuarioperfil}}</mat-label>
           </div>
         </div>
 
         <div class="col-sm-3">
           <div class="form-group">
-            <label class="form-label">{{lblFechaInterno}}</label>
+           <mat-label>{{lblusuarioInterno}}</mat-label>
             <br>
-            <label class="form-label">{{lblfhfechaautoriza}}</label>
+           <mat-label>{{lblusuarioautoriza}}</mat-label>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+           <mat-label>{{lblFechaInterno}}</mat-label>
+            <br>
+           <mat-label>{{lblfhfechaautoriza}}</mat-label>
           </div>
         </div>
 
@@ -126,65 +125,65 @@
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">RFC</label>
+           <mat-label>RFC</mat-label>
             <br>
-            <label class="form-label">{{lbltrfc}}</label>
+           <mat-label>{{lbltrfc}}</mat-label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Razón social</label>
+           <mat-label>Razón social</mat-label>
             <br>
-            <label class="form-label">{{lbltrazonsocial}}</label>
+           <mat-label>{{lbltrazonsocial}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">Cp</label>
+           <mat-label>Cp</mat-label>
             <br>
-            <label class="form-label">{{lblecodigopostal}}</label>
+           <mat-label>{{lblecodigopostal}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">Entidad</label>
+           <mat-label>Entidad</mat-label>
             <br>
-            <label class="form-label">{{lbltentidadfederativa}}</label>
+           <mat-label>{{lbltentidadfederativa}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">Municipio</label>
+           <mat-label>Municipio</mat-label>
             <br>
-            <label class="form-label">{{lbltmunicipio}}</label>
+           <mat-label>{{lbltmunicipio}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">Colonia</label>
+           <mat-label>Colonia</mat-label>
             <br>
-            <label class="form-label">{{lbltcolonia}}</label>
+           <mat-label>{{lbltcolonia}}</mat-label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Calle</label>
+           <mat-label>Calle</mat-label>
             <br>
-            <label class="form-label">{{lbltcalle}}</label>
+           <mat-label>{{lbltcalle}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">No.Interior</label>
+           <mat-label>No.Interior</mat-label>
             <br>
-            <label class="form-label">{{lbltnuminterior}}</label>
+           <mat-label>{{lbltnuminterior}}</mat-label>
           </div>
         </div>
         <div class="col-sm-1">
           <div class="form-group">
-            <label class="form-label">No.Exterior</label>
+           <mat-label>No.Exterior</mat-label>
             <br>
-            <label class="form-label">{{lbltnumexterior}}</label>
+           <mat-label>{{lbltnumexterior}}</mat-label>
           </div>
         </div>
 
@@ -196,40 +195,40 @@
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Método de pago</label>
+           <mat-label>Método de pago</mat-label>
             <br>
-            <label class="form-label">{{lblmetodopago}}</label>
+           <mat-label>{{lblmetodopago}}</mat-label>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Banco</label>
+           <mat-label>Banco</mat-label>
             <br>
-            <label class="form-label">{{lblbanco}}</label>
+           <mat-label>{{lblbanco}}</mat-label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Cfdi</label>
+           <mat-label>Cfdi</mat-label>
             <br>
-            <label class="form-label">{{lblcfdi}}</label>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="form-group">
-            <label class="form-label">Cuenta</label>
-            <br>
-            <label class="form-label">{{lblcuenta}}</label>
+           <mat-label>{{lblcfdi}}</mat-label>
           </div>
         </div>
 
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Moneda</label>
+           <mat-label>Cuenta</mat-label>
             <br>
-            <label class="form-label">{{lblmoneda}}</label>
+           <mat-label>{{lblcuenta}}</mat-label>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+           <mat-label>Moneda</mat-label>
+            <br>
+           <mat-label>{{lblmoneda}}</mat-label>
           </div>
         </div>
 
@@ -241,31 +240,31 @@
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Fecha de servicio</label><br>
-            <label class="form-label">{{lblfhfechaservicio}}</label>
+           <mat-label>Fecha de servicio</mat-label><br>
+           <mat-label>{{lblfhfechaservicio}}</mat-label>
 
           </div>
 
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Correo</label>
+           <mat-label>Correo</mat-label>
             <br>
-            <label class="form-label">{{lbltcorreo}}</label>
+           <mat-label>{{lbltcorreo}}</mat-label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Teléfono</label>
+           <mat-label>Teléfono</mat-label>
             <br>
-            <label class="form-label">{{lblttelefono}}</label>
+           <mat-label>{{lblttelefono}}</mat-label>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="form-group">
-            <label class="form-label">Referencia</label>
+           <mat-label>Referencia</mat-label>
             <br>
-            <label class="form-label">{{lbltreferencia}}</label>
+           <mat-label>{{lbltreferencia}}</mat-label>
           </div>
         </div>
       </div>

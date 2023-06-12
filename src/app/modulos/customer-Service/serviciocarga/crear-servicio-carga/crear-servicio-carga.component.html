@@ -27,11 +27,9 @@
                     <div class="card-body">
                         <div class="component mb-2">
                             <div class="button-row">
-                                <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><i
-                                        class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
+                                <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
                                 <button mat-raised-button color="primary"
-                                    (click)="e_guardar(FormSolicitudServiciosCarga.value)"><i
-                                        class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>
+                                    (click)="e_guardar(FormSolicitudServiciosCarga.value)">Guardar</button>
 
                             </div>
                         </div>
@@ -358,8 +356,7 @@
                                             <tbody>
                                                 <tr *ngFor="let dato of servicios; let i = index">
                                                     <td> <button type="button" mat-raised-button color="primary"
-                                                            (click)="e_eliminar_servicio(dato)"><i
-                                                                class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                                            (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                                                     </td>
                                                     <td> {{ i + 1}} </td>
                                                     <td> {{ dato.ttipomercancia }}</td>
@@ -641,12 +638,10 @@
                                                 <tbody>
                                                     <tr *ngFor="let dato of listDatosCarga; let i = index">
                                                         <td><button type="button" mat-raised-button color="primary"
-                                                                (click)="e_eliminar(dato)"><i
-                                                                    class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                                                (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                                                         </td>
                                                         <td><button type="button" mat-raised-button color="primary"
-                                                                (click)="e_editar(dato, i)"><i
-                                                                    class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                                                (click)="e_editar(dato, i)">Editar</button>
                                                         </td>
                                                         <td>{{i+ 1 }}</td>
                                                         <td>{{dato.ttramite}}</td>
@@ -933,15 +928,13 @@
                                                 <tbody>
                                                     <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                                         <td><button type="button" (click)="e_eliminarMercancia(dato)"
-                                                                mat-raised-button color="primary"><i
-                                                                    class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                                                mat-raised-button color="primary"><mat-icon>delete</mat-icon>Eliminar</button>
                                                         </td>
                                                         <td><button type="button" (click)="e_editarDetalleBien(dato)"
-                                                                mat-raised-button color="primary"><i
-                                                                    class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                                                mat-raised-button color="primary"><mat-icon>edit</mat-icon>Editar</button>
                                                         </td>
                                                         <td> {{i+ 1 }}</td>
-                                                        <td> {{dato.tfactura}}</td>
+                                                        <td> {{dato.tfacturas}}</td>
                                                         <td> {{dato.tmarcas}}</td>
                                                         <td> {{dato.tdescripcion}}</td>
                                                         <td> {{dato.ecantidad}}</td>

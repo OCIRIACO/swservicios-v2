@@ -41,10 +41,8 @@
                         [style.cursor]=" tingresoTotal == 'SI' ? 'not-allowed' : '' "
                         [style.pointer-events]=" tingresoTotal == 'SI' ? 'all !important' : '' ">
                         Guardar</button>
-                    <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><i
-                            class="fas fa-list mg-r-5 fa-1x"></i>Consultar</button>
-                    <button mat-raised-button color="primary" (click)="e_nuevo()"><i
-                            class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+                    <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                    <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>Nuevo</button>
 
                 </div>
             </div>
@@ -327,8 +325,7 @@
                                 <tbody>
                                     <tr *ngFor="let dato of servicios; let i = index">
                                         <td> <button type="button" mat-raised-button color="primary"
-                                                (click)="e_eliminar_servicio(dato)"><i
-                                                    class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
+                                                (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
                                         <td> {{ i + 1}} </td>
                                         <td> {{ dato.ttipomercancia }}</td>
                                         <td> {{ dato.ttiposervicio }}</td>
@@ -599,22 +596,19 @@
                                                     (click)="e_eliminarBien(dato)" [disabled]="dato.texistencia == 'SI'"
                                                     title="Eliminar"
                                                     [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
-                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' "><i
-                                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i></button>
+                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' ">Eliminar</button>
                                             </td>
                                             <td>
                                                 <button type="button" mat-raised-button color="primary"
                                                     (click)="e_editarBien(dato)" [disabled]="dato.texistencia == 'SI'"
                                                     title="Editar"
                                                     [style.cursor]=" dato.texistencia == 'SI' ? 'not-allowed' : '' "
-                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' "><i
-                                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i></button>
+                                                    [style.pointer-events]=" dato.texistencia == 'SI' ? 'all !important' : '' "><mat-icon>edit</mat-icon>Editar</button>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-xs btn btn-success btn-brand-02"
                                                     title="Ingresada"
-                                                    [style.display]=" dato.texistencia == 'SI' ? 'block' : 'none' "><i
-                                                        class="fas fa-check-circle mg-r-5 fa-1.5x "></i></button>
+                                                    [style.display]=" dato.texistencia == 'SI' ? 'block' : 'none' ">Ingresada</button>
                                             </td>
                                             <td>{{i+ 1 }}</td>
                                             <td>{{dato.eguia}}</td>
@@ -895,19 +889,17 @@
                                                     mat-raised-button color="primary" title="Eliminar"
                                                     [disabled]="texistencia == 'SI'"
                                                     [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
-                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i
-                                                        class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button>
+                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><mat-icon>delete</mat-icon>Eliminar</button>
                                             </td>
                                             <td><button type="button" (click)="e_editarDetalleBien(dato)"
                                                     mat-raised-button color="primary" title="Editar"
                                                     [disabled]="texistencia == 'SI'"
                                                     [style.cursor]=" texistencia == 'SI' ? 'not-allowed' : '' "
-                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><i
-                                                        class="fas fa-edit fa-1x mg-r-5 fa-1.5x"></i>Editar</button>
+                                                    [style.pointer-events]=" texistencia == 'SI' ? 'all !important' : '' "><mat-icon>edit</mat-icon>Editar</button>
                                             </td>
                                             <td> {{ i+ 1 }}</td>
                                             <td> {{dato.edetalleguia }}</td>
-                                            <td> {{dato.tfactura}}</td>
+                                            <td> {{dato.tfacturas}}</td>
                                             <td> {{dato.tmarcas}}</td>
                                             <td> {{dato.tdescripcion}}</td>
                                             <td> {{dato.ecantidad}}</td>

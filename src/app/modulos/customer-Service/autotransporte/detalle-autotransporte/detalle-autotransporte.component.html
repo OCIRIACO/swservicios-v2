@@ -42,9 +42,9 @@
               [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
               [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' " (click)="e_imprimir()"><i
                 class="fas fa-print mg-r-5 fa-1.5x"></i>Imprimir</button>
-            <button mat-raised-button color="primary" (click)="e_consulta()">Consultar</button>
+            <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>Consultar</button>
             <button mat-raised-button color="primary" (click)="e_nuevo()"><i
-                class="fa fa-file mg-r-5 fa-1.5x"></i>Nuevo</button>
+                class="fa fa-file mg-r-5 fa-1.5x"></i><mat-icon> insert_drive_file</mat-icon>Nuevo</button>
           </div>
         </div>
       </div>

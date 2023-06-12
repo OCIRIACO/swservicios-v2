@@ -30,8 +30,8 @@
               <!--ZONA BOTONES-->
               <div class="component mb-2">
                 <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar">Consultar</button>
-                  <button mat-raised-button color="primary">Guardar</button>
+                  <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                  <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
                 </div>
               </div>
               <hr>
@@ -340,8 +340,7 @@
                       <tbody>
                         <tr *ngFor="let dato of servicios; let i = index">
                           <td> <button type="button" mat-raised-button color="primary"
-                              (click)="e_eliminar_servicio(dato)"><i
-                                class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
+                              (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
                           <td> {{ i + 1}} </td>
                           <td> {{ dato.ttipomercancia }}</td>
                           <td> {{ dato.ttiposervicio }}</td>
@@ -472,8 +471,7 @@
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of bienesServicios; let i = index">
-                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><i
-                              class="fas fa-trash-alt mg-r-5 fa-1.5x"></i>Eliminar</button> </td>
+                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.eguia }}</td>
                         <td> {{ dato.ttipocarga }}</td>
