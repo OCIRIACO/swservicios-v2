@@ -20,7 +20,8 @@
       <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
         <section>
           <div class="button-row">
-            <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+            <button mat-raised-button color="primary" (click)="e_consulta()"
+              title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
             <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
           </div>
         </section>
@@ -539,7 +540,8 @@
                 </tr>
                 <tbody>
                   <tr *ngFor="let dato of bienes; let i = index">
-                    <td><button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
+                    <td><button type="button" mat-raised-button color="primary"
+                        (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                     </td>
                     <td><button type="button" mat-raised-button color="primary" (click)="e_editar(dato)">Editar</button>
                     </td>

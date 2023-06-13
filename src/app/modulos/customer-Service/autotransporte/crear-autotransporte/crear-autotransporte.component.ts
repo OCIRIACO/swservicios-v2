@@ -35,7 +35,7 @@ export class CrearAutotransporteComponent implements OnInit {
   lblNotificacionRechazo: string = ''
 
   //Textarea *comentarion
-  maxCaracteres: number = 150
+  maxCaracteres: number = 256
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
