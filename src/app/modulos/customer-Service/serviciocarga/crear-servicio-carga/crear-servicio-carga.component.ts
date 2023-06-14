@@ -27,8 +27,8 @@ import { map, startWith } from 'rxjs/operators';
 export class CrearServicioCargaComponent implements OnInit {
 
 
-  @ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
-  @ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
+  //@ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
+  //@ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
 
 
   //Etique  dinamica cuando el selecciona el tipo de carga esto cambia
@@ -79,7 +79,7 @@ export class CrearServicioCargaComponent implements OnInit {
   changeCountMercancia = 0;
 
   //Otros's
-  bienes: any;
+  bienes: Array<any> = []
   carga: any;
   datosBien: any;
   listDetallesBienNew: any;
@@ -512,6 +512,8 @@ export class CrearServicioCargaComponent implements OnInit {
       return;
     }
 
+    console.log(this.FormDatosBien);
+    console.log(this.bienes);
 
 
     //let datosBien: any = {};
@@ -825,16 +827,16 @@ export class CrearServicioCargaComponent implements OnInit {
   get fcontacto() { return this.FormSolicitudServicios.controls; }
 
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
-    ////console.log(datos);
+    console.log(solicitud);
 
 
     //Validar datos del contacto
     this.submitGuardar = true;
 
     // stop y valido
-    if (this.FormSolicitudServicios.invalid) {
+    if (solicitud.invalid) {
       ////console.log('error.');
       return;
     }
@@ -968,21 +970,27 @@ export class CrearServicioCargaComponent implements OnInit {
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+      //Parche buscar el id del cliente por el RFC
+      this.datosClientes.forEach((dato: any, valor: any) => {
+        if (dato.trfc == solicitud.value.trfc) {
+          solicitud.value.cliente = dato.ecliente;
+        }
+      })
 
       Isolicitud = {
-        ecliente: datos.ecliente,
-        edireccion: datos.edireccion,
-        emetodopago: datos.emetodopago,
-        ebanco: datos.ebanco,
-        ecfdi: datos.ecfdi,
-        ecuenta: datos.ecuenta,
-        tmoneda: datos.tmoneda,
+        ecliente: solicitud.value.ecliente,
+        edireccion: solicitud.value.edireccion,
+        emetodopago: solicitud.value.emetodopago,
+        ebanco: solicitud.value.ebanco,
+        ecfdi: solicitud.value.ecfdi,
+        ecuenta: solicitud.value.ecuenta,
+        tmoneda: solicitud.value.tmoneda,
         ttiposolicitud: 'SERVICIO',
-        tcorreo: datos.tcorreo,
-        ttelefono: datos.ttelefono,
-        treferencia: datos.treferencia,
-        fhfechaservicio: datos.fhfechaservicio,
-        tobservaciones: datos.tobservaciones,
+        tcorreo: solicitud.value.tcorreo,
+        ttelefono: solicitud.value.ttelefono,
+        treferencia: solicitud.value.treferencia,
+        fhfechaservicio: solicitud.value.fhfechaservicio,
+        tobservaciones: solicitud.value.tobservaciones,
         ecodusuario: datosUsuario.ecodusuario,
         servicios: arrServivios,
         bienes: listaCarga

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, Form, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormControl, FormGroup, NgForm, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,9 @@ import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/sol
 import * as $ from 'jquery';
 import 'select2';
 import { Observable, of } from 'rxjs';
+import { ApiServiceManifiesto } from 'src/app/serviciosRest/Customer/solicitudEntradas/api.service.manifiesto';
+import { DatePipe } from '@angular/common';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -29,8 +32,16 @@ import { Observable, of } from 'rxjs';
 })
 export class ActualizarServicioCargaComponent implements OnInit {
 
-  @ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
-  @ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
+
+  //@ViewChild('idsequence', { static: false }) idsequence!: ElementRef;
+  //@ViewChild('idSequenceDetalleBien', { static: false }) idSequenceDetalleBien!: ElementRef;
+ 
+  @ViewChild('solicitudForm') ngformsolicitudentrada: NgForm;
+
+
+  //Es existente
+  isExistenteBien: string = ''
+  isIngresoTotal: string = ''
 
   //Etique  dinamica cuando el selecciona el tipo de carga esto cambia
   lblSerieMarca: string = 'Contenedor'
@@ -38,13 +49,40 @@ export class ActualizarServicioCargaComponent implements OnInit {
   //Notificaciones
   lblNotificacionRechazo: string = ''
 
+  //Alertas
+  lblalert: string = ''
+  lbltipoAlerta: string = ''
+  lblfhfecharegistro: string = '';
+
+  //Otros
+  lbltnombreprogramo: string = '';
+  testatus: string = '';
+  lblttelefono: string = '';
+  lbltcorreo: string = '';
+
   //Textarea *comentarion
   maxCaracteres: number = 256
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
   unSaved: boolean = true;
+
   isReadonly: boolean = false
+
+  //etransaccion
+  etransaccion: number = 0;
+
+  //Contador rows tables
+  contadorRowBien: number = 1;
+
+  //Now DATE
+  nowFechaServicio: any;
+
+  //@ViewChild("myNameElem") myNameElem: ElementRef;
+  tmarcas = ''
+
+  //Datos de usuario
+  datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
 
   //Selected true or false
@@ -52,182 +90,205 @@ export class ActualizarServicioCargaComponent implements OnInit {
   ngSelectServicios: string = ""
   ngSelectServicioEspecifico: string = ""
 
-  // Numero de transaccion
-  etransaccion: number = 0;
-
-  // Arreglo datos del cliente que van ser llenado del API's
-  datosClientes: any
-  datosDirecciones: any
-
-  //Datos de usuario
-  datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
-
   //Path base
   directorio: string = GlobalConstants.pathCustomer;
 
-  id?: string;
+  respuestaConfirmar: any;
+  seleccion: any;
+  seleccionNaviera: any;
 
-  //Label's
-  lbletransaccion?: string;
-  lblfhfecharegistro?: string;
-  lbltnombreprogramo?: string;
-  lbltcorreo?: string;
-  lblttelefono?: string;
-  lbltreferencia: string = '';
-  texistencia: string = ''
-  tingresoTotal: string = ''
-  testatus: string = ''
-  lblalert: string = ''
-  lbltipoAlerta: string = ''
+  //Change's
+  changeCount = 0;
+  changeCountMercancia = 0;
 
-  listDatosCarga: any;
-  datoBien: any = {};
-
-  listDetallesBien: Array<IdatosMercancia>;
-  datosBien: any = {};
-
-
-  //Datos bien (Array)
-  bienesServicios: Array<any> = [];
+  //Otros's
+  bienes: Array<any> = []
+  carga: any;
+  datosBien: any;
+  listDetallesBienNew: any;
   servicios: Array<any> = []
   arratipoServicios: Array<any> = []
   arrservicio: Array<any> = []
   arrtiposolicitud: Array<any> = []
+  listDetallesBien: Array<IdatosMercancia>;
+  //datosDetalleBien: IdatosMercancia;
+
 
   // Div Show Hidden
   divCarga: boolean = true;
   divMercancia: boolean = false;
   divecodCarga: boolean = true;
   divDetalleBien: boolean = true;
-  divAlerta: boolean = false
   divServicioEspecifico: boolean = false
   divNotificacion: boolean = false
+  divAlerta: boolean = false
 
-  // Submit's 
-  submitGuardar = false;
-  submitBien = false;
-  submitDetalleBien = false;
-  submitServicios = false
-
-  //Select's catalogo's
-  datosNaviera: Array<any> = [];
-  datosEmbalaje: Array<any> = [];
-  datosTipoContenedor: Array<any> = [];
-  datosTramite: any
-
-  datosMetodoPago: any = [];
+  //Catalogos
+  datosMetodoPago: any
   datosBancos: any
   datosCfdi: any
+  datosTramite: any
 
-  /// Numero de orden
-  eNumeroOrden: number = 0;
-
-  //No recuerdo XD
-  seleccion: any;
+  //Submit's
+  submitted = false;
+  submitBien = false;
+  submitDetalleBien = false;
+  submitGuardar = false;
+  submitServicios = false
 
   //RegExr's
   regNumericLogitud: string = '^\\d+(?:\\.\\d{0,2})?$'
   regNumerico: string = '^[+-]?([0-9]*[.])?[0-9]+$'
 
-  // Form contacto
-  FormSolicitudEntrada = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    edireccion: new UntypedFormControl('', Validators.required),
-    emetodopago: new UntypedFormControl('', Validators.required),
-    ebanco: new UntypedFormControl('', Validators.required),
-    ecfdi: new UntypedFormControl('', Validators.required),
-    ecuenta: new UntypedFormControl('', Validators.required),
-    tmoneda: new UntypedFormControl('', Validators.required),
-    fhfechaservicio: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('', [
-      Validators.required,
-      Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-    ]),
-    ttelefono: new UntypedFormControl('', [Validators.required,
-    Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
-    ]),
-    treferencia: new UntypedFormControl('', null),
-    tobservaciones: new UntypedFormControl('', null)
-  });
-
-
-
-  // Form Bienes
-  FormDatosBien = new UntypedFormGroup({
-    idsequence: new UntypedFormControl('', null),
-    eguia: new UntypedFormControl(0, Validators.required),
-    tembalaje: new UntypedFormControl('', Validators.required),
-    ecodembalaje: new UntypedFormControl('', Validators.required),
-    tnaviera: new UntypedFormControl('', Validators.required),
-    ecodnaviera: new UntypedFormControl('', Validators.required),
-    tmarcas: new UntypedFormControl('', Validators.required),
-    ttipocontenedor: new UntypedFormControl('', Validators.required),
-    epesoneto: new UntypedFormControl('', [
+  //Forms's
+  FormDatosBien = new FormGroup({
+    econtadorRowBien: new FormControl(0, null),
+    eguia: new FormControl(0, Validators.required),
+    ecodembalaje: new FormControl('', Validators.required),
+    ecodnaviera: new FormControl('', Validators.required),
+    tmarcas: new FormControl('', Validators.required),
+    ttipocontenedor: new FormControl('', Validators.required),
+    epesoneto: new FormControl('', [
       Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
       this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
     ]),
-    epesobruto: new UntypedFormControl('', [Validators.required,
+    epesobruto: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
     ),
-    ebultos: new UntypedFormControl('', [Validators.required,
+    ebultos: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
     ),
-    ttramite: new UntypedFormControl('', Validators.required),
-    //ttipocarga: new UntypedFormControl('', Validators.required),
-    tsellos: new UntypedFormControl('', [
+    ttramite: new FormControl('', Validators.required),
+    ttipocarga: new FormControl('', Validators.required),
+    tsellos: new FormControl('', [
       Validators.required,
       Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
     ])
   })
 
-
-  FormDatosDetalleBien = new UntypedFormGroup({
-    idSequenceDetalleBien: new UntypedFormControl('', null),
-    edetalleguia: new UntypedFormControl(0, Validators.required),
-    tfacturas: new UntypedFormControl('', Validators.required),
-    tmarcas: new UntypedFormControl('', Validators.required),
-    tdescripcion: new UntypedFormControl('', Validators.required),
-    ecantidad: new UntypedFormControl('', [Validators.required,
+  FormDatosDetallesBien = new FormGroup({
+    econtadorRow: new FormControl(0, null),
+    eguia: new FormControl(0, null),
+    tfactura: new FormControl('', Validators.required),
+    tmarcas: new FormControl('', Validators.required),
+    tdescripcion: new FormControl('', Validators.required),
+    ecantidad: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
     ]),
-    epesobruto: new UntypedFormControl('', [Validators.required,
+    epesobruto: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
     ]),
-    epesoneto: new UntypedFormControl('', [Validators.required,
+    epesoneto: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
     ]),
-    evolumen: new UntypedFormControl('', [Validators.required,
+    evolumen: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
     this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]),
-    ecodembalaje: new UntypedFormControl('', Validators.required),
-    tembalaje: new UntypedFormControl('', Validators.required)
+    ecodembalaje: new FormControl('', Validators.required),
+    //tembalaje: new FormControl('', Validators.required)
   });
 
-  FormServicios = new UntypedFormGroup({
-    etipomercancia: new UntypedFormControl(null, Validators.required),
-    etiposervicio: new UntypedFormControl(null, Validators.required),
-    etiposolicitud: new UntypedFormControl(null, Validators.required),
+  FormServicios = new FormGroup({
+    etipomercancia: new FormControl(null, Validators.required),
+    etiposervicio: new FormControl(null, Validators.required),
+    etiposolicitud: new FormControl(null, Validators.required),
   })
 
+
+  FormSolicitudServicios = new FormGroup({
+    trfc: new FormControl('', Validators.required),
+    edireccion: new FormControl('', Validators.required),
+    emetodopago: new FormControl('', Validators.required),
+    ebanco: new FormControl('', Validators.required),
+    ecfdi: new FormControl('', Validators.required),
+    ecuenta: new FormControl('', [
+      Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+    ]),
+    tmoneda: new FormControl('', Validators.required),
+    fhfechaservicio: new FormControl('', Validators.required),
+    tcorreo: new FormControl('',
+      [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+      ]
+    ),
+    ttelefono: new FormControl('', [
+      Validators.required,
+      Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
+    ]),
+    treferencia: new FormControl('', null),
+    tobservaciones: new FormControl('', null)
+  })
+
+  //Autocomplete
+  controlFormRfc = new FormControl('');
+  opcionesRfc!: Array<any>;
+  filtrarOpcionesRfc?: Observable<any>;
+
+
+  datosNaviera: any;
+  datosEmbalaje: any;
+  datosTipoContenedor: any;
+  inputvalue = "";
+  lbletransaccion = '';
+  keyword = "name"
+
+  // Arreglo datos del cliente que van ser llenado del API's
+  datosClientes: any
+  datosDirecciones: any
+  globalIdCliente: any
+
+
+
   constructor(
+    private api: classApiCatalogo,
+    private apiManifiesto: ApiServiceManifiesto,
     private route: ActivatedRoute,
     private router: Router,
-    private apiServiceSolicitudServicios: apiServiceSolicitudServicios,
-    private api: classApiCatalogo,
-    private spinner: NgxSpinnerService,
     private serviceDatosUsuario: serviceDatosUsuario,
-    private serviceCatalogos: serviceCatalogos,
     private apiCliente: apiCliente,
+    private apiServiceSolicitudServicios: apiServiceSolicitudServicios,
+    private serviceCatalogos: serviceCatalogos,
 
   ) {
-    this.listDetallesBien = [];
+  }
 
+
+
+  // true o false validador regex
+  regexValidador(regex: RegExp, error: ValidationErrors): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      if (!control.value) {
+        return null as any;
+      }
+      const valid = regex.test(control.value);
+      return valid ? null as any : error;
+    };
+  }
+
+
+
+
+  onChangeEmbalajeBien(event: any) {
+    let dato = event.target.options[event.target.options.selectedIndex].text;
+    //this.FormDatosBien.get('tembalaje')?.setValue(dato);
+  }
+
+  onChangeDetalleBien(event: any) {
+    let dato = event.target.options[event.target.options.selectedIndex].text;
+    //this.FormDatosDetallesBien.get('tembalaje')?.setValue(dato);
+  }
+
+  onChangeNaviera(event: any) {
+    let dato = event.target.options[event.target.options.selectedIndex].text;
+    //this.FormDatosBien.get('tnaviera')?.setValue(dato);
   }
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
@@ -239,55 +300,91 @@ export class ActualizarServicioCargaComponent implements OnInit {
     return true;
   }
 
+
   ngOnInit(): void {
-    //Consultar los clientes
-    let parametros = {
-      eperfil: this.datosUsuario.eperfil
-    }
 
-    this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
-      (response) => {
-        this.e_procesar_datos_clientes(response)
+    //Date
+    const datePipe = new DatePipe('en-Us');
+    this.nowFechaServicio = datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+
+    /* $('#ecliente').on('eValorCliente', (ev, dato) => {
+       ////console.log('Datos:'+dato)
+       this.e_procesarDirecciones(dato)
+     });*/
+
+
+    /*$(document).ready(function () {
+      //$('.select2').select2(); //initialize 
+      (<any>$('.select2')).select2();
+    });
+
+    $(".select2").on("select2:select", function (e) {
+      let dato_rfc: any = $(e.currentTarget).val()!
+      console.log(dato_rfc)
+      //$('#ecliente').val(dato_rfc).trigger("change");
+      let parametros = {
+        ecliente: dato_rfc
       }
-    )
-    ///////////////////////////////////////////////////////////
+      $('#ecliente').trigger('eValorCliente', parametros);
+    });*/
 
 
-    //Default
-    this.submitGuardar = false;
-    this.submitBien = false;
-    this.submitDetalleBien = false;
-
-
-    //Api catalogos para los selects
     //Catalogo de naviera
-    this.spinner.show();
+    /*this.api.GetNavieras().subscribe(data => {
+      let dato = {
+        ecodnaviera: null,
+        tnombre: 'SELECCIONAR'
+      }
+      this.datosNaviera = data;
+      this.datosNaviera.push(dato)
+    })*/
+    this.datosNaviera = this.serviceCatalogos.catalogoNavieras
+
+
+    //Catalogo de Embalajes
+    /*this.api.GetEmbalajes().subscribe(data => {
+      let dato = {
+        ecodembalaje: null,
+        tnombre: 'SELECCIONAR'
+      }
+      this.datosEmbalaje = data;
+      this.datosEmbalaje.push(dato)
+    })*/
+    this.datosEmbalaje = this.serviceCatalogos.catalogoEmbalajes
+
+
+    //Catalogo de Tipos de contenedores
+    this.api.GetTipoContenedores().subscribe(data => {
+      let dato = {
+        id: null,
+        ttipo: 'SELECCIONAR'
+      }
+      this.datosTipoContenedor = data;
+      this.datosTipoContenedor.push(dato)
+
+    })
 
     //Catalogo de metodo de pago
+    /*this.api.GetMetodoPago().subscribe(data => {
+      this.datosMetodoPago = data;
+    })*/
     this.datosMetodoPago = this.serviceCatalogos.catalogoMetodoPago
 
-    //Catalogo bancos
+
+    //Catalogo de Bancos
+    /*this.api.GetBancos().subscribe(data => {
+      this.datosBancos = data;
+    })*/
     this.datosBancos = this.serviceCatalogos.catalogoBancos
 
-    //Catalogo Cfdi
+
+
+    //Catalogo de metodo de pago
+    /*this.api.GetCfdi().subscribe(data => {
+      this.datosCfdi = data;
+    })*/
     this.datosCfdi = this.serviceCatalogos.catalogoCfdi
-
-    //Catalogo embalaje
-    let datoEmbalaje = {
-      ecodembalaje: null,
-      tnombre: 'SELECCIONAR'
-    }
-    this.datosEmbalaje = this.serviceCatalogos.catalogoEmbalajes
-    this.datosEmbalaje.push(datoEmbalaje)
-
-
-    //Catalogo naviera
-    let datoNaviera = {
-      ecodnaviera: null,
-      tnombre: 'SELECCIONAR'
-    }
-    this.datosNaviera = this.serviceCatalogos.catalogoNavieras
-    this.datosNaviera.push(datoNaviera)
 
 
     //Catalogo de tramite
@@ -308,65 +405,27 @@ export class ActualizarServicioCargaComponent implements OnInit {
     ]
     this.datosTramite = arrTramite
 
+    //Consultar los clientes
+    let parametros = {
+      eperfil: this.datosUsuario.eperfil
+    }
 
-    /*this.api.GetNavieras().subscribe(data => {
-      data.forEach((dato: any, index: any) => {
-        this.datosNaviera.push(dato);
-      });
-    })
+    this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
+      (response) => {
+        this.e_procesar_datos_clientes(response)
 
-    //Catalogo de Embalajes
-    this.api.GetEmbalajes().subscribe(data => {
-      data.forEach((dato: any, index: any) => {
-        this.datosEmbalaje.push(dato);
-      });
-    })*/
 
-    //Catalogo de Tipos de contenedores
-    this.api.GetTipoContenedores().subscribe(data => {
-      let dato = {
-        id: null,
-        ttipo: 'SELECCIONAR'
+
+        this.opcionesRfc = response.data;
+        //console.log(this.options);
+
+        //Auto complete
+        this.filtrarOpcionesRfc = this.controlFormRfc.valueChanges.pipe(
+          startWith(''),
+          map(value => this.e_filtrarRfc(value)),
+        );
       }
-      this.datosTipoContenedor = data;
-      this.datosTipoContenedor.push(dato)
-
-    })
-
-
-
-    //Spinner Hide
-    this.spinner.hide();
-
-    this.id = this.route.snapshot.params['id'];
-    this.eNumeroOrden = this.route.snapshot.params['id'];
-    this.e_consultaSolicitud(this.id);
-
-
-    //// Configurar el select2
-
-    $('#ecliente').on('eValorCliente', (ev, dato) => {
-      //////console.log('Datos:'+dato)
-      this.e_procesarDirecciones(dato)
-    });
-
-
-    $(document).ready(function () {
-      //$('.select2').select2(); //initialize 
-      (<any>$('.select2')).select2();
-    });
-
-    $(".select2").on("select2:select", function (e) {
-      let dato_rfc: any = $(e.currentTarget).val()!
-      //console.log(dato_rfc)
-      //$('#ecliente').val(dato_rfc).trigger("change");
-      let parametros = {
-        ecliente: dato_rfc
-      }
-      $('#ecliente').trigger('eValorCliente', parametros);
-    });
-
-    ////////////////////////////////
+    )
 
     //Consultar los tipos de servicios
     let parametroServicios = {
@@ -380,156 +439,42 @@ export class ActualizarServicioCargaComponent implements OnInit {
         this.e_procesarDatosServicios(response);
         // this.e_procesar_datos_clientes(response)
         //this.rowData =  response
-        ////console.log(response);
+        //console.log(response);
       }
     )
 
+
     //Selected
-    this.FormDatosBien.controls['ecodembalaje'].setValue(null);
-    this.FormDatosBien.controls['ecodnaviera'].setValue(null);
-    this.FormDatosBien.controls['ttramite'].setValue(null);
+    //this.FormDatosBien.controls['ecodembalaje'].setValue(null);
+    //this.FormDatosBien.controls['ecodnaviera'].setValue(null);
+    //this.FormDatosBien.controls['ttramite'].setValue(null);
     //this.FormDatosBien.controls['ttipocarga'].setValue(null);
-    this.FormDatosBien.controls['ttipocontenedor'].setValue(null);
+    //this.FormDatosBien.controls['ttipocontenedor'].setValue(null);
 
+    this.etransaccion = this.route.snapshot.params['id'];
+    this.e_consultaSolicitud(this.etransaccion);
 
   }
 
-
-  // true o false validador regex
-  regexValidador(regex: RegExp, error: ValidationErrors): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
-      if (!control.value) {
-        return null as any;
-      }
-      const valid = regex.test(control.value);
-      return valid ? null as any : error;
-    };
-  }
-
-
-  //Procesar los datos los servicios para el arragles
-  e_procesarDatosServicios(datos: any) {
-    //Clear
-    this.arrservicio = []
-    this.arrtiposolicitud = []
-
-    //Seleccionar primera posicio (reset)
-    this.ngSelectTipoServicio = ""
-    this.ngSelectServicios = ""
-    this.ngSelectServicioEspecifico = ""
-
-
-    this.arratipoServicios = datos.data
-  }
-
-
-  /// Alertas
-  alerta(datos: any) {
-    Swal.fire({
-      icon: datos['tipo'],
-      title: 'ATENCIÓN',
-      html: datos['text'],
-      footer: datos['footer'],
-      showConfirmButton: true,
-      confirmButtonColor: "#22bab7"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.submitGuardar = false;
-        this.submitBien = false;
-        this.submitDetalleBien = false;
-        this.unSaved = false
-
-        if (result.isConfirmed && datos['tipo'] == 'success') {
-          this.unSaved = false
-          this.router.navigate(['dashboard/customer/serviciocarga/detalle', this.lbletransaccion]);
-        }
-      }
-    })
-  }
-
-
-  alertaConfirm(dato: any, callback: any) {
-    let valor: boolean = false;
-    Swal.fire({
-      title: 'ATENCIÓN',
-      html: dato['text'],
-      icon: dato['tipo'],
-      showCancelButton: true,
-      confirmButtonColor: '#22bab7',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        valor = result.value;
-        callback(valor);
-      }
-    })
-    return valor;
-  }
-
-  // Procesar los datos del cliente
-  e_procesar_datos_clientes(datos: any) {
-    ////console.log(datos.data)
-    let datoClientes: Array<any> = [];
-    /*datos.forEach((dato: any, index: any) => {
-      datoClientes.push(dato.data);
-
-    })*/
-    this.datosClientes = datos.data
-  }
-
-  /// onChange's
-  onChangeEmbalajeBien(event: any) {
-    let dato = event.target.options[event.target.options.selectedIndex].text;
-    this.FormDatosBien.get('tembalaje')?.setValue(dato);
-  }
-
-
-  onChangeEmbalajeDetalleBien(event: any) {
-    let dato = event.target.options[event.target.options.selectedIndex].text;
-    this.FormDatosDetalleBien.get('tembalaje')?.setValue(dato);
-  }
-
-
-  onChangeNaviera(event: any) {
-    let dato = event.target.options[event.target.options.selectedIndex].text;
-    this.FormDatosBien.get('tnaviera')?.setValue(dato);
-  }
-
-
-  /////////////////////////////////////////////////////////////////////////////
-
-
-  /// Consulta de manifiesto
+  //Consultar solicitud
   e_consultaSolicitud(idtransaccion: any) {
-
-    // Root
-    //let RootConsultaUnManifiesto: IRootConsultaUnManifiesto;
-    //let IconsultaUnManifiesto: IconsultaUnManifiesto;
-    //let Icredencial: Icredencial;
     let Iparametros: Iparametros;
-
     let productos: any = [];
-
     Iparametros = {
       etransaccion: idtransaccion
     }
 
-
-
     this.apiServiceSolicitudServicios.postConsultarSolicitudServicio(Iparametros).subscribe(
       data => {
-        //this.bienesServicios = data.mercancias
-        ////console.log(data.mercancias)
         this.e_procesarConsultaSolicitud(data)
       }
     )
-
-
   }
 
-  e_procesarConsultaSolicitud(datos?: any) {
+
+  e_procesarConsultaSolicitud(datos: any) {
+
+    console.log(datos);
 
     //Carga(s)
     let Icarga: any = {};
@@ -547,12 +492,6 @@ export class ActualizarServicioCargaComponent implements OnInit {
     // Nofificaciones
     let arrNotificaciones: any
 
-    //Contadores Bienes
-    let contadorDetallesBien: number = 0;
-
-    let contadorBien: number = 0;
-
-
     let sellos: any = [];
 
     //Estatus de la solicitud
@@ -563,26 +502,26 @@ export class ActualizarServicioCargaComponent implements OnInit {
     //Mercancia(s)
     IListadoCargas = [];
 
-    // Datos del contacto
-    this.FormSolicitudEntrada = new UntypedFormGroup({
-      ecliente: new UntypedFormControl(datos.ecliente, Validators.required),
-      edireccion: new UntypedFormControl(datos.edireccion, Validators.required),
-      emetodopago: new UntypedFormControl(datos.emetodopago, Validators.required),
-      ebanco: new UntypedFormControl(datos.ebanco, Validators.required),
-      ecfdi: new UntypedFormControl(datos.ecfdi, Validators.required),
-      ecuenta: new UntypedFormControl(datos.ecuenta, Validators.required),
-      tmoneda: new UntypedFormControl(datos.tmoneda, Validators.required),
-      fhfechaservicio: new UntypedFormControl(datos.fhfechaservicio, Validators.required),
-      tcorreo: new UntypedFormControl(datos.tcorreo, [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-      ]),
-      ttelefono: new UntypedFormControl(datos.ttelefono, [Validators.required,
-      Validators.pattern("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$")
-      ]),
-      treferencia: new UntypedFormControl(datos.treferencia, null),
-      tobservaciones: new UntypedFormControl(datos.tobservaciones, null)
-    });
+    // Datos de solicitud
+    let solicitud = {
+          trfc : datos.trfc,
+          edireccion : datos.edireccion,
+          emetodopago : datos.emetodopago,
+          ebanco : datos.ebanco,
+          ecfdi : datos.ecfdi,
+          ecuenta : datos.ecuenta,
+          tmoneda : datos.tmoneda,
+          fhfechaservicio : datos.fhfechaservicio,
+          tcorreo : datos.tcorreo,
+          ttelefono : datos.ttelefono,
+          treferencia : datos.treferencia,
+          tobservaciones : datos.tobservaciones,
+    }
+    
+    this.ngformsolicitudentrada.form.setValue(solicitud)
+
+
+    
 
     //Servicios
     this.servicios = datos.servicios
@@ -596,9 +535,9 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
     // Validar si todo los bienes ya ingresaron en su totalidad
 
-    if (datos.tingresototal == 'SI') {
+    if (datos.isIngresoTotal == 'SI') {
       this.divAlerta = true
-      this.tingresoTotal = 'SI'
+      this.isIngresoTotal = 'SI'
     }
 
     //arreglo notificaciones
@@ -636,11 +575,6 @@ export class ActualizarServicioCargaComponent implements OnInit {
       sellos = [];
       IListadoMercancias = [];
 
-      //Clear contadores
-      contadorDetallesBien = 0
-
-
-
       // Busco los textos de los catalogos de la naviera ya los tengo a la mano
       this.datosNaviera.forEach((naviera: any, navindex: any) => {
         if (naviera['ecodnaviera'] == datocarga['ecodnaviera']) {
@@ -677,728 +611,594 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
 
         Imercancia = {
-          edetalleguia: datoMercancia['edetalleguia'],
-          tfacturas: datoMercancia['tfacturas'],
-          tmarcas: datoMercancia['tmarcas'],
-          tdescripcion: datoMercancia['tdescripcion'],
-          ecantidad: datoMercancia['ecantidad'],
-          epesobruto: datoMercancia['epesobruto'],
-          epesoneto: datoMercancia['epesoneto'],
+          econtadorRowBien: this.contadorRowBien,
+          edetalleguia: datoMercancia.edetalleguia,
+          tfacturas: datoMercancia.tfacturas,
+          tmarcas: datoMercancia.tmarcas,
+          tdescripcion: datoMercancia.tdescripcion,
+          ecantidad: datoMercancia.ecantidad,
+          epesobruto: datoMercancia.epesobruto,
+          epesoneto: datoMercancia.epesoneto,
           tembalaje: tnombreEmbalaje,
-          ecodembalaje: datoMercancia['ecodembalaje'],
-          evolumen: datoMercancia['evolumen'],
-          idSequenceDetalleBien: contadorDetallesBien
+          ecodembalaje: datoMercancia.ecodembalaje,
+          evolumen: datoMercancia.evolumen
         }
 
-        contadorDetallesBien++;
 
         IListadoMercancias.push(Imercancia);
+        this.contadorRowBien++;
+
 
 
       });
 
 
       Icarga = {
+        econtadorRowBien: this.contadorRowBien,
         eguia: datocarga.eguia,
-        idsequence: contadorBien,
         tembalaje: tnombreEmbalajeMercancia,
-        ecodembalaje: datocarga['ecodembalaje'],
+        ecodembalaje: datocarga.ecodembalaje,
         tnaviera: tnombreNaviera,
-        ecodnaviera: datocarga['ecodnaviera'],
-        tmarcas: datocarga['tmarcas'],
-        ttipocontenedor: datocarga['ttipocontenedor'],
-        epesoneto: datocarga['epesoneto'],
-        epesobruto: datocarga['epesobruto'],
-        ebultos: datocarga['ecantidad'],
-        ttramite: datocarga['ttramite'],
-        //ttipocarga: datocarga['ttipocarga'],
+        ecodnaviera: datocarga.ecodnaviera,
+        tmarcas: datocarga.tmarcas,
+        ttipocontenedor: datocarga.ttipocontenedor,
+        epesoneto: datocarga.epesoneto,
+        epesobruto: datocarga.epesobruto,
+        ebultos: datocarga.ecantidad,
+        ttramite: datocarga.ttramite,
+        ttipocarga:datocarga.ttipocarga,
         tsellos: sellos.join('/'),
         texistencia: datocarga.texistencia,
         detallesbien: IListadoMercancias
       }
 
-      contadorBien++;
 
       IListadoCargas.push(Icarga);
+      this.contadorRowBien++;
 
-      // Change select2 
-      $('.select2').val(datos.ecliente).trigger('change');
-      let parametros = {
-        ecliente: datos.ecliente
-      }
-      $('#ecliente').trigger('eValorCliente', parametros);
-      /////////////////////////////////////////////////////
-
+     
     });
 
-
-    this.listDatosCarga = IListadoCargas;
-
+    this.bienes = IListadoCargas;
 
   }
 
+  //////// Autocomplete /////////
 
-  ///////// Contacto /////////
-  //
-  get fcontacto() { return this.FormSolicitudEntrada.controls; }
-
-
-  ///////// Detalle Mercancias  /////////
-  e_mercancias(datos: any) {
-
-    ////console.log(datos);
-
-    //Carga(s)
-    let Icarga: Icarga;
-    //let IListadoCargas: Array<Icarga> = [];
-
-    //Auxiliares
-    let tnombreNaviera = '';
-    let tnombreEmbalaje = '';
-    let sellos: any = [];
-
-    // Busco los textos de los catalogos de la naviera ya los tengo a la mano
-    this.datosNaviera.forEach((naviera: any, navindex: any) => {
-      if (naviera['ecodnaviera'] == datos['ecodnaviera']) {
-        tnombreNaviera = naviera['tnombre']
-      }
-    });
-
-    this.datosEmbalaje.forEach((embalaje: any, index: any) => {
-      if (embalaje['ecodembalaje'] == datos['ecodembalaje']) {
-        tnombreEmbalaje = embalaje['tembalaje']
-      }
-    });
-
-
-
-    //IListadoCargas.push(Icarga);
-
-    // Lo cargo todo para el table
-    this.datosBien = datos;
-
-    //En caso de que el bien ya tenga cargado los detalles del bien se pinta  entonces !!!
-    if (Boolean(this.datosBien.detallesbien) == true) {
-      this.listDetallesBien = this.datosBien.detallesbien
+  e_filtrarRfc(value: any) {
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.trfc.toLowerCase();
     }
 
-
-
-
-    //Show Hidden div's
-    this.divCarga = false;
-    this.divMercancia = true;
-
-    //Reset al form de  detalle mercancias
-    this.FormDatosDetalleBien.reset();
-    this.submitDetalleBien = false;
-
-    //Reser el form de los detalles del bien 
-    /*this.FormDatosDetalleBien = new FormGroup({
-      idSequenceDetalleBien: new FormControl('', null),
-      edetalleguia: new FormControl(0, Validators.required),
-      tfacturas: new FormControl('', Validators.required),
-      tmarcas: new FormControl('', Validators.required),
-      tdescripcion: new FormControl('', Validators.required),
-      ecantidad: new FormControl('', Validators.required),
-      epesobruto: new FormControl('', Validators.required),
-      epesoneto: new FormControl('', Validators.required),
-      evolumen: new FormControl('', Validators.required),
-      ecodembalaje: new FormControl('', Validators.required),
-      tembalaje: new FormControl('', Validators.required)
-    });*/
-
-    //Reset Form
-    this.FormDatosDetalleBien = new UntypedFormGroup({
-      idSequenceDetalleBien: new UntypedFormControl('', null),
-      edetalleguia: new UntypedFormControl(0, Validators.required),
-      tfacturas: new UntypedFormControl('', Validators.required),
-      tmarcas: new UntypedFormControl('', Validators.required),
-      tdescripcion: new UntypedFormControl('', Validators.required),
-      ecantidad: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesoneto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      evolumen: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]),
-      ecodembalaje: new UntypedFormControl('', Validators.required),
-      tembalaje: new UntypedFormControl('', Validators.required)
-    });
-
+    return this.opcionesRfc.filter(
+      option => option.trfc.toLowerCase().indexOf(filterValue) === 0
+    );
 
   }
 
 
-  e_carga(datos: any) {
-
-    //Clear
-    this.listDetallesBien = [];
-
-    // Reset submit
-    this.submitBien = false;
-
-    //Show o Hidden div
-    this.divCarga = true;
-    this.divMercancia = false;
-
-    //Reser Form detalle biene
-    //Reset Form
-    this.FormDatosDetalleBien = new UntypedFormGroup({
-      idSequenceDetalleBien: new UntypedFormControl('', null),
-      edetalleguia: new UntypedFormControl(0, Validators.required),
-      tfacturas: new UntypedFormControl('', Validators.required),
-      tmarcas: new UntypedFormControl('', Validators.required),
-      tdescripcion: new UntypedFormControl('', Validators.required),
-      ecantidad: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesoneto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      evolumen: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]),
-      ecodembalaje: new UntypedFormControl('', Validators.required),
-      tembalaje: new UntypedFormControl('', Validators.required)
-    });
-
+  e_seleccionarRfc(dato: any) {
+    console.log('*Dato rfc');
+    console.log(dato);
+    this.datosDirecciones = dato.direcciones
+    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
   }
 
 
-  //Editar el detalles del bien
-  e_editarDetalleBien(dato: any) {
 
-    // Set value del sequence
-    this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
-
-    this.FormDatosDetalleBien = new UntypedFormGroup({
-      idSequenceDetalleBien: new UntypedFormControl(dato.idSequenceDetalleBien, null),
-      edetalleguia: new UntypedFormControl(dato.edetalleguia, null),
-      tfacturas: new UntypedFormControl(dato.tfacturas, Validators.required),
-      tmarcas: new UntypedFormControl(dato.tmarcas, Validators.required),
-      tdescripcion: new UntypedFormControl(dato.tdescripcion, Validators.required),
-      ecantidad: new UntypedFormControl(dato.ecantidad, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl(dato.epesobruto, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesoneto: new UntypedFormControl(dato.epesoneto, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      evolumen: new UntypedFormControl(dato.evolumen, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      ecodembalaje: new UntypedFormControl(dato.ecodembalaje, Validators.required)
-    });
-
-
-    /*this.FormDatosDetalleBien = new FormGroup({
-      idSequenceDetalleBien: new FormControl(dato.idSequenceDetalleBien, null),
-      edetalleguia: new FormControl(dato.edetalleguia, null),
-      tfacturas: new FormControl(dato.tfacturas, Validators.required),
-      tmarcas: new FormControl(dato.tmarcas, Validators.required),
-      tdescripcion: new FormControl(dato.tdescripcion, Validators.required),
-      ecantidad: new FormControl(dato.ecantidad, Validators.required),
-      epesobruto: new FormControl(dato.epesobruto, Validators.required),
-      epesoneto: new FormControl(dato.epesoneto, Validators.required),
-      evolumen: new FormControl(dato.evolumen, Validators.required),
-      tembalaje: new FormControl(dato.tembalaje, Validators.required),
-      ecodembalaje: new FormControl(dato.ecodembalaje, Validators.required)
-    });*/
-  }
-  //Eliminar los detalle del bien
-  e_eliminarDetalleBien(datoDetalleBien: any) {
-    this.listDetallesBien.forEach((dato: any, valor: any) => {
-      if (dato.idSequenceDetalleBien == datoDetalleBien.idSequenceDetalleBien) {
-        this.listDetallesBien.splice(valor, 1);
+  /// ALERTAS
+  alerta(datos: any) {
+    Swal.fire({
+      icon: datos['tipo'],
+      title: 'ATENCIÓN',
+      text: datos['text'],
+      footer: datos['footer'],
+      showConfirmButton: true,
+      confirmButtonColor: "#22bab7"
+    }).then((result) => {
+      if (result.isConfirmed && datos['tipo'] == 'success') {
+        this.unSaved = false
+        // this.etransaccion se llena cuando responde el response success
+        this.router.navigate(['dashboard/customer/serviciocarga/detalle', this.etransaccion]);
       }
     })
   }
 
-  // Valido datos de form
-  get fdetallebien() { return this.FormDatosDetalleBien.controls; }
+  alertaConfirm(dato: any, callback: any) {
+    let valor: boolean = false;
+    Swal.fire({
+      title: 'ATENCIÓN',
+      text: dato['text'],
+      icon: dato['tipo'],
+      showCancelButton: true,
+      confirmButtonColor: '#22bab7',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ACEPTAR',
+      cancelButtonText: "CANCELAR"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        valor = result.value;
+        callback(valor);
+      }
+    })
+    return valor;
+  }
 
-  e_agregarDetalleBien(dato: any) {
+  ///
+  e_procesar_datos_clientes(datos: any) {
+    //console.log(datos.data)
+    let datoClientes: Array<any> = [];
+    /*datos.forEach((dato: any, index: any) => {
+      datoClientes.push(dato.data);
 
-    ////console.log('Agregar detalle bien...')
-    ////console.log(dato)
+    })*/
+    this.datosClientes = datos.data
+  }
 
-    //Get id sequence
-    dato.idSequenceDetalleBien = this.idSequenceDetalleBien.nativeElement.value;
-
-    ////console.log(dato.idSequenceDetalleBien)
+  //////////////  AGERGAR BIEN ////////////////////////
 
 
-    // Stop en caso de detectar error
-    this.submitDetalleBien = true;
+  // convenience getter for easy access to form fields
+  //get f() { return this.FormDatosBien.controls; }
 
-    if (this.FormDatosDetalleBien.invalid) {
-      ////console.log('error!')
+  e_agregarBien(): void {
+
+
+    if (this.FormDatosBien.invalid) {
+      console.log('error.');
+      return;
+    }
+
+    console.log(this.FormDatosBien);
+    console.log(this.bienes);
+
+
+    //let datosBien: any = {};
+    this.datosBien = {}
+    this.datosBien.econtadorRowBien = this.FormDatosBien.value.econtadorRowBien;
+    this.datosBien.tembalaje = '';
+    this.datosBien.ecodembalaje = this.FormDatosBien.value.ecodembalaje;
+    this.datosBien.tnaviera = '';
+    this.datosBien.ecodnaviera = this.FormDatosBien.value.ecodnaviera;
+    this.datosBien.tmarcas = this.FormDatosBien.value.tmarcas;
+    this.datosBien.ttipocontenedor = this.FormDatosBien.value.ttipocontenedor;
+    this.datosBien.epesoneto = this.FormDatosBien.value.epesoneto;
+    this.datosBien.epesobruto = this.FormDatosBien.value.epesobruto;
+    this.datosBien.ebultos = this.FormDatosBien.value.ebultos;
+    this.datosBien.ttramite = this.FormDatosBien.value.ttramite;
+    this.datosBien.ttipocarga = this.FormDatosBien.value.ttipocarga;
+    this.datosBien.tsellos = this.FormDatosBien.value.tsellos;
+    //this.datosBien.bienes = this.FormDatosBien.value.tsellos;
+
+
+    //Nombre naviera
+    this.datosNaviera.forEach((valor: any, index: any) => {
+      if (valor.ecodnaviera == this.datosBien.ecodembalaje) {
+        this.datosBien.tnaviera = valor.tnombre;
+      }
+    });
+
+
+    //Nombre embalaje
+    this.datosEmbalaje.forEach((valor: any, index: any) => {
+      if (valor.ecodembalaje == this.datosBien.ecodembalaje) {
+        this.datosBien.tembalaje = valor.tnombre;
+      }
+    });
+
+    //Eliminar registro del arreglo bienes
+    if (this.datosBien.econtadorRowBien != 0) {
+      this.bienes.forEach((value: any, index: any) => {
+        if (value.econtadorRowBien == this.datosBien.econtadorRowBien) {
+          //Recuperar los datalles antes de eliminar
+
+          if (value.detallesbien) {
+            if (value.detallesbien.length == 0) {
+              this.datosBien.detallesbien = [];
+            } else {
+              this.datosBien.detallesbien = value.detallesbien;
+            }
+          }
+          //Eliminar
+          this.bienes.splice(index, 1);
+        }
+      })
+    } else {
+      this.datosBien.detallesbien = [];
+    }
+
+
+    //Crear un nuevo identificador row
+    this.datosBien.econtadorRowBien = this.contadorRowBien;
+    this.datosBien.eguia = this.FormDatosBien.value.eguia;
+
+
+    //Agregar
+    this.bienes.push(this.datosBien);
+
+    //Contador++
+    this.contadorRowBien++;
+
+    //Reset
+    this.FormDatosBien.reset();
+
+    //Reset items
+    this.FormDatosBien.get('econtadorRowBien')!.setValue(0);
+    this.FormDatosBien.get('eguia')!.setValue(0);
+
+    console.log('*Bienes')
+    console.log(this.bienes);
+
+
+  }
+
+  e_eliminarBien(element: any) {
+    //////console.log(element);
+
+    this.bienes.forEach((value: any, index: any) => {
+      if (value == element) {
+        this.bienes.splice(index, 1);
+        //this.FormDatosBien.get('idsequence')?.setValue(this.bienes.length);
+      }
+    });
+  }
+
+  e_editarBien(datos: any) {
+
+    //Item's
+    this.FormDatosBien = new FormGroup({
+      econtadorRowBien: new FormControl(datos.econtadorRowBien, null),
+      eguia: new FormControl(datos.eguia, null),
+      ecodembalaje: new FormControl(datos.ecodembalaje, Validators.required),
+      ecodnaviera: new FormControl(datos.ecodnaviera, Validators.required),
+      tmarcas: new FormControl(datos.tmarcas, Validators.required),
+      ttipocontenedor: new FormControl(datos.ttipocontenedor, Validators.required),
+      epesoneto: new FormControl(datos.epesoneto, [
+        Validators.required,
+        this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesobruto: new FormControl(datos.epesobruto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
+      ),
+      ebultos: new FormControl(datos.ebultos, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
+      ),
+      ttramite: new FormControl(datos.ttramite, Validators.required),
+      ttipocarga: new FormControl(datos.ttipocarga, Validators.required),
+      tsellos: new FormControl(datos.tsellos, [
+        Validators.required,
+        Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
+      ])
+    })
+
+
+  }
+
+  //////////////////////////////////////////////////// DETALLES DE BIEN /////////////////////////////////////////////////////////////
+
+  // convenience getter for easy access to form fields
+  get fmercancia() { return this.FormDatosDetallesBien.controls; }
+
+
+  //agregar Detalles del bien
+  e_agregarDetalleBien() {
+
+    console.log('*Datos bien');
+    console.log(this.datosBien);
+
+    console.log('*Detalles bienes');
+    console.log(this.FormDatosDetallesBien)
+
+    // stop here if form is invalid
+    if (this.FormDatosDetallesBien.invalid) {
+      console.log('error.');
       return;
     }
 
 
+    let datosDetallesBien: any = {}
+    datosDetallesBien.econtadorRow = this.FormDatosDetallesBien.value.econtadorRow;
+    datosDetallesBien.eguia = this.FormDatosDetallesBien.value.eguia;
+    datosDetallesBien.tfactura = this.FormDatosDetallesBien.value.tfactura;
+    datosDetallesBien.tmarcas = this.FormDatosDetallesBien.value.tmarcas;
+    datosDetallesBien.tdescripcion = this.FormDatosDetallesBien.value.tdescripcion;
+    datosDetallesBien.ecantidad = this.FormDatosDetallesBien.value.ecantidad;
+    datosDetallesBien.epesobruto = this.FormDatosDetallesBien.value.epesobruto;
+    datosDetallesBien.epesoneto = this.FormDatosDetallesBien.value.epesoneto;
+    datosDetallesBien.evolumen = this.FormDatosDetallesBien.value.evolumen;
+    datosDetallesBien.ecodembalaje = this.FormDatosDetallesBien.value.ecodembalaje;
 
-    let datosDetalleBien: any = {}
-
-    //datosDetalleBien.edetalleguia = dato.idSequenceDetalleBien;
-    datosDetalleBien.edetalleguia = dato.edetalleguia;
-    datosDetalleBien.tfacturas = dato.tfacturas;
-    datosDetalleBien.tmarcas = dato.tmarcas;
-    datosDetalleBien.tdescripcion = dato.tdescripcion;
-    datosDetalleBien.ecantidad = dato.ecantidad;
-    datosDetalleBien.epesobruto = dato.epesobruto;
-    datosDetalleBien.epesoneto = dato.epesoneto;
-    datosDetalleBien.evolumen = dato.evolumen;
-    datosDetalleBien.ecodembalaje = dato.ecodembalaje;
-
-
-    datosDetalleBien.tembalaje = dato.tembalaje;
-
-
-    // Insert da inicio a la sequencen
-    if (this.listDetallesBien.length == 0) {
-
-      //Sequence
-      datosDetalleBien.idSequenceDetalleBien = (this.listDetallesBien.length);
-
-      this.listDetallesBien.push(datosDetalleBien);
-    } else {
-
-      //Verificar si existe la sequence
-      if (Boolean(this.listDetallesBien[dato.idSequenceDetalleBien]) == true) {
-        ////console.log('Actualizando...');
-
-        this.listDetallesBien[dato.idSequenceDetalleBien].edetalleguia = datosDetalleBien.edetalleguia;
-        this.listDetallesBien[dato.idSequenceDetalleBien].tfacturas = datosDetalleBien.tfacturas;
-        this.listDetallesBien[dato.idSequenceDetalleBien].tmarcas = datosDetalleBien.tmarcas;
-        this.listDetallesBien[dato.idSequenceDetalleBien].tdescripcion = datosDetalleBien.tdescripcion;
-        this.listDetallesBien[dato.idSequenceDetalleBien].ecantidad = datosDetalleBien.ecantidad;
-        this.listDetallesBien[dato.idSequenceDetalleBien].epesobruto = datosDetalleBien.epesobruto;
-        this.listDetallesBien[dato.idSequenceDetalleBien].epesoneto = datosDetalleBien.epesoneto;
-        this.listDetallesBien[dato.idSequenceDetalleBien].evolumen = datosDetalleBien.evolumen;
-        this.listDetallesBien[dato.idSequenceDetalleBien].ecodembalaje = datosDetalleBien.ecodembalaje;
-        this.listDetallesBien[dato.idSequenceDetalleBien].tembalaje = datosDetalleBien.tembalaje;
-
-
-      } else {
-        ////console.log('Insert...');
-        //Sequence
-
-        datosDetalleBien.idSequenceDetalleBien = (this.listDetallesBien.length);
-
-        this.listDetallesBien.push(datosDetalleBien);
-
-        //this.listDatosCarga.push(this.carga);
-
+    //Nombre embalaje
+    this.datosEmbalaje.forEach((valor: any, index: any) => {
+      if (valor.ecodembalaje == datosDetallesBien.ecodembalaje) {
+        datosDetallesBien.tembalaje = valor.tnombre;
       }
+    });
+
+    //Eliminar el registro del arreglo
+    //Lo reemplazar por uno nuevo id
+    if (datosDetallesBien.econtadorRow != 0) {
+      this.listDetallesBien.forEach((value: any, index: any) => {
+        if (value.econtadorRow == datosDetallesBien.econtadorRow) {
+          //Eliminar
+          this.listDetallesBien.splice(index, 1);
+        }
+      })
     }
 
 
-    this.datosBien.detallesbien = this.listDetallesBien;
+    //Crear un nuevo identificador row.
+    datosDetallesBien.econtadorRow = this.contadorRowBien;
 
+    //Agregar
+    this.listDetallesBien.push(datosDetallesBien);
+
+    //Agregar el detalle en el bien correspondiente.
+    /* this.bienes.forEach((value: any, index: any) => {
+       if (value.econtadorRowBien == this.datosBien.econtadorRowBien) {
+         this.bienes[index].detallesbien = this.listDetallesBien;
+       }
+     });
+ 
+     */
+
+    //Contador++
+    this.contadorRowBien++;
 
     //Reset
-    this.submitDetalleBien = false;
+    this.FormDatosDetallesBien.reset();
 
-    // RESET
+    //Nuevo
+    this.FormDatosDetallesBien.get('econtadorRow')!.setValue(0);
+    this.FormDatosDetallesBien.get('eguia')!.setValue(0);
 
 
-    this.FormDatosDetalleBien = new UntypedFormGroup({
-      idSequenceDetalleBien: new UntypedFormControl('', null),
-      edetalleguia: new UntypedFormControl(0, Validators.required),
-      tfacturas: new UntypedFormControl('', Validators.required),
-      tmarcas: new UntypedFormControl('', Validators.required),
-      tdescripcion: new UntypedFormControl('', Validators.required),
-      ecantidad: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesoneto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      evolumen: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]),
-      ecodembalaje: new UntypedFormControl('', Validators.required),
-      tembalaje: new UntypedFormControl('', Validators.required)
+  }
+
+  //Form para iniciar la captura de los detalles del bien
+  e_capturarDetalleBien(datos: any) {
+
+    console.log('* Detalles bien')
+    console.log(datos)
+
+    //Cargas los datos
+    this.datosBien = datos
+
+    this.listDetallesBien = datos.detallesbien;
+
+    //Show Hidden div
+    this.divCarga = !this.divCarga
+    this.divMercancia = true
+
+  }
+
+  //ELiminar el detalles del bien 
+  e_eliminarDetalleBien(dato: any) {
+
+    this.listDetallesBien.forEach((value: any, index: any) => {
+      if (value == dato) {
+        this.listDetallesBien.splice(index, 1);
+        //this.FormDatosDetallesBien.get('idSequenceDetalleBien')?.setValue(this.listDetallesBien.length);
+      }
     });
+  }
+
+  //Editar el detalles del bien
+  e_editarDetalleBien(datos: any) {
+
+    // Set value del sequence
+    //this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
+
+    this.FormDatosDetallesBien = new FormGroup({
+      econtadorRow: new FormControl(datos.econtadorRow, null),
+      eguia: new FormControl(datos.eguia, null),
+      tfactura: new FormControl(datos.tfactura, Validators.required),
+      tmarcas: new FormControl(datos.tmarcas, Validators.required),
+      tdescripcion: new FormControl(datos.tdescripcion, Validators.required),
+      ecantidad: new FormControl(datos.ecantidad, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesobruto: new FormControl(datos.epesobruto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesoneto: new FormControl(datos.epesoneto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      evolumen: new FormControl(datos.evolumen, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      ecodembalaje: new FormControl(datos.ecodembalaje, Validators.required)
+    });
+
+    /*this.FormDatosDetallesBien = new FormGroup({
+      tfactura: new FormControl(dato.tfactura, Validators.required),
+      tmarcas: new FormControl(dato.tmarcas, Validators.required),
+      tdescripcion: new FormControl(dato.tdescripcion, Validators.required),
+      ecantidad: new FormControl(dato.ecantidad, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesobruto: new FormControl(dato.epesobruto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesoneto: new FormControl(dato.epesoneto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      evolumen: new FormControl(dato.evolumen, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      ecodembalaje: new FormControl(dato.ecodembalaje, Validators.required)
+    });*/
 
 
 
   }
 
-  ///////// Mercancia /////////
-  get fbien() { return this.FormDatosBien.controls; }
-
-  e_agregarBien(dato: any) {
-
-    //.log('Agregar bien...')
-    ////console.log(dato)
-
-    //Get idsequence
-    let idSecuenceBien = this.idsequence.nativeElement.value
+  e_carga(datos: any) {
 
 
-    //Validamos el Forms
-    this.submitBien = true;
+    //Clear
+    this.listDetallesBien = [];
 
-    // Stop en caso de detectar error
-    if (this.FormDatosBien.invalid) {
+    //Show Hidden div
+    this.divCarga = true;
+    this.divMercancia = false;
+
+
+  }
+
+
+  //////////////////////////////////// CONTACTO /////////////////////////////////////////
+
+  // convenience getter for easy access to form fields
+  get fcontacto() { return this.FormSolicitudServicios.controls; }
+
+
+  e_guardar(solicitud: NgForm) {
+
+    console.log(solicitud);
+
+
+    //Validar datos del contacto
+    this.submitGuardar = true;
+
+    // stop y valido
+    if (solicitud.invalid) {
       ////console.log('error.');
       return;
     }
 
 
-    //Clear
-    this.datoBien = {};
 
-    this.datoBien.eguia = dato.eguia;
-    this.datoBien.tembalaje = dato.tembalaje;
-    this.datoBien.ecodembalaje = dato.ecodembalaje;
-    this.datoBien.tnaviera = dato.tnaviera;
-    this.datoBien.ecodnaviera = dato.ecodnaviera;
-    this.datoBien.tmarcas = dato.tmarcas;
-    this.datoBien.ttipocontenedor = dato.ttipocontenedor;
-    this.datoBien.epesoneto = dato.epesoneto;
-    this.datoBien.epesobruto = dato.epesobruto;
-    this.datoBien.ebultos = dato.ebultos;
-    this.datoBien.ttramite = dato.ttramite;
-    //this.datoBien.ttipocarga = dato.ttipocarga;
-    this.datoBien.tsellos = dato.tsellos;
+    if (this.bienes.length == 0) {
 
+      let alertaCarga: any = {};
 
-    // Insert da inicio a la sequencen
-    if (this.listDatosCarga.length == 0) {
-
-      //Sequence
-      this.datoBien.idsequence = (this.listDatosCarga.length);
-
-      this.listDatosCarga.push(this.datoBien);
-
-    } else {
-
-      //Verificar si existe la sequence
-      if (Boolean(this.listDatosCarga[idSecuenceBien]) == true) {
-        ////console.log('Actualizando...');
-
-
-        this.listDatosCarga[idSecuenceBien].tembalaje = this.datoBien.tembalaje;
-        this.listDatosCarga[idSecuenceBien].ecodembalaje = this.datoBien.ecodembalaje;
-        this.listDatosCarga[idSecuenceBien].tnaviera = this.datoBien.tnaviera;
-        this.listDatosCarga[idSecuenceBien].ecodnaviera = this.datoBien.ecodnaviera;
-        this.listDatosCarga[idSecuenceBien].tmarcas = this.datoBien.tmarcas;
-        this.listDatosCarga[idSecuenceBien].ttipocontenedor = this.datoBien.ttipocontenedor;
-        this.listDatosCarga[idSecuenceBien].epesoneto = this.datoBien.epesoneto;
-        this.listDatosCarga[idSecuenceBien].epesobruto = this.datoBien.epesobruto;
-        this.listDatosCarga[idSecuenceBien].ebultos = this.datoBien.ebultos;
-        this.listDatosCarga[idSecuenceBien].ttramite = this.datoBien.ttramite;
-        //this.listDatosCarga[idSecuenceBien].ttipocarga = this.datoBien.ttipocarga;
-        this.listDatosCarga[idSecuenceBien].tsellos = this.datoBien.tsellos;
-
-      } else {
-        ////console.log('Insert...');
-        //Sequence
-        this.datoBien.idsequence = (this.listDatosCarga.length);
-
-        this.listDatosCarga.push(this.datoBien);
-
-      }
+      alertaCarga['text'] = 'NO SE DETECTA NINGUNA CARGA PARA ESTA OPERACIÓN';
+      alertaCarga['tipo'] = 'error';
+      alertaCarga['footer'] = '';
+      this.alerta(alertaCarga);
 
     }
 
-    //Final
-    ////console.log(this.listDatosCarga);
 
-    //Reset
-    //this.FormDatosBien.reset()
+    ////console.log('Antes');
+    ////console.log(JSON.stringify(this.bienes));
 
 
-    //////console.log(form);
-    this.submitBien = false;
+    if (this.bienes.length != 0) {
 
-    //Reset
-    this.FormDatosBien = new UntypedFormGroup({
-      idsequence: new UntypedFormControl('', null),
-      eguia: new UntypedFormControl(0, Validators.required),
-      tembalaje: new UntypedFormControl('', Validators.required),
-      ecodembalaje: new UntypedFormControl('', Validators.required),
-      tnaviera: new UntypedFormControl('', Validators.required),
-      ecodnaviera: new UntypedFormControl('', Validators.required),
-      tmarcas: new UntypedFormControl('', Validators.required),
-      ttipocontenedor: new UntypedFormControl('', Validators.required),
-      epesoneto: new UntypedFormControl('', [
-        Validators.required,
-        this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-      ),
-      ebultos: new UntypedFormControl('', [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-      ),
-      ttramite: new UntypedFormControl('', Validators.required),
-      //ttipocarga: new UntypedFormControl('', Validators.required),
-      tsellos: new UntypedFormControl('', [
-        Validators.required,
-        Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
-      ])
-    })
+      // Procesando datos
 
-    //Selected
-    this.FormDatosBien.controls['ecodembalaje'].setValue(null);
-    this.FormDatosBien.controls['ecodnaviera'].setValue(null);
-    this.FormDatosBien.controls['ttramite'].setValue(null);
-    //this.FormDatosBien.controls['ttipocarga'].setValue(null);
-    this.FormDatosBien.controls['ttipocontenedor'].setValue(null);
+      // Interfaces
+      //let rootNotifaManifiesto: IRootNotificaUnManifiesto;
 
-  }
+      //let datosNotificaManifiesto: InotificaManifiesto;
 
-  e_editarBien(dato: any) {
-    ////console.log('Editar bien...')
-    ////console.log(dato)
+      let Isolicitud: any;
+      let arrServivios: Array<any> = []
 
-    //Reset
-    this.FormDatosBien.reset();
+      //let datosCredencial: Icredencial;
 
-    //Load datos
-    /*this.FormDatosBien = new FormGroup({
-      idsequence: new FormControl(dato.idsequence, null),
-      eguia: new FormControl(dato.eguia, Validators.required),
-      tembalaje: new FormControl(dato.tembalaje, Validators.required),
-      ecodembalaje: new FormControl(dato.ecodembalaje, Validators.required),
-      tnaviera: new FormControl(dato.tnaviera, Validators.required),
-      ecodnaviera: new FormControl(dato.ecodnaviera, Validators.required),
-      tmarcas: new FormControl(dato.tmarcas, Validators.required),
-      ttipocontenedor: new FormControl(dato.ttipocontenedor, Validators.required),
-      epesoneto: new FormControl(dato.epesoneto, Validators.required),
-      epesobruto: new FormControl(dato.epesobruto, Validators.required),
-      ebultos: new FormControl(dato.ebultos, Validators.required),
-      ttramite: new FormControl(dato.ttramite, Validators.required),
-      ttipocarga: new FormControl(dato.ttipocarga, Validators.required),
-      tsellos: new FormControl(dato.tsellos, Validators.required)
-
-    })*/
-
-    this.FormDatosBien = new UntypedFormGroup({
-      idsequence: new UntypedFormControl(dato.idsequence, null),
-      eguia: new UntypedFormControl(dato.eguia, Validators.required),
-      tembalaje: new UntypedFormControl(dato.tembalaje, Validators.required),
-      ecodembalaje: new UntypedFormControl(dato.ecodembalaje, Validators.required),
-      tnaviera: new UntypedFormControl(dato.tnaviera, Validators.required),
-      ecodnaviera: new UntypedFormControl(dato.ecodnaviera, Validators.required),
-      tmarcas: new UntypedFormControl(dato.tmarcas, Validators.required),
-      ttipocontenedor: new UntypedFormControl(dato.ttipocontenedor, Validators.required),
-      epesoneto: new UntypedFormControl(dato.epesoneto, [
-        Validators.required,
-        this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-      ]),
-      epesobruto: new UntypedFormControl(dato.epesobruto, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-      ),
-      ebultos: new UntypedFormControl(dato.ebultos, [Validators.required,
-      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-      ),
-      ttramite: new UntypedFormControl(dato.ttramite, Validators.required),
-      //ttipocarga: new UntypedFormControl(dato.ttipocarga, Validators.required),
-      tsellos: new UntypedFormControl(dato.tsellos, [
-        Validators.required,
-        Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
-      ])
-    })
+      let datosParametros: Iparametros;
 
 
-  }
+      //let carga: Imercancias;
+      let carga: any = [];
+      let listaCarga: Array<Imercancias> = [];
 
-  //Eliminar Bien
-  e_eliminarBien(datosBien: any) {
-    this.listDatosCarga.forEach((dato: any, valor: any) => {
-      if (dato.idsequence == datosBien.idsequence) {
-        this.listDatosCarga.splice(valor, 1);
-      }
-    })
-  }
-
-  ///////// Guardar /////////
-
-  e_guardar(datos: any) {
-
-    //console.log('solicitud')
-    //console.log(datos)
-
-    //Seguridad
-    //let localData = localStorage.getItem("token");
-    //let seguridad = localData ? JSON.parse(localData) : [];
-
-    //El resto del fomulario
-    this.submitGuardar = true;
-
-    // Stop en caso de error
-    if (this.FormSolicitudEntrada.invalid) {
-      ////console.log('error');
-      return;
-    }
-
-    // Interfaces
-    let IdetalleMercancia: Idetallemercancias;
-    let IlistaDetMercancias: Array<Idetallemercancias> = [];
-
-    let Isellos: Isellos;
-    let IlistaSellos: Array<Isellos> = [];
-
-    let Imercancia: any;
-    let IlistaMercancia: Array<Imercancias> = [];
-
-    let Isolicitud: any;
-
-    let arrServivios: Array<any> = []
+      let sellos: Isellos;
+      let listaSellos: Array<Isellos> = [];
 
 
-    let estado: string = 'OK!'
-    let mensaje: string = ''
-
-    //let IrectificaUnManifiesto: IrectificaUnManifiesto;
-    //let IRootrectificaUnManifiesto: IRootrectificaUnManifiesto;
+      let mercancia: Idetallemercancias;
+      let listaMercancias: Array<Idetallemercancias> = [];
 
 
-    //Proceso los datos
-    ////console.log('datos');
-    ////console.log(this.listDatosCarga);
 
-    //Revisar servicios agregados
-    //SERVICIOS
-    if (this.servicios.length == 0) {
-      estado = 'ERROR!'
-      mensaje += 'NO SE DETECTA SERVICIOS AGREGADO PARA ESTA OPERACIÓN\n';
-    }
+      this.bienes.forEach((dato: any, index: any) => {
+        ////console.log(index);
+        ////console.log(dato['idsequence']);
 
-    //Revisar registros
-    if (this.listDatosCarga.length == 0) {
-
-      /* let alertaCarga: any = {};
- 
-       alertaCarga['text'] = 'NO SE DETECTA NINGUNA CARGA PARA ESTA OPERACIÓN';
-       alertaCarga['tipo'] = 'warning';
-       alertaCarga['footer'] = '';
-       this.alerta(alertaCarga);*/
-
-      estado = 'ERROR!'
-      mensaje += 'NO SE DETECTA SERVICIOS AGREGADO PARA ESTA OPERACIÓN\n';
+        //clear
+        listaMercancias = []
+        listaSellos = []
 
 
-    }
+        if (Boolean(dato['detallesbien']) == false) {
 
-    // Validar que existe una bien agregado
-    if (estado == 'ERROR!') {
-
-      let alerta: any = {};
-
-      alerta['text'] = mensaje;
-      alerta['tipo'] = 'error';
-      alerta['footer'] = '';
-      this.alerta(alerta);
-
-
-    } else {
-
-      //Recorrer el array para prepar el json de envio al API
-
-      this.listDatosCarga.forEach((mercancia: any, index: any) => {
-
-        //Clear
-        IlistaSellos = [];
-        IlistaDetMercancias = [];
-        let arrServivios: Array<any> = []
-
-
-        if (Boolean(mercancia['detallesbien']) == false) {
           let alerta: any = {};
+
           alerta['text'] = 'CAPTURAR EL DETALLE DE LAS MERCANCIAS';
           alerta['tipo'] = 'warning';
           alerta['footer'] = '';
           this.alerta(alerta);
+
         }
 
-        //Detalle mercancia(s)
-        if (mercancia['detallesbien']) {
-          mercancia['detallesbien'].forEach((detmercancia: any, index: any) => {
-
-            IdetalleMercancia = {
-              edetalleguia: detmercancia['edetalleguia'],
-              tfacturas: detmercancia['tfacturas'],
-              ecodpropietario: 0,
-              tmarcas: detmercancia['tmarcas'],
-              tdescripcion: detmercancia['tdescripcion'],
-              ecantidad: detmercancia['ecantidad'],
-              epesobruto: detmercancia['epesobruto'],
-              epesoneto: detmercancia['epesoneto'],
-              ecodembalaje: detmercancia['ecodembalaje'],
-              evolumen: detmercancia['evolumen'],
+        //DETALLE MERCANCIA
+        if (dato['detallesbien']) {
+          dato['detallesbien'].forEach((datomercancias: any, index: any) => {
+            mercancia = {
+              edetalleguia: datomercancias.eguia,
+              tfacturas: datomercancias.tfactura,
+              ecodpropietario: datomercancias.ecodpropietario,
+              tmarcas: datomercancias.tmarcas,
+              tdescripcion: datomercancias.tdescripcion,
+              ecantidad: datomercancias.ecantidad,
+              epesobruto: datomercancias.epesobruto,
+              epesoneto: datomercancias.epesoneto,
+              ecodembalaje: datomercancias.ecodembalaje,
+              evolumen: datomercancias.evolumen,
             }
-            IlistaDetMercancias.push(IdetalleMercancia);
+
+            listaMercancias.push(mercancia);
+
           });
         }
 
-        // Sello(s)
-        let Splitsellos = mercancia['tsellos'].split("/");
+        // SELLOS
+        let Splitsellos = dato['tsellos'].split("/");
         Splitsellos.forEach((datosello: any, index: any) => {
-          Isellos = {
+          sellos = {
             tsello: datosello,
-            ttiposello: 'TAPON' // por ahora default
+            ttiposello: 'TAPON'
           }
-          IlistaSellos.push(Isellos);
+          listaSellos.push(sellos);
         })
 
-        //Mercancia(s)
-        Imercancia = {
-          eguia: mercancia['eguia'],
-          //ttipocarga: mercancia['ttipocarga'],
-          ttramite: mercancia['ttramite'],
-          ecodnaviera: mercancia['ecodnaviera'],
-          ttipocontenedor: mercancia['ttipocontenedor'],
-          ecodembalaje: mercancia['ecodembalaje'],
-          tmarcas: mercancia['tmarcas'],
-          epesobruto: mercancia['epesobruto'],
-          epesoneto: mercancia['epesoneto'],
-          ecantidad: mercancia['ebultos'],
-          sellos: IlistaSellos,
-          detallesbien: IlistaDetMercancias
+        carga = {
+          eguia: dato.eguia,
+          ttramite: dato.ttramite,
+          ecodnaviera: dato.ecodnaviera,
+          ttipocontenedor: dato.ttipocontenedor,
+          ecodembalaje: dato.ecodembalaje,
+          tmarcas: dato.tmarcas,
+          epesobruto: dato.epesobruto,
+          epesoneto: dato.epesoneto,
+          ecantidad: dato.ebultos,
+          sellos: listaSellos,
+          detallesbien: listaMercancias
         }
-        IlistaMercancia.push(Imercancia);
 
-      })
+        listaCarga.push(carga);
+
+      });
+
 
       ///Servicios
       this.servicios.forEach((dato: any, valor: any) => {
@@ -1409,66 +1209,67 @@ export class ActualizarServicioCargaComponent implements OnInit {
       })
 
 
+
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
+      //Parche buscar el id del cliente por el RFC
+      this.datosClientes.forEach((dato: any, valor: any) => {
+        if (dato.trfc == solicitud.value.trfc) {
+          solicitud.value.cliente = dato.ecliente;
+        }
+      })
+
       Isolicitud = {
-        etransaccion: this.eNumeroOrden,
-        ecliente: datos.ecliente,
-        edireccion: datos.edireccion,
+        etransaccion: this.etransaccion,
+        ecliente: solicitud.value.cliente,
+        edireccion: solicitud.value.edireccion,
+        emetodopago: solicitud.value.emetodopago,
+        ebanco: solicitud.value.ebanco,
+        ecfdi: solicitud.value.ecfdi,
+        ecuenta: solicitud.value.ecuenta,
+        tmoneda: solicitud.value.tmoneda,
         ttiposolicitud: 'SERVICIO',
-        tcorreo: datos.tcorreo,
-        treferencia: datos.treferencia,
-        emetodopago: datos.emetodopago,
-        ebanco: datos.ebanco,
-        ecfdi: datos.ecfdi,
-        ecuenta: datos.ecuenta,
-        tmoneda: datos.tmoneda,
-        fhfechaservicio: datos.fhfechaservicio,
-        tobservaciones: datos.tobservaciones,
-        ttelefono: datos.ttelefono,
+        tcorreo: solicitud.value.tcorreo,
+        ttelefono: solicitud.value.ttelefono,
+        treferencia: solicitud.value.treferencia,
+        fhfechaservicio: solicitud.value.fhfechaservicio,
+        tobservaciones: solicitud.value.tobservaciones,
         ecodusuario: datosUsuario.ecodusuario,
         servicios: arrServivios,
-        bienes: IlistaMercancia,
-
+        bienes: listaCarga
       }
 
 
-      //IdatosParametros = { orden: Isolicitud }
+      //datosParametros = { orden: Isolicitud }
+
 
 
       let alerta: any = {};
 
-      alerta['text'] = '¿ DESEA CONTINUAR ? ';
+      alerta['text'] = 'DESEA CONTINUAR ? ';
       alerta['tipo'] = 'question';
       alerta['footer'] = '';
 
 
-      /*this.alertaConfirm(alerta, (confirmed: boolean) => {
-        if (confirmed == true) {
-          this.e_rectificaUnManifiesto(IdatosParametros);
-        }
-      });*/
-
       this.alertaConfirm(alerta, (confirmed: boolean) => {
         if (confirmed == true) {
           //console.log(JSON.stringify(Isolicitud));
-          this.e_actualizarSolicitudServicio(Isolicitud);
+          this.e_notificarSolicitudServicio(Isolicitud);
         }
       });
-    }
 
+
+    }
 
   }
 
-
-  /// Procesar API actualizar solicitud
-  e_actualizarSolicitudServicio(datos: any) {
-    //Consumir el servicio api
+  e_notificarSolicitudServicio(datos: any) {
     let alerta: any = {};
     let text = '';
     let success: boolean
 
+    //Consumir el api
     this.apiServiceSolicitudServicios.postActualizarSolicitudServicioGuia(datos).subscribe(
       (response) => {
 
@@ -1478,6 +1279,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
             text += dato.attributes.text + '\n'
             if (dato.attributes.etransaccion) {
               this.etransaccion = dato.attributes.etransaccion
+
             }
 
           })
@@ -1486,82 +1288,125 @@ export class ActualizarServicioCargaComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            ////console.log(dato.attributes.text)
+            //console.log(dato.attributes.text)
             text += dato.attributes.text + '\n'
           })
         }
 
         alerta['text'] = text;
         alerta['tipo'] = (success == true ? "success" : "error");
-        alerta['footer'] = "SERVICIO CARGA";
-
+        alerta['footer'] = "SERVICIO";
         this.alerta(alerta);
-      }
-    )
+      })
   }
 
-  /*e_rectificaUnManifiesto(datos: any) {
-
-    let alerta: any = {};
-    let text = '';
-    let success: boolean
-
-    this.apiManifiesto.postRectificaUnManifiesto(datos).subscribe(
-      (response) => {
-
-        if (response.data) {
-          success = true
-          response.data.forEach((dato: any, index: any) => {
-            text += dato.attributes.text + '\n'
-            if (dato.attributes.order) {
-              this.lbletransaccion = dato.attributes.order
-            }
-          })
-        }
-
-        alerta['text'] = text;
-        alerta['tipo'] = (success == true ? "success" : "error");
-        alerta['footer'] = "CLIENTE";
-        this.alerta(alerta);
-      }
-    )
-
-  }*/
-
+  //Redirecionar al reporte de consultar
   e_consulta() {
     this.router.navigate(['dashboard/customer/serviciocarga/consultar']);
   }
 
   e_procesarDirecciones(datos: any) {
-    ////console.log('datos')
-    ////console.log(datos)
-    this.FormSolicitudEntrada.controls.ecliente.setValue(datos.ecliente);
+    //console.log('datos')
+    //console.log(datos)
+    //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        ////console.log(dato.direcciones)
+        //console.log(dato.direcciones)
         this.datosDirecciones = dato.direcciones
       }
     })
   }
 
-  //Redireccionar para crear una nueva solicitud
-  e_nuevo() {
-    this.router.navigate(['dashboard/customer/serviciocarga/nuevo']);
+
+  //Procesar los datos los servicios para el arragles
+  e_procesarDatosServicios(datos: any) {
+    //Clear
+    this.arrservicio = []
+    this.arrtiposolicitud = []
+
+    //Seleccionar primera posicio (reset)
+    this.ngSelectTipoServicio = ""
+    this.ngSelectServicios = ""
+    this.ngSelectServicioEspecifico = ""
+
+
+    this.arratipoServicios = datos.data
   }
 
-  //agregar servicios
+  //Onchage tipo servicio
+  e_onChangeTipoServicio(datos: any) {
+
+    //Ocultar especificacion del servicio
+    this.divServicioEspecifico = false
+
+    //Clear
+    this.arrservicio = []
+    //this.arrtiposolicitud = []
+
+    //Seleccionar primera posicio (reset)
+    this.ngSelectServicios = ""
+    this.ngSelectServicioEspecifico = ""
+
+
+    if (datos.value.childs) {
+      datos.value.childs.forEach((dato: any, valor: any) => {
+        this.arrservicio.push(dato)
+        /*if (dato.servicios.length > 0) {
+          this.arrtiposolicitud = []
+          console.log(dato.servicios)
+          this.arrtiposolicitud = dato.servicios
+        }*/
+      })
+    }
+  }
+
+  //Onchage servicios
+  e_onChangeServicio(datos: any) {
+
+    this.arrtiposolicitud = []
+
+    //console.log('Servicios')
+    //console.log(datos.servicios.length)
+    this.arrtiposolicitud = []
+
+    if (datos.value.childs) {
+      if (datos.value.childs.length > 0) {
+
+        this.ngSelectServicioEspecifico = ''
+
+        //Mostrar especificacion del servicio
+        this.divServicioEspecifico = true
+        datos.value.childs.forEach((dato: any, valor: any) => {
+          this.arrtiposolicitud.push(dato)
+        })
+      }
+    }
+  }
+
+  //Eliminar servicio
+  e_eliminar_servicio(datos: any) {
+    this.servicios.forEach((servicio: any, valor: any) => {
+      if (servicio.eservicio == datos.eservicio) {
+        // console.log('eliminar!');
+        this.servicios.splice(valor, 1);
+      }
+    })
+  }
+
+
+  //Agregar servicio(s)
   get fservicios() { return this.FormServicios.controls; }
 
-  e_agregarServicio(datos: any) {
+  e_agregarServicio(datos: NgForm) {
 
     console.log('Servicios');
     console.log(datos);
 
     //Validamos el Forms
-    this.submitServicios = true;
+    //this.submitServicios = true;
     // Stop en caso de detectar error
-    if (this.FormServicios.invalid) {
+    if (datos.invalid) {
       //console.log('error.');
       return;
     }
@@ -1575,7 +1420,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
     if (this.servicios.length > 0) {
       this.servicios.forEach((servicio: any, valor: any) => {
-        if (datos.etiposolicitud.eservicio == servicio.eservicio) {
+        if (datos.value.etiposolicitud.eservicio == servicio.eservicio) {
           exitencia = 'SI';
         }
 
@@ -1591,89 +1436,36 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
       let datoservicios = {}
 
-      if (datos.etiposolicitud > 0) {
+      if (datos.value.etiposolicitud > 0) {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud: datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       } else {
         datoservicios = {
-          ttipomercancia: datos.etipomercancia.tdescripcion,
-          ttiposervicio: datos.etiposervicio.tdescripcion,
-          ttiposolicitud: datos.etiposolicitud.tdescripcion,
-          eservicio: datos.etiposolicitud.eservicio
+          ttipomercancia: datos.value.etipomercancia.tdescripcion,
+          ttiposervicio: datos.value.etiposervicio.tdescripcion,
+          ttiposolicitud: datos.value.etiposolicitud.tdescripcion,
+          eservicio: datos.value.etiposolicitud.eservicio
         }
       }
 
       this.servicios.push(datoservicios)
 
-      this.FormServicios = new UntypedFormGroup({
-        etipomercancia: new UntypedFormControl(null, Validators.required),
-        etiposervicio: new UntypedFormControl(null, Validators.required),
-        etiposolicitud: new UntypedFormControl(null, Validators.required),
-      })
+      /*this.FormServicios = new FormGroup({
+        etipomercancia: new FormControl(null, Validators.required),
+        etiposervicio: new FormControl(null, Validators.required),
+        etiposolicitud: new FormControl(null, Validators.required),
+      })*/
+
+      //Reset
+      this.FormServicios.reset();
+
+
     }
 
-  }
-
-  //Onchange servicio
-  e_onChangeServicio(datos: any) {
-
-    this.arrtiposolicitud = []
-
-    //console.log('Servicios')
-    //console.log(datos.servicios.length)
-    this.arrtiposolicitud = []
-
-    if (datos.childs) {
-      if (datos.childs.length > 0) {
-
-        this.ngSelectServicioEspecifico = ''
-
-        //Mostrar especificacion del servicio
-        this.divServicioEspecifico = true
-        datos.childs.forEach((dato: any, valor: any) => {
-          this.arrtiposolicitud.push(dato)
-        })
-      }
-    }
-  }
-  //Eliminar servicio
-  e_eliminar_servicio(datos: any) {
-    this.servicios.forEach((servicio: any, valor: any) => {
-      if (servicio.eservicio == datos.eservicio) {
-        // //console.log('eliminar!');
-        this.servicios.splice(valor, 1);
-      }
-    })
-  }
-  //Onchage tipo de servicio
-  e_onChangeTipoServicio(datos: any) {
-
-    //Ocultar especificacion del servicio
-    this.divServicioEspecifico = false
-
-    //Clear
-    this.arrservicio = []
-    //this.arrtiposolicitud = []
-
-    //Seleccionar primera posicio (reset)
-    this.ngSelectServicios = ""
-    this.ngSelectServicioEspecifico = ""
-
-
-    if (datos.childs) {
-      datos.childs.forEach((dato: any, valor: any) => {
-        this.arrservicio.push(dato)
-        /*if (dato.servicios.length > 0) {
-          this.arrtiposolicitud = []
-          console.log(dato.servicios)
-          this.arrtiposolicitud = dato.servicios
-        }*/
-      })
-    }
   }
 
   //Onchange tipo de carga
@@ -1700,9 +1492,9 @@ export class ActualizarServicioCargaComponent implements OnInit {
       }
 
 
-      /*if (this.listDatosCarga.length != 0) {
+      /*if (this.bienes.length != 0) {
 
-        this.listDatosCarga.forEach((dato: any, index: any) => {
+        this.bienes.forEach((dato: any, index: any) => {
           if (datos != dato.ttipocarga) {
             //Reset
             //this.FormDatosBien.controls['ttipocarga'].setValue(null);
@@ -1723,7 +1515,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
     }
 
 
-    /*if (this.listDatosCarga.length == 0) {
+    /*if (this.bienes.length == 0) {
  
       let alertaCarga: any = {};
  
@@ -1736,5 +1528,12 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
 
   }
+
+
+  //Redireccionar para crear una nueva solicitud
+  e_nuevo() {
+    this.router.navigate(['dashboard/customer/serviciocarga/nuevo']);
+  }
+
 
 }

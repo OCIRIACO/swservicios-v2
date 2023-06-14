@@ -601,6 +601,7 @@ export class CrearAutotransporteComponent implements OnInit {
       return;
     }
 
+    
 
 
     //let datosBien: any = {};
@@ -695,34 +696,34 @@ export class CrearAutotransporteComponent implements OnInit {
 
   e_editarBien(datos: any) {
 
-       //Item's
-       this.FormDatosBien = new FormGroup({
-        econtadorRowBien: new FormControl(datos.econtadorRowBien, null),
-        eguia: new FormControl(datos.eguia, null),
-        ecodembalaje: new FormControl(datos.ecodembalaje, Validators.required),
-        ecodnaviera: new FormControl(datos.ecodnaviera, Validators.required),
-        tmarcas: new FormControl(datos.tmarcas, Validators.required),
-        ttipocontenedor: new FormControl(datos.ttipocontenedor, Validators.required),
-        epesoneto: new FormControl(datos.epesoneto, [
-          Validators.required,
-          this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-          this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
-        ]),
-        epesobruto: new FormControl(datos.epesobruto, [Validators.required,
+    //Item's
+    this.FormDatosBien = new FormGroup({
+      econtadorRowBien: new FormControl(datos.econtadorRowBien, null),
+      eguia: new FormControl(datos.eguia, null),
+      ecodembalaje: new FormControl(datos.ecodembalaje, Validators.required),
+      ecodnaviera: new FormControl(datos.ecodnaviera, Validators.required),
+      tmarcas: new FormControl(datos.tmarcas, Validators.required),
+      ttipocontenedor: new FormControl(datos.ttipocontenedor, Validators.required),
+      epesoneto: new FormControl(datos.epesoneto, [
+        Validators.required,
         this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-        ),
-        ebultos: new FormControl(datos.ebultos, [Validators.required,
-        this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
-        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
-        ),
-        ttramite: new FormControl(datos.ttramite, Validators.required),
-        ttipocarga: new FormControl(datos.ttipocarga, Validators.required),
-        tsellos: new FormControl(datos.tsellos, [
-          Validators.required,
-          Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
-        ])
-      })
+        this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })
+      ]),
+      epesobruto: new FormControl(datos.epesobruto, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
+      ),
+      ebultos: new FormControl(datos.ebultos, [Validators.required,
+      this.regexValidador(new RegExp(this.regNumerico), { 'number': true }),
+      this.regexValidador(new RegExp(this.regNumericLogitud), { 'precision': true })]
+      ),
+      ttramite: new FormControl(datos.ttramite, Validators.required),
+      ttipocarga: new FormControl(datos.ttipocarga, Validators.required),
+      tsellos: new FormControl(datos.tsellos, [
+        Validators.required,
+        Validators.pattern('[a-z0-9-A-Z0-9/\\s]+')
+      ])
+    })
 
 
   }
@@ -922,7 +923,7 @@ export class CrearAutotransporteComponent implements OnInit {
   ////////////////////////// GUARDAR ///////////////////////
 
   // convenience getter for easy access to form fields
-  get fcontacto() { return this.FormSolicitudServicios.controls; }
+  // get fcontacto() { return this.FormSolicitudServicios.controls; }
 
 
   e_guardar(solicitud: NgForm) {
