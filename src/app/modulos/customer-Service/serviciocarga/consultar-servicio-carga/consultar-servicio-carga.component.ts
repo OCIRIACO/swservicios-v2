@@ -47,7 +47,6 @@ export class ConsultarServicioCargaComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     //Parametros
     let parametros = {}
 
@@ -61,7 +60,6 @@ export class ConsultarServicioCargaComponent implements OnInit {
       (response) => {
         this.dataSource.data = response as Post[];
         this.dataSource.paginator = this.paginator;
-
       }
     )
 
