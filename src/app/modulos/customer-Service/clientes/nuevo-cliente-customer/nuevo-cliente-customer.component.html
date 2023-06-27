@@ -103,12 +103,12 @@
                                -->
 
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-2">
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Codigo postal</mat-label>
                                             <input matInput placeholder=""
-                                                oninput="this.value = this.value.toUpperCase()" 
-                                                name="ecodigopostal" ngModel #ecodigopostal="ngModel" required
+                                                oninput="this.value = this.value.toUpperCase()" name="ecodigopostal"
+                                                ngModel #ecodigopostal="ngModel" required
                                                 (change)="e_consultaCp($event)" size="256">
                                             <mat-error
                                                 *ngIf="FormDireccion.controls['ecodigopostal'].errors?.required">Cp es
@@ -130,7 +130,7 @@
                                             </div>
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-2">
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Estado federativa</mat-label>
                                             <input matInput placeholder=""
@@ -158,7 +158,7 @@
                                                 formControlName="eestado" name="eestado">
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-2">
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Municipio</mat-label>
                                             <input matInput placeholder=""
@@ -187,7 +187,7 @@
                                                 formControlName="emunicipio" name="emunicipio">
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-2">
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Colonia</mat-label>
                                             <mat-select name="tcolonia" ngModel #tcolonia="ngModel" required>
@@ -197,7 +197,7 @@
                                                     {{dato.tcolonia}}
                                                 </mat-option>
                                             </mat-select>
-                                            <mat-error *ngIf="FormDireccion.controls.ecolonia.errors?.required">Colonia
+                                            <mat-error *ngIf="FormDireccion.controls.tcolonia.errors?.required">Colonia
                                                 es requerido</mat-error>
                                         </mat-form-field>
 
@@ -218,7 +218,7 @@
                                             </div>
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-2">
+                                    <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Calle</mat-label>
                                             <input matInput placeholder=""
@@ -240,7 +240,7 @@
                                             </div>
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-1">
+                                    <div class="col-xs-12 col-sm-12 col-md-1">
                                         <mat-form-field class="full-width">
                                             <mat-label>N° exterior</mat-label>
                                             <input matInput placeholder=""
@@ -262,7 +262,7 @@
                                             </div>
                                         </div>-->
                                     </div>
-                                    <div class="col-sm-12 col-md-1">
+                                    <div class="col-xs-12 col-sm-12 col-md-1">
                                         <mat-form-field class="full-width">
                                             <mat-label>N° exterior</mat-label>
                                             <input matInput placeholder=""
@@ -279,15 +279,33 @@
                                 </div>
 
                                 <div class="row">
+
                                     <div class="col-sm-12 col-md-2">
-                                        <input matInput name="econtadorrow" ngModel #econtadorrow="ngModel">
+                                        <mat-form-field class="full-width">
+                                            <mat-label>edireccion</mat-label>
+                                            <input matInput name="edireccion" ngModel #edireccion="ngModel">
+                                        </mat-form-field>
                                     </div>
 
                                     <div class="col-sm-12 col-md-2">
-                                        <input matInput name="eentidadfederativa" ngModel #eentidadfederativa="ngModel">
+                                        <mat-form-field class="full-width">
+                                            <mat-label>econtadorrow</mat-label>
+                                            <input matInput name="econtadorrow" ngModel #econtadorrow="ngModel">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-sm-12 col-md-2">
+                                        <mat-form-field class="full-width">
+                                            <mat-label>eentidadfederativa</mat-label>
+                                            <input matInput name="eentidadfederativa" ngModel
+                                                #eentidadfederativa="ngModel">
+                                        </mat-form-field>
                                     </div>
                                     <div class="col-sm-12 col-md-2">
-                                        <input matInput name="emunicipio" ngModel #emunicipio="ngModel">
+                                        <mat-form-field class="full-width">
+                                            <mat-label>emunicipio</mat-label>
+                                            <input matInput name="emunicipio" ngModel #emunicipio="ngModel">
+                                        </mat-form-field>
                                     </div>
                                 </div>
 

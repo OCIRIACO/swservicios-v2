@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, NgForm, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { apiCodigosPostales } from 'src/app/serviciosRest/api/api.codigospostales';
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import Swal from 'sweetalert2';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
+import { MatSelectChange } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+
 
 @Component({
   selector: 'app-editar-cliente-customer',
@@ -14,67 +18,82 @@ import { Observable, of } from 'rxjs';
 })
 export class EditarClienteCustomerComponent implements OnInit {
 
+
+  @ViewChild('formDireccionesRazonSocial') ngformDireccionRazonSocial: NgForm;
+  @ViewChild('solicitudRazonSocial') ngformRazonSocial: NgForm;
+  @ViewChild('clocl') divClick: ElementRef;
   //RegEx
   regNumerico: string = '^[+-]?([0-9]*[.])?[0-9]+$'
 
+  //Datos de usuario
+  datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
   //Get text colonia
   tcolonia: string = ''
 
   //Catalogos arreglo
   arrdatosColonia: any
-  arrdatosDireccion: Array<any> = [];
+  direcciones: Array<any> = [];
 
   //Path base
   directorio: string = GlobalConstants.pathCustomer;
 
   //Form's
-  FormCliente = new UntypedFormGroup({
-    ecliente: new UntypedFormControl('', Validators.required),
-    trazonsocial: new UntypedFormControl('', Validators.required),
-    trfc: new UntypedFormControl('', Validators.required),
+  FormRazonSocial = new FormGroup({
+    ecliente: new FormControl('', Validators.required),
+    trazonsocial: new FormControl('', Validators.required),
+    trfc: new FormControl('', Validators.required),
   })
 
-  FormDireccion = new UntypedFormGroup({
-    eindex: new UntypedFormControl('', null),
-    edireccion: new UntypedFormControl('', null),
-    ecodigopostal: new UntypedFormControl('', [Validators.required,
+  //contador rows tables
+  contadorRow: number = 1;
+
+  FormDireccion = new FormGroup({
+    econtadorrow: new FormControl(0, Validators.required),
+    edireccion: new FormControl(0, null),
+    ecodigopostal: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
     ]),
-    tentidadfederativa: new UntypedFormControl('', Validators.required),
-    eestado: new UntypedFormControl('', Validators.required),
-    tmunicipio: new UntypedFormControl('', Validators.required),
-    emunicipio: new UntypedFormControl('', Validators.required),
-    ecolonia: new UntypedFormControl('', Validators.required),
-    tcalle: new UntypedFormControl('', Validators.required),
-    tnumexterior: new UntypedFormControl('', [Validators.required,
+    tentidadfederativa: new FormControl('', Validators.required),
+    eentidadfederativa: new FormControl('', Validators.required),
+    tmunicipio: new FormControl('', Validators.required),
+    emunicipio: new FormControl('', Validators.required),
+    tcolonia: new FormControl('', Validators.required),
+    ecolonia: new FormControl('', Validators.required),
+    tcalle: new FormControl('', Validators.required),
+    tnumexterior: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
     ]),
-    tnuminterior: new UntypedFormControl('', null),
+    tnuminterior: new FormControl('', null),
   });
 
   //Submit's
-  submitDireccion = false;
-  submitCliente = false;
+  //submitDireccion = false;
+  //submitCliente = false;
 
   //Label's
   lblecliente: number = 0
   lblfhfecharegistro: string = ""
 
-  //Variable Get
-  id: string = "";
-
-  //Boolean para el alert cuando se quiere salir de la pagina
+  //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
   unSaved: boolean = true;
 
+  etransaccion: number = 0;
+
   constructor(
-    private apiCliente: apiCliente,
-    private route: ActivatedRoute,
     private apiCodigoPostal: apiCodigosPostales,
     private router: Router,
-  ) { }
+    private apiCliente: apiCliente,
+    private serviceDatosUsuario: serviceDatosUsuario,
+    private route: ActivatedRoute,
+  ) {
 
-  //funcion para detectar que se quiere salir del modulo
+
+
+  }
+
+
+  //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
   canDeactivate(): Observable<boolean> | boolean {
     if (this.unSaved) {
       const result = window.confirm('Hay cambios sin guardar, ¿desea descartarlos?');
@@ -86,9 +105,9 @@ export class EditarClienteCustomerComponent implements OnInit {
   ngOnInit(): void {
 
     //POST CONSULAR DETALLE
-    this.id = this.route.snapshot.params['id'];
+    this.etransaccion = this.route.snapshot.params['id'];
 
-    this.apiCliente.postConsultarDetalleCliente(this.id).subscribe(
+    this.apiCliente.postConsultarDetalleCliente(this.etransaccion).subscribe(
       (response) => {
         this.e_procesar_datos_cliente_detalle(response)
       }
@@ -96,11 +115,80 @@ export class EditarClienteCustomerComponent implements OnInit {
 
   }
 
+  //Procesar los datos de la información del cliente
+  e_procesar_datos_cliente_detalle(datos: any) {
+    console.log(datos);
 
-  //Get text colonia
-  /*onChangeTcolonia($event: any) {
-    this.tcolonia = $event.target.options[$event.target.options.selectedIndex].text;
-  }*/
+
+    let razonsocial = {
+      ecliente: datos.data[0].ecliente,
+      trazonsocial: datos.data[0].trazonsocial,
+      trfc: datos.data[0].trfc,
+    }
+
+    this.ngformRazonSocial.form.setValue(razonsocial);
+
+    //Direcciones
+
+
+    let direccionesList: any = [];
+
+    datos.data[0].direcciones.forEach((value: any, index: any) => {
+      console.log(value);
+
+      let direccion = {
+        econtadorrow: this.contadorRow,
+        edireccion: value.edireccion,
+        ecodigopostal: value.ecodigopostal,
+        tentidadfederativa: value.tentidadfederativa,
+        eentidadfederativa: value.eentidadfederativa,
+        tmunicipio: value.tmunicipio,
+        emunicipio: value.emunicipio,
+        tcolonia: value.tcolonia,
+        ecolonia: value.ecolonia,
+        tcalle: value.tcalle,
+        tnumexterior: value.tnumexterior,
+        tnuminterior: value.tnuminterior,
+      };
+
+      direccionesList.push(direccion);
+
+      this.contadorRow++;
+
+    })
+
+    this.direcciones = direccionesList;
+
+    //Label's
+    this.lblfhfecharegistro = datos.data[0].fhfecharegistro
+
+  }
+
+
+  ngAfterViewInit() {
+
+    //Iniciar los contadores
+    let direccion = {
+      econtadorrow: '0',
+      edireccion: '0',
+      ecodigopostal: '',
+      tentidadfederativa: '',
+      eentidadfederativa: '',
+      tmunicipio: '',
+      emunicipio: '',
+      tcolonia: '',
+      ecolonia: '',
+      tcalle: '',
+      tnumexterior: '',
+      tnuminterior: '',
+    }
+    setTimeout(() => {
+      this.ngformDireccionRazonSocial.form.setValue(direccion)
+    },);
+
+  }
+
+
 
   //Alertas
   alerta(datos: any) {
@@ -117,11 +205,11 @@ export class EditarClienteCustomerComponent implements OnInit {
         if (result.isConfirmed && datos['tipo'] == 'success') {
           this.unSaved = false
           this.router.navigate(['dashboard/customer/clientes/detalle', this.lblecliente]);
-
         }
       }
     })
   }
+
 
   alertaConfirm(dato: any, callback: any) {
     let valor: boolean = false;
@@ -143,6 +231,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     return valor;
   }
 
+
   // true o false validador regex
   regexValidador(regex: RegExp, error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
@@ -154,34 +243,13 @@ export class EditarClienteCustomerComponent implements OnInit {
     };
   }
 
-  //Procesar los datos de la información del cliente
-  e_procesar_datos_cliente_detalle(datos: any) {
-
-    //ecliente
-    this.lblecliente = datos.data[0].ecliente
-
-    this.FormCliente = new UntypedFormGroup({
-      ecliente: new UntypedFormControl(datos.data[0].ecliente, Validators.required),
-      trazonsocial: new UntypedFormControl(datos.data[0].trazonsocial, Validators.required),
-      trfc: new UntypedFormControl(datos.data[0].trfc, Validators.required),
-    })
-
-
-    //arreglo
-    this.arrdatosDireccion = datos.data[0].direcciones
-
-
-    //Label's
-    this.lblfhfecharegistro = datos.data[0].fhfecharegistro
-  }
-
   //Cosultar Cp
   e_consultaCp(datos: any) {
 
     //Limpiar arreglo
     this.arrdatosColonia = []
 
-    console.log(datos.target.value)
+    //console.log(datos.target.value)
 
     let parametros = {
       ecodigopostal: datos.target.value
@@ -192,16 +260,17 @@ export class EditarClienteCustomerComponent implements OnInit {
         this.e_procesarDatosCodigoPostal(response)
       }
     )
+
   }
 
   //Procesar respuesta del Api de codigo postal
   e_procesarDatosCodigoPostal(datos: any) {
-    console.log(datos)
 
-    this.FormDireccion.controls['tentidadfederativa'].setValue(datos.tentidadfederativa);
-    this.FormDireccion.controls['eestado'].setValue(datos.eestado);
-    this.FormDireccion.controls['tmunicipio'].setValue(datos.tmunicipio);
-    this.FormDireccion.controls['emunicipio'].setValue(datos.emunicipio);
+    this.ngformDireccionRazonSocial.form.get('tentidadfederativa')?.setValue(datos.tentidadfederativa);
+    this.ngformDireccionRazonSocial.form.get('eentidadfederativa')?.setValue(datos.eestado);
+
+    this.ngformDireccionRazonSocial.form.get('tmunicipio')?.setValue(datos.tmunicipio);
+    this.ngformDireccionRazonSocial.form.get('emunicipio')?.setValue(datos.emunicipio);
 
     this.arrdatosColonia = datos.colonias;
 
@@ -210,34 +279,71 @@ export class EditarClienteCustomerComponent implements OnInit {
   //Agregar Direccion
 
   // Captador de Field's
-  get frmdireccion() { return this.FormDireccion.controls; }
+  // get frmdireccion() { return this.FormDireccion.controls; }
 
 
-  e_agregarDireccion(datos: any) {
+  e_agregarDireccion(datoDireccion: NgForm) {
+
 
     //Datos de la direccion
-    console.log('Direcciones')
-    console.log(datos)
+    //console.log('Direcciones')
+    //console.log(datos)
+
 
     ////console.log(form);
-    this.submitDireccion = true;
+    //this.submitDireccion = true;
 
     //Validar form
-    if (this.FormDireccion.invalid) {
+    if (datoDireccion.invalid) {
       //console.log('error.');
       return;
     }
 
+
+    let direccion: any = {};
+    direccion.econtadorrow = datoDireccion.value.econtadorrow;
+    direccion.edireccion = datoDireccion.value.edireccion;
+    direccion.ecodigopostal = datoDireccion.value.ecodigopostal;
+    direccion.tentidadfederativa = datoDireccion.value.tentidadfederativa;
+    direccion.eentidadfederativa = datoDireccion.value.eentidadfederativa;
+    direccion.tmunicipio = datoDireccion.value.tmunicipio;
+    direccion.emunicipio = datoDireccion.value.emunicipio;
+    direccion.tcolonia = datoDireccion.value.tcolonia;
+    direccion.ecolonia = datoDireccion.value.ecolonia;
+    direccion.tcalle = datoDireccion.value.tcalle;
+    direccion.tnumexterior = datoDireccion.value.tnumexterior;
+    direccion.tnuminterior = datoDireccion.value.tnuminterior;
+
+
+    //Eliminar registro del arreglo bienes
+    if (direccion.econtadorrow != 0) {
+      this.direcciones.forEach((value: any, index: any) => {
+        if (value.econtadorrow == direccion.econtadorrow) {
+          //Eliminar
+          this.direcciones.splice(index, 1);
+        }
+      })
+    }
+
+    //Crear un nuevo identificador row
+    direccion.econtadorrow = this.contadorRow;
+
+    this.direcciones.push(direccion);
+
+    //Contador++
+    this.contadorRow++;
+
+    //console.log(datoDireccion);
+
     //Get text select
-    var sel = document.getElementById('ecolonia') as HTMLSelectElement | null;
+    /*var sel = document.getElementById('ecolonia') as HTMLSelectElement | null;
     this.tcolonia = sel!.options[sel!.selectedIndex].text;
 
-
-    if (this.arrdatosDireccion.length == 0) {
+    if (this.direcciones.length == 0) {
       //Nuevo registro 
-      datos.edireccion = 0;
+      datos.edireccion = (this.direcciones.length)
       datos.tcolonia = this.tcolonia
-      this.arrdatosDireccion.push(datos)
+      this.direcciones.push(datos)
     } else {
 
       //console.log('Nivel 2')
@@ -245,101 +351,90 @@ export class EditarClienteCustomerComponent implements OnInit {
       //console.log(datos.edireccion)
 
 
-
-
       if (datos.edireccion === '') {
         //Nuevo registro
         //console.log('*Nuevo')
         //console.log(datos.edireccion)
-        datos.edireccion = 0
-        datos.eindex = (this.arrdatosDireccion.length)
+        datos.edireccion = (this.direcciones.length)
         datos.tcolonia = this.tcolonia
-        this.arrdatosDireccion.push(datos)
+        this.direcciones.push(datos)
       } else {
         //console.log('*Actualizar')
         //Actualizar registro
-        /*
-        this.arrdatosDireccion[datos.edireccion].edireccion = datos.edireccion;
-        this.arrdatosDireccion[datos.edireccion].ecodigopostal = datos.ecodigopostal;
-        this.arrdatosDireccion[datos.edireccion].tentidadfederativa = datos.tentidadfederativa;
-        this.arrdatosDireccion[datos.edireccion].eestado = datos.eestado;
-        this.arrdatosDireccion[datos.edireccion].tmunicipio = datos.tmunicipio;
-        this.arrdatosDireccion[datos.edireccion].emunicipio = datos.emunicipio;
-        this.arrdatosDireccion[datos.edireccion].tcolonia = datos.tcolonia;
-        this.arrdatosDireccion[datos.edireccion].tcalle = datos.tcalle;
-        this.arrdatosDireccion[datos.edireccion].tnumexterior = datos.tnumexterior;
-        this.arrdatosDireccion[datos.edireccion].tnuminterior = datos.tnuminterior;
-        */
-
-        //if(this.tcolonia ==''){
-
-        // }
-
-        this.arrdatosDireccion.forEach((dato: any, valor: any) => {
-
-          if (dato.edireccion == datos.edireccion) {
-            //console.log('Encontrado index:'+valor)
-
-            this.arrdatosDireccion[valor].eindex = datos.eindex;
-            this.arrdatosDireccion[valor].edireccion = datos.edireccion;
-            this.arrdatosDireccion[valor].ecodigopostal = datos.ecodigopostal;
-            this.arrdatosDireccion[valor].tentidadfederativa = datos.tentidadfederativa;
-            this.arrdatosDireccion[valor].eestado = datos.eestado;
-            this.arrdatosDireccion[valor].tmunicipio = datos.tmunicipio;
-            this.arrdatosDireccion[valor].emunicipio = datos.emunicipio;
-            this.arrdatosDireccion[valor].ecolonia = datos.ecolonia;
-            this.arrdatosDireccion[valor].tcolonia = this.tcolonia;
-            this.arrdatosDireccion[valor].tcalle = datos.tcalle;
-            this.arrdatosDireccion[valor].tnumexterior = datos.tnumexterior;
-            this.arrdatosDireccion[valor].tnuminterior = datos.tnuminterior;
-
-          }
-
-        })
-
-
+        this.direcciones[datos.edireccion].edireccion = datos.edireccion;
+        this.direcciones[datos.edireccion].ecodigopostal = datos.ecodigopostal;
+        this.direcciones[datos.edireccion].tentidadfederativa = datos.tentidadfederativa;
+        this.direcciones[datos.edireccion].eestado = datos.eestado;
+        this.direcciones[datos.edireccion].tmunicipio = datos.tmunicipio;
+        this.direcciones[datos.edireccion].emunicipio = datos.emunicipio;
+        this.direcciones[datos.edireccion].ecolonia = datos.ecolonia;
+        this.direcciones[datos.edireccion].tcolonia = this.tcolonia;
+        this.direcciones[datos.edireccion].tcalle = datos.tcalle;
+        this.direcciones[datos.edireccion].tnumexterior = datos.tnumexterior;
+        this.direcciones[datos.edireccion].tnuminterior = datos.tnuminterior;
       }
 
     }
 
 
-    //console.log(this.arrdatosDireccion)
+    //console.log(this.direcciones)
 
     ////Submit's
     this.submitDireccion = false;
 
     //Reset form
-    this.FormDireccion = new UntypedFormGroup({
-      eindex: new UntypedFormControl('', null),
-      edireccion: new UntypedFormControl('', null),
-      ecodigopostal: new UntypedFormControl('', Validators.required),
-      tentidadfederativa: new UntypedFormControl('', Validators.required),
-      eestado: new UntypedFormControl('', Validators.required),
-      tmunicipio: new UntypedFormControl('', Validators.required),
-      emunicipio: new UntypedFormControl('', Validators.required),
-      ecolonia: new UntypedFormControl('', Validators.required),
-      tcalle: new UntypedFormControl('', Validators.required),
-      tnumexterior: new UntypedFormControl('', Validators.required),
-      tnuminterior: new UntypedFormControl('', null),
+    this.FormDireccion = new FormGroup({
+      edireccion: new FormControl('', null),
+      ecodigopostal: new FormControl('', Validators.required),
+      tentidadfederativa: new FormControl('', Validators.required),
+      eestado: new FormControl('', Validators.required),
+      tmunicipio: new FormControl('', Validators.required),
+      emunicipio: new FormControl('', Validators.required),
+      ecolonia: new FormControl('', Validators.required),
+      tcalle: new FormControl('', Validators.required),
+      tnumexterior: new FormControl('', Validators.required),
+      tnuminterior: new FormControl('', null),
     });
+*/
+
+    //Reset
+
+    direccion = {
+      econtadorrow: 0,
+      edireccion: 0,
+      ecodigopostal: '',
+      tentidadfederativa: '',
+      eentidadfederativa: '',
+      tmunicipio: '',
+      emunicipio: '',
+      tcolonia: '',
+      ecolonia: '',
+      tcalle: '',
+      tnumexterior: '',
+      tnuminterior: '',
+    }
+
+    this.ngformDireccionRazonSocial.form.setValue(direccion);
 
   }
 
   //Eliminar direccion
   e_eliminarDireccion(datoDireccion: any) {
-    this.arrdatosDireccion.forEach((dato: any, valor: any) => {
+    this.direcciones.forEach((dato: any, valor: any) => {
       if (dato.edireccion == datoDireccion.edireccion) {
-        this.arrdatosDireccion.splice(valor, 1);
+        this.direcciones.splice(valor, 1);
       }
     })
   }
 
   //Editar direccion
-  e_editarDireccion(datos: any, index: any) {
-    //console.log('Editar')
-    //console.log(datos)
+  e_editarDireccion(datos: any) {
 
-    /// Post Consulat APO de CP
+    console.log('*Editar direccion');
+    console.log(datos);
+
+    /////////////////
+
     let parametros = {
       ecodigopostal: datos.ecodigopostal
     }
@@ -349,51 +444,89 @@ export class EditarClienteCustomerComponent implements OnInit {
         this.e_procesarDatosCodigoPostal(response)
       }
     )
-    ///////////////////////////////////////
+
+    ////////////////
+
+    let direccion = {
+      econtadorrow: datos.econtadorrow,
+      edireccion: datos.edireccion,
+      ecodigopostal: datos.ecodigopostal,
+      tentidadfederativa: datos.tentidadfederativa,
+      eentidadfederativa: datos.eentidadfederativa,
+      tmunicipio: datos.tmunicipio,
+      emunicipio: datos.emunicipio,
+      tcolonia: datos.tcolonia,
+      ecolonia: datos.ecolonia,
+      tcalle: datos.tcalle,
+      tnumexterior: datos.tnumexterior,
+      tnuminterior: datos.tnuminterior,
+    }
+
+    this.ngformDireccionRazonSocial.form.setValue(direccion);
 
 
-    this.FormDireccion = new UntypedFormGroup({
-      eindex: new UntypedFormControl(index, null),
-      edireccion: new UntypedFormControl(datos.edireccion, null),
-      ecodigopostal: new UntypedFormControl(datos.ecodigopostal, [Validators.required,
+    /* let direccion = {
+       econtadorrow: datos.econtadorrow,
+       edireccion: datos.edireccion,
+       ecodigopostal: datos.ecodigopostal,
+       tentidadfederativa: datos.tentidadfederativa,
+       eentidadfederativa: datos.eentidadfederativa,
+       tmunicipio: datos.tmunicipio,
+       emunicipio: datos.emunicipio,
+       tcolonia: datos.tcolonia,
+       ecolonia: datos.ecolonia,
+       tcalle: datos.tcalle,
+       tnumexterior: datos.tnumexterior,
+       tnuminterior: datos.tnuminterior,
+     }
+ 
+     this.ngformDireccionRazonSocial.form.setValue(direccion)*/
+
+
+    //console.log('Editar')
+    //console.log(datos)
+
+    /*this.FormDireccion = new FormGroup({
+      edireccion: new FormControl(datos.edireccion, null),
+      ecodigopostal: new FormControl(datos.ecodigopostal, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
       ]),
-      tentidadfederativa: new UntypedFormControl(datos.tentidadfederativa, Validators.required),
-      eestado: new UntypedFormControl(datos.eestado, Validators.required),
-      tmunicipio: new UntypedFormControl(datos.tmunicipio, Validators.required),
-      emunicipio: new UntypedFormControl(datos.emunicipio, Validators.required),
-      ecolonia: new UntypedFormControl(datos.ecolonia, Validators.required),
-      tcalle: new UntypedFormControl(datos.tcalle, Validators.required),
-      tnumexterior: new UntypedFormControl(datos.tnumexterior, [Validators.required,
+      tentidadfederativa: new FormControl(datos.tentidadfederativa, Validators.required),
+      eestado: new FormControl(datos.eestado, Validators.required),
+      tmunicipio: new FormControl(datos.tmunicipio, Validators.required),
+      emunicipio: new FormControl(datos.emunicipio, Validators.required),
+      ecolonia: new FormControl(datos.ecolonia, Validators.required),
+      tcalle: new FormControl(datos.tcalle, Validators.required),
+      tnumexterior: new FormControl(datos.tnumexterior, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
       ]),
-      tnuminterior: new UntypedFormControl(datos.tnuminterior, null)
-    });
+      tnuminterior: new FormControl(datos.tnuminterior, null)
+    });*/
 
 
   }
 
   //Guardar Cliente
 
-  get frmCliente() { return this.FormCliente.controls; }
+  //get frmCliente() { return this.FormCliente.controls; }
 
 
-  e_guardar(datos: any) {
+  e_guardar(solicitud: NgForm) {
 
     let alerta: any = {};
 
 
     ////console.log(form);
-    this.submitCliente = true;
+    //this.submitCliente = true;
 
     //Validar form
-    if (this.FormCliente.invalid) {
+    if (solicitud.invalid) {
       //console.log('error.');
       return;
     }
 
     //Validar que existan direcciones agregadas
-    if (this.arrdatosDireccion.length == 0) {
+    if (this.direcciones.length == 0) {
       alerta['text'] = 'AGREGAR UNA DIRECCIÓN';
       alerta['tipo'] = 'warning';
       alerta['footer'] = 'CLIENTE';
@@ -406,10 +539,9 @@ export class EditarClienteCustomerComponent implements OnInit {
     let arrdireccion: Array<any> = [];
 
     // Recorrer los valor de la direcciones
-    this.arrdatosDireccion.forEach((dato: any, valor: any) => {
+    this.direcciones.forEach((dato: any, valor: any) => {
       let valorDireccion: any = {}
 
-      valorDireccion.edireccion = dato.edireccion;
       valorDireccion.ecodigopostal = dato.ecodigopostal;
       valorDireccion.tentidadfederativa = dato.tentidadfederativa;
       valorDireccion.tmunicipio = dato.tmunicipio;
@@ -424,9 +556,9 @@ export class EditarClienteCustomerComponent implements OnInit {
     })
 
     parametros = {
-      ecliente: datos.ecliente,
-      trazonsocial: datos.trazonsocial,
-      trfc: datos.trfc,
+      eperfil: this.datosUsuario.eperfil,
+      trazonsocial: solicitud.value.trazonsocial,
+      trfc: solicitud.value.trfc,
       direcciones: arrdireccion
     }
 
@@ -436,24 +568,23 @@ export class EditarClienteCustomerComponent implements OnInit {
     alerta['tipo'] = 'question';
     alerta['footer'] = '';
 
-    console.log(JSON.stringify(parametros))
+    //console.log(JSON.stringify(parametros))
 
     this.alertaConfirm(alerta, (confirmed: boolean) => {
       if (confirmed == true) {
-        console.log('Guardar')
-        this.postActualizarCliente(parametros);
+        this.e_postCliente(parametros);
       }
     });
   }
 
 
-  postActualizarCliente(datos: any) {
+  e_postCliente(datos: any) {
 
     let alerta: any = {};
     let text = '';
     let success: boolean
 
-    this.apiCliente.postActualizarCliente(datos).subscribe(
+    this.apiCliente.postCrearCliente(datos).subscribe(
       (response) => {
 
         if (response.data) {
@@ -467,35 +598,32 @@ export class EditarClienteCustomerComponent implements OnInit {
           })
         }
 
+        if (response.errors) {
+          success = false
+          response.errors.forEach((dato: any, index: any) => {
+            //console.log(dato.attributes.text)
+            text += dato.attributes.text + '\n'
+          })
+        }
+
         alerta['text'] = text;
         alerta['tipo'] = (success == true ? "success" : "error");
         alerta['footer'] = "CLIENTE";
         this.alerta(alerta);
       }
     )
-
   }
 
-  //Redireccionar al modulo de consultar
+  //Consultar reporte de cliente
   e_consulta() {
     this.router.navigate(['dashboard/customer/clientes/consultar']);
   }
 
-  myConfirm(message: any) {
-    var start = new Date().getTime();
-    var result = confirm(message);
-    var dt = new Date().getTime() - start;
-    // dt < 50ms means probable computer
-    // the quickest I could get while expecting the popup was 100ms
-    // slowest I got from computer suppression was 20ms
-    for (var i = 0; i < 10 && !result && dt < 50; i++) {
-      start = new Date().getTime();
-      result = confirm(message);
-      dt = new Date().getTime() - start;
-    }
-    if (dt < 50)
-      return true;
-    return result;
+
+  e_changeColonia(datos: MatSelectChange) {
+    console.log('*Colonia');
+    this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
+    console.log((datos.source.selected as MatOption).viewValue);
   }
 
 }

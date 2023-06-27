@@ -58,7 +58,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
     tmunicipio: new FormControl('', Validators.required),
     emunicipio: new FormControl('', Validators.required),
     tcolonia: new FormControl('', Validators.required),
-    ecolonia: new FormControl('', Validators.required),
+    //ecolonia: new FormControl('', Validators.required),
     tcalle: new FormControl('', Validators.required),
     tnumexterior: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
@@ -82,7 +82,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
     private router: Router,
     private apiCliente: apiCliente,
     private serviceDatosUsuario: serviceDatosUsuario
-  ) { 
+  ) {
 
 
 
@@ -99,8 +99,33 @@ export class NuevoClienteCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+
+  ngAfterViewInit() {
+
+    //Iniciar los contadores
+    let direccion = {
+      econtadorrow: '0',
+      edireccion: '0',
+      ecodigopostal: '',
+      tentidadfederativa: '',
+      eentidadfederativa: '',
+      tmunicipio: '',
+      emunicipio: '',
+      tcolonia: '',
+      //ecolonia: '',
+      tcalle: '',
+      tnumexterior: '',
+      tnuminterior: '',
+    }
+    setTimeout(() => {
+      this.ngformDireccionRazonSocial.form.setValue(direccion)
+    },);
+
 
   }
+
 
 
   //Alertas
@@ -212,24 +237,39 @@ export class NuevoClienteCustomerComponent implements OnInit {
     }
 
 
-    let direccion = {
-      econtadorrow: this.contadorRow,
-      edireccion: datoDireccion.value.edireccion,
-      ecodigopostal: datoDireccion.value.ecodigopostal,
-      tentidadfederativa: datoDireccion.value.tentidadfederativa,
-      eentidadfederativa: datoDireccion.value.eentidadfederativa,
-      tmunicipio: datoDireccion.value.tmunicipio,
-      emunicipio: datoDireccion.value.emunicipio,
-      tcolonia: datoDireccion.value.tcolonia,
-      ecolonia: datoDireccion.value.ecolonia,
-      tcalle: datoDireccion.value.tcalle,
-      tnumexterior: datoDireccion.value.tnumexterior,
-      tnuminterior: datoDireccion.value.tnuminterior,
+    let direccion: any = {};
+    direccion.econtadorrow = datoDireccion.value.econtadorrow;
+    direccion.edireccion = datoDireccion.value.edireccion;
+    direccion.ecodigopostal = datoDireccion.value.ecodigopostal;
+    direccion.tentidadfederativa = datoDireccion.value.tentidadfederativa;
+    direccion.eentidadfederativa = datoDireccion.value.eentidadfederativa;
+    direccion.tmunicipio = datoDireccion.value.tmunicipio;
+    direccion.emunicipio = datoDireccion.value.emunicipio;
+    direccion.tcolonia = datoDireccion.value.tcolonia;
+    direccion.tcalle = datoDireccion.value.tcalle;
+    direccion.tnumexterior = datoDireccion.value.tnumexterior;
+    direccion.tnuminterior = datoDireccion.value.tnuminterior;
+
+
+    //Eliminar registro del arreglo bienes
+    if (direccion.econtadorrow != 0) {
+      this.direcciones.forEach((value: any, index: any) => {
+        if (value.econtadorrow == direccion.econtadorrow) {
+          //Eliminar
+          this.direcciones.splice(index, 1);
+        }
+      })
     }
+
+    //Crear un nuevo identificador row
+    direccion.econtadorrow = this.contadorRow;
 
     this.direcciones.push(direccion);
 
-    console.log(datoDireccion);
+    //Contador++
+    this.contadorRow++;
+
+    //console.log(datoDireccion);
 
     //Get text select
     /*var sel = document.getElementById('ecolonia') as HTMLSelectElement | null;
@@ -304,7 +344,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
       tmunicipio: '',
       emunicipio: '',
       tcolonia: '',
-      ecolonia: '',
+      //ecolonia: '',
       tcalle: '',
       tnumexterior: '',
       tnuminterior: '',
@@ -338,13 +378,31 @@ export class NuevoClienteCustomerComponent implements OnInit {
       tmunicipio: datos.tmunicipio,
       emunicipio: datos.emunicipio,
       tcolonia: datos.tcolonia,
-      ecolonia: datos.ecolonia,
+      //ecolonia: datos.ecolonia,
       tcalle: datos.tcalle,
       tnumexterior: datos.tnumexterior,
       tnuminterior: datos.tnuminterior,
     }
 
-    this.ngformDireccionRazonSocial.form.setValue(direccion)
+    this.ngformDireccionRazonSocial.form.setValue(direccion);
+
+
+    /* let direccion = {
+       econtadorrow: datos.econtadorrow,
+       edireccion: datos.edireccion,
+       ecodigopostal: datos.ecodigopostal,
+       tentidadfederativa: datos.tentidadfederativa,
+       eentidadfederativa: datos.eentidadfederativa,
+       tmunicipio: datos.tmunicipio,
+       emunicipio: datos.emunicipio,
+       tcolonia: datos.tcolonia,
+       ecolonia: datos.ecolonia,
+       tcalle: datos.tcalle,
+       tnumexterior: datos.tnumexterior,
+       tnuminterior: datos.tnuminterior,
+     }
+ 
+     this.ngformDireccionRazonSocial.form.setValue(direccion)*/
 
 
     //console.log('Editar')
