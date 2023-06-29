@@ -29,9 +29,9 @@
             <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
               <div class="component mg-b-15">
                 <div class="button-row">
-                  <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
-                  <button mat-raised-button color="primary" (click)="e_consultar()"><mat-icon>list</mat-icon>Consultar</button>
-                  <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>Nuevo</button>
+                  <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                  <button mat-raised-button color="primary" (click)="e_consultar()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                  <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
                 </div>
               </div>
               <hr>
@@ -331,7 +331,7 @@ requerido</mat-error>-->
                       <tbody>
                         <tr *ngFor="let dato of servicios; let i = index">
                           <td> <button type="button" mat-raised-button color="primary"
-                              (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
+                              (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
                           <td> {{ i + 1}} </td>
                           <td> {{ dato.ttipomercancia }}</td>
                           <td> {{ dato.ttiposervicio }}</td>
@@ -465,7 +465,7 @@ requerido</mat-error>-->
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of bienesServicios; let i = index">
-                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
+                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.eguia }}</td>
                         <td> {{ dato.ttipocarga }}</td>

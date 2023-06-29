@@ -40,10 +40,10 @@
           <div class="button-row">
             <button mat-raised-button color="primary" [disabled]="lblestatus == 'RECHAZADA'"
               [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
-              [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' " (click)="e_imprimir()"><mat-icon> print </mat-icon> Imprimir</button>
-            <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>Consultar</button>
+              [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' " (click)="e_imprimir()"><mat-icon> print </mat-icon>&nbsp; Imprimir</button>
+            <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
             <button mat-raised-button color="primary" (click)="e_nuevo()"><i
-                class="fa fa-file mg-r-5 fa-1.5x"></i><mat-icon> insert_drive_file</mat-icon>Nuevo</button>
+                class="fa fa-file mg-r-5 fa-1.5x"></i><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
           </div>
         </div>
       </div>

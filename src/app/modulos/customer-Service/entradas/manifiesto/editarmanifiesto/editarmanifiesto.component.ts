@@ -230,6 +230,7 @@ export class EditarmanifiestoComponent implements OnInit {
     };
   }
 
+  /*
   onChangeEmbalajeBien(event: any) {
     let dato = event.target.options[event.target.options.selectedIndex].text;
     // this.FormDatosBien.get('tembalaje').setValue(dato);
@@ -244,10 +245,9 @@ export class EditarmanifiestoComponent implements OnInit {
     let dato = event.target.options[event.target.options.selectedIndex].text;
     //this.FormDatosBien.get('tnaviera')?.setValue(dato);
   }
+  */
 
   ngOnInit(): void {
-
-
 
 
     //Date
@@ -274,7 +274,6 @@ export class EditarmanifiestoComponent implements OnInit {
       this.datosEmbalaje = data;
       this.datosEmbalaje.push(dato)
 
-      console.log(this.datosEmbalaje);
 
 
     })*/
@@ -305,7 +304,6 @@ export class EditarmanifiestoComponent implements OnInit {
     //Catalogo de Tipos de contenedores
     this.api.GetTipoContenedores().subscribe(data => {
 
-      //console.log(data)
       let dato = {
         id: null,
         ttipo: 'SELECCIONAR'
@@ -343,11 +341,10 @@ export class EditarmanifiestoComponent implements OnInit {
 
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
+
         this.e_procesar_datos_clientes(response)
-        //this.rowData =  response
 
         this.options = response.data;
-        //console.log(this.options);
 
         //Auto complete
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -355,19 +352,13 @@ export class EditarmanifiestoComponent implements OnInit {
           map(value => this._filter(value)),
         );
 
+
+        //Buscar datos de la transaccion
+        this.etransaccion = this.route.snapshot.params['id'];
+        this.e_consultarTransaccion(this.etransaccion);
+
       }
     )
-
-    //Selected
-    //this.FormDatosBien.controls['ecodembalaje'].setValue(null);
-    //this.FormDatosBien.controls['ecodnaviera'].setValue(null);
-    //this.FormDatosBien.controls['ttramite'].setValue(null);
-    //this.FormDatosBien.controls['ttipocarga'].setValue(null);
-    //this.FormDatosBien.controls['ttipocontenedor'].setValue(null);
-
-    this.etransaccion = this.route.snapshot.params['id'];
-    this.e_consultarTransaccion(this.etransaccion);
-
   }
 
 
@@ -380,19 +371,26 @@ export class EditarmanifiestoComponent implements OnInit {
 
     this.apiManifiesto.postConsultaManifiesto(parametros).subscribe(
       data => {
-        //productos = data;
-        this.e_procesarDatos(data);
-        //console.log(data)
+        this.e_procesarConsultaSolicitud(data);
       }
     )
   }
 
   //Procesar datos
-  e_procesarDatos(datos: any) {
+  e_procesarConsultaSolicitud(datos: any) {
 
-
-    console.log('*Solicitud')
+    console.log('*Datos de cliente')
     console.log(datos)
+    console.log('*Cartera de clientes')
+    console.log(this.datosClientes)
+
+    //Procesar la busqueda de la direccion
+    this.datosClientes.forEach((datocliente: any, index: any) => {
+      if (datocliente.ecliente == datos.ecliente) {
+        this.datosDirecciones = datocliente.direcciones
+      }
+    })
+
 
     let solicitud = {
       cliente: datos.trfc,
@@ -414,9 +412,6 @@ export class EditarmanifiestoComponent implements OnInit {
 
     //Bien(es)
     datos['bienes'].forEach((dato: any, index: any) => {
-
-
-
 
       //Detalle(s) Bien(es)
       let listDetallesBien: any = [];
@@ -502,8 +497,6 @@ export class EditarmanifiestoComponent implements OnInit {
     });
 
 
-    console.log(this.bienes);
-
   }
 
   //////// OTROS /////////
@@ -523,13 +516,9 @@ export class EditarmanifiestoComponent implements OnInit {
   }
 
 
-  OnHumanSelected(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
-
+  e_seleccionarRfc(dato: any) {
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudEntrada.get('cliente')?.setValue(dato);
-
   }
 
 
@@ -573,12 +562,6 @@ export class EditarmanifiestoComponent implements OnInit {
   }
 
   e_procesar_datos_clientes(datos: any) {
-    ////console.log(datos.data)
-    let datoClientes: Array<any> = [];
-    /*datos.forEach((dato: any, index: any) => {
-      datoClientes.push(dato.data);
-
-    })*/
     this.datosClientes = datos.data
   }
 
@@ -588,7 +571,6 @@ export class EditarmanifiestoComponent implements OnInit {
 
 
     if (this.FormDatosBien.invalid) {
-      console.log('error.');
       return;
     }
 
@@ -667,14 +649,9 @@ export class EditarmanifiestoComponent implements OnInit {
     this.FormDatosBien.get('econtadorRowBien')!.setValue(0);
     this.FormDatosBien.get('eguia')!.setValue(0);
 
-    console.log('*Bienes')
-    console.log(this.bienes);
-
-
   }
 
   e_eliminarBien(element: any) {
-    ////////console.log(element);
 
     this.bienes.forEach((value: any, index: any) => {
       if (value == element) {
@@ -722,18 +699,11 @@ export class EditarmanifiestoComponent implements OnInit {
   //agregar Detalles del bien
   e_agregarDetalleBien() {
 
-    console.log('*Datos bien');
-    console.log(this.datosBien);
 
-    console.log('*Detalles bienes');
-    console.log(this.FormDatosDetallesBien)
-
-    // stop here if form is invalid
+    // stop 
     if (this.FormDatosDetallesBien.invalid) {
-      console.log('error.');
       return;
     }
-
 
     let datosDetallesBien: any = {}
     datosDetallesBien.econtadorRow = this.FormDatosDetallesBien.value.econtadorRow;
@@ -793,8 +763,6 @@ export class EditarmanifiestoComponent implements OnInit {
   //Form para iniciar la captura de los detalles del bien
   e_capturarDetalleBien(datos: any) {
 
-    console.log('* Detalles bien')
-    console.log(datos)
 
     //Cargas los datos
     this.datosBien = datos
@@ -874,11 +842,8 @@ export class EditarmanifiestoComponent implements OnInit {
 
     // stop y valido
     if (solicitud.invalid) {
-      console.log('*error');
       return;
     }
-    console.log('*Solicitud');
-    console.log(solicitud);
 
 
     if (this.bienes.length == 0) {
@@ -1022,7 +987,6 @@ export class EditarmanifiestoComponent implements OnInit {
         this.alertaConfirm(alerta, (confirmed: boolean) => {
           if (confirmed == true) {
             this.enotificarManifiesto(datosParametros);
-            //console.log(JSON.stringify(this.datosManifiesto));
           }
         });
 
@@ -1055,7 +1019,6 @@ export class EditarmanifiestoComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
             text += dato.attributes.text + '\n'
           })
         }
@@ -1076,13 +1039,12 @@ export class EditarmanifiestoComponent implements OnInit {
   }
 
   e_procesarDirecciones(datos: any) {
-    ////console.log('datos')
-    ////console.log(datos)
+
+
     this.FormSolicitudEntrada.controls.cliente.setValue(datos.cliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.cliente == datos.cliente) {
-        ////console.log(dato.direcciones)
         this.datosDirecciones = dato.direcciones
       }
     })

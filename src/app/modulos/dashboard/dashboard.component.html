@@ -4,7 +4,7 @@
   <mat-toolbar class="navbar" color="primary">
 
     <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
+      <mat-icon>menu</mat-icon>&nbsp;
     </button>
 
     <!--<a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
@@ -18,7 +18,7 @@
  <span class="navbar-spacer"></span>
   
       <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-        <mat-icon matBadge="2" matBadgeColor="accent">notifications</mat-icon>
+        <mat-icon matBadge="2" matBadgeColor="accent">notifications</mat-icon>&nbsp;
       </button>
       <mat-menu #notificationMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
   
@@ -36,7 +36,7 @@
 
 
     <button mat-button [matMenuTriggerFor]="userMenu">
-      <mat-icon>person</mat-icon>
+      <mat-icon>person</mat-icon>&nbsp;
       <span fxShow fxHide.xs>
         OSCAR HERNANDEZ CIRIACO
       </span>
@@ -44,7 +44,7 @@
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
       <a mat-menu-item [routerLink]=""  (click)="e_cerrarSesion()" >
-        <mat-icon>exit_to_app</mat-icon>
+        <mat-icon>exit_to_app</mat-icon>&nbsp;
         <span>Salir</span>
       </a>
 
@@ -63,33 +63,33 @@
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
-          </mat-icon>
+          </mat-icon>&nbsp;
           <p mat-line> Inicio </p>
         </a>
 
         <a mat-list-item [routerLink]="" (click)="e_operaciones('customer')" routerLinkActive="active">
           <mat-icon mat-list-icon>
             business
-          </mat-icon>
+          </mat-icon>&nbsp;
           <p mat-line> Operaciones </p>
         </a>
         <!--<a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
             <mat-icon mat-list-icon>
               people
-            </mat-icon>
+            </mat-icon>&nbsp;
             <p mat-line> Operaciones </p>
           </a>-->
 
         <!--
   <a mat-list-item [routerLink]="['/account/profile']">
-          <mat-icon mat-list-icon>person</mat-icon>
+          <mat-icon mat-list-icon>person</mat-icon>&nbsp;
           <p mat-line> Cuenta </p>
         </a>
           -->
 
 
         <!--<a mat-list-item [routerLink]="['/auth/login']">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>
+          <mat-icon mat-list-icon>exit_to_app</mat-icon>&nbsp;
           <p mat-line> Salir </p>
         </a>-->
 

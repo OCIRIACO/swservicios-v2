@@ -276,7 +276,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
 
 
-  onChangeEmbalajeBien(event: any) {
+  /*onChangeEmbalajeBien(event: any) {
     let dato = event.target.options[event.target.options.selectedIndex].text;
     //this.FormDatosBien.get('tembalaje')?.setValue(dato);
   }
@@ -289,7 +289,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
   onChangeNaviera(event: any) {
     let dato = event.target.options[event.target.options.selectedIndex].text;
     //this.FormDatosBien.get('tnaviera')?.setValue(dato);
-  }
+  }*/
 
   //funcion para evitar que los usuarios abandonen accidentalmente una ruta / página
   canDeactivate(): Observable<boolean> | boolean {
@@ -414,16 +414,19 @@ export class ActualizarServicioCargaComponent implements OnInit {
       (response) => {
         this.e_procesar_datos_clientes(response)
 
-
-
         this.opcionesRfc = response.data;
-        //console.log(this.options);
 
         //Auto complete
         this.filtrarOpcionesRfc = this.controlFormRfc.valueChanges.pipe(
           startWith(''),
           map(value => this.e_filtrarRfc(value)),
         );
+
+        //Consultar transaccion
+        this.etransaccion = this.route.snapshot.params['id'];
+        this.e_consultarTransaccion(this.etransaccion);
+    
+
       }
     )
 
@@ -444,20 +447,12 @@ export class ActualizarServicioCargaComponent implements OnInit {
     )
 
 
-    //Selected
-    //this.FormDatosBien.controls['ecodembalaje'].setValue(null);
-    //this.FormDatosBien.controls['ecodnaviera'].setValue(null);
-    //this.FormDatosBien.controls['ttramite'].setValue(null);
-    //this.FormDatosBien.controls['ttipocarga'].setValue(null);
-    //this.FormDatosBien.controls['ttipocontenedor'].setValue(null);
-
-    this.etransaccion = this.route.snapshot.params['id'];
-    this.e_consultaSolicitud(this.etransaccion);
-
+   
+ 
   }
 
   //Consultar solicitud
-  e_consultaSolicitud(idtransaccion: any) {
+  e_consultarTransaccion(idtransaccion: any) {
     let Iparametros: Iparametros;
     let productos: any = [];
     Iparametros = {
@@ -474,7 +469,6 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
   e_procesarConsultaSolicitud(datos: any) {
 
-    console.log(datos);
 
     //Carga(s)
     let Icarga: any = {};
@@ -483,7 +477,6 @@ export class ActualizarServicioCargaComponent implements OnInit {
     //Mercancia(s)
     let Imercancia: any = {};
     let IListadoMercancias: Array<Imercancia> = [];
-
 
     //Auxiliares
     let tnombreNaviera = '';
@@ -497,10 +490,20 @@ export class ActualizarServicioCargaComponent implements OnInit {
     //Estatus de la solicitud
     this.testatus = datos.testatus;
 
-
-
     //Mercancia(s)
     IListadoCargas = [];
+
+    console.log('*Datos de cliente')
+    console.log(datos)
+    console.log('*Cartera de clientes')
+    console.log(this.datosClientes)
+
+    //Procesar la busqueda de la direccion
+    this.datosClientes.forEach((datocliente: any, index: any) => {
+      if (datocliente.ecliente == datos.ecliente) {
+        this.datosDirecciones = datocliente.direcciones
+      }
+    })
 
     // Datos de solicitud
     let solicitud = {

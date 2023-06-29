@@ -4,8 +4,9 @@
             <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
                 <section>
                     <div class="button-row">
-                        <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
-                        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
+                        <button mat-raised-button color="primary" (click)="e_consulta()"
+                            title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                     </div>
                 </section>
                 <hr>
@@ -20,7 +21,7 @@
                             <input type="text" matInput name="cliente" ngModel #cliente="ngModel"
                                 [matAutocomplete]="auto" required>
                             <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option (click)="OnHumanSelected(dato)"
+                                <mat-option (click)="e_seleccionarRfc(dato)"
                                     *ngFor="let dato of filteredOptions  | async " [value]="dato.trfc">
                                     {{dato.trfc}}
                                 </mat-option>
@@ -233,7 +234,7 @@
 
                         <!--Carga(s)-->
 
-                        <div class="row">
+                        <div class="row" style="display: none;">
                             <div class='col-md-3 col-xs-3'>
                                 <input class="form-control form-control-sm" id="econtadorRowBien"
                                     name="econtadorRowBien" formControlName="econtadorRowBien" size="30" type="text" />
@@ -277,8 +278,7 @@
                             <div class='col-md-3 col-xs-3'>
                                 <mat-form-field class="full-width">
                                     <mat-label>Embalaje</mat-label>
-                                    <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                                        (change)="onChangeEmbalajeBien($event)">
+                                    <mat-select formControlName="ecodembalaje" name="ecodembalaje" required>
                                         <mat-option>SELECCIONAR</mat-option>
                                         <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
                                             {{dato.tnombre}}
@@ -398,10 +398,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="text-center">
+                            <div class="text-center mt-4 mb-4">
                                 <div class='form-group'>
-                                    <button type="submit" mat-raised-button color="primary" (click)="e_agregarBien()"><i
-                                            class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>
+                                    <button type="submit" mat-raised-button color="primary"
+                                        (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;&nbsp;Agregar</button>
                                     <!--<button class="btn btn-xs btn-primary"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
 
 
@@ -429,10 +429,10 @@
                                 <tbody>
                                     <tr *ngFor="let dato of bienes; let i = index">
                                         <td><button type="button" mat-raised-button color="primary"
-                                                (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
+                                                (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
                                         </td>
                                         <td><button type="button" mat-raised-button color="primary"
-                                                (click)="e_editarBien(dato)"><mat-icon>delete</mat-icon>Editar</button>
+                                                (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
                                         </td>
                                         <td>{{i+ 1 }}</td>
                                         <td>{{dato.ttramite}}</td>
@@ -500,7 +500,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" style="display: none;">
                                 <div class='col-md-3 col-xs-3'>
                                     <input class="form-control form-control-sm" id="econtadorRow" name="econtadorRow"
                                         formControlName="econtadorRow" size="30" type="text" />
@@ -715,8 +715,7 @@
                                 <div class='col-md-3 col-xs-3'>
                                     <mat-form-field class="full-width">
                                         <mat-label>Embalaje</mat-label>
-                                        <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                                            (change)="onChangeDetalleBien($event)">
+                                        <mat-select formControlName="ecodembalaje" name="ecodembalaje" required>
                                             <mat-option>SELECCIONAR</mat-option>
                                             <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
                                                 {{dato.tnombre}}
@@ -746,13 +745,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class='col-xl-1'>
+                                <div class='text-center mt-4 mb-4'>
                                     <div class='form-group'>
                                         <button type="submit" mat-raised-button color="primary"
-                                            (click)="e_agregarDetalleBien()">Agregar</button>
-                                        <!--<button type="button" mat-raised-button color="primary"
-                    (click)="e_agregarDetalleBien(FormDatosDetallesBien.value)"><i
-                      class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
+                                            (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                     </div>
                                 </div>
                             </div>
@@ -774,10 +770,12 @@
                                         <tbody>
                                             <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                                 <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
-                                                        mat-raised-button color="primary"><mat-icon>delete</mat-icon>Eliminar</button>
+                                                        mat-raised-button
+                                                        color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
                                                 </td>
                                                 <td><button type="button" (click)="e_editarDetalleBien(dato)"
-                                                        mat-raised-button color="primary"><mat-icon>edit</mat-icon>Editar</button>
+                                                        mat-raised-button
+                                                        color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
                                                 </td>
                                                 <td> {{i+ 1 }}</td>
                                                 <td> {{dato.tfacturas}}</td>

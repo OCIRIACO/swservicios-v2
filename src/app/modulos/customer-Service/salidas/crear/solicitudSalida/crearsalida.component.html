@@ -30,8 +30,8 @@
             <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
               <div class="component mb-2">
                 <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
-                  <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
+                  <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                  <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                 </div>
               </div>
               <hr>
@@ -217,14 +217,14 @@ requerido</mat-error>-->
                       <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" name="tvalor"
                         ngModel #tvalor="ngModel" required>
 
-                      <button mat-raised-button matSuffix mat-stroked-button color="primary"><mat-icon>search</mat-icon>
+                      <button mat-raised-button matSuffix mat-stroked-button color="primary"><mat-icon>search</mat-icon>&nbsp;
                       </button>
 
                       <mat-error *ngIf="FormBusquedaBien.controls['tvalor'].errors?.required">Ingresa el valor
                         a buscar requerido</mat-error>
 
                       <!--<button mat-button matSuffix mat-stroked-button aria-label="search">
-                        <mat-icon>Buscar</mat-icon>
+                        <mat-icon>Buscar</mat-icon>&nbsp;
                       </button>-->
                     </mat-form-field>
 
@@ -360,7 +360,7 @@ requerido</mat-error>-->
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of bienesLiberar; let i = index">
-                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
+                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.eguia }}</td>
                         <td> {{ dato.ttipocarga }}</td>
