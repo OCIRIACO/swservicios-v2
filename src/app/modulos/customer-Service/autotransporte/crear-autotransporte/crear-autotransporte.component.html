@@ -34,7 +34,8 @@
                                 <div class="button-row">
                                     <button mat-raised-button color="primary" (click)="e_consulta()"
                                         title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                                    <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                                    <button mat-raised-button
+                                        color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                                 </div>
                             </div>
                             <hr>
@@ -511,7 +512,7 @@
                                     </div>-->
                                     <div class="row">
                                         <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
-                                            <button mat-raised-button color="primary">Agregar</button>
+                                            <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -560,7 +561,7 @@
 
                                             <!--Carga(s)-->
 
-                                            <div class="row">
+                                            <div class="row" style="display: none;">
                                                 <div class='col-md-3 col-xs-3'>
                                                     <input class="form-control form-control-sm" id="econtadorRowBien"
                                                         name="econtadorRowBien" formControlName="econtadorRowBien"
@@ -777,7 +778,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                                     <button mat-raised-button color="primary"
-                                                        (click)="e_agregarBien()">Agregar</button>
+                                                        (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                                 </div>
                                             </div>
 
@@ -805,7 +806,7 @@
                                                                     (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
                                                             </td>
                                                             <td><button type="button" mat-raised-button color="primary"
-                                                                    (click)="e_editarBien(dato)"><mat-icon>delete</mat-icon>&nbsp;Editar</button>
+                                                                    (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
                                                             </td>
                                                             <td>{{i+ 1 }}</td>
                                                             <td>{{dato.ttramite}}</td>
@@ -1055,7 +1056,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                                         <button mat-raised-button color="primary"
-                                                            (click)="e_agregarDetalleBien()">Agregar</button>
+                                                            (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -1152,7 +1153,7 @@
                                                 <h6 class="mt-3 mb-2 text-primary">+ Detalle(s) mercancia(s)</h6>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" style="display: none;">
                                             <div class='col-md-3 col-xs-3'>
                                                 <input class="form-control form-control-sm" id="econtadorRow"
                                                     name="econtadorRow" formControlName="econtadorRow" size="30"
@@ -1322,7 +1323,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                                 <button mat-raised-button color="primary"
-                                                    (click)="e_agregarDetalleBien()">Agregar</button>
+                                                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                             </div>
                                         </div>
 
@@ -1370,7 +1371,7 @@
                                     </form>
                                 </div>
                                 <!--Fin Mercancia(s)-->
-                                
+
                             </div><!-- row -->
                             <hr>
                             <div class="row">
@@ -1399,3 +1400,6 @@
                 </div> <!-- card -->
 
             </div><!-- content-body -->
+        </mat-card>
+    </div>
+</div>

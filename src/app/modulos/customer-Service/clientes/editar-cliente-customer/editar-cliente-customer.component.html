@@ -27,7 +27,7 @@
                                 <div class="button-row">
                                     <button mat-raised-button color="primary" (click)="e_consulta()"
                                         title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                                    <button mat-raised-button color="primary">Guardar</button>
+                                    <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                                 </div>
                             </div>
                             <hr>
@@ -78,7 +78,7 @@
                                         </div>
                                     </div>-->
                                 </div>
-                                <div class="col-md-2 col-sm-12">
+                                <div class="col-md-2 col-sm-12" style="display: none;">
                                     <mat-form-field class="full-width">
                                         <mat-label>ecliente</mat-label>
                                         <input matInput placeholder="" 
@@ -280,7 +280,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" style="display: none;">
 
                                     <div class="col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
@@ -319,11 +319,15 @@
 
                                 </div>
 
-                                <div class="col-sm-1 ">
-                                    <div class='form-group mt-4'>
-                                        <button mat-raised-button color="primary">Agregar</button>
+                                <div class="row">
+                                    <div class="text-center mt-4 mb-4">
+                                        <div class='form-group'>
+                                            <button mat-raised-button
+                                                color="primary"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </form>
                         <hr>
@@ -346,7 +350,7 @@
                                                 (click)="e_eliminarDireccion(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
                                         </td>
                                         <td><button type="button" mat-raised-button color="primary"
-                                                (click)="e_editarDireccion(dato)">Editar</button>
+                                                (click)="e_editarDireccion(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
                                         </td>
                                         <td>{{i+ 1 }}</td>
                                         <td>{{dato.ecodigopostal}}</td>

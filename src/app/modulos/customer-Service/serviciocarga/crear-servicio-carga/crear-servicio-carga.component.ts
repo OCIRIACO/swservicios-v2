@@ -829,7 +829,7 @@ export class CrearServicioCargaComponent implements OnInit {
 
   e_guardar(solicitud: NgForm) {
 
-    console.log(solicitud);
+    //console.log(solicitud);
 
 
     //Validar datos del contacto
@@ -971,6 +971,10 @@ export class CrearServicioCargaComponent implements OnInit {
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
       //Parche buscar el id del cliente por el RFC
+
+      console.log(this.datosClientes);
+      console.log(solicitud.value.trfc);
+
       this.datosClientes.forEach((dato: any, valor: any) => {
         if (dato.trfc == solicitud.value.trfc) {
           solicitud.value.cliente = dato.ecliente;
@@ -978,7 +982,7 @@ export class CrearServicioCargaComponent implements OnInit {
       })
 
       Isolicitud = {
-        ecliente: solicitud.value.ecliente,
+        ecliente: solicitud.value.cliente,
         edireccion: solicitud.value.edireccion,
         emetodopago: solicitud.value.emetodopago,
         ebanco: solicitud.value.ebanco,
@@ -999,7 +1003,7 @@ export class CrearServicioCargaComponent implements OnInit {
 
       datosParametros = { orden: Isolicitud }
 
-
+     console.log(JSON.stringify(Isolicitud));
 
       let alerta: any = {};
 

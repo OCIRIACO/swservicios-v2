@@ -7,6 +7,8 @@ import { apiCodigosPostales } from 'src/app/serviciosRest/api/api.codigospostale
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { Observable, of } from 'rxjs';
+import { MatSelectChange } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 
 @Component({
@@ -58,7 +60,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
     tmunicipio: new FormControl('', Validators.required),
     emunicipio: new FormControl('', Validators.required),
     tcolonia: new FormControl('', Validators.required),
-    //ecolonia: new FormControl('', Validators.required),
+    ecolonia: new FormControl('', Validators.required),
     tcalle: new FormControl('', Validators.required),
     tnumexterior: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
@@ -114,7 +116,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
       tmunicipio: '',
       emunicipio: '',
       tcolonia: '',
-      //ecolonia: '',
+      ecolonia: '',
       tcalle: '',
       tnumexterior: '',
       tnuminterior: '',
@@ -246,6 +248,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
     direccion.tmunicipio = datoDireccion.value.tmunicipio;
     direccion.emunicipio = datoDireccion.value.emunicipio;
     direccion.tcolonia = datoDireccion.value.tcolonia;
+    direccion.ecolonia = datoDireccion.value.ecolonia;
     direccion.tcalle = datoDireccion.value.tcalle;
     direccion.tnumexterior = datoDireccion.value.tnumexterior;
     direccion.tnuminterior = datoDireccion.value.tnuminterior;
@@ -344,7 +347,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
       tmunicipio: '',
       emunicipio: '',
       tcolonia: '',
-      //ecolonia: '',
+      ecolonia: '',
       tcalle: '',
       tnumexterior: '',
       tnuminterior: '',
@@ -369,6 +372,21 @@ export class NuevoClienteCustomerComponent implements OnInit {
     console.log('*Editar direccion');
     console.log(datos);
 
+    /////////////////
+
+    let parametros = {
+      ecodigopostal: datos.ecodigopostal
+    }
+
+    this.apiCodigoPostal.postConsultarCodigoPostal(parametros).subscribe(
+      (response) => {
+        this.e_procesarDatosCodigoPostal(response)
+      }
+    )
+
+    ////////////////
+
+
     let direccion = {
       econtadorrow: datos.econtadorrow,
       edireccion: datos.edireccion,
@@ -378,7 +396,7 @@ export class NuevoClienteCustomerComponent implements OnInit {
       tmunicipio: datos.tmunicipio,
       emunicipio: datos.emunicipio,
       tcolonia: datos.tcolonia,
-      //ecolonia: datos.ecolonia,
+      ecolonia: datos.ecolonia,
       tcalle: datos.tcalle,
       tnumexterior: datos.tnumexterior,
       tnuminterior: datos.tnuminterior,
@@ -428,22 +446,14 @@ export class NuevoClienteCustomerComponent implements OnInit {
 
   }
 
-  //Guardar Cliente
-
-  //get frmCliente() { return this.FormCliente.controls; }
-
 
   e_guardar(solicitud: NgForm) {
 
     let alerta: any = {};
 
 
-    ////console.log(form);
-    //this.submitCliente = true;
-
     //Validar form
     if (solicitud.invalid) {
-      //console.log('error.');
       return;
     }
 
@@ -540,4 +550,13 @@ export class NuevoClienteCustomerComponent implements OnInit {
   e_consulta() {
     this.router.navigate(['dashboard/customer/clientes/consultar']);
   }
+
+
+  e_changeColonia(datos: MatSelectChange) {
+    console.log('*Colonia');
+    this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
+    console.log((datos.source.selected as MatOption).viewValue);
+  }
+
+
 }

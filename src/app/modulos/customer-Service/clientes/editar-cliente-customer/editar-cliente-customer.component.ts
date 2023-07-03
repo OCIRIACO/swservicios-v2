@@ -117,8 +117,8 @@ export class EditarClienteCustomerComponent implements OnInit {
 
   //Procesar los datos de la información del cliente
   e_procesar_datos_cliente_detalle(datos: any) {
-    console.log(datos);
 
+    this.lblecliente = datos.data[0].ecliente
 
     let razonsocial = {
       ecliente: datos.data[0].ecliente,
@@ -542,6 +542,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     this.direcciones.forEach((dato: any, valor: any) => {
       let valorDireccion: any = {}
 
+      valorDireccion.edireccion =  dato.edireccion;
       valorDireccion.ecodigopostal = dato.ecodigopostal;
       valorDireccion.tentidadfederativa = dato.tentidadfederativa;
       valorDireccion.tmunicipio = dato.tmunicipio;
@@ -557,6 +558,7 @@ export class EditarClienteCustomerComponent implements OnInit {
 
     parametros = {
       eperfil: this.datosUsuario.eperfil,
+      ecliente:solicitud.value.ecliente,
       trazonsocial: solicitud.value.trazonsocial,
       trfc: solicitud.value.trfc,
       direcciones: arrdireccion
@@ -584,7 +586,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     let text = '';
     let success: boolean
 
-    this.apiCliente.postCrearCliente(datos).subscribe(
+    this.apiCliente.postActualizarCliente(datos).subscribe(
       (response) => {
 
         if (response.data) {

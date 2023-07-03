@@ -306,9 +306,6 @@ export class EditarAutotransporteComponent implements OnInit {
     this.nowFechaServicio = datePipe.transform(new Date(), 'yyyy-MM-dd');
 
 
-
-
-
     //Catalogo de naviera
     /*this.api.GetNavieras().subscribe(data => {
       let dato = {
@@ -440,6 +437,11 @@ export class EditarAutotransporteComponent implements OnInit {
           startWith(''),
           map(value => this.e_filtrarRfc(value)),
         );
+
+        //Consultar solicitud
+        this.etransaccion = this.route.snapshot.params['id'];
+        this.e_consultaSolicitud(this.etransaccion);
+
       }
     )
 
@@ -471,9 +473,7 @@ export class EditarAutotransporteComponent implements OnInit {
     this.FormSolicitudServicios.controls['ttipotransporte'].setValue(null);
     */
 
-    //Consultar solicitud
-    this.etransaccion = this.route.snapshot.params['id'];
-    this.e_consultaSolicitud(this.etransaccion);
+
 
   }
 
@@ -527,6 +527,14 @@ export class EditarAutotransporteComponent implements OnInit {
     //Mercancia(s)
     IListadoCargas = [];
 
+
+    //Procesar la busqueda de la direccion
+    this.datosClientes.forEach((datocliente: any, index: any) => {
+      if (datocliente.ecliente == datos.ecliente) {
+        this.datosDirecciones = datocliente.direcciones
+      }
+    })
+
     //console.log('*Solicitud');
     //console.log(datos);
 
@@ -543,7 +551,7 @@ export class EditarAutotransporteComponent implements OnInit {
       ttelefono: datos.ttelefono,
       treferencia: datos.treferencia,
       tobservaciones: datos.tobservaciones,
-      truta : datos.operaciones[0].truta,
+      truta: datos.operaciones[0].truta,
       ttramite: datos.operaciones[0].ttramite,
       ttipocarga: datos.operaciones[0].ttipocarga,
       ttipotransporte: datos.operaciones[0].ttipotransporte,
@@ -715,7 +723,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
     //console.log('*Resultado');
     //console.log( this.bienes);
-  }    
+  }
 
 
 
@@ -1081,7 +1089,7 @@ export class EditarAutotransporteComponent implements OnInit {
     // Set value del sequence
     //this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
 
-     console.log(datos);
+    console.log(datos);
 
     this.FormDatosDetallesBien = new FormGroup({
       econtadorRow: new FormControl(datos.econtadorRow, null),

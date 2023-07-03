@@ -84,7 +84,7 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
 
 
   FormSolicitudServicios = new FormGroup({
-    trfc: new FormControl('', Validators.required),
+    cliente: new FormControl('', Validators.required),
     edireccion: new FormControl('', Validators.required),
     emetodopago: new FormControl('', Validators.required),
     ebanco: new FormControl('', Validators.required),
@@ -176,11 +176,16 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
 
         //Auto complete
         this.opcionesRfc = response.data;
-
         this.filtrarOpcionesRfc = this.controlRfc.valueChanges.pipe(
           startWith(''),
           map(value => this.e_filtrarRfc(value)),
         );
+
+
+        this.etransaccion = this.route.snapshot.params['id'];
+        //Cosnultar la solicitud web de salida del bien(es)
+        this.e_consultaSolicitud(this.etransaccion);
+
       }
     )
     ///////////////////////////////////////////////////////////
@@ -197,34 +202,30 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     this.datosCfdi = this.serviceCatalogos.catalogoCfdi
 
 
-    this.id = this.route.snapshot.params['id'];
-
-    //Cosnultar la solicitud web de salida del bien(es)
-    this.e_consultaSolicitud(this.id);
 
 
     //// Configurar el select2
 
-   /* $('#ecliente').on('eValorCliente', (ev, dato) => {
-      ////console.log('Datos:'+dato)
-      this.e_procesarDirecciones(dato)
-    });
-
-
-    $(document).ready(function () {
-      //$('.select2').select2(); //initialize 
-      (<any>$('.select2')).select2();
-    });
-
-    $(".select2").on("select2:select", function (e) {
-      let dato_rfc: any = $(e.currentTarget).val()!
-      //console.log(dato_rfc)
-      //$('#ecliente').val(dato_rfc).trigger("change");
-      let parametros = {
-        ecliente: dato_rfc
-      }
-      $('#ecliente').trigger('eValorCliente', parametros);
-    });*/
+    /* $('#ecliente').on('eValorCliente', (ev, dato) => {
+       ////console.log('Datos:'+dato)
+       this.e_procesarDirecciones(dato)
+     });
+ 
+ 
+     $(document).ready(function () {
+       //$('.select2').select2(); //initialize 
+       (<any>$('.select2')).select2();
+     });
+ 
+     $(".select2").on("select2:select", function (e) {
+       let dato_rfc: any = $(e.currentTarget).val()!
+       //console.log(dato_rfc)
+       //$('#ecliente').val(dato_rfc).trigger("change");
+       let parametros = {
+         ecliente: dato_rfc
+       }
+       $('#ecliente').trigger('eValorCliente', parametros);
+     });*/
 
   }
 
@@ -247,10 +248,8 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
 
 
   e_seleccionarRfc(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
     this.datosDirecciones = dato.direcciones
-    this.FormSolicitudServicios.get('trfc')?.setValue(dato);
+    this.FormSolicitudServicios.get('cliente')?.setValue(dato);
 
   }
 
@@ -321,19 +320,27 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
     this.lbletransaccion = datos.etransaccion
     this.lblfhfecharegistro = datos.fhfecharegistro
 
+    //Procesar la busqueda de la direccion
+    this.datosClientes.forEach((datocliente: any, index: any) => {
+      if (datocliente.ecliente == datos.ecliente) {
+        this.datosDirecciones = datocliente.direcciones
+      }
+    })
+
+
     let solicitud = {
-        trfc             : datos.trfc,            
-        edireccion       : datos.edireccion,                  
-        emetodopago      : datos.emetodopago,                   
-        ebanco           : datos.ebanco,              
-        ecfdi            : datos.ecfdi,             
-        ecuenta          : datos.ecuenta,               
-        tmoneda          : datos.tmoneda,               
-        fhfechaservicio  : datos.fhfechaservicio,                       
-        tcorreo          : datos.tcorreo,               
-        ttelefono        : datos.ttelefono,                 
-        treferencia      : datos.treferencia,                   
-        tobservaciones   : datos.tobservaciones,                      
+      cliente: datos.trfc,
+      edireccion: datos.edireccion,
+      emetodopago: datos.emetodopago,
+      ebanco: datos.ebanco,
+      ecfdi: datos.ecfdi,
+      ecuenta: datos.ecuenta,
+      tmoneda: datos.tmoneda,
+      fhfechaservicio: datos.fhfechaservicio,
+      tcorreo: datos.tcorreo,
+      ttelefono: datos.ttelefono,
+      treferencia: datos.treferencia,
+      tobservaciones: datos.tobservaciones,
     }
 
     this.ngformsolicitud.form.setValue(solicitud)
@@ -607,7 +614,7 @@ export class ActualizarSolicitudSalidaComponent implements OnInit {
       bienes: arrBienes
     }
 
-    console.log(JSON.stringify(Isolicitud));
+    //console.log(JSON.stringify(Isolicitud));
 
 
     //Consumir el servicio api

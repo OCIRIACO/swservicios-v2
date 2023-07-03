@@ -640,6 +640,13 @@ export class EditarServiciosComponent implements OnInit {
     this.lbletransaccion = datos.etransaccion
     this.lblfhfecharegistro = datos.fhfecharegistro
 
+    //Procesar la busqueda de la direccion
+    this.datosClientes.forEach((datocliente: any, index: any) => {
+      if (datocliente.ecliente == datos.ecliente) {
+        this.datosDirecciones = datocliente.direcciones
+      }
+    })
+
     let solicitud = {
       trfc: datos.trfc,
       edireccion: datos.edireccion,
