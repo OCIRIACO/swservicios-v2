@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { GridOptions } from 'ag-grid-community';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.service.usuario';
@@ -14,119 +14,45 @@ import { RenderAcciones } from './render-acciones';
 })
 export class UsuariosComponent implements OnInit {
 
+  //NgForm
+  @ViewChild('solicitudForm') ngFormSolicitudUsuario: NgForm;
+
+  
   //Path base
   directorio: string = GlobalConstants.pathIntranet;
-
 
   // Submit's 
   submitGuardar = false;
 
-  //Configuraciones para la tabla
-  gridApi: any;
-  gridColumnApi: any;
-  columnDefs: any
-  rowData: any
-  defaultColDef: any
-  paginationPageSize: any;
-  frameworkComponents: any
-  gridOptions: any;
+  //Reportes
+  usuariosList: Array<any> = [];
 
   //Form's
-  formUsuario = new UntypedFormGroup({
-    ecodusuario: new UntypedFormControl(0, Validators.required),
-    tnombre: new UntypedFormControl('', Validators.required),
-    tdireccion: new UntypedFormControl('', Validators.required),
-    ttelefono: new UntypedFormControl('', Validators.required),
-    tcorreo: new UntypedFormControl('', Validators.required),
-    tusuario: new UntypedFormControl('', Validators.required),
-    tpassword: new UntypedFormControl('', Validators.required),
-    testado: new UntypedFormControl('', Validators.required),
+  formUsuario = new FormGroup({
+    ecodusuario: new FormControl(0, Validators.required),
+    tnombre: new FormControl('', Validators.required),
+    tdireccion: new FormControl('', Validators.required),
+    ttelefono: new FormControl('', Validators.required),
+    tcorreo: new FormControl('', Validators.required),
+    tusuario: new FormControl('', Validators.required),
+    tpassword: new FormControl('', Validators.required),
+    testado: new FormControl('', Validators.required),
   })
 
 
   constructor(private apiServiceUsuario: ApiServiceUsuario) {
-
-    this.columnDefs = [
-      {
-        headerName: 'Acciones',
-        cellRendererFramework: RenderAcciones,
-        width: 100,
-
-      },
-      {
-        field: 'ecodusuario',
-        width: 100,
-        headerName: 'Id'
-      },
-      {
-        field: 'tnombre',
-        width: 100,
-        headerName: 'Nombre'
-      },
-      {
-        field: 'tdireccion',
-        width: 100,
-        headerName: 'Direccion'
-      },
-      {
-        field: 'ttelefono',
-        width: 100,
-        headerName: 'Teléfono'
-      },
-      {
-        field: 'tcorreo',
-        width: 100,
-        headerName: 'Correo'
-      },
-      {
-        field: 'tusuario',
-        width: 100,
-        headerName: 'Usuario'
-      },
-      {
-        field: 'tpassword',
-        width: 100,
-        headerName: 'Password'
-      },
-      {
-        field: 'testado',
-        width: 100,
-        headerName: 'Estado'
-      }
-    ]
-
-
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 200,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-      componentParent: this
-    };
-
-    this.gridOptions = {
-      context: {
-        componentParent: this
-      }
-    };
-
-    this.paginationPageSize = 0
-
   }
 
 
 
   ngOnInit(): void {
-    this.rowData = []
-
     //Consultar listado de usuarios
     this.e_concultarListadoUsuario()
   }
 
   // consultar usuario
   e_concultarListadoUsuario() {
-    //POST servicio consultar usuario
+
     this.apiServiceUsuario.postConsultarUsuarios().subscribe(
       (response) => {
         this.e_procesar_datos(response)
@@ -159,8 +85,8 @@ export class UsuariosComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#22bab7',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar', 
-      cancelButtonText: 'Cancelar',   
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         valor = result.value;
@@ -172,7 +98,9 @@ export class UsuariosComponent implements OnInit {
 
   // procesar datos del web service
   e_procesar_datos(datos: any) {
-    this.rowData = datos
+    
+    //Zona de reporte
+    this.usuariosList =  datos
   }
 
   // Guardar
@@ -256,7 +184,7 @@ export class UsuariosComponent implements OnInit {
 
             alerta['text'] = text;
             alerta['tipo'] = (success == true ? "success" : "error");
-           
+
             this.alerta(alerta);
 
           }
@@ -321,7 +249,7 @@ export class UsuariosComponent implements OnInit {
             if (response.data) {
               this.e_nuevo()
               this.e_concultarListadoUsuario()
-              success=true
+              success = true
               response.data.forEach((dato: any, index: any) => {
                 text += dato.attributes.text + '\n'
               })
@@ -346,32 +274,52 @@ export class UsuariosComponent implements OnInit {
 
   // Editar Usuario
   editarUsuario(dato: any) {
-    //console.log('datos....')
-    //console.log(dato)
+   
+  
+     let usuario =  {
+      ecodusuario : dato.ecodusuario,
+      tnombre : dato.tnombre,
+      tdireccion : dato.tdireccion,
+      ttelefono : dato.ttelefono,
+      tcorreo : dato.tcorreo,
+      tusuario : dato.tusuario,
+      tpassword : dato.tpassword,
+      testado : dato.testado,
+     }
 
-    this.formUsuario = new UntypedFormGroup({
-      ecodusuario: new UntypedFormControl(dato.ecodusuario, Validators.required),
-      tnombre: new UntypedFormControl(dato.tnombre, Validators.required),
-      tdireccion: new UntypedFormControl(dato.tdireccion, Validators.required),
-      ttelefono: new UntypedFormControl(dato.ttelefono, Validators.required),
-      tcorreo: new UntypedFormControl(dato.tcorreo, Validators.required),
-      tusuario: new UntypedFormControl(dato.tusuario, Validators.required),
-      tpassword: new UntypedFormControl(dato.tpassword, Validators.required),
-      testado: new UntypedFormControl(dato.testado, Validators.required),
+     this.ngFormSolicitudUsuario.form.setValue(usuario)
+
+   /* 
+   OLD BORRAR
+    console.log('datos....')
+    console.log(dato)
+
+    this.formUsuario = new FormGroup({
+      ecodusuario: new FormControl(dato.ecodusuario, Validators.required),
+      tnombre: new FormControl(dato.tnombre, Validators.required),
+      tdireccion: new FormControl(dato.tdireccion, Validators.required),
+      ttelefono: new FormControl(dato.ttelefono, Validators.required),
+      tcorreo: new FormControl(dato.tcorreo, Validators.required),
+      tusuario: new FormControl(dato.tusuario, Validators.required),
+      tpassword: new FormControl(dato.tpassword, Validators.required),
+      testado: new FormControl(dato.testado, Validators.required),
     })
+
+    */
+
   }
 
   // Nuevo usuario
   e_nuevo() {
-    this.formUsuario = new UntypedFormGroup({
-      ecodusuario: new UntypedFormControl(0, Validators.required),
-      tnombre: new UntypedFormControl('', Validators.required),
-      tdireccion: new UntypedFormControl('', Validators.required),
-      ttelefono: new UntypedFormControl('', Validators.required),
-      tcorreo: new UntypedFormControl('', Validators.required),
-      tusuario: new UntypedFormControl('', Validators.required),
-      tpassword: new UntypedFormControl('', Validators.required),
-      testado: new UntypedFormControl('', Validators.required),
+    this.formUsuario = new FormGroup({
+      ecodusuario: new FormControl(0, Validators.required),
+      tnombre: new FormControl('', Validators.required),
+      tdireccion: new FormControl('', Validators.required),
+      ttelefono: new FormControl('', Validators.required),
+      tcorreo: new FormControl('', Validators.required),
+      tusuario: new FormControl('', Validators.required),
+      tpassword: new FormControl('', Validators.required),
+      testado: new FormControl('', Validators.required),
     })
   }
 

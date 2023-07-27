@@ -5,7 +5,6 @@ import { GlobalConstants } from 'src/app/modelos/global';
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
 import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.service.usuario';
 
-
 // Service para usar datos en otro componente
 import { Router } from '@angular/router';
 
@@ -120,13 +119,8 @@ export class PerfilClienteStep1Component implements OnInit {
               "separator_after": true,
               "label": "Asignar cliente",
               "action": function (obj: any) {
-                ////console.log('nivel');
                 //trigger
                 $('#jstree').trigger('asignarClienteDirecto', item.original.metada);
-                //e_crear(item.original.metada)
-
-
-
               }
             }
           }
@@ -138,6 +132,11 @@ export class PerfilClienteStep1Component implements OnInit {
       $("#jstree").jstree("open_all");
     });
 
+  }
+
+  //Regresar menu Inicio
+  e_inicio(){
+    this.router.navigate(['dashboard/intranet/menu']);
   }
 
 }

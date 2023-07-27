@@ -14,19 +14,27 @@
                     </nav>
                     <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
                 </div>
-            </div><!-- content-header -->
-
+            </div>
             <div class="content-body">
                 <div class="card card-invoice">
                     <div class="card-header">
-                        <div>
-                            <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
-                            <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
-                        </div>
-
-                    </div><!-- card-header -->
+                    </div>
                     <div class="card-body">
-                        <div class='component mg-b-10'>
+                        <!--Botones-->
+                        <div class="component mb-2">
+                            <div class="button-row">
+                                <button mat-raised-button color="primary"
+                                    title="Consultar"><mat-icon>home</mat-icon>&nbsp;Inicio</button>
+                                <button mat-raised-button color="primary"
+                                    title="Consultar"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                                <button mat-raised-button
+                                    color="primary"><mat-icon>insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                            </div>
+                        </div>
+                        <!--
+                            <div class='component mg-b-10'>
+
+                       
                             <div class="btn-toolbar" role="group">
                                 <div class="btn-group mr-5" role="group">
                                     <a type="button" routerLink={{directorio}} class="btn btn-xs btn-primary"><i
@@ -42,7 +50,9 @@
                                     <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
                                 </div>
                             </div>
-                        </div>
+                         
+                            </div>
+                        -->
                         <hr>
                         <div class="component mg-t-20">
                             <div class="row row-xs">
@@ -98,3 +108,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

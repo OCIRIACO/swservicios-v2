@@ -1,12 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { apiClienteDirecto } from 'src/app/serviciosRest/Intranet/cliente/api.service.clienteDirecto';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { Router } from '@angular/router';
-import { RenderAcciones } from './render-acciones';
-import { RenderAccionesAsignado } from './render-acciones-asignados';
-import { FormArray, UntypedFormBuilder, FormControl, UntypedFormGroup, ValidatorFn } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
+
+export interface entidades {
+  ecodcliente: number,
+  ecodclientepadre: number,
+  trazonsocial: string,
+  trfc: string,
+  ttipocliente: string,
+  testado:string,
+  fhfecharegistro:string
+}
 
 
 @Component({
@@ -16,9 +27,19 @@ import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilU
 })
 export class PerfilClienteStep2Component implements OnInit {
 
+  //Table
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  displayedColumnsPendientes: string[] = ['acciones', 'ecodcliente','trazonsocial', 'trfc' ];
+  dataSourceUsuariosPendientes = new MatTableDataSource<entidades>([]);
+
+
+  displayedColumnsAsignados: string[] = ['acciones', 'ecodcliente','trazonsocial', 'trfc' ];
+  dataSourceUsuariosAsginados = new MatTableDataSource<entidades>([]);
+
+
   //Form's
-  formClienteDirecto = new UntypedFormGroup({})
-  formClienteAsignados = new UntypedFormGroup({})
+  formClienteDirecto = new FormGroup({})
+  formClienteAsignados = new FormGroup({})
 
   //Path base
   directorio: string = GlobalConstants.pathIntranet;
@@ -26,6 +47,7 @@ export class PerfilClienteStep2Component implements OnInit {
   //Label's
   lblpathPerfil: string = ""
 
+  /*
   //Configuraciones para la tabla
   gridApi: any;
   gridColumnApi: any;
@@ -41,7 +63,7 @@ export class PerfilClienteStep2Component implements OnInit {
   columnDefsAsignados: any
   gridOptionsAsignados: any;
   dataClienteAsignado: any
-
+*/
 
 
   // Id del cliente
@@ -64,96 +86,6 @@ export class PerfilClienteStep2Component implements OnInit {
   ) {
 
 
-    this.columnDefs = [
-      {
-        headerName: 'Acciones',
-        cellRendererFramework: RenderAcciones,
-        width: 100,
-      },
-      {
-        field: 'ecodcliente',
-        width: 20,
-        headerName: 'Id.cliente',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'trazonsocial',
-        width: 20,
-        headerName: 'Razón social',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'trfc',
-        width: 20,
-        headerName: 'Correo',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      }
-    ];
-
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 50,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-    };
-
-    this.gridOptions = {
-      context: {
-        componentParent: this
-      }
-    };
-
-    // Config clientes asignados
-    this.columnDefsAsignados = [
-      {
-        headerName: 'Acciones',
-        cellRendererFramework: RenderAccionesAsignado,
-        width: 100,
-      },
-      {
-        field: 'ecodcliente',
-        width: 20,
-        headerName: 'Id.cliente',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'trazonsocial',
-        width: 20,
-        headerName: 'Razón social',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'trfc',
-        width: 20,
-        headerName: 'Correo',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      }
-    ];
-
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 50,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-    };
-
-    //Configuracion table clientes asignados
-    this.gridOptionsAsignados = {
-      context: {
-        componentParent: this
-      }
-    };
-
-
-    this.paginationPageSize = 0
 
   }
 
@@ -171,18 +103,15 @@ export class PerfilClienteStep2Component implements OnInit {
     });
 
 
-    this.dataClienteDirecto = []
-
     //POST
     let parametros1 = {
       eperfil: this.serviceDatosPerfil.ecodperfil,
     }
-
+    
     this.apiCliente.postConsultarPerfilClientePendiente(parametros1).subscribe(
       (response) => {
-        this.e_procesar_datos(response)
-        //this.rowData =  response
-        //console.log(response);
+        this.dataSourceUsuariosPendientes.data = response as entidades [];
+        this.dataSourceUsuariosPendientes.paginator = this.paginator;
       }
     )
 
@@ -192,11 +121,10 @@ export class PerfilClienteStep2Component implements OnInit {
     }
     this.apiCliente.postConsultarPerfilCliente(parametros2).subscribe(
       (response) => {
-        this.e_procesar_datos_perfil_cliente(response)
+        this.dataSourceUsuariosAsginados.data = response as entidades [];
+        this.dataSourceUsuariosAsginados.paginator = this.paginator;
       }
     )
-
-
 
   }
 
@@ -211,7 +139,8 @@ export class PerfilClienteStep2Component implements OnInit {
       showConfirmButton: true,
       confirmButtonColor: "#22bab7"
     }).then((result) => {
-      this.e_procesar_consultar_clientes()
+      //this.e_procesar_consultar_clientes()
+      console.log(result);
     })
   }
 
@@ -238,50 +167,46 @@ export class PerfilClienteStep2Component implements OnInit {
 
 
   //Consultar las api's 
-  e_procesar_consultar_clientes(){
-      //POST
-      let parametros1 = {
-        eperfil: this.serviceDatosPerfil.ecodperfil,
+  /*e_procesar_consultar_clientes() {
+    //POST
+    let parametros1 = {
+      eperfil: this.serviceDatosPerfil.ecodperfil,
+    }
+
+    this.apiCliente.postConsultarPerfilClientePendiente(parametros1).subscribe(
+      (response) => {
+        this.e_procesar_datos(response)
+        //this.rowData =  response
+        //console.log(response);
       }
-  
-      this.apiCliente.postConsultarPerfilClientePendiente(parametros1).subscribe(
-        (response) => {
-          this.e_procesar_datos(response)
-          //this.rowData =  response
-          //console.log(response);
-        }
-      )
-  
-      //POST
-      let parametros2 = {
-        eperfil: this.serviceDatosPerfil.ecodperfil,
+    )
+
+    //POST
+    let parametros2 = {
+      eperfil: this.serviceDatosPerfil.ecodperfil,
+    }
+    this.apiCliente.postConsultarPerfilCliente(parametros2).subscribe(
+      (response) => {
+        this.e_procesar_datos_perfil_cliente(response)
       }
-      this.apiCliente.postConsultarPerfilCliente(parametros2).subscribe(
-        (response) => {
-          this.e_procesar_datos_perfil_cliente(response)
-        }
-      )
-  }
+    )
+  }*/
 
   //Procesar datos del API para crear el reporte
-  e_procesar_datos(datos: any) {
-
+  /*e_procesar_datos(datos: any) {
     let datoClientes: Array<any> = [];
     datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato);
     })
-    this.dataClienteDirecto = datoClientes
-  }
+  }*/
 
   //Procesar datos del API para crear el reporte perfil con cliente
-  e_procesar_datos_perfil_cliente(datos: any) {
-
+  /*e_procesar_datos_perfil_cliente(datos: any) {
     let datoClientes: Array<any> = [];
     datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato);
     })
-    this.dataClienteAsignado = datoClientes
-  }
+  }*/
 
 
 
@@ -292,7 +217,7 @@ export class PerfilClienteStep2Component implements OnInit {
 
 
   //Change del reporte de clientes pendientes de perfil
-  e_onChangeRoot(datos1: any, datos2: any) {
+  e_onChangeRootPendiente(datos1: any, datos2: any) {
     //Clear
     this.eclienteFinal = 0
     this.eclienteFinal = datos2.value
@@ -434,4 +359,9 @@ export class PerfilClienteStep2Component implements OnInit {
     }
   }
 
+
+
 }
+
+
+

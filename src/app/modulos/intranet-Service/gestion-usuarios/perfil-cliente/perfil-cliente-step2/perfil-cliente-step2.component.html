@@ -2,101 +2,226 @@
     <div fxFlex="95%">
         <mat-card>
             <div class="content-header">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Cliente(s)</li>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Cliente(s)</li>
 
-            </ol>
-        </nav>
-        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
-    </div>
-</div><!-- content-header -->
-
-<div class="content-body">
-    <div class="card card-invoice">
-        <div class="card-header">
-            <div>
-                <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
-                <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
+                        </ol>
+                    </nav>
+                    <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
+                </div>
             </div>
 
-        </div><!-- card-header -->
-        <div class="card-body">
-
-            <div class="row">
-
-                <div class='component mg-b-10'>
-                    <div class="btn-toolbar" role="group">
-                        <div class="btn-group mr-5" role="group">
-                            <button mat-raised-button color="primary" (click)="e_regresar()"><i
-                                    class=" fas fa-outdent mg-r-5 fa-1x "></i>Regresar</button>
+            <div class="content-body">
+                <div class="card card-invoice">
+                    <div class="card-header">
+                        <div>
+                         
+                            
                         </div>
+
                     </div>
-                </div>
-                <div class='component'>
-                    <hr>
-                </div>
+                    <div class="card-body">
 
-                <div class="component mg-b-20 mg-t-10">
-                    {{lblpathPerfil}}
-                </div>
-
-                <div class="col-sm-6">
-
-                    <form [formGroup]="formClienteDirecto">
-                        <div class='component mg-b-20'>
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <button mat-raised-button color="primary" 
-                                    (click)="e_agregarClienteDirecto(formClienteDirecto)">
-                                        <i class="fas fa-plus mg-r-5 fa-1x"></i>Agregar
-                                        Cliente(s)</button>
+                        <div class="row">
+                            <div class='component mg-b-10'>
+                                <div class="btn-toolbar" role="group">
+                                    <div class="btn-group mr-5" role="group">
+                                        <button mat-raised-button color="primary"
+                                            (click)="e_regresar()"><mat-icon>arrow_back_ios</mat-icon>&nbsp;Regresar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {{lblpathPerfil}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
 
-                        <div class="table-responsive">
-                            <div class="outer-div">
-                                <div class="grid-wrapper" id="gridCliente">
-                                    <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUCliente"
-                                        class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
-                                        [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
-                                        [defaultColDef]="defaultColDef" [rowData]="dataClienteDirecto">
-                                    </ag-grid-angular>
+                                        <form [formGroup]="formClienteDirecto">
+                                            <div class='component mg-b-20'>
+                                                <div class="btn-toolbar" role="group">
+                                                    <div class="btn-group mr-5" role="group">
+                                                        <button mat-raised-button color="primary"
+                                                            (click)="e_agregarClienteDirecto(formClienteDirecto)">
+                                                            <mat-icon> add_circle </mat-icon> &nbsp;Agregar
+                                                            Cliente(s)</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table mat-table [dataSource]="dataSourceUsuariosPendientes"
+                                                        class="mat-elevation-z8" width="100%">
+
+                                                        <!--Acciones -->
+                                                        <ng-container matColumnDef="acciones">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                style="text-align: center;">
+                                                                S
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                <div style="text-align:center;">
+                                                                    <input type="radio" 
+                                                                        name="checkCliente" value="{{element.ecodcliente}}"
+                                                                        id="{{element.ecodcliente}}"
+                                                                        (change)="e_onChangeRootPendiente(element.ecodcliente, $event.target)">
+                                                                </div>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- Id usuario -->
+                                                        <ng-container matColumnDef="ecodcliente">
+                                                            <th mat-header-cell *matHeaderCellDef> NO.USUARIO </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.ecodcliente}}
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- RAZON SOCIAL -->
+                                                        <ng-container matColumnDef="trazonsocial">
+                                                            <th mat-header-cell *matHeaderCellDef> RAZON SOCIAL </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.trazonsocial}}
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- Rfc -->
+                                                        <ng-container matColumnDef="trfc">
+                                                            <th mat-header-cell *matHeaderCellDef> RFC </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.trfc}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <tr mat-header-row
+                                                            *matHeaderRowDef="displayedColumnsPendientes, sticky: true">
+                                                        </tr>
+                                                        <tr mat-row
+                                                            *matRowDef="let row; columns: displayedColumnsPendientes;">
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
+                                                    showFirstLastButtons></mat-paginator>
+                                            </div>
+
+                                            <!--
+                                            <div class="table-responsive">
+                                                <div class="outer-div">
+                                                    <div class="grid-wrapper" id="gridCliente">
+                                                        <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;"
+                                                            id="gridUCliente" class="ag-theme-alpine" [pagination]="true"
+                                                            [gridOptions]="gridOptions"
+                                                            [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
+                                                            [defaultColDef]="defaultColDef" [rowData]="dataClienteDirecto">
+                                                        </ag-grid-angular>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        -->
+                                        </form>
+
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <form [formGroup]="formClienteAsignados">
+                                            <div class='component mg-b-20'>
+                                                <div class="btn-toolbar" role="group">
+                                                    <div class="btn-group mr-5" role="group">
+                                                        <button mat-raised-button color="primary"
+                                                            (click)="e_eliminarClienteDirecto(formClienteAsignados)">
+                                                            <mat-icon> remove_circle </mat-icon> &nbsp;
+                                                            Eliminar Cliente(s)</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table mat-table [dataSource]="dataSourceUsuariosAsginados"
+                                                        class="mat-elevation-z8" width="100%">
+
+                                                        <!--Acciones -->
+                                                        <ng-container matColumnDef="acciones">
+                                                            <th mat-header-cell *matHeaderCellDef
+                                                                style="text-align: center;">
+                                                                S
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                <div style="text-align:center;">
+                                                                    <input type="radio" 
+                                                                        name="checkCliente" value="{{element.ecodcliente}}"
+                                                                        id="{{element.ecodcliente}}"
+                                                                        (change)="e_onChangeRootAsignado(element.ecodcliente, $event.target)">
+                                                                </div>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- Id usuario -->
+                                                        <ng-container matColumnDef="ecodcliente">
+                                                            <th mat-header-cell *matHeaderCellDef> NO.USUARIO </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.ecodcliente}}
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- RAZON SOCIAL -->
+                                                        <ng-container matColumnDef="trazonsocial">
+                                                            <th mat-header-cell *matHeaderCellDef> RAZON SOCIAL </th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.trazonsocial}}
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- Rfc -->
+                                                        <ng-container matColumnDef="trfc">
+                                                            <th mat-header-cell *matHeaderCellDef> RFC </th>
+                                                            <td mat-cell *matCellDef="let element"> {{element.trfc}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <tr mat-header-row
+                                                            *matHeaderRowDef="displayedColumnsAsignados, sticky: true">
+                                                        </tr>
+                                                        <tr mat-row
+                                                            *matRowDef="let row; columns: displayedColumnsAsignados;">
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
+                                                    showFirstLastButtons></mat-paginator>
+                                            </div>
+
+                                            <!--
+                                            <div class="outer-div">
+                                                <div class="grid-wrapper" id="gridCliente">
+                                                    <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;"
+                                                        id="gridUCliente" class="ag-theme-alpine" [pagination]="true"
+                                                        [gridOptions]="gridOptionsAsignados"
+                                                        [paginationPageSize]="paginationPageSize"
+                                                        [columnDefs]="columnDefsAsignados" [defaultColDef]="defaultColDef"
+                                                        [rowData]="dataClienteAsignado">
+                                                    </ag-grid-angular>
+                                                </div>
+                                            </div>
+                                        -->
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-
-                </div>
-                <div class="col-sm-6">
-                     <form [formGroup]="formClienteAsignados">
-                    <div class='component mg-b-20'>
-                        <div class="btn-toolbar" role="group">
-                            <div class="btn-group mr-5" role="group">
-                                <button mat-raised-button color="primary" (click)="e_eliminarClienteDirecto(formClienteAsignados)" >
-                                    <i class="fas fa-minus mg-r-5 fa-1x"></i>
-                                    Eliminar Cliente(s)</button>
-                            </div>
-                        </div>
                     </div>
-                    <div class="outer-div">
-                         <div class="grid-wrapper" id="gridCliente">
-                                <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUCliente"
-                                    class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptionsAsignados"
-                                    [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefsAsignados"
-                                    [defaultColDef]="defaultColDef" [rowData]="dataClienteAsignado">
-                                </ag-grid-angular>
-                            </div>
-                    </div>
-                    </form> 
                 </div>
             </div>
-        </div>
-
+        </mat-card>
     </div>
 </div>

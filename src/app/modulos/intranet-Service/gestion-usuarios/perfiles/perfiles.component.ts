@@ -4,7 +4,7 @@ import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.s
 import * as $ from 'jquery';
 import 'jstree';
 import Swal from 'sweetalert2';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -22,9 +22,9 @@ export class PerfilesComponent implements OnInit {
   IdataPerfil: Array<any> = [];
 
   //Form's
-  formPerfil = new UntypedFormGroup({
-    tdescripcion: new UntypedFormControl('', Validators.required),
-    testado: new UntypedFormControl('', Validators.required)
+  formPerfil = new FormGroup({
+    tdescripcion: new FormControl('', Validators.required),
+    testado: new FormControl('', Validators.required)
   })
   // Submit's 
   submitGuardar = false;
@@ -39,6 +39,7 @@ export class PerfilesComponent implements OnInit {
   constructor(private apiServiceUsuario: ApiServiceUsuario) { }
 
   ngOnInit(): void {
+    
     //Iniciar consultar los perfiles
     this.e_consultarPerfiles()
 
@@ -67,9 +68,9 @@ export class PerfilesComponent implements OnInit {
       console.log('Editar!')
 
       //Form's
-      this.formPerfil = new UntypedFormGroup({
-        tdescripcion: new UntypedFormControl(this.datosPerfil.tdescripcion, Validators.required),
-        testado: new UntypedFormControl(this.datosPerfil.testado, Validators.required)
+      this.formPerfil = new FormGroup({
+        tdescripcion: new FormControl(this.datosPerfil.tdescripcion, Validators.required),
+        testado: new FormControl(this.datosPerfil.testado, Validators.required)
       })
 
       //this.e_crearperfil(dato);
@@ -404,9 +405,9 @@ export class PerfilesComponent implements OnInit {
     this.lblObservacionesPerfil = ''
 
     //Form's
-    this.formPerfil = new UntypedFormGroup({
-      tdescripcion: new UntypedFormControl('', Validators.required),
-      testado: new UntypedFormControl('', Validators.required)
+    this.formPerfil = new FormGroup({
+      tdescripcion: new FormControl('', Validators.required),
+      testado: new FormControl('', Validators.required)
     })
 
   }

@@ -11,6 +11,7 @@ import { IdetalleUbicacion, IparametrosUbicaciones } from 'src/app/modelos/ubica
 import { ApiServiceUbicaciones } from 'src/app/serviciosRest/Intranet/ubicaciones/api.service.ubicaciones';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
+import { Router } from '@angular/router';
 
 
 
@@ -55,7 +56,12 @@ export class ConfigUbicacionesComponent implements OnInit {
   divecoddetubicacion: boolean = false
 
 
-  constructor(private apiZonas: ApiServiceZonas, private apiUbicacion: ApiServiceUbicaciones, private serviceDatosUsuario: serviceDatosUsuario) { }
+  constructor(
+    private apiZonas: ApiServiceZonas, 
+    private apiUbicacion: ApiServiceUbicaciones, 
+    private serviceDatosUsuario: serviceDatosUsuario,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
     // Consultar informacion del folio  de salida
@@ -346,6 +352,11 @@ export class ConfigUbicacionesComponent implements OnInit {
     )
 
 
+  }
+
+  //Botones
+  e_inicio(){
+    this.router.navigate(['dashboard/intranet/menu']);
   }
 
 }

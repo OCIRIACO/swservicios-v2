@@ -1,8 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { RenderAcciones } from './render-acciones';
 import { apiSolicitudServicios } from 'src/app/serviciosRest/Intranet/servicios/api.service.servicios';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatRadioChange } from '@angular/material/radio';
+import { Router } from '@angular/router';
 
+
+export interface IdataServicios {
+  etransaccion: number,
+  tcorreo: string,
+  ttelefono: string,
+  treferencia: string,
+  fhfecharegistro: string,
+  fhfechaservicio: string
+}
 
 @Component({
   selector: 'app-consultar-solicitud-servicios',
@@ -11,112 +24,49 @@ import { apiSolicitudServicios } from 'src/app/serviciosRest/Intranet/servicios/
 })
 export class ConsultarSolicitudServiciosComponent implements OnInit {
 
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  columnasServicios: string[] = ['acciones', 'etransaccion', 'tcorreo', 'ttelefono', 'treferencia', 'fhfecharegistro', 'fhfechaservicio'];
+  solicitudesServicos = new MatTableDataSource<IdataServicios>([]);
+
   //Path base
   directorio: string = GlobalConstants.pathIntranet;
 
-  //Configuraciones para la tabla
-  gridApi: any;
-  gridColumnApi: any;
-  columnDefs: any
-  rowData: any
-  defaultColDef: any
-  paginationPageSize: any;
-  frameworkComponents: any
-
 
   constructor(
-    private apiSolicitudServicios: apiSolicitudServicios
+    private apiSolicitudServicios: apiSolicitudServicios,
+    private router: Router
   ) {
-
-    this.columnDefs = [
-      {
-        headerName: 'Acciones',
-        cellRendererFramework: RenderAcciones,
-        width: 20,
-
-      },
-      {
-        field: 'etransaccion',
-        width: 20,
-        headerName: 'Transacción',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'tcorreo',
-        width: 20,
-        headerName: 'Correo',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'ttelefono',
-        width: 20,
-        headerName: 'Teléfono',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'treferencia',
-        width: 20,
-        headerName: 'Referencia',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'fhfecharegistro',
-        width: 20,
-        headerName: 'Fecha registro',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      },
-      {
-        field: 'fhfechaservicio',
-        width: 20,
-        headerName: 'Fecha servicio',
-        suppressMenu: true,
-        filter: 'agTextColumnFilter'
-      }
-    ]
-
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 20,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-    };
-
-    this.paginationPageSize = 0
   }
 
   ngOnInit(): void {
     //Radio checked y click
-    let checkbox = document.getElementById('rdpendiente') as HTMLInputElement
-    checkbox.checked = true
-    checkbox.click()
-
-
-    //Clear rowdata para pintar el reporte
-    this.rowData = []
+    // let checkbox = document.getElementById('rdpendiente') as HTMLInputElement
+    //checkbox.checked = true
+    //checkbox.click()
   }
 
-  e_opcion(datos: any) {
-    //console.log(datos.target.id);
+  e_opcion(event: MatRadioChange) {
+    //console.log(event.value);
     // console.log(datos.target.attributes.value.value);
 
     let parametros = {
       ttiposolicitud: 'SERVICIO',
-      testatus: datos.target.attributes.value.value
+      testatus: event.value
     }
 
     this.apiSolicitudServicios.postConsultarSolicitudesServicios(parametros).subscribe(
       (response) => {
-        //this.e_procesar_datos(response)
-        this.rowData = response
+        this.solicitudesServicos.data = response as IdataServicios[];
+        this.solicitudesServicos.paginator = this.paginator;
 
       }
     )
+  }
+
+  //Consultar detalle de la solicitud
+  e_detalle(etransaccion:number){
+    this.router.navigate(['/dashboard/intranet/servicios/detalles', etransaccion ]);  // nativo
   }
 
 }

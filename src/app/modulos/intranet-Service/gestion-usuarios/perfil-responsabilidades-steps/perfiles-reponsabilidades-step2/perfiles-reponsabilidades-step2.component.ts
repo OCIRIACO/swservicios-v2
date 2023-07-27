@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import 'jstree';
 import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.service.usuario';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfiles-reponsabilidades-step2',
@@ -24,7 +25,11 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
   // Datos service
   serviceDatosPerfil = this.serviceDatosPerfilUsuarios.datosPerfilUsuarios
 
-  constructor(private apiServiceUsuario: ApiServiceUsuario, private ApiServiceMenu: ApiServiceMenu, private serviceDatosPerfilUsuarios: serviceDatosPerfilUsuarios) { }
+  constructor(private apiServiceUsuario: ApiServiceUsuario,
+    private ApiServiceMenu: ApiServiceMenu,
+    private serviceDatosPerfilUsuarios: serviceDatosPerfilUsuarios,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -91,11 +96,11 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
           // NO TOCAR
           if (dato.checked == 'true') {
             checked = {
-             selected : true, checked : true, opened : true 
+              selected: true, checked: true, opened: true
             }
           } else {
             checked = {
-              selected : false, checked : false, opened : true 
+              selected: false, checked: false, opened: true
             }
           }
 
@@ -133,15 +138,15 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
     //Magia
     $('#jstree').jstree({
       "core": {
-       "multiple": true,
+        "multiple": true,
         "check_callback": true,
         "data": this.IdataOperaciones,
       },
       "plugins": ["checkbox"],
-      "checkbox": { 
+      "checkbox": {
         //"three_state": false,
-        "tie_selection" : true ,
-        "whole_node" : true,
+        "tie_selection": true,
+        "whole_node": true,
       },
       "expand_selected_onload": false
     })
@@ -207,10 +212,10 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
     }
 
 
-   //Consumir el servicio api
-   let text = '';
-   let success: boolean
-   let alerta: any = {};
+    //Consumir el servicio api
+    let text = '';
+    let success: boolean
+    let alerta: any = {};
 
 
     this.apiServiceUsuario.postPerfilResponsabilidades(parametros).subscribe(
@@ -218,9 +223,9 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
 
 
         if (response.data) {
-           //Iniciar consultar los perfiles
-           this.e_consultarOperaciones(this.serviceDatosPerfil)
-          success=true
+          //Iniciar consultar los perfiles
+          this.e_consultarOperaciones(this.serviceDatosPerfil)
+          success = true
           response.data.forEach((dato: any, index: any) => {
             text += dato.attributes.text + '\n'
           })
@@ -237,5 +242,11 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
     )
 
   }
+
+  //Regresar
+  e_regresar() {
+    this.router.navigate(['dashboard/intranet/administracion/config/perfiles/respons/step1']);
+  }
+
 
 }

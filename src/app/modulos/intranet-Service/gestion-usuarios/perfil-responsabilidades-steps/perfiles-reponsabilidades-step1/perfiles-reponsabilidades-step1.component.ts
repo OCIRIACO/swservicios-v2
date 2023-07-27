@@ -31,8 +31,8 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
 
     // Click
     $('#jstree').on('asignarResponsabilidades', (ev, dato) => {
-       //console.log('datos perfil')
-       //console.log(dato)
+      //console.log('datos perfil')
+      //console.log(dato)
       this.e_responsabilidades(dato);
     });
   }
@@ -129,6 +129,11 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
       $("#jstree").jstree("open_all");
     });
 
+  }
+
+  //Regresar menu Inicio
+  e_inicio() {
+    this.router.navigate(['dashboard/intranet/menu']);
   }
 
 }

@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modulos/login/login.component';
@@ -107,6 +106,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
+import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
 
 @NgModule({
   declarations: [
@@ -178,8 +179,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     EditarAutotransporteComponent,
     RegistrarComponent,
     CrearReferenciaComponent,
-    ConsultarReferenciasComponent
-
+    ConsultarReferenciasComponent,
+    PerfilClienteStep1Component,
+    PerfilesStep1Component
   ],
   imports: [
     BrowserModule,
@@ -220,6 +222,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},
     CanDeactivateGuard
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   bootstrap: [AppComponent]
 })

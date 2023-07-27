@@ -12,7 +12,7 @@
                         </ol>
                     </nav>
                 </div>
-            </div><!-- content-header -->
+            </div>
             <div class="content-body">
                 <div class="card card-invoice">
                     <div class="card-header">
@@ -20,7 +20,7 @@
                             <h5 class="mg-b-3">No.Cliente # {{lblecliente}}</h5>
                             <span class="tx-sm text-muted">Registro: {{lblfhfecharegistro}}</span>
                         </div>
-                    </div><!-- card-header -->
+                    </div>
                     <div class="card-body">
                         <form #solicitudRazonSocial="ngForm" (ngSubmit)="e_guardar(solicitudRazonSocial)">
                             <div class="component mb-2">
@@ -350,7 +350,8 @@
                                                 (click)="e_eliminarDireccion(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
                                         </td>
                                         <td><button type="button" mat-raised-button color="primary"
-                                                (click)="e_editarDireccion(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                                (click)="e_editarDireccion(dato)"><mat-icon>edit</mat-icon>&nbsp;
+                                                   Editar</button>
                                         </td>
                                         <td>{{i+ 1 }}</td>
                                         <td>{{dato.ecodigopostal}}</td>

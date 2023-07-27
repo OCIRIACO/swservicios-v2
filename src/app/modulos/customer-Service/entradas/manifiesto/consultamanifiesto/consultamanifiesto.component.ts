@@ -36,7 +36,8 @@ export class ConsultamanifiestoComponent implements OnInit {
   constructor(
     private apiManifiesto: ApiServiceManifiesto, 
     private spinner: NgxSpinnerService, 
-    private router: Router) {
+    private router: Router
+    ) {
 
   }
 

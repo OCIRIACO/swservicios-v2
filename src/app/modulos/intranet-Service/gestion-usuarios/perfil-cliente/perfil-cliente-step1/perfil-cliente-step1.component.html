@@ -1,4 +1,6 @@
-
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <mat-card>
             <div class="content-header">
                 <div>
                     <nav aria-label="breadcrumb">
@@ -12,26 +14,25 @@
                     </nav>
                     <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
                 </div>
-            </div><!-- content-header -->
-
+            </div>
             <div class="content-body">
                 <div class="card card-invoice">
                     <div class="card-header">
                         <div>
-                            <!--<h5 class="mg-b-3">Invoice #DF032AZ00022</h5>-->
-                            <!--<span class="tx-sm text-muted">Due on September 15, 2019</span>-->
                         </div>
-
-                    </div><!-- card-header -->
+                    </div>
                     <div class="card-body">
-                        <div class='component mg-b-10'>
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <a type="button" href={{directorio}} class="btn btn-xs btn-primary"><i
-                                            class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                        <div class="row">
+                            <div class='component mg-b-10'>
+                                <div class="btn-toolbar" role="group">
+                                    <div class="btn-group mr-5" role="group">
+                                        <button mat-raised-button color="primary" (click)="e_inicio()"><mat-icon> home
+                                            </mat-icon> &nbsp;Inicio</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <hr>
                         <div class="row row-xs">
                             <div class="col-sm">
@@ -42,6 +43,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+        </mat-card>
+    </div>
+</div>

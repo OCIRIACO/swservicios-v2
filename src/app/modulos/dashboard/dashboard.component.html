@@ -73,6 +73,14 @@
           </mat-icon>&nbsp;
           <p mat-line> Operaciones </p>
         </a>
+
+        <a mat-list-item [routerLink]="" (click)="e_operaciones('intranet')" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            business
+          </mat-icon>&nbsp;
+          <p mat-line> Intranet </p>
+        </a>
+
         <!--<a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
             <mat-icon mat-list-icon>
               people

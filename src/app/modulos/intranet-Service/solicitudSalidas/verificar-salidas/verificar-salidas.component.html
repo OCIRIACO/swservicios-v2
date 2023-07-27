@@ -12,7 +12,7 @@
                         </ol>
                     </nav>
                 </div>
-            </div><!-- content-header -->
+            </div>
 
             <div class="content-body" id="htmlSolicitudSalida">
                 <div class="card card-invoice">
@@ -21,7 +21,7 @@
                             <h5 class="mg-b-3">Transacción # {{lbletransaccion}}</h5>
                             <span class="tx-sm text-muted">Registro: {{lblfhfecharegistro}}</span>
                         </div>
-                    </div><!-- card-header -->
+                    </div>
                     <div class="card-body">
 
                         <div class="alert alert-{{lbltipoAlerta}}" role="alert">
@@ -47,22 +47,23 @@
                                     </div>
 
                                     <div class="btn-group mr-1" role="group">
-                                        <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                                        <button mat-raised-button color="primary"
+                                            (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
                                     </div>
 
                                     <div class="btn-group ml-5" role="group">
                                         <button mat-raised-button color="primary" (click)="e_autorizar()"
                                             [disabled]="lblestatus == 'AUTORIZADA'"
                                             [style.cursor]=" lblestatus == 'AUTORIZADA' ? 'not-allowed' : '' "
-                                            [style.pointer-events]=" lblestatus == 'AUTORIZADA' ? 'all !important' : '' "><i
-                                                class="fas fa-check mg-r-5 fa-1x"></i>Autorizar</button>
+                                            [style.pointer-events]=" lblestatus == 'AUTORIZADA' ? 'all !important' : '' "><mat-icon>
+                                                done </mat-icon>&nbsp;Autorizar</button>
                                     </div>
                                     <div class="btn-group ml-1" role="group">
                                         <button mat-raised-button color="primary" (click)="e_rechazar()"
                                             [disabled]="lblestatus == 'RECHAZADA'"
                                             [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
-                                            [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' "><i
-                                                class="fas fa-times mg-r-5 fa-1x"></i>Rechazar</button>
+                                            [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' "><mat-icon>
+                                                block </mat-icon>&nbsp;Rechazar</button>
                                     </div>
 
                                 </div>
