@@ -151,8 +151,8 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
     //CARRIL / RACK
 
-    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid;">'
-    html += '<tbody>'
+    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid">'
+    html += '<tbody style="border-width:1;">'
     html += '<tr>'
     html += '<td>' + bloque + '</td>'
     html += '</tr>'
@@ -160,7 +160,8 @@ export class VistaUbicaciones2dComponent implements OnInit {
     html += '</table>'
 
 
-    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid;" >'
+    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid" >'
+    html += '<tbody style="border-width:1;">'
 
     for (let x = 0; x < bahias; x++) {
       html += '<tr>'
@@ -283,11 +284,13 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
       html += '</tr>'
     }
-
+    html += '</tbody>'
     html += '</table>'
     html += '<p>'
     html += '</div>'
     //});
+
+    console.log(html);
 
     return html;
 

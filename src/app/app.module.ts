@@ -108,6 +108,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
 import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
+import {MatTabsModule} from '@angular/material/tabs'; 
 
 @NgModule({
   declarations: [
@@ -181,7 +182,8 @@ import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuar
     CrearReferenciaComponent,
     ConsultarReferenciasComponent,
     PerfilClienteStep1Component,
-    PerfilesStep1Component
+    PerfilesStep1Component,
+    ZonasComponent
   ],
   imports: [
     BrowserModule,
@@ -217,7 +219,8 @@ import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuar
     MatRadioModule,
     MatPaginatorModule,
     NgFor,
-    AsyncPipe
+    AsyncPipe,
+    MatTabsModule
   ],
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},

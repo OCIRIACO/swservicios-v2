@@ -362,6 +362,11 @@ export class ZonasComponent implements OnInit {
 
 
 
+  //Botones
+  e_inicio(){
+    this.router.navigate(['dashboard/intranet/menu']);
+  }
+  
 
 
 }

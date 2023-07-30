@@ -2,152 +2,172 @@
     <div fxFlex="95%">
         <mat-card>
             <div class="content-header">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Configuración zona(s)</li>
-
-            </ol>
-        </nav>
-        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
-    </div>
-</div>
-<div class="content-body">
-
-    <form [formGroup]="FormDatosZonas">
-        <div class="card card-invoice">
-            <div class="card-header">
                 <div>
-                 
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Configuración zona(s)</li>
+
+                        </ol>
+                    </nav>
                     
                 </div>
-                <!--<div class="btn-group-invoice">
+            </div>
+            <div class="content-body">
+
+                <form [formGroup]="FormDatosZonas">
+                    <div class="card card-invoice">
+                        <div class="card-header">
+                            <div>
+
+
+                            </div>
+                            <!--<div class="btn-group-invoice">
                     <div class="btn-group-invoice">
                         <a [routerLink]="[]" class="btn btn-brand-02 btn-sm btn-uppercase"
                             (click)="e_guardar(FormDatosZonas.value)"><i data-feather="save"></i>Guardar</a>
                     </div>
                 </div>-->
+                        </div>
+                        <div class="card-body">
+
+                            <div class='component mg-b-10'>
+                                <div class="btn-toolbar" role="group">
+                                    <div class="btn-group mr-5" role="group">
+                                        <a type="button" routerLink={{directorio}} class="btn btn-xs btn-primary"><i
+                                                class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
+                                    </div>
+                                    <div class="button-row mr-2">
+                                        <button mat-raised-button color="primary"
+                                            (click)="e_guardar(FormDatosZonas.value)"><i
+                                                class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div class="row row-xs">
+                                <div class="col-sm">
+                                    <div class="pd-y-10 pd-x-20 ">
+                                        <div id="jstree">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm mg-t-10 mg-sm-t-0">
+                                    <div class="pd-y-10 pd-x-20 ">
+                                        <div class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="taccion">Accion</label>
+                                                <input class="form-control form-control-sm" id="taccion"
+                                                    name="zona[taccion]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="taccion" readonly />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="divZona" class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="ecodzona">ecodzona</label>
+                                                <input class="form-control form-control-sm" id="ecodzona"
+                                                    name="zona[ecodzona]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="ecodzona" />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="divZona" class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="ecodzonapadre">ecodzonapadre</label>
+                                                <input class="form-control form-control-sm" id="ecodzonapadre"
+                                                    name="zona[ecodzonapadre]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="ecodzonapadre" />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="tpath">Ruta</label>
+                                                <input class="form-control form-control-sm" id="tpath"
+                                                    name="zona[tpath]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="tpath" readonly />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="ttipo">Tipo</label>
+                                                <input class="form-control form-control-sm" id="ttipo"
+                                                    name="zona[ttipo]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="ttipo" readonly />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="divSubtipo" id="divSubtipo" class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="tsubtipo">Sub-zona</label>
+
+                                                <select class="custom-select form-control-sm" id="tsubtipo"
+                                                    name="zona[tsubtipo]" formControlName="tsubtipo"
+                                                    [ngClass]="{ 'is-invalid': submitZona && getFormZona.tsubtipo.errors }">
+                                                    <option value="NA">SELECCIONAR</option>
+                                                    <option value="CARRIL">ALMACEN</option>
+                                                    <option value="CARRIL">PATIO DE CONTENEDORES</option>
+                                                    <option value="PLAYA">PLAYA</option>
+                                                    <option value="RECEPCION">RECEPCION</option>
+                                                    <option value="SERVICIO">SERVICIO</option>
+                                                </select>
+                                                <div *ngIf="submitZona && getFormZona.tsubtipo.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="getFormZona.tsubtipo.errors.required">Sub-tipo es
+                                                        requerido
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="ttramite">Descripción</label>
+                                                <input class="form-control form-control-sm" id="tdescripcion"
+                                                    name="zona[tdescripcion]" size="30" type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    formControlName="tdescripcion" maxlength="25"
+                                                    [ngClass]="{ 'is-invalid': submitZona && getFormZona.tdescripcion.errors }" />
+                                                <div *ngIf="submitZona && getFormZona.tdescripcion.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="getFormZona.tdescripcion.errors.required">Descripción es
+                                                        requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class='col-sm-12'>
+                                            <div class='form-group'>
+                                                <label for="testado">Estado</label>
+                                                <select class="custom-select form-control-sm" id="testado"
+                                                    name="zona[testado]" formControlName="testado"
+                                                    [ngClass]="{ 'is-invalid': submitZona && getFormZona.testado.errors }">
+                                                    <option value="NA">SELECCIONAR</option>
+                                                    <option value="VIGENTE">VIGENTE</option>
+                                                    <option value="NO VIGENTE">NO VIGENTE</option>
+                                                </select>
+                                                <div *ngIf="submitZona && getFormZona.testado.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="getFormZona.testado.errors.required">Estado es requerido
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- row -->
+
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="card-body">
-
-                <div class='component mg-b-10'>
-                    <div class="btn-toolbar" role="group">
-                        <div class="btn-group mr-5" role="group">
-                            <a type="button" routerLink={{directorio}}  class="btn btn-xs btn-primary"><i
-                                    class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
-                        </div>
-                        <div class="button-row mr-2">
-                            <button mat-raised-button color="primary"
-                                (click)="e_guardar(FormDatosZonas.value)"><i
-                                    class="fas fa-save mg-r-5 fa-1x"></i>Guardar</button>
-                        </div>
-
-                    </div>
-                </div>
-                <hr>
-
-                <div class="row row-xs">
-                    <div class="col-sm">
-                        <div class="pd-y-10 pd-x-20 ">
-                            <div id="jstree">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0">
-                        <div class="pd-y-10 pd-x-20 ">
-                            <div class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="taccion">Accion</label>
-                                    <input class="form-control form-control-sm" id="taccion" name="zona[taccion]"
-                                        size="30" type="text" oninput="this.value = this.value.toUpperCase()" formControlName="taccion" readonly />
-                                </div>
-                            </div>
-                            <div *ngIf="divZona" class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="ecodzona">ecodzona</label>
-                                    <input class="form-control form-control-sm" id="ecodzona" name="zona[ecodzona]"
-                                        size="30" type="text" oninput="this.value = this.value.toUpperCase()" formControlName="ecodzona" />
-                                </div>
-                            </div>
-                            <div *ngIf="divZona" class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="ecodzonapadre">ecodzonapadre</label>
-                                    <input class="form-control form-control-sm" id="ecodzonapadre"
-                                        name="zona[ecodzonapadre]" size="30" type="text" oninput="this.value = this.value.toUpperCase()"
-                                        formControlName="ecodzonapadre" />
-                                </div>
-                            </div>
-                            <div class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="tpath">Ruta</label>
-                                    <input class="form-control form-control-sm" id="tpath" name="zona[tpath]" size="30"
-                                        type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tpath" readonly />
-                                </div>
-                            </div>
-                            <div class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="ttipo">Tipo</label>
-                                    <input class="form-control form-control-sm" id="ttipo" name="zona[ttipo]" size="30"
-                                        type="text" oninput="this.value = this.value.toUpperCase()" formControlName="ttipo" readonly />
-                                </div>
-                            </div>
-                            <div *ngIf="divSubtipo" id="divSubtipo" class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="tsubtipo">Sub-zona</label>
-
-                                    <select class="custom-select form-control-sm" id="tsubtipo" name="zona[tsubtipo]"
-                                        formControlName="tsubtipo" [ngClass]="{ 'is-invalid': submitZona && getFormZona.tsubtipo.errors }" >
-                                        <option value="NA">SELECCIONAR</option>
-                                        <option value="CARRIL">ALMACEN</option>
-                                        <option value="CARRIL">PATIO DE CONTENEDORES</option>
-                                        <option value="PLAYA">PLAYA</option>
-                                        <option value="RECEPCION">RECEPCION</option>
-                                        <option value="SERVICIO">SERVICIO</option>
-                                    </select>
-                                    <div *ngIf="submitZona && getFormZona.tsubtipo.errors" class="invalid-feedback">
-                                        <div *ngIf="getFormZona.tsubtipo.errors.required">Sub-tipo es requerido
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="ttramite">Descripción</label>
-                                    <input class="form-control form-control-sm" id="tdescripcion"
-                                        name="zona[tdescripcion]" size="30" type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tdescripcion"
-                                        maxlength="25"
-                                        [ngClass]="{ 'is-invalid': submitZona && getFormZona.tdescripcion.errors }" />
-                                    <div *ngIf="submitZona && getFormZona.tdescripcion.errors" class="invalid-feedback">
-                                        <div *ngIf="getFormZona.tdescripcion.errors.required">Descripción es requerido
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class='col-sm-12'>
-                                <div class='form-group'>
-                                    <label for="testado">Estado</label>
-                                    <select class="custom-select form-control-sm" id="testado" name="zona[testado]"
-                                        formControlName="testado" [ngClass]="{ 'is-invalid': submitZona && getFormZona.testado.errors }">
-                                        <option value="NA">SELECCIONAR</option>
-                                        <option value="VIGENTE">VIGENTE</option>
-                                        <option value="NO VIGENTE">NO VIGENTE</option>
-                                    </select>
-                                    <div *ngIf="submitZona && getFormZona.testado.errors" class="invalid-feedback">
-                                        <div *ngIf="getFormZona.testado.errors.required">Estado es requerido
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- row -->
-
-            </div>
-        </div>
-    </form>
+        </mat-card>
+    </div>
 </div>

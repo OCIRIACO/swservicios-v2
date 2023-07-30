@@ -1,7 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceHistorial } from 'src/app/serviciosRest/Intranet/historial/api.service.historial'
 import { GlobalConstants } from 'src/app/modelos/global';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
+export interface IdataHistorico {
+    eguia : number,
+    ttipocarga: string,
+    ttramite: string,
+    tnaviera: string,
+    ttipocontendor: string,
+    tembalaje: string,
+    tmarcas: string,
+    epesorecibido: number,
+    ecantidadrecibido:number,
+    fhfechaentrada: string,
+    fhfechasalida: string,
+    tmovimiento: string,
+    sellos: Array<any>,
+    detallebienes: Array<any>,
+    bitacora: Array<any>
+
+}
 
 @Component({
   selector: 'app-historial',
@@ -10,6 +32,10 @@ import { GlobalConstants } from 'src/app/modelos/global';
 })
 export class HistorialComponent implements OnInit {
 
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  columnasHistorico: string[] = ['acciones','eguia','ttipocarga','ttramite','tnaviera','ttipocontendor','tembalaje','tmarcas','epesorecibido','ecantidadrecibido','fhfechaentrada','fhfechasalida','tmovimiento'];
+  datosHistorico = new MatTableDataSource<IdataHistorico>([]);
+  
   constructor(private apiHistorial: ApiServiceHistorial) {
   }
 
@@ -25,9 +51,9 @@ export class HistorialComponent implements OnInit {
   detallebienes: Array<any> = [];
 
   //Form Busqueda
-  FormBusqueda = new UntypedFormGroup({
-    tbusqueda: new UntypedFormControl('', Validators.required),
-    tvalor: new UntypedFormControl('', Validators.required),
+  FormBusqueda = new FormGroup({
+    tbusqueda: new FormControl('', Validators.required),
+    tvalor: new FormControl('', Validators.required),
   })
 
   // Submit's 
@@ -101,7 +127,9 @@ export class HistorialComponent implements OnInit {
 
     this.apiHistorial.postConsultaHistorial(datos).subscribe(
       (response) => {
-        this.e_procesar_datos(response);
+        //this.e_procesar_datos(response);
+        this.datosHistorico.data = response as IdataHistorico[];
+        this.datosHistorico.paginator = this.paginator;
       }
     )
 

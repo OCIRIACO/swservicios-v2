@@ -824,7 +824,7 @@ export class CrearServicioCargaComponent implements OnInit {
   //////////////////////////////////// CONTACTO /////////////////////////////////////////
 
   // convenience getter for easy access to form fields
-  get fcontacto() { return this.FormSolicitudServicios.controls; }
+ // get fcontacto() { return this.FormSolicitudServicios.controls; }
 
 
   e_guardar(solicitud: NgForm) {
@@ -833,7 +833,7 @@ export class CrearServicioCargaComponent implements OnInit {
 
 
     //Validar datos del contacto
-    this.submitGuardar = true;
+    //this.submitGuardar = true;
 
     // stop y valido
     if (solicitud.invalid) {

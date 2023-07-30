@@ -2,70 +2,77 @@
     <div fxFlex="95%">
         <mat-card>
             <div class="content-header">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Ubicacione(s) 2D</li>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Ubicacione(s) 2D</li>
 
-            </ol>
-        </nav>
-        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
-    </div>
-</div>
-<div class="content-body">
-    <div class="row"  >
-        <div class="col-xl-12">
-            <div class="content-bod">
-                <div class="card card-invoice">
-                    <div class="card-header">
-                        <h6 class="card-title mg-b-0">Ubicacione(s)</h6>
-                    </div>
-                    <div class="card-body pd-xl-25">
-                        <div class="component mg-b-10">
-                            <div class="button-row">
-                                <button mat-raised-button color="primary" (click)="e_zonas()"><i class="fas fa-step-backward  mg-r-5 fa-1.5x"></i>Regresar</button>
-                                <button mat-raised-button color="primary" (click)="e_vista2d()"><i class="fas fa-eye mg-r-5 fa-1.5x"></i>Vista 2D</button>
-                            </div>
-                        </div>
-                        <hr>
+                        </ol>
+                    </nav>
+                    
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="content-bod">
+                            <div class="card card-invoice">
+                                <div class="card-header">
+                                    <h6 class="card-title mg-b-0">Ubicacione(s)</h6>
+                                </div>
+                                <div class="card-body pd-xl-25">
+                                    <div class="component mg-b-10">
+                                        <div class="button-row">
+                                            <button mat-raised-button color="primary"
+                                                (click)="e_zonas()"><mat-icon>arrow_back_ios</mat-icon>&nbsp;Regresar</button>
+                                            <button mat-raised-button color="primary"
+                                                (click)="e_vista2d()"><mat-icon><mat-icon> my_location </mat-icon></mat-icon>&nbsp;Vista
+                                                2D</button>
+                                        </div>
+                                    </div>
+                                    <hr>
 
-                        <div class='component mg-t-10'>
-                            <div class="table-responsive">
-                                <table id="tblubicaciones" class="table table-sm mg-b-0">
-                                    <tr>
-                                        <th scope="col" colspan="1">
-                                            <input type="checkbox" id="chkall"  (click)="e_checkTodo()" value="first_checkbox" >
-                                        </th>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Bloque</th>
-                                        <th scope="col">Filas</th>
-                                        <th scope="col">Bahias</th>
-                                        <th scope="col">Altura</th>
-                                        <th scope="col">Estado</th>
-                                    </tr>
-                                    <tbody>
-                                        <tr *ngFor="let dato of datosConsultaDetUbicaciones; let i = index">
-                                            <td>
-                                                <input type="checkbox" id="check{{i}}" value="{{dato.ecoddetubicacion}}" class="ubicaciones" >
-                                            </td>
-                                            <td>{{i+1 }}</td>
-                                            <td>{{dato.tbloque }}</td>
-                                            <td>{{dato.efilas }}</td>
-                                            <td>{{dato.ebahias }}</td>
-                                            <td>{{dato.ealturas }}</td>
-                                            <td>{{dato.testado }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <div class='component mg-t-10'>
+                                        <div class="table-responsive">
+                                            <table id="tblubicaciones" class="table table-sm mg-b-0">
+                                                <tr>
+                                                    <th scope="col" colspan="1">
+                                                        <input type="checkbox" id="chkall" (click)="e_checkTodo()"
+                                                            value="first_checkbox">
+                                                    </th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Bloque</th>
+                                                    <th scope="col">Filas</th>
+                                                    <th scope="col">Bahias</th>
+                                                    <th scope="col">Altura</th>
+                                                    <th scope="col">Estado</th>
+                                                </tr>
+                                                <tbody>
+                                                    <tr *ngFor="let dato of datosConsultaDetUbicaciones; let i = index">
+                                                        <td>
+                                                            <input type="checkbox" id="check{{i}}"
+                                                                value="{{dato.ecoddetubicacion}}" class="ubicaciones">
+                                                        </td>
+                                                        <td>{{i+1 }}</td>
+                                                        <td>{{dato.tbloque }}</td>
+                                                        <td>{{dato.efilas }}</td>
+                                                        <td>{{dato.ebahias }}</td>
+                                                        <td>{{dato.ealturas }}</td>
+                                                        <td>{{dato.testado }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </mat-card>
     </div>
 </div>
-

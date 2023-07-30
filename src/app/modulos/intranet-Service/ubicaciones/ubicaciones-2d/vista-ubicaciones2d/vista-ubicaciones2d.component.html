@@ -2,53 +2,55 @@
     <div fxFlex="95%">
         <mat-card>
             <div class="content-header">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Ubicaciones 2D</li>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
+                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Ubicaciones 2D</li>
 
-            </ol>
-        </nav>
-        <!--<h4 class="content-title content-title-sm">Configuraciones</h4>-->
-    </div>
-</div>
-<div class="content-body">
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="content-bod">
-                <div class="card card-invoice">
-                    <div class="card-header">
-                        <h6 class="card-title mg-b-0">Vista 2D</h6>
-                    </div>
-                    <div class="card-body pd-xl-25">
-                        <div class="component mg-b-10">
-                            <div class="button-row">
-                                <button mat-raised-button color="primary" (click)="e_ubicaciones()"><i
-                                        class="fas fa-step-backward  mg-r-5 fa-1.5x"></i>Regresar</button>
+                        </ol>
+                    </nav>
+                    
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="content-bod">
+                            <div class="card card-invoice">
+                                <div class="card-header">
+                                    <h6 class="card-title mg-b-0">Vista 2D</h6>
+                                </div>
+                                <div class="card-body pd-xl-25">
+                                    <div class="component mg-b-10">
+                                        <div class="button-row">
+                                            <button mat-raised-button color="primary" (click)="e_ubicaciones()"><mat-icon>arrow_back_ios</mat-icon>&nbsp;Regresar</button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="component mg-t-10">
+                                        <div class="row row-xs" id="htmlUbicaciones2d"></div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="component mg-t-10">
-                            <div class="row row-xs" id="htmlUbicaciones2d"></div>
                         </div>
 
                     </div>
                 </div>
+
+                <jw-modal id="custom-modal-2" class="col-xl-12">
+                    <div class="row">
+                        <button (click)="closeModal('custom-modal-2');">Cerrar</button>
+                    </div>
+                    <hr>
+                    <div class="row" id="vista_contenedor">
+                    </div>
+                </jw-modal>
+
             </div>
-
-        </div>
+        </mat-card>
     </div>
-
-    <jw-modal id="custom-modal-2" class="col-xl-12">
-        <div class="row">
-            <button (click)="closeModal('custom-modal-2');">Cerrar</button>
-        </div>
-        <hr>
-        <div class="row" id="vista_contenedor">
-        </div>
-    </jw-modal>
-
 </div>
