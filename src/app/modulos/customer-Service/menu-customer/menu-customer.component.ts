@@ -256,6 +256,37 @@ export class MenuCustomerComponent implements OnInit {
 
 
 
+
+
+      this.myTemplate += '<div class="col-md-4 row-dif">'
+      this.myTemplate += '<div class="row">';
+        this.myTemplate += '<div class="col-xs-4 col-sm-3 col-md-4 div-dif">';
+        this.myTemplate += '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> '
+        this.myTemplate += ' <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> '
+        this.myTemplate += ' <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> '
+        this.myTemplate += '</svg> ';
+        this.myTemplate += '</div>'
+        this.myTemplate += '<div class=" col-xs-6 col-sm-4 col-md-7 col-md-offset-1">';
+        
+
+        this.myTemplate += ' <ul class="list-unstyled"> '
+
+        dato1.child.forEach((dato2: any, index: any) => {
+            this.myTemplate += ' <li style="font-size:12px;" > '
+          this.myTemplate += ' <a  href="javascript:void(0)"  routerLink="' + dato2.url + '" class="">' + dato2.descripcion + '</a> '
+            this.myTemplate += ' </li>'
+            this.myTemplate += ' <li class="divider"></li>'
+            
+        });
+
+        this.myTemplate += ' </ul> '
+
+
+        this.myTemplate += '</div>'
+      this.myTemplate += '</div>'
+      this.myTemplate += '</div>'
+
+
       /*this.myTemplate += '<div class="col-sm-12 col-md-4 mg-t-5 mg-sm-t-5" id="divUbicacaciones">'
       this.myTemplate += '<div class="pd-y-10 pd-x-10 ">'
       this.myTemplate += '<div class="card card-hover card-customer-score">'
@@ -287,44 +318,45 @@ export class MenuCustomerComponent implements OnInit {
       this.myTemplate += '</div>'
       this.myTemplate += '</div>'
       this.myTemplate += '</div>'
-      this.myTemplate += '</div>'*/
+      this.myTemplate += '</div>'
+     ¨*/
 
-
-      let separador = (12 / this.totalModulos);
-
-      //this.myTemplate += '<div class="row">';
-      this.myTemplate += '<div class="col-sm-' + separador + ' col-md-' + separador + ' mg-t-5 mg-sm-t-5" id="divUbicacaciones">'
-
-      this.myTemplate += ' <div class="row" > ';
-
-      //Iconos
-      this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4" > ';
-      this.myTemplate += '<svg xmlns="http://www.w3.org/2000/svg" width="125" height="125" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> '
-      this.myTemplate += ' <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> '
-      this.myTemplate += ' <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> '
-      this.myTemplate += '</svg> ';
-      this.myTemplate += ' </div> ';
-
-      //Opciones
-      this.myTemplate += ' <div class="col-xs-6 col-sm-4 col-md-7 col-md-offset-1" > ';
-      this.myTemplate += ' <div class="tableOfContentContainer"> ';
-      this.myTemplate += ' <div class="tableOfContent docs-toc-container"> ';
-      this.myTemplate += ' <div class="docs-toc-heading">' + dato1.descripcion + '</div> ';
-      this.myTemplate += ' <nav> ';
-      dato1.child.forEach((dato2: any, index: any) => {
-        this.myTemplate += ' <a   routerLink="' + dato2.url + '"  style="  cursor: pointer;"  class="docs-level-h3 docs-link ng-star-inserted" >' + dato2.descripcion + '</a> '
-        // this.myTemplate += ' <a href="'+dato2.url+'" class="docs-level-h3 docs-link ng-star-inserted">'+dato2.descripcion+'</a> ';
-        this.myTemplate += ' <br> ';
-      });
-      this.myTemplate += ' </nav> ';
-      this.myTemplate += ' </div> ';
-      this.myTemplate += ' </div> ';
-      this.myTemplate += ' </div> ';
-
-      this.myTemplate += ' </div> ';
-
-      this.myTemplate += ' </div> ';
-      //this.myTemplate += ' </div> ';
+      /*
+       let separador = (12 / this.totalModulos);
+ 
+       //this.myTemplate += '<div class="row">';
+       this.myTemplate += '<div class="col-sm-' + separador + ' col-md-' + separador + ' mg-t-5 mg-sm-t-5" id="divUbicacaciones">'
+ 
+       this.myTemplate += ' <div class="row" > ';
+ 
+       //Iconos
+       this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4" > ';
+       this.myTemplate += '<svg xmlns="http://www.w3.org/2000/svg" width="125" height="125" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> '
+       this.myTemplate += ' <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> '
+       this.myTemplate += ' <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/> '
+       this.myTemplate += '</svg> ';
+       this.myTemplate += ' </div> ';
+ 
+       //Opciones
+       this.myTemplate += ' <div class="col-xs-6 col-sm-4 col-md-7 col-md-offset-1" > ';
+       this.myTemplate += ' <div class="tableOfContentContainer"> ';
+       this.myTemplate += ' <div class="tableOfContent docs-toc-container"> ';
+       this.myTemplate += ' <div class="docs-toc-heading">' + dato1.descripcion + '</div> ';
+       this.myTemplate += ' <nav> ';
+       dato1.child.forEach((dato2: any, index: any) => {
+         this.myTemplate += ' <a   routerLink="' + dato2.url + '"  style="  cursor: pointer;"  class="docs-level-h3 docs-link ng-star-inserted" >' + dato2.descripcion + '</a> '
+         // this.myTemplate += ' <a href="'+dato2.url+'" class="docs-level-h3 docs-link ng-star-inserted">'+dato2.descripcion+'</a> ';
+         this.myTemplate += ' <br> ';
+       });
+       this.myTemplate += ' </nav> ';
+       this.myTemplate += ' </div> ';
+       this.myTemplate += ' </div> ';
+       this.myTemplate += ' </div> ';
+ 
+       this.myTemplate += ' </div> ';
+ 
+       this.myTemplate += ' </div> ';
+       */
 
 
 
@@ -347,13 +379,9 @@ export class MenuCustomerComponent implements OnInit {
     ////console.log(this.myTemplate)
     let html = "";
 
-  
-
-
     html += '<div class="row">';
     html += this.myTemplate;
     html += '</div>';
-
 
     document.getElementById('divHtml')!.innerHTML = html;
   }

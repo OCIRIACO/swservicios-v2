@@ -1,25 +1,4 @@
-#myVideo {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    background: rgb(255, 255, 255);
-}
-
-.contentVideo {
-    position: fixed;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    padding: 20px;
-}
 
 .input-login {
-    width: 100%;
-  }
-
-mat-card{
-    width: fit-content;
+  width: 100%;
 }
