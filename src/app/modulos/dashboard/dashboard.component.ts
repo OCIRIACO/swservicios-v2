@@ -26,8 +26,11 @@ export class DashboardComponent implements OnInit {
   lbltperfil: string = ''
 
   //show or hide opciones
-  opCustumer: Array<any> = []
-  opIntranet: Array<any> = []
+  opCustumer: Array<any> = [];
+  opIntranet: Array<any> = [];
+
+  OpcionCustomer: boolean = false;
+  OpcionIntranet: boolean = false;
 
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
@@ -41,7 +44,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
-  ) { 
+  ) {
 
     this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -79,15 +82,31 @@ export class DashboardComponent implements OnInit {
 
     this.apiMenu.postConsultaMenuSistema('INTRANET').subscribe(
       (response) => {
+        console.log('Intranet');
         this.serviceCatalogos.arrIntranet = response
-        this.opIntranet =  this.serviceCatalogos.arrIntranet
+        this.opIntranet = this.serviceCatalogos.arrIntranet
+
+        if (this.opIntranet.length != 0) {
+          this.OpcionIntranet = true;
+        }
+
+
       })
 
     this.apiMenu.postConsultaMenuSistema('CUSTOMER').subscribe(
       (response) => {
         this.serviceCatalogos.arrCustomer = response
-        this.opCustumer =  this.serviceCatalogos.arrCustomer
-     })
+        this.opCustumer = this.serviceCatalogos.arrCustomer
+
+        if (this.opCustumer.length != 0) {
+          this.OpcionCustomer = true;
+        }
+
+      })
+
+
+
+
 
 
 
@@ -104,7 +123,7 @@ export class DashboardComponent implements OnInit {
   ngAfterViewInit(): void {
     this.changeDetectorRef.detectChanges();
   }
-  
+
 
   e_cerrarSesion() {
     this.dataService.cerrarSesion();
@@ -118,7 +137,7 @@ export class DashboardComponent implements OnInit {
 
     } else if (dato == 'intranet') {
       this.router.navigate(['dashboard/intranet/menu']);
-    // window.location.href = "#/dashboard/intranet/menu";
+      // window.location.href = "#/dashboard/intranet/menu";
 
     }
 

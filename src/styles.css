@@ -1,4 +1,6 @@
 
+@import 'custom-theme.scss';
+
 .button-row .mat-button-base {
   margin-right: 5px;
 }
@@ -239,11 +241,16 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: url('../src/assets/images/logistic.jpg'); 
+    background: url('https://image.cnbcfm.com/api/v1/image/107149511-1668071326472-gettyimages-997042320-148347209.jpeg?v=1668140224&w=1920&h=1080'); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+body::before{
+  background: rgba(0,0,0,0.5);
+}
+
 .box {
 	position: absolute;
 	top: 50%;
@@ -332,4 +339,14 @@ body {
   margin: 9px 0;
   overflow: hidden;
   background-color: #e5e5e5;
+}
+
+
+/*---------------------------------------------------*/
+
+
+.contenedor {
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 2%;
 }

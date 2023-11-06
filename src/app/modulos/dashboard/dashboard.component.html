@@ -67,14 +67,14 @@
           <p mat-line> Inicio </p>
         </a>
 
-        <a mat-list-item [routerLink]="" (click)="e_operaciones('customer')" routerLinkActive="active">
+        <a mat-list-item [routerLink]="" (click)="e_operaciones('customer')" routerLinkActive="active"  *ngIf="opCustumer">
           <mat-icon mat-list-icon>
             business
           </mat-icon>&nbsp;
           <p mat-line> Operaciones </p>
         </a>
 
-        <a mat-list-item [routerLink]="" (click)="e_operaciones('intranet')" routerLinkActive="active">
+        <a mat-list-item [routerLink]="" (click)="e_operaciones('intranet')" routerLinkActive="active"  *ngIf="OpcionIntranet" >
           <mat-icon mat-list-icon>
             business
           </mat-icon>&nbsp;
@@ -111,8 +111,8 @@
     <mat-sidenav-content class="sidenav-content">
 
       <div class="progress-bar-container">
-        <mat-progress-bar color="accent" mode="indeterminate">
-        </mat-progress-bar>
+        <!--<mat-progress-bar color="accent" mode="indeterminate">
+        </mat-progress-bar>-->
         <!-- <mat-spinner class="spinner" [diameter]="50" *ngIf="showSpinner"></mat-spinner> -->
       </div>
 
@@ -123,3 +123,4 @@
   </mat-sidenav-container>
 
 </div>
+
