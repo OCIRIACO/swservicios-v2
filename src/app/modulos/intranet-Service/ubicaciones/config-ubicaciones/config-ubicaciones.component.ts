@@ -356,7 +356,7 @@ export class ConfigUbicacionesComponent implements OnInit {
 
   //Botones
   e_inicio(){
-    this.router.navigate(['dashboard/intranet/menu']);
+    this.router.navigate(['/dashboard/intranet/menu']);
   }
 
 }

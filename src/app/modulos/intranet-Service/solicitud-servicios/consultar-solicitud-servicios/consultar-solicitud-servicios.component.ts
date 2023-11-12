@@ -65,8 +65,15 @@ export class ConsultarSolicitudServiciosComponent implements OnInit {
   }
 
   //Consultar detalle de la solicitud
-  e_detalle(etransaccion:number){
-    this.router.navigate(['/dashboard/intranet/servicios/detalles', etransaccion ]);  // nativo
+  e_detalle(etransaccion: number) {
+    this.router.navigate(['/dashboard/intranet/servicios/detalles', etransaccion]);  // nativo
   }
+
+  //Redireccionar Inicio
+  e_inicio() {
+    this.router.navigate(['/dashboard/intranet/menu']);
+  }
+
+
 
 }

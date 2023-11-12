@@ -203,7 +203,7 @@ export class MenuComponent implements OnInit {
       this.myTemplate += '<div class="row">';
 
       dato.forEach((items: any, index: any) => {
-        
+
         this.myTemplate += ' <div class=" col-md-4"> ';
         this.myTemplate += ' <div class="row" style="font-size:13px"> ';
         this.myTemplate += ' <p>' + items.descripcion + '</p> ';
@@ -222,7 +222,10 @@ export class MenuComponent implements OnInit {
 
         items.child.forEach((opcion: any, index: any) => {
           this.myTemplate += ' <li style="font-size:12px;" > '
-          this.myTemplate += ' <a  href="javascript:void(0)"  routerLink="' + opcion.url + '" class="">' + opcion.descripcion + '</a> '
+          //this.myTemplate += ' <a  href="javascript:void(0)"  routerLink="' + opcion.url + '" class="">' + opcion.descripcion + '</a> '
+
+          this.myTemplate += ' <a style="cursor: pointer;" routerLink="' + opcion.url + '" >' + opcion.descripcion + '</a> ';
+
           this.myTemplate += ' </li>'
           this.myTemplate += ' <li class="divider"></li>'
 
@@ -312,11 +315,15 @@ export class MenuComponent implements OnInit {
       }
     }
 
+
+
+
     if (dato.nodeName === 'A') {
       //console.log(dato);
       let url = dato.getAttribute('routerlink');
       this.router.navigate([url]);
     }
+
 
   }
 
@@ -330,6 +337,10 @@ export class MenuComponent implements OnInit {
     } else {
       melement!.style.display = 'none';
     }
+  }
+
+  e_link(dato: any) {
+    console.log(dato)
   }
 
 

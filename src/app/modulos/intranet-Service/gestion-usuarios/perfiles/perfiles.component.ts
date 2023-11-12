@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 import 'jstree';
 import Swal from 'sweetalert2';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,10 +37,13 @@ export class PerfilesComponent implements OnInit {
   datosPerfil: any
 
 
-  constructor(private apiServiceUsuario: ApiServiceUsuario) { }
+  constructor(
+    private apiServiceUsuario: ApiServiceUsuario,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
-    
+
     //Iniciar consultar los perfiles
     this.e_consultarPerfiles()
 
@@ -133,7 +137,7 @@ export class PerfilesComponent implements OnInit {
       confirmButtonColor: '#22bab7',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',   
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         valor = result.value;
@@ -154,7 +158,7 @@ export class PerfilesComponent implements OnInit {
     let parametroPerfil = {
       ttipoperfil: "TODOS"
     }
-    
+
     this.apiServiceUsuario.postConsultarPerfiles(parametroPerfil).subscribe(
       (response) => {
         //Recorre los datos
@@ -329,7 +333,7 @@ export class PerfilesComponent implements OnInit {
 
               if (response.data) {
                 this.e_consultarPerfiles()
-                success=true
+                success = true
                 response.data.forEach((dato: any, index: any) => {
                   text += dato.attributes.text + '\n'
                 })
@@ -410,6 +414,11 @@ export class PerfilesComponent implements OnInit {
       testado: new FormControl('', Validators.required)
     })
 
+  }
+
+  //Redireccionar Menu
+  e_menu() {
+    this.router.navigate(['/dashboard/intranet/menu']);
   }
 
 }

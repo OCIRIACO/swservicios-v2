@@ -1,114 +1,97 @@
-<div class="contenedor">
-    <div fxFlex="95%">
-        <mat-card>
-            <div class="content-header">
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Perfiles</li>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Perfiles
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card-actions>
+            <div class="btn-toolbar" role="group">
 
-                        </ol>
-                    </nav>
-                    
+                <button mat-raised-button color="primary"  (click)="e_menu()"
+                    title="Menu"><mat-icon>list</mat-icon>&nbsp;Menu</button>
+
+                <button mat-raised-button color="primary" (click)="e_guardar(formPerfil.value)"
+                    title="Menu"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+
+                <button mat-raised-button color="primary" (click)="e_nuevo()"
+                    title="Menu"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+
+
+
+                <!--
+
+                     <div class="btn-group mr-5" role="group">
+                    <a type="button" routerLink={{directorio}} class="btn btn-xs btn-primary"><i
+                            class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
                 </div>
+                <div class="btn-group mr-2" role="group">
+                    <button type="button" class="btn btn-xs btn-primary pull-right"
+                        (click)="e_guardar(formPerfil.value)">
+                        <li class=" fas fa-save mg-r-5 fa-1.5x"></li>Guardar
+                    </button>
+                </div>
+                <div class="btn-group mr-2" role="group">
+                    <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                </div>
+
+
+                -->
+
             </div>
-            <div class="content-body">
-                <div class="card card-invoice">
-                    <div class="card-header">
-                    </div>
-                    <div class="card-body">
-                        <!--Botones-->
-                        <div class="component mb-2">
-                            <div class="button-row">
-                                <button mat-raised-button color="primary"
-                                    title="Consultar"><mat-icon>home</mat-icon>&nbsp;Inicio</button>
-                                <button mat-raised-button color="primary"
-                                    title="Consultar"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
-                                <button mat-raised-button
-                                    color="primary"><mat-icon>insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+        </mat-card-actions>
+        <mat-card-actions>
+            <div class="component mg-t-20">
+                <div class="row row-xs">
+                    <div class="col-sm">
+                        <div class="pd-y-10 pd-x-20 ">
+                            <div id="jstree">
                             </div>
                         </div>
-                        <!--
-                            <div class='component mg-b-10'>
+                    </div>
 
-                       
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <a type="button" routerLink={{directorio}} class="btn btn-xs btn-primary"><i
-                                            class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
-                                </div>
-                                <div class="btn-group mr-2" role="group">
-                                    <button type="button" class="btn btn-xs btn-primary pull-right"
-                                        (click)="e_guardar(formPerfil.value)">
-                                        <li class=" fas fa-save mg-r-5 fa-1.5x"></li>Guardar
-                                    </button>
-                                </div>
-                                <div class="btn-group mr-2" role="group">
-                                    <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
-                                </div>
+                    <div class="col-sm mg-t-10 mg-sm-t-0">
+                        <form [formGroup]="formPerfil">
+                            <div class="col-sm-12 mg-b-10">
+                                {{lblObservacionesPerfil}}
                             </div>
-                         
-                            </div>
-                        -->
-                        <hr>
-                        <div class="component mg-t-20">
-                            <div class="row row-xs">
-                                <div class="col-sm">
-                                    <div class="pd-y-10 pd-x-20 ">
-                                        <div id="jstree">
-                                        </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Descripción perfil</label>
+                                    <input class="form-control form-control-sm" type="text"
+                                        oninput="this.value = this.value.toUpperCase()" id="tdescripcion"
+                                        formControlName="tdescripcion"
+                                        [ngClass]="{'is-invalid': submitGuardar && frmPerfil.tdescripcion.errors}"
+                                        name="usuario[tdescripcion]">
+                                    <div *ngIf="submitGuardar && frmPerfil.tdescripcion.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="frmPerfil.tdescripcion.errors.required">* Descripción
+                                            perfil es
+                                            requerido</div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm mg-t-10 mg-sm-t-0">
-                                    <form [formGroup]="formPerfil">
-                                        <div class="col-sm-12 mg-b-10">
-                                            {{lblObservacionesPerfil}}
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">Descripción perfil</label>
-                                                <input class="form-control form-control-sm" type="text"
-                                                    oninput="this.value = this.value.toUpperCase()" id="tdescripcion"
-                                                    formControlName="tdescripcion"
-                                                    [ngClass]="{'is-invalid': submitGuardar && frmPerfil.tdescripcion.errors}"
-                                                    name="usuario[tdescripcion]">
-                                                <div *ngIf="submitGuardar && frmPerfil.tdescripcion.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="frmPerfil.tdescripcion.errors.required">* Descripción
-                                                        perfil es
-                                                        requerido</div>
-                                                </div>
-                                            </div>
+                            </div>
 
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Estado</label>
+                                    <select class="custom-select form-control-sm" id="testado" name="perfil[testado]"
+                                        formControlName="testado"
+                                        [ngClass]="{ 'is-invalid': submitGuardar && frmPerfil.testado.errors }">
+                                        <option value="VIGENTE">VIGENTE</option>
+                                        <option value="NO VIGENTE">NO VIGENTE</option>
+                                    </select>
+                                    <div *ngIf="submitGuardar && frmPerfil.testado.errors" class="invalid-feedback">
+                                        <div *ngIf="frmPerfil.testado.errors.required">* Estado es requerido
                                         </div>
-
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label class="form-label">Estado</label>
-                                                <select class="custom-select form-control-sm" id="testado"
-                                                    name="perfil[testado]" formControlName="testado"
-                                                    [ngClass]="{ 'is-invalid': submitGuardar && frmPerfil.testado.errors }">
-                                                    <option value="VIGENTE">VIGENTE</option>
-                                                    <option value="NO VIGENTE">NO VIGENTE</option>
-                                                </select>
-                                                <div *ngIf="submitGuardar && frmPerfil.testado.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="frmPerfil.testado.errors.required">* Estado es requerido
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </mat-card>
-    </div>
-</div>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>
