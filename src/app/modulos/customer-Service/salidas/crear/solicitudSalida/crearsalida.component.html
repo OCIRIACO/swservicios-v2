@@ -17,8 +17,8 @@
         <div class="card card-invoice">
           <div class="card-header">
             <div>
-           
-              
+
+
             </div>
             <!--<div class="btn-group-invoice">
               <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
@@ -30,7 +30,8 @@
             <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
               <div class="component mb-2">
                 <div class="button-row">
-                  <button mat-raised-button color="primary" (click)="e_consulta()" title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                  <button mat-raised-button color="primary" (click)="e_consulta()"
+                    title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
                   <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                 </div>
               </div>
@@ -217,7 +218,8 @@ requerido</mat-error>-->
                       <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" name="tvalor"
                         ngModel #tvalor="ngModel" required>
 
-                      <button mat-raised-button matSuffix mat-stroked-button color="primary"><mat-icon>search</mat-icon>&nbsp;
+                      <button mat-raised-button matSuffix mat-stroked-button
+                        color="primary"><mat-icon>search</mat-icon>&nbsp;
                       </button>
 
                       <mat-error *ngIf="FormBusquedaBien.controls['tvalor'].errors?.required">Ingresa el valor
@@ -253,10 +255,11 @@ requerido</mat-error>-->
                     <div class="d-flex">
 
 
-                      
 
-                      <mat-radio-group  [(ngModel)]="tbusqueda" name="tbusqueda"  >
-                        <mat-radio-button *ngFor="let option of tiposBusqueda" [value]="option.ttipo" style="margin: 10px">
+
+                      <mat-radio-group [(ngModel)]="tbusqueda" name="tbusqueda">
+                        <mat-radio-button *ngFor="let option of tiposBusqueda" [value]="option.ttipo"
+                          style="margin: 10px">
                           {{option.ttipo}}
                         </mat-radio-button>
                       </mat-radio-group>
@@ -313,7 +316,8 @@ requerido</mat-error>-->
                           </tr>
                           <tbody>
                             <tr *ngFor="let dato of datosBien; let i = index">
-                              <td> <button type="button" mat-raised-button color="primary" (click)="e_agregar(dato)"><mat-icon>add_box</mat-icon>&nbsp; Agregar</button> </td>
+                              <td> <button type="button" mat-raised-button color="primary"
+                                  (click)="e_agregar(dato)"><mat-icon>add_box</mat-icon>&nbsp; Agregar</button> </td>
                               <td> {{ i + 1}} </td>
                               <td> {{ dato.eguia }}</td>
                               <td> {{ dato.ttipocarga }}</td>
@@ -359,7 +363,8 @@ requerido</mat-error>-->
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of bienesLiberar; let i = index">
-                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
+                        <td> <button type="button" mat-raised-button color="primary"
+                            (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.eguia }}</td>
                         <td> {{ dato.ttipocarga }}</td>

@@ -33,8 +33,10 @@
                   <!--<button mat-raised-button color="primary" (click)="e_guardar(FormSolicitudSalida.value)"><i
                       class="fas fa-save mg-r-5 fa-1.5x"></i>Guardar</button>-->
                   <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
-                  <button mat-raised-button color="primary" (click)="e_consultar()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                  <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                  <button mat-raised-button color="primary"
+                    (click)="e_consultar()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                  <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
+                      insert_drive_file</mat-icon>&nbsp;Nuevo</button>
                 </div>
               </div>
               <hr>
@@ -46,7 +48,8 @@
                 <div class="col-md-3">
                   <mat-form-field class="full-width">
                     <mat-label>RFC</mat-label>
-                    <input type="text" matInput name="cliente" ngModel #cliente="ngModel" [matAutocomplete]="auto" required>
+                    <input type="text" matInput name="cliente" ngModel #cliente="ngModel" [matAutocomplete]="auto"
+                      required>
                     <mat-autocomplete #auto="matAutocomplete">
                       <mat-option (click)="e_seleccionarRfc(dato)" *ngFor="let dato of filtrarOpcionesRfc  | async "
                         [value]="dato.trfc">
@@ -330,7 +333,8 @@ requerido</mat-error>-->
                     </tr>
                     <tbody>
                       <tr *ngFor="let dato of arrDatosBienesLiberar; let i = index">
-                        <td> <button type="button" mat-raised-button color="primary" (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
+                        <td> <button type="button" mat-raised-button color="primary"
+                            (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
                         <td> {{ i + 1}} </td>
                         <td> {{ dato.eguia }}</td>
                         <td> {{ dato.ttipocarga }}</td>
@@ -359,8 +363,8 @@ requerido</mat-error>-->
                     <textarea id="tobservaciones"
                       placeholder="Por favor ingrese un máximo de {{maxCaracteres}} caracteres"
                       [maxlength]="maxCaracteres" [(ngModel)]="reglaLenght"
-                      oninput="this.value = this.value.toUpperCase()" name="tobservaciones"
-                      #tobservaciones="ngModel" rows="4" style="width:100%;">
+                      oninput="this.value = this.value.toUpperCase()" name="tobservaciones" #tobservaciones="ngModel"
+                      rows="4" style="width:100%;">
               </textarea>
                   </div>
                 </div>

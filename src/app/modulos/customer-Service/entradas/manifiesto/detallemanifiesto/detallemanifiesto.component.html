@@ -1,18 +1,18 @@
 <div class="contenedor">
   <div fxFlex="95%">
     <mat-card>
-      
-        <div>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
 
-              <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Detalle entrada(s)</li>
-            </ol>
-          </nav>
-        </div>
-      
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+
+            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalle entrada(s)</li>
+          </ol>
+        </nav>
+      </div>
+
       <div id="htmlSolicitudEntrada">
         <div class="card card-invoice">
           <div class="card-header">
@@ -25,9 +25,12 @@
 
             <div class='component mg-b-20'>
               <div class="button-row">
-                <button mat-raised-button color="primary" (click)="e_imprimir()"><mat-icon> print </mat-icon>&nbsp; Imprimir</button>
-                <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                <button mat-raised-button color="primary" (click)="e_imprimir()"><mat-icon> print </mat-icon>&nbsp;
+                  Imprimir</button>
+                <button mat-raised-button color="primary"
+                  (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
+                    insert_drive_file</mat-icon>&nbsp;Nuevo</button>
               </div>
             </div>
             <hr>

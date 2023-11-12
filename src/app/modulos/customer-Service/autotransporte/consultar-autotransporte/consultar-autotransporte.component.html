@@ -1,29 +1,28 @@
 <div class="contenedor">
     <div fxFlex="95%">
         <mat-card>
-            <div class="content-header">
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Autotransporte</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+            <mat-card-subtitle>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+                        <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Autotransporte</li>
+                    </ol>
+                </nav>
+            </mat-card-subtitle>
             <div class="content-body">
                 <div class="card card-invoice">
                     <div class="card-header">
                         <div>
-                         
-                            
+
+
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="component mb-2">
                             <div class="button-row">
-                                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
+                                        insert_drive_file</mat-icon>&nbsp;Nuevo</button>
                             </div>
                         </div>
                         <hr>
@@ -32,7 +31,7 @@
                             <div class="col-sm-12">
                                 <div class="table-responsive">
                                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
-                                        <!--Acciones -->                                        <ng-container matColumnDef="acciones">
+                                        <!--Acciones --> <ng-container matColumnDef="acciones">
                                             <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
                                             </th>
                                             <td mat-cell *matCellDef="let element">
@@ -96,3 +95,6 @@
                     </div><!-- card-body -->
                 </div> <!-- card -->
             </div><!-- content-body -->
+        </mat-card>
+    </div>
+</div>

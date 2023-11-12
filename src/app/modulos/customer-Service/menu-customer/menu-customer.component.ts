@@ -249,17 +249,18 @@ export class MenuCustomerComponent implements OnInit {
   //Crear el Div  
   e_crearDivDinamico(datos: any) {
 
+    
+
     datos.forEach((dato1: any, index: any) => {
 
 
       console.log(dato1)
 
-
       this.myTemplate += '<div class="col-md-4 row-dif">'
       this.myTemplate += '<div class="row">';
       this.myTemplate += '<div class="col-xs-4 col-sm-3 col-md-4 div-dif">';
 
-      this.myTemplate += '<i class="fas '+dato1.icono+' fa-4x"></i>';
+      this.myTemplate += '<i class="fas '+dato1.icono+' fa-6x"></i>';
 
       //this.myTemplate += '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16"> '
       //this.myTemplate += ' <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/> '

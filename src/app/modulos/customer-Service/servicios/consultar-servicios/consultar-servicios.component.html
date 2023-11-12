@@ -17,8 +17,8 @@
                 <div class="card card-invoice">
                     <div class="card-header">
                         <div>
-                         
-                            
+
+
                         </div>
                         <!--<div class="btn-group-invoice">
                 <a [routerLink]="" class="btn btn-brand-02 btn-sm btn-uppercase" (click)="e_guarda()"><i
@@ -28,7 +28,8 @@
                     <div class="card-body">
                         <div class="component mb-2">
                             <div class="button-row">
-                                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                                <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
+                                        insert_drive_file</mat-icon>&nbsp;Nuevo</button>
                             </div>
                         </div>
                         <hr>
@@ -36,7 +37,7 @@
                             <div class="col-sm-12">
                                 <div class="table-responsive">
                                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
-                                        <!--Acciones -->                                        <ng-container matColumnDef="acciones">
+                                        <!--Acciones --> <ng-container matColumnDef="acciones">
                                             <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
                                             </th>
                                             <td mat-cell *matCellDef="let element">
@@ -100,3 +101,6 @@
                     </div><!-- card-body -->
                 </div> <!-- card -->
             </div><!-- content-body -->
+        </mat-card>
+    </div>
+</div>

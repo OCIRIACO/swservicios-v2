@@ -27,7 +27,8 @@
                                 <div class="button-row">
                                     <button mat-raised-button color="primary" (click)="e_consulta()"
                                         title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                                    <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                                    <button mat-raised-button
+                                        color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
                                 </div>
                             </div>
                             <hr>
@@ -81,8 +82,8 @@
                                 <div class="col-md-2 col-sm-12" style="display: none;">
                                     <mat-form-field class="full-width">
                                         <mat-label>ecliente</mat-label>
-                                        <input matInput placeholder="" 
-                                            name="ecliente" ngModel #ecliente="ngModel" required size="256">
+                                        <input matInput placeholder="" name="ecliente" ngModel #ecliente="ngModel"
+                                            required size="256">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -192,7 +193,8 @@
                                     <div class="col-xs-12 col-sm-12 col-md-2">
                                         <mat-form-field class="full-width">
                                             <mat-label>Colonia</mat-label>
-                                            <mat-select name="ecolonia" ngModel #ecolonia="ngModel"  (selectionChange)="e_changeColonia($event)"  required>
+                                            <mat-select name="ecolonia" ngModel #ecolonia="ngModel"
+                                                (selectionChange)="e_changeColonia($event)" required>
                                                 <mat-option>SELECCIONAR</mat-option>
                                                 <mat-option *ngFor="let dato of arrdatosColonia"
                                                     [value]="dato.ecolonia">
@@ -351,7 +353,7 @@
                                         </td>
                                         <td><button type="button" mat-raised-button color="primary"
                                                 (click)="e_editarDireccion(dato)"><mat-icon>edit</mat-icon>&nbsp;
-                                                   Editar</button>
+                                                Editar</button>
                                         </td>
                                         <td>{{i+ 1 }}</td>
                                         <td>{{dato.ecodigopostal}}</td>

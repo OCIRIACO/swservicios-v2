@@ -1,329 +1,335 @@
 <div class="contenedor">
-    <div fxFlex="95%">
-        <mat-card>
-            <div class="content-header">
-  <div>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-        
-        <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Detalle(s) servicio salida</li>
-      </ol>
-    </nav>
+  <div fxFlex="95%">
+    <mat-card>
+      <div class="content-header">
+        <div>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
+
+              <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Detalle(s) servicio salida</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="content-body" id="htmlSolicitudSalida">
+
+
+        <div class="card card-invoice">
+          <div class="card-header">
+            <div>
+              <h5 class="mg-b-3"></h5>
+              <span class="tx-sm text-muted"></span>
+            </div>
+          </div>
+          <div class="card-body">
+
+            <div class="alert alert-{{lbltipoAlerta}}" role="alert">
+              {{lblalert}}
+            </div>
+
+            <div *ngIf="divNotificacion" class="alert alert-warning" role="alert">
+              <div [innerHTML]="lblNotificacionRechazo">
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class='component mg-b-20'>
+                <div class="button-row">
+                  <button mat-raised-button color="primary" [disabled]="lblestatus == 'RECHAZADA'"
+                    [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
+                    [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' "
+                    (click)="e_imprimir()"><mat-icon> print </mat-icon>&nbsp; Imprimir</button>
+                  <button mat-raised-button color="primary"
+                    (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                  <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
+                      insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Operación</h6>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Transacción</mat-label>
+                  <br>
+                  <mat-label>{{lbletransaccion}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Fecha de solicitud</mat-label>
+                  <br>
+                  <mat-label>{{lblfhfecharegistro}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Tipo de Solicitud</mat-label>
+                  <br>
+                  <mat-label>{{lblttiposolicitud}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Estado de solicitud</mat-label>
+                  <br>
+                  <mat-label>{{lblestatus}}</mat-label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Usuarios</h6>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Programada</mat-label>
+                  <br>
+                  <mat-label>{{lblusuarioprogramo}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>Perfil</mat-label>
+                  <br>
+                  <mat-label>{{lblusuarioperfil}}</mat-label>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>{{lblusuarioInterno}}</mat-label>
+                  <br>
+                  <mat-label>{{lblusuarioautoriza}}</mat-label>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <mat-label>{{lblFechaInterno}}</mat-label>
+                  <br>
+                  <mat-label>{{lblfhfechaautoriza}}</mat-label>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>RFC</mat-label>
+                  <br>
+                  <mat-label>{{lbltrfc}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Razón social</mat-label>
+                  <br>
+                  <mat-label>{{lbltrazonsocial}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>Cp</mat-label>
+                  <br>
+                  <mat-label>{{lblecodigopostal}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>Entidad</mat-label>
+                  <br>
+                  <mat-label>{{lbltentidadfederativa}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>Municipio</mat-label>
+                  <br>
+                  <mat-label>{{lbltmunicipio}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>Colonia</mat-label>
+                  <br>
+                  <mat-label>{{lbltcolonia}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Calle</mat-label>
+                  <br>
+                  <mat-label>{{lbltcalle}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>No.Interior</mat-label>
+                  <br>
+                  <mat-label>{{lbltnuminterior}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <mat-label>No.Exterior</mat-label>
+                  <br>
+                  <mat-label>{{lbltnumexterior}}</mat-label>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Método de pago</mat-label>
+                  <br>
+                  <mat-label>{{lblmetodopago}}</mat-label>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Banco</mat-label>
+                  <br>
+                  <mat-label>{{lblbanco}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Cfdi</mat-label>
+                  <br>
+                  <mat-label>{{lblcfdi}}</mat-label>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Cuenta</mat-label>
+                  <br>
+                  <mat-label>{{lblcuenta}}</mat-label>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Moneda</mat-label>
+                  <br>
+                  <mat-label>{{lblmoneda}}</mat-label>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Servicio</h6>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Fecha de servicio</mat-label><br>
+                  <mat-label>{{lblfhfechaservicio}}</mat-label>
+
+                </div>
+
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Correo</mat-label>
+                  <br>
+                  <mat-label>{{lbltcorreo}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Teléfono</mat-label>
+                  <br>
+                  <mat-label>{{lblttelefono}}</mat-label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <mat-label>Referencia</mat-label>
+                  <br>
+                  <mat-label>{{lbltreferencia}}</mat-label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)/Biene(s)</h6>
+              </div>
+              <div class="table-responsive mg-t-30">
+
+                <table class="table  table-sm  bd-b-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">No.Guía</th>
+                      <th scope="col">Trámite</th>
+                      <th scope="col">Carga</th>
+                      <th scope="col">Embalaje</th>
+                      <th scope="col">Naviera</th>
+                      <th scope="col">Contenedor</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Sello(s)</th>
+                      <th scope="col">Peso neto</th>
+                      <th scope="col">Peso bruto</th>
+                      <th scope="col">Bultos</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let dato of listDatosBienes; let i = index">
+                      <td> {{ i + 1}} </td>
+                      <td>{{dato.eguia}}</td>
+                      <td>{{dato.ttramite}}</td>
+                      <td>{{dato.ttipocarga}}</td>
+                      <td>{{dato.tembalaje}}</td>
+                      <td>{{dato.tnaviera}}</td>
+                      <td>{{dato.tmarcas}}</td>
+                      <td>{{dato.ttipocontenedor}}</td>
+                      <td>{{dato.tsellos}}</td>
+                      <td>{{dato.epesoneto}}</td>
+                      <td>{{dato.epesobruto}}</td>
+                      <td>{{dato.ebultos}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
+              </div>
+              <div class="col-xl-12">
+                <div class='form-group'>
+                  {{lblobservaciones}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+            </div>
+            <!--QR-->
+          </div><!-- card-body -->
+        </div><!-- card -->
+      </div><!-- content-body -->
+    </mat-card>
   </div>
 </div>
-<div class="content-body" id="htmlSolicitudSalida">
-
-
-  <div class="card card-invoice">
-    <div class="card-header">
-      <div>
-        <h5 class="mg-b-3"></h5>
-        <span class="tx-sm text-muted"></span>
-      </div>
-    </div>
-    <div class="card-body">
-
-      <div class="alert alert-{{lbltipoAlerta}}" role="alert">
-        {{lblalert}}
-      </div>
-
-      <div *ngIf="divNotificacion" class="alert alert-warning" role="alert">
-        <div [innerHTML]="lblNotificacionRechazo">
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class='component mg-b-20'>
-          <div class="button-row">
-            <button mat-raised-button color="primary" [disabled]="lblestatus == 'RECHAZADA'"
-              [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
-              [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' " (click)="e_imprimir()"><mat-icon> print </mat-icon>&nbsp; Imprimir</button>
-            <button mat-raised-button color="primary" (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-            <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon> insert_drive_file</mat-icon>&nbsp;Nuevo</button>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Operación</h6>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Transacción</mat-label>
-            <br>
-           <mat-label>{{lbletransaccion}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Fecha de solicitud</mat-label>
-            <br>
-           <mat-label>{{lblfhfecharegistro}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Tipo de Solicitud</mat-label>
-            <br>
-           <mat-label>{{lblttiposolicitud}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Estado de solicitud</mat-label>
-            <br>
-           <mat-label>{{lblestatus}}</mat-label>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Usuarios</h6>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Programada</mat-label>
-            <br>
-           <mat-label>{{lblusuarioprogramo}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>Perfil</mat-label>
-            <br>
-           <mat-label>{{lblusuarioperfil}}</mat-label>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>{{lblusuarioInterno}}</mat-label>
-            <br>
-           <mat-label>{{lblusuarioautoriza}}</mat-label>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="form-group">
-           <mat-label>{{lblFechaInterno}}</mat-label>
-            <br>
-           <mat-label>{{lblfhfechaautoriza}}</mat-label>
-          </div>
-        </div>
-
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>RFC</mat-label>
-            <br>
-           <mat-label>{{lbltrfc}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Razón social</mat-label>
-            <br>
-           <mat-label>{{lbltrazonsocial}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>Cp</mat-label>
-            <br>
-           <mat-label>{{lblecodigopostal}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>Entidad</mat-label>
-            <br>
-           <mat-label>{{lbltentidadfederativa}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>Municipio</mat-label>
-            <br>
-           <mat-label>{{lbltmunicipio}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>Colonia</mat-label>
-            <br>
-           <mat-label>{{lbltcolonia}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Calle</mat-label>
-            <br>
-           <mat-label>{{lbltcalle}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>No.Interior</mat-label>
-            <br>
-           <mat-label>{{lbltnuminterior}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-1">
-          <div class="form-group">
-           <mat-label>No.Exterior</mat-label>
-            <br>
-           <mat-label>{{lbltnumexterior}}</mat-label>
-          </div>
-        </div>
-
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Método de pago</mat-label>
-            <br>
-           <mat-label>{{lblmetodopago}}</mat-label>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Banco</mat-label>
-            <br>
-           <mat-label>{{lblbanco}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Cfdi</mat-label>
-            <br>
-           <mat-label>{{lblcfdi}}</mat-label>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Cuenta</mat-label>
-            <br>
-           <mat-label>{{lblcuenta}}</mat-label>
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Moneda</mat-label>
-            <br>
-           <mat-label>{{lblmoneda}}</mat-label>
-          </div>
-        </div>
-
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Servicio</h6>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Fecha de servicio</mat-label><br>
-           <mat-label>{{lblfhfechaservicio}}</mat-label>
-
-          </div>
-
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Correo</mat-label>
-            <br>
-           <mat-label>{{lbltcorreo}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Teléfono</mat-label>
-            <br>
-           <mat-label>{{lblttelefono}}</mat-label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-group">
-           <mat-label>Referencia</mat-label>
-            <br>
-           <mat-label>{{lbltreferencia}}</mat-label>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)/Biene(s)</h6>
-        </div>
-        <div class="table-responsive mg-t-30">
-
-          <table class="table  table-sm  bd-b-0">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">No.Guía</th>
-                <th scope="col">Trámite</th>
-                <th scope="col">Carga</th>
-                <th scope="col">Embalaje</th>
-                <th scope="col">Naviera</th>
-                <th scope="col">Contenedor</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Sello(s)</th>
-                <th scope="col">Peso neto</th>
-                <th scope="col">Peso bruto</th>
-                <th scope="col">Bultos</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let dato of listDatosBienes; let i = index">
-                <td> {{ i + 1}} </td>
-                <td>{{dato.eguia}}</td>
-                <td>{{dato.ttramite}}</td>
-                <td>{{dato.ttipocarga}}</td>
-                <td>{{dato.tembalaje}}</td>
-                <td>{{dato.tnaviera}}</td>
-                <td>{{dato.tmarcas}}</td>
-                <td>{{dato.ttipocontenedor}}</td>
-                <td>{{dato.tsellos}}</td>
-                <td>{{dato.epesoneto}}</td>
-                <td>{{dato.epesobruto}}</td>
-                <td>{{dato.ebultos}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <hr>
-      <div class="row">
-        <div class="col-xl-12">
-          <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
-        </div>
-        <div class="col-xl-12">
-          <div class='form-group'>
-            {{lblobservaciones}}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-      </div>
-      <!--QR-->
-    </div><!-- card-body -->
-  </div><!-- card -->
-</div><!-- content-body -->
