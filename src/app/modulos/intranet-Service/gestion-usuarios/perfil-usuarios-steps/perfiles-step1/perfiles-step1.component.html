@@ -1,51 +1,26 @@
-<div class="contenedor">
-    <div fxFlex="95%">
-        <mat-card>
-            <div class="content-header">
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                            <li class="breadcrumb-item"><a href="{{directorio}}">Intranet</a></li>
-                            <li class="breadcrumb-item"><a href="{{directorio}}">Operaciones</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Perfiles</li>
-
-                        </ol>
-                    </nav>
-                    
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Perfiles
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card-actions>
+            <div class="btn-toolbar" role="group">
+                <div class="btn-group mr-5" role="group">
+                    <button mat-raised-button color="primary" (click)="e_inicio()"><mat-icon> home
+                        </mat-icon> &nbsp;Inicio</button>
                 </div>
             </div>
-            <div class="content-body">
-                <div class="card card-invoice">
-                    <div class="card-header">
-                        <div>
-                         
-                            
-                        </div>
-
+        </mat-card-actions>
+        <hr>
+        <div class="row">
+            <div class="col-sm">
+                <div class="pd-y-10 pd-x-20 ">
+                    <div id="jstree">
                     </div>
-                    <div class="card-body">
-                        <div class='component mg-b-10'>
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <a type="button" href={{directorio}} class="btn btn-xs btn-primary"><i
-                                            class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row row-xs">
-                            <div class="col-sm">
-                                <div class="pd-y-10 pd-x-20 ">
-                                    <div id="jstree">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-        </mat-card>
-    </div>
-</div>
+        </div>
+    </mat-card-content>
+</mat-card>

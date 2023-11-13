@@ -42,60 +42,60 @@
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
             <div class="table-responsive">
-                <table mat-table [dataSource]="solicitudesServicos" class="mat-elevation-z8" width="100%">
+                <mat-table [dataSource]="solicitudesServicos" class="mat-elevation-z8" width="100%">
                     <!--Acciones -->
                     <ng-container matColumnDef="acciones">
-                        <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
-                        </th>
-                        <td mat-cell *matCellDef="let element">
+                        <mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
                             <div style="text-align:center;">
                                 <button mat-button color="primary" (click)="e_detalle(element.etransaccion)"><mat-icon>
                                         more_horiz
                                     </mat-icon> &nbsp;</button>
                             </div>
-                        </td>
+                        </mat-cell>
                     </ng-container>
 
                     <!-- Transacción -->
                     <ng-container matColumnDef="etransaccion">
-                        <th mat-header-cell *matHeaderCellDef> NO.TRANSACCIÓN </th>
-                        <td mat-cell *matCellDef="let element"> {{element.etransaccion}} </td>
+                        <mat-header-cell *matHeaderCellDef> NO.TRANSACCIÓN </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.etransaccion}} </mat-cell>
                     </ng-container>
 
                     <!-- Correo -->
                     <ng-container matColumnDef="tcorreo">
-                        <th mat-header-cell *matHeaderCellDef> CORREO </th>
-                        <td mat-cell *matCellDef="let element"> {{element.tcorreo}} </td>
+                        <mat-header-cell *matHeaderCellDef> CORREO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.tcorreo}} </mat-cell>
                     </ng-container>
 
                     <!-- Telefono -->
                     <ng-container matColumnDef="ttelefono">
-                        <th mat-header-cell *matHeaderCellDef> TELEFONO </th>
-                        <td mat-cell *matCellDef="let element"> {{element.ttelefono}} </td>
+                        <mat-header-cell *matHeaderCellDef> TELEFONO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.ttelefono}} </mat-cell>
                     </ng-container>
 
                     <!-- Referencia -->
                     <ng-container matColumnDef="treferencia">
-                        <th mat-header-cell *matHeaderCellDef> REFERENCIA </th>
-                        <td mat-cell *matCellDef="let element"> {{element.treferencia}} </td>
+                        <mat-header-cell *matHeaderCellDef> REFERENCIA </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.treferencia}} </mat-cell>
                     </ng-container>
 
                     <!-- Fecha de registro -->
                     <ng-container matColumnDef="fhfecharegistro">
-                        <th mat-header-cell *matHeaderCellDef> F.REGISTRO </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fhfecharegistro}} </td>
+                        <mat-header-cell *matHeaderCellDef> F.REGISTRO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.fhfecharegistro}} </mat-cell>
                     </ng-container>
 
                     <!-- Fecha de servicio -->
                     <ng-container matColumnDef="fhfechaservicio">
-                        <th mat-header-cell *matHeaderCellDef> F.SERVICIO </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fhfechaservicio}} </td>
+                        <mat-header-cell *matHeaderCellDef> F.SERVICIO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.fhfechaservicio}} </mat-cell>
                     </ng-container>
 
 
-                    <tr mat-header-row *matHeaderRowDef="columnasServicios, sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnasServicios;"></tr>
-                </table>
+                    <mat-header-row *matHeaderRowDef="columnasServicios, sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasServicios;"></mat-row>
+                </mat-table>
                 <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
             </div>

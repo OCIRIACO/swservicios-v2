@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.service.usuario';
 import { RenderAcciones } from './render-acciones';
@@ -6,9 +6,16 @@ import { Router } from '@angular/router';
 
 // Service para usar datos en otro componente
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RenderAccionesUsuariosAsignados } from './render-acciones-asignados';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+export interface entidades {
+  ecodusuario: number,
+  tnombre: string,
+}
 
 @Component({
   selector: 'app-usuarios-step2',
@@ -16,10 +23,20 @@ import { RenderAccionesUsuariosAsignados } from './render-acciones-asignados';
   styleUrls: ['./usuarios-step2.component.css']
 })
 export class UsuariosStep2Component implements OnInit {
-  //Form's
-  formUsuarioPendientes = new UntypedFormGroup({})
-  formUsuarioAsignados = new UntypedFormGroup({})
 
+  //Table
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  displayedColumnsPendientes: string[] = ['acciones', 'ecodusuario', 'tnombre'];
+  listaUsuariosPendientes = new MatTableDataSource<entidades>([]);
+
+  displayedColumnsAsignados: string[] = ['acciones', 'ecodusuario', 'tnombre'];
+  listaUsuariosAsignados = new MatTableDataSource<entidades>([]);
+
+
+
+  //Form's
+  formUsuarioPendientes = new FormGroup({})
+  formUsuarioAsignados = new FormGroup({})
 
   //Label's
   lblpath: string = ''
@@ -31,6 +48,7 @@ export class UsuariosStep2Component implements OnInit {
   serviceDatosPerfil = this.serviceDatosPerfilUsuario.datosPerfilUsuarios
 
 
+  /*
   //Configuraciones para la tabla
   gridApi: any;
   gridColumnApi: any;
@@ -44,6 +62,7 @@ export class UsuariosStep2Component implements OnInit {
 
   // Configurar para la tabla de usuario ASIGNADOS
   columnDefs_asignados: any
+ */
 
   constructor(private apiServiceUsuario: ApiServiceUsuario, private router: Router, private serviceDatosPerfilUsuario: serviceDatosPerfilUsuarios, private formBuilder: UntypedFormBuilder) {
 
@@ -51,6 +70,7 @@ export class UsuariosStep2Component implements OnInit {
 
 
 
+    /*
     //Columnas de usuarios
     this.columnDefs = [
       {
@@ -88,10 +108,12 @@ export class UsuariosStep2Component implements OnInit {
         width: 600,
       }
     ]
+    */
 
 
 
 
+    /*
     this.defaultColDef = {
       //flex: 1,
       //autoWidth: 'value',
@@ -108,10 +130,8 @@ export class UsuariosStep2Component implements OnInit {
       }
     };
 
-
-
-
     this.paginationPageSize = 0
+    */
 
   }
 
@@ -121,25 +141,25 @@ export class UsuariosStep2Component implements OnInit {
   ngOnInit(): void {
 
     // Form usuario pendientes
-    this.formUsuarioPendientes = this.formBuilder.group({
+    /*this.formUsuarioPendientes = this.formBuilder.group({
       value: this.formBuilder.array([])
-    });
+    });*/
 
     //Form usuasrio asignados
-    this.formUsuarioAsignados = this.formBuilder.group({
+    /*this.formUsuarioAsignados = this.formBuilder.group({
       value: this.formBuilder.array([])
-    });
+    });*/
 
     //Clear
-    this.dataUsuario = []
+    //this.dataUsuario = []
 
     //Datos del componenet origen perfiles step 1
     //console.log('Datos origen:')
     //console.log(this.serviceDatosPerfilUsuario.datosPerfilUsuarios)
 
-    let datosPerfil = this.serviceDatosPerfilUsuario.datosPerfilUsuarios
+    //let datosPerfil = this.serviceDatosPerfilUsuario.datosPerfilUsuarios
     //Parceo de datos
-    this.lblpath = datosPerfil.tpath
+    //this.lblpath = datosPerfil.tpath
 
 
     /////////////////////// POST ////////////////////////////////////
@@ -152,8 +172,10 @@ export class UsuariosStep2Component implements OnInit {
     //POST servicio consultar usuario PENDIENTES
     this.apiServiceUsuario.postConsultarUsuariosPerfil(datoUsuariosPendiente).subscribe(
       (response) => {
-        this.dataUsuario = response
-
+        //this.dataUsuario = response}
+        console.log(response);
+        this.listaUsuariosPendientes.data = response as entidades [];
+        this.listaUsuariosPendientes.paginator = this.paginator;
       }
     )
 
@@ -166,7 +188,9 @@ export class UsuariosStep2Component implements OnInit {
     //POST servicio consultar usuario ASIGNADOS
     this.apiServiceUsuario.postConsultarUsuariosPerfil(datoUsuariosAsginados).subscribe(
       (response) => {
-        this.dataUsuarioAsignados = response
+        console.log(response);
+        this.listaUsuariosAsignados.data = response as entidades [];
+        this.listaUsuariosAsignados.paginator = this.paginator;
       }
     )
 
@@ -225,9 +249,9 @@ export class UsuariosStep2Component implements OnInit {
     let arrdatosUsuarios: any = []
     let datoUsuario: any = {}
 
-    let arrUsuarios = []
+    let arrUsuarios : any = []
 
-    arrUsuarios = this.formUsuarioPendientes.value;
+    //arrUsuarios = this.formUsuarioPendientes.value;
 
     if (arrUsuarios.value.length == 0) {
       alerta['text'] = 'SELECCIONAR EL O LOS USUARIO(S) PARA AGREGAR'
@@ -327,13 +351,16 @@ export class UsuariosStep2Component implements OnInit {
   e_onChangeRoot(dato1: any, dato2: any) {
     //console.log(dato2.checked)
 
-    const usuarioPendientes = (this.formUsuarioPendientes.controls.value as UntypedFormArray);
+    //const usuarioPendientes = (this.formUsuarioPendientes.controls.value as UntypedFormArray);
+
+    let usuarioPendientes: any;
 
     if (dato2.checked) {
       usuarioPendientes.push(new UntypedFormControl(dato1));
     } else {
-      const index = usuarioPendientes.controls.findIndex(x => x.value === dato1);
-      usuarioPendientes.removeAt(index);
+      //const index = usuarioPendientes.controls.findIndex(x => x.value === dato1);
+      //usuarioPendientes.removeAt(index);
+      null;
     }
 
   }
@@ -343,13 +370,16 @@ export class UsuariosStep2Component implements OnInit {
   e_onChangeRootAsignados(dato1: any, dato2: any) {
     //console.log(dato2.checked)
 
-    const usuariosAsignados = (this.formUsuarioAsignados.controls.value as UntypedFormArray);
+    //const usuariosAsignados = (this.formUsuarioAsignados.controls.value as UntypedFormArray);
+
+    let usuariosAsignados : any;
 
     if (dato2.checked) {
       usuariosAsignados.push(new UntypedFormControl(dato1));
     } else {
-      const index = usuariosAsignados.controls.findIndex(x => x.value === dato1);
-      usuariosAsignados.removeAt(index);
+       null;
+      //const index = usuariosAsignados.controls.findIndex(x => x.value === dato1);
+      //usuariosAsignados.removeAt(index);
     }
 
   }
@@ -361,7 +391,7 @@ export class UsuariosStep2Component implements OnInit {
     let alerta: any = {};
 
     // arreglo
-    let arrUsuarios = []
+    let arrUsuarios : any = []
 
     // arreglo para el tratamiento y envio de datos
     let parametros: any = {}

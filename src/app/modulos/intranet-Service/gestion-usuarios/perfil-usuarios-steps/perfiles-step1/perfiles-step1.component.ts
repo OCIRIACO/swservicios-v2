@@ -142,4 +142,9 @@ export class PerfilesStep1Component implements OnInit {
 
   }
 
+  //Regresar menu Inicio
+  e_inicio(){
+    this.router.navigate(['/dashboard/intranet/menu']);
+  }
+
 }

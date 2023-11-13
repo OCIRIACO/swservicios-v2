@@ -1,103 +1,117 @@
-<div class="contenedor">
-    <div fxFlex="95%">
-        <mat-card>
-            <div class="content-header">
-    <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Usuario(s)</li>
-
-            </ol>
-        </nav>
-        
-    </div>
-</div>
-
-<div class="content-body">
-    <div class="card card-invoice">
-        <div class="card-header">
-            <div>
-             
-                
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Usuario
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card-actions>
+            <div class="btn-toolbar" role="group">
+                <div class="btn-group mr-5" role="group">
+                    <button mat-raised-button color="primary" (click)="e_regresar()"><i
+                            class=" fas fa-outdent mg-r-5 fa-1x "></i>Regresar</button>
+                </div>
             </div>
-
+        </mat-card-actions>
+        <hr>
+        <div class="component mg-b-20 mg-t-10">
+            {{lblpath}}
         </div>
-        <div class="card-body">
-
-            <div class="row">
-
-                <div class='component mg-b-10'>
-                    <div class="btn-toolbar" role="group">
-                        <div class="btn-group mr-5" role="group">
-                            <button mat-raised-button color="primary" (click)="e_regresar()"><i
-                                    class=" fas fa-outdent mg-r-5 fa-1x "></i>Regresar</button>
+        <hr>
+        <div class="row">
+            <div class="col-xl-6">
+                <form [formGroup]="formUsuarioPendientes">
+                    <div class='component mg-b-20'>
+                        <div class="btn-toolbar" role="group">
+                            <div class="btn-group mr-5" role="group">
+                                <button mat-raised-button color="primary" (click)="e_agregar(formUsuarioPendientes)">
+                                    <i class="fas fa-plus mg-r-5 fa-1x"></i>Agregar
+                                    usuario(s)</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class='component'>
-                    <hr>
-                </div>
-              
-                <div class="component mg-b-20 mg-t-10">
-                    {{lblpath}}
-                </div>
+                    <div class="table-responsive">
+                        <mat-table [dataSource]="listaUsuariosPendientes" class="mat-elevation-z8" width="100%">
+                            <!--Acciones -->
+                            <ng-container matColumnDef="acciones">
+                                <mat-header-cell *matHeaderCellDef style="text-align: center;">
+                                    S
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <div style="text-align:center;">
+                                        <input type="radio" name="checkCliente" value="{{element.ecodusuario}}"
+                                            id="{{element.ecodusuario}}">
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
 
-                <div class="col-sm-6">
+                            <!-- Id usuario -->
+                            <ng-container matColumnDef="ecodusuario">
+                                <mat-header-cell *matHeaderCellDef> NO.USUARIO </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    {{element.ecodusuario}}
+                                </mat-cell>
+                            </ng-container>
 
-                    <form [formGroup]="formUsuarioPendientes">
-                        <div class='component mg-b-20'>
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <button mat-raised-button color="primary"
-                                        (click)="e_agregar(formUsuarioPendientes)">
-                                        <i class="fas fa-plus mg-r-5 fa-1x"></i>Agregar
-                                        usuario(s)</button>
+                            <!-- Nombre usuario -->
+                            <ng-container matColumnDef="tnombre">
+                                <mat-header-cell *matHeaderCellDef> USUARIO </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    {{element.tnombre}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsPendientes, sticky: true">
+                            </mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsPendientes;">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+                </form>
+            </div>
+            <div class="col-xl-6">
+                <div class="table-responsive">
+
+                    <mat-table [dataSource]="listaUsuariosAsignados" class="mat-elevation-z8">
+                        <!--Acciones -->
+                        <ng-container matColumnDef="acciones">
+                            <mat-header-cell  *matHeaderCellDef style="text-align: center;">
+                                S
+                            </mat-header-cell>
+                            <mat-cell  *matCellDef="let element">
+                                <div style="text-align:center;">
+                                    <input type="radio" name="checkCliente" value="{{element.ecodusuario}}"
+                                        id="{{element.ecodusuario}}">
                                 </div>
-                            </div>
-                        </div>
+                            </mat-cell >
+                        </ng-container>
 
-                        <div class="table-responsive">
-                            <div class="outer-div">
-                                <div class="grid-wrapper" id="gridUsuario">
-                                    <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUusuario"
-                                        class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
-                                        [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs"
-                                        [defaultColDef]="defaultColDef" [rowData]="dataUsuario">
-                                    </ag-grid-angular>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        <!-- Id usuario -->
+                        <ng-container matColumnDef="ecodusuario">
+                            <mat-header-cell  *matHeaderCellDef> NO.USUARIO </mat-header-cell>
+                            <mat-cell  *matCellDef="let element">
+                                {{element.ecodusuario}}
+                            </mat-cell >
+                        </ng-container>
+                        <!-- Nombre usuario -->
+                        <ng-container matColumnDef="tnombre">
+                            <mat-header-cell  *matHeaderCellDef> USUARIO </mat-header-cell>
+                            <mat-cell  *matCellDef="let element">
+                                {{element.tnombre}}
+                            </mat-cell >
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsAsignados, sticky: true">
+                        </mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsAsignados;">
+                        </mat-row>
+                    </mat-table>
 
                 </div>
-                <div class="col-sm-6">
-                    <form [formGroup]="formUsuarioAsignados">
-                        <div class='component mg-b-20'>
-                            <div class="btn-toolbar" role="group">
-                                <div class="btn-group mr-5" role="group">
-                                    <button mat-raised-button color="primary"
-                                        (click)="e_eliminar(formUsuarioAsignados)">
-                                        <i class="fas fa-minus mg-r-5 fa-1x"></i>
-                                        Eliminar usuario(s)</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outer-div">
-                            <div class="grid-wrapper" id="gridUsuario">
-                                <ag-grid-angular #agGrid style=" width: 100%;  height: 700px;" id="gridUusuario"
-                                    class="ag-theme-alpine" [pagination]="true" [gridOptions]="gridOptions"
-                                    [paginationPageSize]="paginationPageSize" [columnDefs]="columnDefs_asignados"
-                                    [defaultColDef]="defaultColDef" [rowData]="dataUsuarioAsignados">
-                                </ag-grid-angular>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
             </div>
         </div>
-
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>
