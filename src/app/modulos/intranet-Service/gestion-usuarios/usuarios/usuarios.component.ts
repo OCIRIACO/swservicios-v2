@@ -17,7 +17,7 @@ export class UsuariosComponent implements OnInit {
   //NgForm
   @ViewChild('solicitudForm') ngFormSolicitudUsuario: NgForm;
 
-  
+
   //Path base
   directorio: string = GlobalConstants.pathIntranet;
 
@@ -98,28 +98,30 @@ export class UsuariosComponent implements OnInit {
 
   // procesar datos del web service
   e_procesar_datos(datos: any) {
-    
+
     //Zona de reporte
-    this.usuariosList =  datos
+    this.usuariosList = datos
   }
 
   // Guardar
 
-  get frmUsuario() { return this.formUsuario.controls; }
-  e_guardar(datos: any) {
+  //get frmUsuario() { return this.formUsuario.controls; }
+
+  e_guardar(datos: NgForm) {
 
 
-    this.submitGuardar = true;
+    //this.submitGuardar = true;
+
+    //console.log(datos);
 
     // Stop en caso de error
-    if (this.formUsuario.invalid) {
-      //console.log('error');
+    if (datos.invalid) {
+      console.log('error');
       return;
     }
 
-    console.log(datos)
 
-    if (datos.ecodusuario == 0) {
+    if (datos.value.ecodusuario == 0) {
       this.e_crear_nuevo_usuario(datos)
     } else {
       this.e_editar_nuevo_usuario(datos)
@@ -128,7 +130,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   // Consumir API para crer nuevo usuario
-  e_crear_nuevo_usuario(datos: any) {
+  e_crear_nuevo_usuario(datos: NgForm) {
 
     //Alerta
     let alerta: any = {};
@@ -143,12 +145,12 @@ export class UsuariosComponent implements OnInit {
     alerta['footer'] = 'USUARIO';
 
     datosUsuario = {
-      tnombre: datos.tnombre,
-      tdireccion: datos.tdireccion,
-      ttelefono: datos.ttelefono,
-      tcorreo: datos.tcorreo,
-      tusuario: datos.tusuario,
-      tpassword: datos.tpassword
+      tnombre: datos.value.tnombre,
+      tdireccion: datos.value.tdireccion,
+      ttelefono: datos.value.ttelefono,
+      tcorreo: datos.value.tcorreo,
+      tusuario: datos.value.tusuario,
+      tpassword: datos.value.tpassword
     }
 
 
@@ -196,7 +198,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   //Consumir API para editar usuario
-  e_editar_nuevo_usuario(datos: any) {
+  e_editar_nuevo_usuario(datos: NgForm) {
 
 
     //Alerta
@@ -208,14 +210,14 @@ export class UsuariosComponent implements OnInit {
     let datosUsuario: any
 
     datosUsuario = {
-      eusuario: datos.ecodusuario,
-      tnombre: datos.tnombre,
-      tdireccion: datos.tdireccion,
-      ttelefono: datos.ttelefono,
-      tcorreo: datos.tcorreo,
-      tusuario: datos.tusuario,
-      tpassword: datos.tpassword,
-      testado: datos.testado
+      eusuario: datos.value.ecodusuario,
+      tnombre: datos.value.tnombre,
+      tdireccion: datos.value.tdireccion,
+      ttelefono: datos.value.ttelefono,
+      tcorreo: datos.value.tcorreo,
+      tusuario: datos.value.tusuario,
+      tpassword: datos.value.tpassword,
+      testado: datos.value.testado
     }
 
 
@@ -274,38 +276,38 @@ export class UsuariosComponent implements OnInit {
 
   // Editar Usuario
   editarUsuario(dato: any) {
-   
-  
-     let usuario =  {
-      ecodusuario : dato.ecodusuario,
-      tnombre : dato.tnombre,
-      tdireccion : dato.tdireccion,
-      ttelefono : dato.ttelefono,
-      tcorreo : dato.tcorreo,
-      tusuario : dato.tusuario,
-      tpassword : dato.tpassword,
-      testado : dato.testado,
-     }
 
-     this.ngFormSolicitudUsuario.form.setValue(usuario)
 
-   /* 
-   OLD BORRAR
-    console.log('datos....')
-    console.log(dato)
+    let usuario = {
+      ecodusuario: dato.ecodusuario,
+      tnombre: dato.tnombre,
+      tdireccion: dato.tdireccion,
+      ttelefono: dato.ttelefono,
+      tcorreo: dato.tcorreo,
+      tusuario: dato.tusuario,
+      tpassword: dato.tpassword,
+      testado: dato.testado,
+    }
 
-    this.formUsuario = new FormGroup({
-      ecodusuario: new FormControl(dato.ecodusuario, Validators.required),
-      tnombre: new FormControl(dato.tnombre, Validators.required),
-      tdireccion: new FormControl(dato.tdireccion, Validators.required),
-      ttelefono: new FormControl(dato.ttelefono, Validators.required),
-      tcorreo: new FormControl(dato.tcorreo, Validators.required),
-      tusuario: new FormControl(dato.tusuario, Validators.required),
-      tpassword: new FormControl(dato.tpassword, Validators.required),
-      testado: new FormControl(dato.testado, Validators.required),
-    })
+    this.ngFormSolicitudUsuario.form.setValue(usuario)
 
-    */
+    /* 
+    OLD BORRAR
+     console.log('datos....')
+     console.log(dato)
+ 
+     this.formUsuario = new FormGroup({
+       ecodusuario: new FormControl(dato.ecodusuario, Validators.required),
+       tnombre: new FormControl(dato.tnombre, Validators.required),
+       tdireccion: new FormControl(dato.tdireccion, Validators.required),
+       ttelefono: new FormControl(dato.ttelefono, Validators.required),
+       tcorreo: new FormControl(dato.tcorreo, Validators.required),
+       tusuario: new FormControl(dato.tusuario, Validators.required),
+       tpassword: new FormControl(dato.tpassword, Validators.required),
+       testado: new FormControl(dato.testado, Validators.required),
+     })
+ 
+     */
 
   }
 

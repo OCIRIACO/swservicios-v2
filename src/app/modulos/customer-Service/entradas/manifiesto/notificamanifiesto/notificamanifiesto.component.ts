@@ -857,22 +857,22 @@ export class NotificamanifiestoComponent implements OnInit {
 
         datosParametros = { orden: this.datosManifiesto }
 
-        
-        
-                let alerta: any = {};
-        
-                alerta['text'] = '¿ DESEA CONTINUAR ? ';
-                alerta['tipo'] = 'question';
-                alerta['footer'] = '';
-        
-        
-                this.alertaConfirm(alerta, (confirmed: boolean) => {
-                  if (confirmed == true) {
-                    this.enotificarManifiesto(datosParametros);
-                  }
-                });
-        
-        
+
+
+        let alerta: any = {};
+
+        alerta['text'] = '¿ DESEA CONTINUAR ? ';
+        alerta['tipo'] = 'question';
+        alerta['footer'] = '';
+
+
+        this.alertaConfirm(alerta, (confirmed: boolean) => {
+          if (confirmed == true) {
+            this.enotificarManifiesto(datosParametros);
+          }
+        });
+
+
 
       }
     }

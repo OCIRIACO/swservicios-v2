@@ -1,8 +1,10 @@
 @import 'custom-theme.scss';
 
+/*
 .button-row .mat-button-base {
   margin-right: 5px;
 }
+*/
 
 .navbar-spacer {
   flex: 1 1 auto;
@@ -364,5 +366,6 @@ mat-card-content{
 
 
 .mat-radio-button ~ .mat-radio-button {  
-  margin-left: 16px;  
+  margin-left: 10px;  
 }  
+
