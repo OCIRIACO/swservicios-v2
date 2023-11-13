@@ -29,16 +29,14 @@
                 <span> + Opciones de busqueda </span>
             </div>
         </div>
-        <div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
-
-            <div class="row">
-                <mat-radio-group (change)="e_opcion($event)" aria-label="Select an option">
-                    <mat-radio-button value="PENDIENTE">PENDIENTE(S)</mat-radio-button>
-                    <mat-radio-button value="AUTORIZADA">AUTORIZADA(S)</mat-radio-button>
-                    <mat-radio-button value="RECHAZADA">RECHAZADA(S)</mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
+        <div class="mt-4"></div>
+        <mat-card-actions>
+            <mat-radio-group (change)="e_opcion($event)" aria-label="Select an option">
+                <mat-radio-button value="PENDIENTE">PENDIENTE(S)</mat-radio-button>
+                <mat-radio-button value="AUTORIZADA">AUTORIZADA(S)</mat-radio-button>
+                <mat-radio-button value="RECHAZADA">RECHAZADA(S)</mat-radio-button>
+            </mat-radio-group>
+        </mat-card-actions>
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
             <div class="table-responsive">
