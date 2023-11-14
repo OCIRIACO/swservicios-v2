@@ -11,7 +11,7 @@
     <mat-card-content>
       <mat-form-field class="input-login form-input">
         <mat-label>Usuario</mat-label>
-        <input matInput formControlName="usuario" placeholder="jose@outlook.com o jcarranza">
+        <input matInput formControlName="usuario" placeholder="usuario">
       </mat-form-field>
       <mat-form-field class="input-login form-input">
         <mat-label>Password</mat-label>
@@ -19,9 +19,7 @@
       </mat-form-field>
       <mat-card-actions>
         <div class="form-group" style="text-align: center;">
-          <button type="submit" class="btn btn-primary ms-auto btn-block">
-            Iniciar Sesión
-          </button>
+          <button mat-raised-button color="primary" type="submit" title="Consultar">Iniciar Sesión</button>
         </div>
         <div class="mt-3">
           <div class="text-center" [ngClass]="{'alert alert-danger': mensaje}" alt="Alerta de sesión">
