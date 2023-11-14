@@ -1,417 +1,729 @@
-<div class="contenedor">
-  <div fxFlex="95%">
-    <mat-card>
-      <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
-        <section>
-          <div class="button-row">
-            <button mat-raised-button color="primary" (click)="e_consulta()"
-              title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-            <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
-          </div>
-        </section>
-
-        <hr>
-        <!--CLIENTE-->
-        <div class="row">
-          <div class="col-xl-12">
-            <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
-          </div>
-          <div class="col-sm-3">
-            <mat-form-field class="example-full-width">
-              <mat-label>RFC</mat-label>
-              <input type="text" matInput name="cliente" ngModel #cliente="ngModel" [matAutocomplete]="auto" required>
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay">
-                <mat-option (click)="OnHumanSelected(dato)" *ngFor="let dato of filteredOptions  | async "
-                  [value]="dato">
-                  {{dato.trfc}}
-                </mat-option>
-              </mat-autocomplete>
-              <mat-error
-                *ngIf="FormSolicitudEntrada.controls.cliente?.errors || FormSolicitudEntrada.controls.cliente.errors?.required">RFC
-                es requerido</mat-error>
-            </mat-form-field>
-
-            <!--<div class="form-group">
-          <label class="form-label required">RFC</label>
-          <select class="custom-select form-control-sm select2 select2-hidden-accessible" id="trfc" style="width: 100%;"
-            tabindex="-1" aria-hidden="true">
-            <option value="">SELECCIONAR</option>
-            <option *ngFor="let dato of datosClientes" [ngValue]="dato.cliente" [value]="dato.cliente">
-              {{dato.trfc}}
-            </option>
-          </select>
-          <input type="hidden" id="cliente" style="width: 100%;" tabindex="-1" aria-hidden="true"
-            formControlName="cliente" [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.cliente.errors }">
-          <div *ngIf="submitGuardar && fcontacto.cliente.errors" class="invalid-feedback">
-            <div *ngIf="fcontacto.cliente.errors.required">RFC es requerido</div>
-          </div>
-        </div>-->
-          </div>
-          <div class="col-sm-3">
-            <mat-form-field class="full-width">
-              <mat-label>Dirección</mat-label>
-              <mat-select name="edireccion" ngModel #edireccion="ngModel" required>
-                <mat-option>SELECCIONAR</mat-option>
-                <mat-option *ngFor="let dato of datosDirecciones" [value]="dato.edireccion">
-                  {{dato.tcalle}},{{dato.tcolonia}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="FormSolicitudEntrada.controls.edireccion.errors?.required">Dirección es
-                requerido</mat-error>
-            </mat-form-field>
-            <!--<div class="form-group">
-          <label class="form-label required">Dirección</label>
-          <select class="custom-select form-control-sm" id="edireccion" name="carga[edireccion]"
-            formControlName="edireccion" [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.edireccion.errors }">
-            <option value="">SELECCIONAR</option>
-            <option *ngFor="let dato of datosDirecciones" [ngValue]="dato.edireccion">
-              {{dato.tcalle}},{{dato.tcolonia}}
-            </option>
-          </select>
-          <div *ngIf="submitGuardar && fcontacto.edireccion.errors" class="invalid-feedback">
-            <div *ngIf="fcontacto.edireccion.errors.required">Dirección es requerido</div>
-          </div>
-        </div>-->
-          </div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Nueva - Solicitud de servicio
+    </mat-card-title>
+    <mat-card-subtitle>
+      Entradas
+  </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="e_consulta()"
+          title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+      </mat-card-actions>
+      <hr>
+      <!--CLIENTE-->
+      <div class="row">
+        <div class="col-xl-12">
+          <h6 class="mt-3 mb-2 text-primary">+ Cliente</h6>
         </div>
-        <!--CLIENTE-->
-        <hr>
-        <!--PAGO-->
-        <div class="row">
-          <div class="col-xl-12">
-            <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>Forma de pago</mat-label>
-              <mat-select name="emetodopago" ngModel #emetodopago="ngModel" required>
-                <mat-option>SELECCIONAR</mat-option>
-                <mat-option *ngFor="let formaPago of datosMetodoPago" [value]="formaPago.emetodopago">
-                  {{formaPago.tdescripcion}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="FormSolicitudEntrada.controls['emetodopago'].errors?.required">Forma de pago es
-                requerido</mat-error>
+        <div class="col-sm-3">
+          <mat-form-field class="example-full-width">
+            <mat-label>RFC</mat-label>
+            <input type="text" matInput name="cliente" ngModel #cliente="ngModel" [matAutocomplete]="auto" required>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="AutoCompleteDisplay">
+              <mat-option (click)="OnHumanSelected(dato)" *ngFor="let dato of filteredOptions  | async " [value]="dato">
+                {{dato.trfc}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error
+              *ngIf="FormSolicitudEntrada.controls.cliente?.errors || FormSolicitudEntrada.controls.cliente.errors?.required">RFC
+              es requerido</mat-error>
+          </mat-form-field>
 
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>Método de pago</mat-label>
-              <mat-select>
-                <mat-option value="1">PUE</mat-option>
-                <mat-option value="2">PPD</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>Banco</mat-label>
-              <mat-select name="ebanco" ngModel #ebanco="ngModel" required>
-                <mat-option>SELECCIONAR</mat-option>
-                <mat-option *ngFor="let banco of datosBancos" [value]="banco.ebanco">
-                  {{banco.tbanco}}
-                </mat-option>
-              </mat-select>
-              <!--<mat-error *ngIf="ebanco.errors?.required || formSolicitud.submitted && ebanco.invalid">Banco es
-            requerido</mat-error>-->
-              <mat-error *ngIf="FormSolicitudEntrada.controls['ebanco'].errors?.required">Banco es requerido</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>CFDI</mat-label>
-              <mat-select name="ecfdi" ngModel #ecfdi="ngModel" required>
-                <mat-option>SELECCIONAR</mat-option>
-                <mat-option *ngFor="let usoCfdi of datosCfdi" [value]="usoCfdi.ecfdi">
-                  {{usoCfdi.tdescripcion}}
-                </mat-option>
-              </mat-select>
-              <!--<mat-error *ngIf="ecfdi.errors?.required || formSolicitud.submitted && ecfdi.invalid">Cfdi es
-            requerido</mat-error>-->
-              <mat-error *ngIf="FormSolicitudEntrada.controls['ecfdi'].errors?.required">Cfdi es requerido</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>Cuenta</mat-label>
-              <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4"
-                name="ecuenta" ngModel #ecuenta="ngModel" size="4" required>
-              <!--<mat-error *ngIf="formSolicitud.submitted">Cuenta es requerido</mat-error>-->
-              <mat-error *ngIf="FormSolicitudEntrada.controls['ecuenta'].errors?.required">Cuenta es
-                requerido</mat-error>
-
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field class="full-width">
-              <mat-label>Moneda</mat-label>
-              <mat-select name="tmoneda" ngModel #tmoneda="ngModel" required>
-                <mat-option>SELECCIONAR</mat-option>
-                <mat-option value="MXN">PESO</mat-option>
-                <mat-option value="USD">DOLAR</mat-option>
-              </mat-select>
-              <!--<mat-error *ngIf="tmoneda.errors?.required || formSolicitud.submitted && tmoneda.invalid">Moneda es
-            requerido</mat-error>-->
-              <mat-error *ngIf="FormSolicitudEntrada.controls['tmoneda'].errors?.required">Moneda es
-                requerido</mat-error>
-
-            </mat-form-field>
-          </div>
+          <!--<div class="form-group">
+        <label class="form-label required">RFC</label>
+        <select class="custom-select form-control-sm select2 select2-hidden-accessible" id="trfc" style="width: 100%;"
+          tabindex="-1" aria-hidden="true">
+          <option value="">SELECCIONAR</option>
+          <option *ngFor="let dato of datosClientes" [ngValue]="dato.cliente" [value]="dato.cliente">
+            {{dato.trfc}}
+          </option>
+        </select>
+        <input type="hidden" id="cliente" style="width: 100%;" tabindex="-1" aria-hidden="true"
+          formControlName="cliente" [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.cliente.errors }">
+        <div *ngIf="submitGuardar && fcontacto.cliente.errors" class="invalid-feedback">
+          <div *ngIf="fcontacto.cliente.errors.required">RFC es requerido</div>
         </div>
-        <!--PAGO-->
-        <hr>
-        <!--CONTACTO-->
-        <div class="row">
-          <div class="col-xl-12">
-            <h6 class="mt-3 mb-2 text-primary">+ Contacto</h6>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="full-width">
-              <mat-label>Fecha de servicio</mat-label>
-              <input matInput [matDatepicker]="picker" name="fhfechaservicio" ngModel #fhfechaservicio="ngModel"
-                required>
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <mat-error *ngIf="FormSolicitudEntrada.controls['fhfechaservicio'].errors?.required">Fecha servicio es
-                requerido</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field class="full-width">
-              <mat-label>Correo</mat-label>
-              <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="256"
-                name="tcorreo" ngModel #tcorreo="ngModel" required>
-              <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
-            es
-            requerido</mat-error>-->
-              <mat-error *ngIf="FormSolicitudEntrada.controls['tcorreo'].errors?.required">Correo es
-                requerido</mat-error>
-
-            </mat-form-field>
-
-          </div>
-          <div class="col-md-3">
-            <mat-form-field class="full-width">
-              <mat-label>Teléfono</mat-label>
-              <input matInput placeholder="" maxlength="10" name="ttelefono" ngModel #ttelefono="ngModel" required>
-              <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
-            es
-            requerido</mat-error>-->
-
-              <mat-error *ngIf="FormSolicitudEntrada.controls['ttelefono'].errors?.required">Telefono es
-                requerido</mat-error>
-
-
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field class="full-width">
-              <mat-label>Referencia</mat-label>
-              <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="10"
-                name="treferencia" ngModel #treferencia="ngModel">
-            </mat-form-field>
-          </div>
+      </div>-->
         </div>
-        <!--CONTACTO-->
-        <hr>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>Dirección</mat-label>
+            <mat-select name="edireccion" ngModel #edireccion="ngModel" required>
+              <mat-option>SELECCIONAR</mat-option>
+              <mat-option *ngFor="let dato of datosDirecciones" [value]="dato.edireccion">
+                {{dato.tcalle}},{{dato.tcolonia}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="FormSolicitudEntrada.controls.edireccion.errors?.required">Dirección es
+              requerido</mat-error>
+          </mat-form-field>
+          <!--<div class="form-group">
+        <label class="form-label required">Dirección</label>
+        <select class="custom-select form-control-sm" id="edireccion" name="carga[edireccion]"
+          formControlName="edireccion" [ngClass]="{ 'is-invalid': submitGuardar && fcontacto.edireccion.errors }">
+          <option value="">SELECCIONAR</option>
+          <option *ngFor="let dato of datosDirecciones" [ngValue]="dato.edireccion">
+            {{dato.tcalle}},{{dato.tcolonia}}
+          </option>
+        </select>
+        <div *ngIf="submitGuardar && fcontacto.edireccion.errors" class="invalid-feedback">
+          <div *ngIf="fcontacto.edireccion.errors.required">Dirección es requerido</div>
+        </div>
+      </div>-->
+        </div>
+      </div>
+      <!--CLIENTE-->
+      <hr>
+      <!--PAGO-->
+      <div class="row">
+        <div class="col-xl-12">
+          <h6 class="mt-3 mb-2 text-primary">+ Pago</h6>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>Forma de pago</mat-label>
+            <mat-select name="emetodopago" ngModel #emetodopago="ngModel" required>
+              <mat-option>SELECCIONAR</mat-option>
+              <mat-option *ngFor="let formaPago of datosMetodoPago" [value]="formaPago.emetodopago">
+                {{formaPago.tdescripcion}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="FormSolicitudEntrada.controls['emetodopago'].errors?.required">Forma de pago es
+              requerido</mat-error>
 
-        <!--DATOS BIENES-->
-        <form [formGroup]="FormDatosBien">
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>Método de pago</mat-label>
+            <mat-select>
+              <mat-option value="1">PUE</mat-option>
+              <mat-option value="2">PPD</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>Banco</mat-label>
+            <mat-select name="ebanco" ngModel #ebanco="ngModel" required>
+              <mat-option>SELECCIONAR</mat-option>
+              <mat-option *ngFor="let banco of datosBancos" [value]="banco.ebanco">
+                {{banco.tbanco}}
+              </mat-option>
+            </mat-select>
+            <!--<mat-error *ngIf="ebanco.errors?.required || formSolicitud.submitted && ebanco.invalid">Banco es
+          requerido</mat-error>-->
+            <mat-error *ngIf="FormSolicitudEntrada.controls['ebanco'].errors?.required">Banco es requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>CFDI</mat-label>
+            <mat-select name="ecfdi" ngModel #ecfdi="ngModel" required>
+              <mat-option>SELECCIONAR</mat-option>
+              <mat-option *ngFor="let usoCfdi of datosCfdi" [value]="usoCfdi.ecfdi">
+                {{usoCfdi.tdescripcion}}
+              </mat-option>
+            </mat-select>
+            <!--<mat-error *ngIf="ecfdi.errors?.required || formSolicitud.submitted && ecfdi.invalid">Cfdi es
+          requerido</mat-error>-->
+            <mat-error *ngIf="FormSolicitudEntrada.controls['ecfdi'].errors?.required">Cfdi es requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>Cuenta</mat-label>
+            <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4" name="ecuenta"
+              ngModel #ecuenta="ngModel" size="4" required>
+            <!--<mat-error *ngIf="formSolicitud.submitted">Cuenta es requerido</mat-error>-->
+            <mat-error *ngIf="FormSolicitudEntrada.controls['ecuenta'].errors?.required">Cuenta es
+              requerido</mat-error>
 
-          <!--BIENES-->
-          <div *ngIf="divCarga" class="row">
-            <div class="col-xl-12">
-              <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)/Biene(s)</h6>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field class="full-width">
+            <mat-label>Moneda</mat-label>
+            <mat-select name="tmoneda" ngModel #tmoneda="ngModel" required>
+              <mat-option>SELECCIONAR</mat-option>
+              <mat-option value="MXN">PESO</mat-option>
+              <mat-option value="USD">DOLAR</mat-option>
+            </mat-select>
+            <!--<mat-error *ngIf="tmoneda.errors?.required || formSolicitud.submitted && tmoneda.invalid">Moneda es
+          requerido</mat-error>-->
+            <mat-error *ngIf="FormSolicitudEntrada.controls['tmoneda'].errors?.required">Moneda es
+              requerido</mat-error>
+
+          </mat-form-field>
+        </div>
+      </div>
+      <!--PAGO-->
+      <hr>
+      <!--CONTACTO-->
+      <div class="row">
+        <div class="col-xl-12">
+          <h6 class="mt-3 mb-2 text-primary">+ Contacto</h6>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field class="full-width">
+            <mat-label>Fecha de servicio</mat-label>
+            <input matInput [matDatepicker]="picker" name="fhfechaservicio" ngModel #fhfechaservicio="ngModel" required>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="FormSolicitudEntrada.controls['fhfechaservicio'].errors?.required">Fecha servicio es
+              requerido</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="full-width">
+            <mat-label>Correo</mat-label>
+            <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="256"
+              name="tcorreo" ngModel #tcorreo="ngModel" required>
+            <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
+          es
+          requerido</mat-error>-->
+            <mat-error *ngIf="FormSolicitudEntrada.controls['tcorreo'].errors?.required">Correo es
+              requerido</mat-error>
+
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="full-width">
+            <mat-label>Teléfono</mat-label>
+            <input matInput placeholder="" maxlength="10" name="ttelefono" ngModel #ttelefono="ngModel" required>
+            <!--<mat-error *ngIf="tcorreo.errors?.required || formSolicitud.submitted && tcorreo.invalid">* Correo
+          es
+          requerido</mat-error>-->
+
+            <mat-error *ngIf="FormSolicitudEntrada.controls['ttelefono'].errors?.required">Telefono es
+              requerido</mat-error>
+
+
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field class="full-width">
+            <mat-label>Referencia</mat-label>
+            <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="10"
+              name="treferencia" ngModel #treferencia="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
+      <!--CONTACTO-->
+      <hr>
+
+      <!--DATOS BIENES-->
+      <form [formGroup]="FormDatosBien">
+
+        <!--BIENES-->
+        <div *ngIf="divCarga" class="row">
+          <div class="col-xl-12">
+            <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)/Biene(s)</h6>
+          </div>
+
+          <!--Carga(s)-->
+
+          <div class="row" style="display: none;">
+            <div class='col-md-3 col-xs-3'>
+              <input class="form-control form-control-sm" id="econtadorRowBien" name="econtadorRowBien"
+                formControlName="econtadorRowBien" size="30" type="text" />
             </div>
+          </div>
 
-            <!--Carga(s)-->
+          <div class="row">
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Trámite</mat-label>
+                <mat-select formControlName="ttramite" name="ttramite" required>
+                  <mat-option *ngFor="let dato of datosTramite" [value]="dato.ttramite">
+                    {{dato.tdescripcion}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="FormDatosBien.controls['ttramite'].errors?.required">Trámite es
+                  requerido</mat-error>
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="ttramite">Trámite</label>
+            <select class="custom-select form-control-sm" id="ttramite" name="carga[ttramite]"
+              formControlName="ttramite" [ngClass]="{ 'is-invalid': submitBien && f.ttramite.errors }">
+              <option *ngFor="let dato of datosTramite" [ngValue]="dato.ttramite" [selected]="dato.ttramite == null">
+                {{dato.tdescripcion}}
+              </option>
+            </select>
+            <div *ngIf="submitBien && f.ttramite.errors" class="invalid-feedback">
+              <div *ngIf="f.ttramite.errors.required">Trámite es requerido</div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Tipo carga</mat-label>
+                <mat-select formControlName="ttipocarga" name="ttipocarga" required>
+                  <mat-option>SELECCIONAR</mat-option>
+                  <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
+                  <mat-option value="LCL">LCL</mat-option>
+                  <mat-error *ngIf="FormDatosBien.controls['ttipocarga'].errors?.required">Tipo de carga
+                    es requerido</mat-error>
+                </mat-select>
+              </mat-form-field>
+              <!-- <div class='form-group'>
+            <label class="form-label required" for="ttipocarga">Carga</label>
+            <select class="custom-select form-control-sm" id="ttipocarga" name="carga[ttipocarga]"
+              formControlName="ttipocarga" [ngClass]="{ 'is-invalid': submitBien && f.ttipocarga.errors }"
+              (ngModelChange)="onChangeTipoCarga($event)">
+              <option value="null">SELECCIONAR</option>
+              <option value="CONTENERIZADA">COTENERIZADA</option>
+              <option value="LCL">LCL</option>
+            </select>
+            <div *ngIf="submitBien && f.ttipocarga.errors" class="invalid-feedback">
+              <div *ngIf="f.ttipocarga.errors.required">Carga es requerido</div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Embalaje</mat-label>
+                <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
+                  (change)="onChangeEmbalajeBien($event)">
+                  <mat-option>SELECCIONAR</mat-option>
+                  <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
+                    {{dato.tnombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="FormDatosBien.controls['ecodembalaje'].errors?.required">Método
+                  de
+                  pago es requerido</mat-error>
+
+
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="ecodembalaje">Embalaje</label>
+            <select class="custom-select form-control-sm" id="ecodembalaje" name="carga[ecodembalaje]"
+              [(ngModel)]="seleccion" (change)="onChangeEmbalajeBien($event)" formControlName="ecodembalaje"
+              [ngClass]="{ 'is-invalid': submitBien && f.ecodembalaje.errors }">
+              <option *ngFor="let dato of datosEmbalaje" [ngValue]="dato.ecodembalaje"
+                [selected]="dato.ecodembalaje == null">
+                {{dato.tnombre}}
+              </option>
+            </select>
+            <div *ngIf="submitBien && f.ecodembalaje.errors" class="invalid-feedback">
+              <div *ngIf="f.ecodembalaje.errors.required">Embalaje es requerido</div>
+            </div>
+            <input class="form-control form-control-sm" id="tembalaje" name="carga[tembalaje]" size="30" type="hidden"
+              formControlName="tembalaje" />
+
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Naviera</mat-label>
+                <mat-select formControlName="ecodnaviera" name="ecodnaviera" required>
+                  <mat-option>SELECCIONAR</mat-option>
+                  <mat-option *ngFor="let dato of datosNaviera" [value]="dato.ecodnaviera">
+                    {{dato.tnombre}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="FormDatosBien.controls['ecodnaviera'].errors?.required">Naviera es
+                  requerido</mat-error>
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="ecodnaviera">Naviera</label>
+            <select class="custom-select form-control-sm" id="ecodnaviera" name="carga[ecodnaviera]"
+              [(ngModel)]="seleccionNaviera" (change)="onChangeNaviera($event)" formControlName="ecodnaviera"
+              [ngClass]="{ 'is-invalid': submitBien && f.ecodnaviera.errors }">
+              <option *ngFor="let dato of datosNaviera" [ngValue]="dato.ecodnaviera"
+                [selected]="dato.ecodnaviera == null">
+                {{dato.tnombre}}
+              </option>
+            </select>
+            <input class="form-control form-control-sm" id="tnaviera" name="carga[tnaviera]" size="30" type="hidden"
+              formControlName="tnaviera" />
+
+            <div *ngIf="submitBien && f.tnaviera.errors" class="invalid-feedback">
+              <div *ngIf="f.tnaviera.errors.required">Naviera es requerido</div>
+            </div>
+          </div>-->
+            </div>
+          </div>
+          <div class="row">
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>{{lblSerieMarca}}</mat-label>
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4"
+                  formControlName="tmarcas" name="tmarcas" required size="30">
+                <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor es
+                  requerido</mat-error>
+              </mat-form-field>
+              <!-- <div class='form-group'>
+            <label class="form-label required" for="tmarcas">{{lblSerieMarca}}</label>
+            <input class="form-control form-control-sm" id="tmarcas" name="carga[tmarcas]" size="30" type="text"
+              oninput="this.value = this.value.toUpperCase()" formControlName="tmarcas"
+              [ngClass]="{ 'is-invalid': submitBien && f.tmarcas.errors }" maxlength="11" [ngModel]="tmarcas" />
+            <div *ngIf="submitBien && f.tmarcas.errors" class="invalid-feedback">
+              <div *ngIf="f.tmarcas.errors.required">Contenedor es requerido</div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Tpo. cont</mat-label>
+                <mat-select formControlName="ttipocontenedor" name="ttipocontenedor" required>
+                  <mat-option>SELECCIONAR</mat-option>
+                  <mat-option *ngFor="let dato of datosTipoContenedor" [value]="dato.id">
+                    {{dato.ttipo}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="FormDatosBien.controls['ttipocontenedor'].errors?.required">Tpo. cont es
+                  requerido</mat-error>
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="ttipocontenedor">Tpo. cont</label>
+            <select class="custom-select form-control-sm" id="ttipocontenedor" name="carga[ttipocontenedor]"
+              formControlName="ttipocontenedor" readonly
+              [ngClass]="{ 'is-invalid': submitBien && f.ttipocontenedor.errors }">
+              <option *ngFor="let dato of datosTipoContenedor" [ngValue]="dato.id" [selected]="dato.id == null">
+                {{dato.ttipo}}
+              </option>
+            </select>
+            <div *ngIf="submitBien && f.ttipocontenedor.errors" class="invalid-feedback">
+              <div *ngIf="f.ttipocontenedor.errors.required">Tpo. cont es requerido</div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Sello(s)</mat-label>
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" formControlName="tsellos"
+                  name="tsellos" required size="30">
+                <mat-error *ngIf="FormDatosBien.controls['tsellos'].errors?.required">Sello(s) es
+                  requerido</mat-error>
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="tsellos">Sello(s)</label>
+            <input class="form-control form-control-sm" id="tsellos" name="carga[tsellos]" size="30" type="text"
+              oninput="this.value = this.value.toUpperCase()" formControlName="tsellos" [readonly]="isReadonly"
+              [ngClass]="{ 'is-invalid': submitBien && f.tsellos.errors }" />
+            <div *ngIf="submitBien && f.tsellos.errors" class="invalid-feedback">
+              <div *ngIf="f.tsellos.errors.required">Sello(s) es requerido</div>
+              <div *ngIf="f.tsellos.errors.pattern">Sello(s) captura no valido Ejemplo:sello1/sello2/sello3.
+              </div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Peso neto</mat-label>
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                  formControlName="epesoneto" name="epesoneto" required>
+                <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.required">Peso neto es
+                  requerido</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.['number']">Peso neto valor
+                  numerico!</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.['precision']">Peso neto maximo 2
+                  decimales
+                  numerico!</mat-error>
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="epesoneto">Peso neto</label>
+            <input class="form-control form-control-sm" id="epesoneto" name="carga[epesoneto]" size="30" type="text"
+              oninput="this.value = this.value.toUpperCase()" formControlName="epesoneto"
+              [ngClass]="{ 'is-invalid': submitBien && f.epesoneto.errors }" />
+            <div *ngIf="submitBien && f.epesoneto.errors" class="invalid-feedback">
+              <div *ngIf="f.epesoneto.errors.required">Peso neto es requerido</div>
+              <div *ngIf="f.epesoneto.errors?.['number']">Peso neto valor numerico!</div>
+              <div *ngIf="f.epesoneto.errors?.['precision']">Peso neto maximo 2 decimales numerico!</div>
+            </div>
+          </div>-->
+            </div>
+          </div>
+          <div class="row">
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Peso bruto</mat-label>
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                  formControlName="epesobruto" name="epesobruto" required>
+                <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.required">Peso bruto es
+                  requerido</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
+                  numerico!</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.['precision']">Peso bruto maximo 2
+                  decimales numerico!</mat-error>
+
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="epesobruto">Peso bruto</label>
+            <input class="form-control form-control-sm" id="epesobruto" name="carga[epesobruto]" size="30" type="text"
+              oninput="this.value = this.value.toUpperCase()" formControlName="epesobruto"
+              [ngClass]="{ 'is-invalid': submitBien && f.epesobruto.errors }" />
+            <div *ngIf="submitBien && f.epesobruto.errors" class="invalid-feedback">
+              <div *ngIf="f.epesobruto.errors.required">Peso bruto es requerido</div>
+              <div *ngIf="f.epesobruto.errors?.['number']">Peso bruto valor numerico!</div>
+              <div *ngIf="f.epesobruto.errors?.['precision']">Peso bruto maximo 2 decimales numerico!</div>
+            </div>
+          </div>-->
+            </div>
+            <div class='col-md-3 col-xs-3'>
+              <mat-form-field class="full-width">
+                <mat-label>Bultos</mat-label>
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" formControlName="ebultos"
+                  name="ebultos" required>
+                <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.required">Bultos es requerido</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.['number']">Bultos valor
+                  numerico!</mat-error>
+                <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.['precision']">Bultos maximo 2 decimales
+                  numerico!</mat-error>
+
+              </mat-form-field>
+              <!--<div class='form-group'>
+            <label class="form-label required" for="ebultos">Bultos</label>
+            <input class="form-control form-control-sm" id="ebultos" name="carga[ebultos]" size="30" type="text"
+              oninput="this.value = this.value.toUpperCase()" formControlName="ebultos"
+              [ngClass]="{ 'is-invalid': submitBien && f.ebultos.errors }" />
+            <div *ngIf="submitBien && f.ebultos.errors" class="invalid-feedback">
+              <div *ngIf="f.ebultos.errors.required">Bultos es requerido</div>
+              <div *ngIf="f.ebultos.errors?.['number']">Bultos valor numerico!</div>
+              <div *ngIf="f.ebultos.errors?.['precision']">Bultos maximo 2 decimales numerico!</div>
+            </div>
+          </div>-->
+            </div>
+          </div>
+          <div class="row">
+            <div class="text-center mt-4 mb-4">
+              <div class='form-group'>
+                <button type="submit" mat-raised-button color="primary"
+                  (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                <!--<button class="btn btn-xs btn-primary"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-sm mg-b-0">
+              <tr>
+                <th scope="col" colspan="2">Accciones</th>
+                <th scope="col">#</th>
+                <th scope="col">Trámite</th>
+                <th scope="col">Carga</th>
+                <th scope="col">Embalaje</th>
+                <th scope="col">Naviera</th>
+                <th scope="col">Contenedor</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Sello(s)</th>
+                <th scope="col">Peso neto</th>
+                <th scope="col">Peso bruto</th>
+                <th scope="col">Bultos</th>
+                <th scope="col">Mercancia(s)</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let dato of bienes; let i = index">
+                  <td><button type="button" mat-raised-button color="primary"
+                      (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                  </td>
+                  <td><button type="button" mat-raised-button color="primary"
+                      (click)="e_editar(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                  </td>
+                  <td>{{i+ 1 }}</td>
+                  <td>{{dato.ttramite}}</td>
+                  <td>{{dato.ttipocarga}}</td>
+                  <td>{{dato.tembalaje}}</td>
+                  <td>{{dato.tnaviera}}</td>
+                  <td>{{dato.tmarcas}}</td>
+                  <td>{{dato.ttipocontenedor}}</td>
+                  <td>{{dato.tsellos}}</td>
+                  <td>{{dato.epesoneto}}</td>
+                  <td>{{dato.epesobruto}}</td>
+                  <td>{{dato.ebultos}}</td>
+                  <td><button type="button" mat-raised-button color="primary" (click)="e_mercancias(dato)">Mercancias
+                      [ + ]</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <!--BIENES-->
+
+        <!--Detalle(s)-->
+        <div *ngIf="divMercancia" class="col-sm-12">
+          <form [formGroup]="FormDatosDetallesBien">
+            <div class='row'>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)</h6>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-sm mg-b-0">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Trámite</th>
+                    <th scope="col">Embalaje</th>
+                    <th scope="col">Naviera</th>
+                    <th scope="col">Contenedor</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Peso neto</th>
+                    <th scope="col">Peso bruto</th>
+                    <th scope="col">Bultos</th>
+                    <th scope="col">Mercancia(s)</th>
+                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>{{datosBien.econtadorRowBien }}</td>
+                      <td>{{datosBien.ttramite}}</td>
+                      <td>{{datosBien.tembalaje}}</td>
+                      <td>{{datosBien.tnaviera}}</td>
+                      <td>{{datosBien.tmarcas}}</td>
+                      <td>{{datosBien.ttipocontenedor}}</td>
+                      <td>{{datosBien.epesoneto}}</td>
+                      <td>{{datosBien.epesobruto}}</td>
+                      <td>{{datosBien.ebultos}}</td>
+                      <td><button type="button" mat-raised-button color="primary"
+                          (click)="e_carga(datosBien)">Mercancias
+                          [ - ]</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mt-3 mb-2 text-primary">+ Detalle(s) mercancia(s)</h6>
+              </div>
+            </div>
 
             <div class="row" style="display: none;">
               <div class='col-md-3 col-xs-3'>
-                <input class="form-control form-control-sm" id="econtadorRowBien" name="econtadorRowBien"
-                  formControlName="econtadorRowBien" size="30" type="text" />
+                <input class="form-control form-control-sm" id="econtadorRow" name="econtadorRow"
+                  formControlName="econtadorRow" size="30" type="text" />
               </div>
             </div>
 
-            <div class="row">
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Trámite</mat-label>
-                  <mat-select formControlName="ttramite" name="ttramite" required>
-                    <mat-option *ngFor="let dato of datosTramite" [value]="dato.ttramite">
-                      {{dato.tdescripcion}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="FormDatosBien.controls['ttramite'].errors?.required">Trámite es
-                    requerido</mat-error>
-                </mat-form-field>
-                <!--<div class='form-group'>
-              <label class="form-label required" for="ttramite">Trámite</label>
-              <select class="custom-select form-control-sm" id="ttramite" name="carga[ttramite]"
-                formControlName="ttramite" [ngClass]="{ 'is-invalid': submitBien && f.ttramite.errors }">
-                <option *ngFor="let dato of datosTramite" [ngValue]="dato.ttramite" [selected]="dato.ttramite == null">
-                  {{dato.tdescripcion}}
-                </option>
-              </select>
-              <div *ngIf="submitBien && f.ttramite.errors" class="invalid-feedback">
-                <div *ngIf="f.ttramite.errors.required">Trámite es requerido</div>
-              </div>
-            </div>-->
-              </div>
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Tipo carga</mat-label>
-                  <mat-select formControlName="ttipocarga" name="ttipocarga" required>
-                    <mat-option>SELECCIONAR</mat-option>
-                    <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
-                    <mat-option value="LCL">LCL</mat-option>
-                    <mat-error *ngIf="FormDatosBien.controls['ttipocarga'].errors?.required">Tipo de carga
-                      es requerido</mat-error>
-                  </mat-select>
-                </mat-form-field>
-                <!-- <div class='form-group'>
-              <label class="form-label required" for="ttipocarga">Carga</label>
-              <select class="custom-select form-control-sm" id="ttipocarga" name="carga[ttipocarga]"
-                formControlName="ttipocarga" [ngClass]="{ 'is-invalid': submitBien && f.ttipocarga.errors }"
-                (ngModelChange)="onChangeTipoCarga($event)">
-                <option value="null">SELECCIONAR</option>
-                <option value="CONTENERIZADA">COTENERIZADA</option>
-                <option value="LCL">LCL</option>
-              </select>
-              <div *ngIf="submitBien && f.ttipocarga.errors" class="invalid-feedback">
-                <div *ngIf="f.ttipocarga.errors.required">Carga es requerido</div>
-              </div>
-            </div>-->
-              </div>
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Embalaje</mat-label>
-                  <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                    (change)="onChangeEmbalajeBien($event)">
-                    <mat-option>SELECCIONAR</mat-option>
-                    <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
-                      {{dato.tnombre}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="FormDatosBien.controls['ecodembalaje'].errors?.required">Método
-                    de
-                    pago es requerido</mat-error>
+            <div class='row'>
 
-
-                </mat-form-field>
-                <!--<div class='form-group'>
-              <label class="form-label required" for="ecodembalaje">Embalaje</label>
-              <select class="custom-select form-control-sm" id="ecodembalaje" name="carga[ecodembalaje]"
-                [(ngModel)]="seleccion" (change)="onChangeEmbalajeBien($event)" formControlName="ecodembalaje"
-                [ngClass]="{ 'is-invalid': submitBien && f.ecodembalaje.errors }">
-                <option *ngFor="let dato of datosEmbalaje" [ngValue]="dato.ecodembalaje"
-                  [selected]="dato.ecodembalaje == null">
-                  {{dato.tnombre}}
-                </option>
-              </select>
-              <div *ngIf="submitBien && f.ecodembalaje.errors" class="invalid-feedback">
-                <div *ngIf="f.ecodembalaje.errors.required">Embalaje es requerido</div>
-              </div>
-              <input class="form-control form-control-sm" id="tembalaje" name="carga[tembalaje]" size="30" type="hidden"
-                formControlName="tembalaje" />
-
-            </div>-->
-              </div>
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Naviera</mat-label>
-                  <mat-select formControlName="ecodnaviera" name="ecodnaviera" required>
-                    <mat-option>SELECCIONAR</mat-option>
-                    <mat-option *ngFor="let dato of datosNaviera" [value]="dato.ecodnaviera">
-                      {{dato.tnombre}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="FormDatosBien.controls['ecodnaviera'].errors?.required">Naviera es
-                    requerido</mat-error>
-                </mat-form-field>
-                <!--<div class='form-group'>
-              <label class="form-label required" for="ecodnaviera">Naviera</label>
-              <select class="custom-select form-control-sm" id="ecodnaviera" name="carga[ecodnaviera]"
-                [(ngModel)]="seleccionNaviera" (change)="onChangeNaviera($event)" formControlName="ecodnaviera"
-                [ngClass]="{ 'is-invalid': submitBien && f.ecodnaviera.errors }">
-                <option *ngFor="let dato of datosNaviera" [ngValue]="dato.ecodnaviera"
-                  [selected]="dato.ecodnaviera == null">
-                  {{dato.tnombre}}
-                </option>
-              </select>
-              <input class="form-control form-control-sm" id="tnaviera" name="carga[tnaviera]" size="30" type="hidden"
-                formControlName="tnaviera" />
-
-              <div *ngIf="submitBien && f.tnaviera.errors" class="invalid-feedback">
-                <div *ngIf="f.tnaviera.errors.required">Naviera es requerido</div>
+              <!--<div class='col-xl-1' *ngIf="divDetalleBien">
+              <div class='form-group'>
+                <label for="idSequenceDetalleBien"></label>
+                <input class="form-control form-control-sm" id="idSequenceDetalleBien"
+                  name="mercancia[idSequenceDetalleBien]" size="30" type="text"
+                  oninput="this.value = this.value.toUpperCase()" formControlName="idSequenceDetalleBien" size="30"
+                  type="hidden" #idSequenceDetalleBien />
               </div>
             </div>-->
-              </div>
-            </div>
-            <div class="row">
               <div class='col-md-3 col-xs-3'>
                 <mat-form-field class="full-width">
-                  <mat-label>{{lblSerieMarca}}</mat-label>
-                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="4"
-                    formControlName="tmarcas" name="tmarcas" required size="30">
-                  <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor es
-                    requerido</mat-error>
-                </mat-form-field>
-                <!-- <div class='form-group'>
-              <label class="form-label required" for="tmarcas">{{lblSerieMarca}}</label>
-              <input class="form-control form-control-sm" id="tmarcas" name="carga[tmarcas]" size="30" type="text"
-                oninput="this.value = this.value.toUpperCase()" formControlName="tmarcas"
-                [ngClass]="{ 'is-invalid': submitBien && f.tmarcas.errors }" maxlength="11" [ngModel]="tmarcas" />
-              <div *ngIf="submitBien && f.tmarcas.errors" class="invalid-feedback">
-                <div *ngIf="f.tmarcas.errors.required">Contenedor es requerido</div>
-              </div>
-            </div>-->
-              </div>
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Tpo. cont</mat-label>
-                  <mat-select formControlName="ttipocontenedor" name="ttipocontenedor" required>
-                    <mat-option>SELECCIONAR</mat-option>
-                    <mat-option *ngFor="let dato of datosTipoContenedor" [value]="dato.id">
-                      {{dato.ttipo}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="FormDatosBien.controls['ttipocontenedor'].errors?.required">Tpo. cont es
-                    requerido</mat-error>
-                </mat-form-field>
-                <!--<div class='form-group'>
-              <label class="form-label required" for="ttipocontenedor">Tpo. cont</label>
-              <select class="custom-select form-control-sm" id="ttipocontenedor" name="carga[ttipocontenedor]"
-                formControlName="ttipocontenedor" readonly
-                [ngClass]="{ 'is-invalid': submitBien && f.ttipocontenedor.errors }">
-                <option *ngFor="let dato of datosTipoContenedor" [ngValue]="dato.id" [selected]="dato.id == null">
-                  {{dato.ttipo}}
-                </option>
-              </select>
-              <div *ngIf="submitBien && f.ttipocontenedor.errors" class="invalid-feedback">
-                <div *ngIf="f.ttipocontenedor.errors.required">Tpo. cont es requerido</div>
-              </div>
-            </div>-->
-              </div>
-              <div class='col-md-3 col-xs-3'>
-                <mat-form-field class="full-width">
-                  <mat-label>Sello(s)</mat-label>
+                  <mat-label>Factura</mat-label>
                   <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                    formControlName="tsellos" name="tsellos" required size="30">
-                  <mat-error *ngIf="FormDatosBien.controls['tsellos'].errors?.required">Sello(s) es
+                    formControlName="tfactura" name="tfactura" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['tfactura'].errors?.required">Factura es
                     requerido</mat-error>
                 </mat-form-field>
                 <!--<div class='form-group'>
-              <label class="form-label required" for="tsellos">Sello(s)</label>
-              <input class="form-control form-control-sm" id="tsellos" name="carga[tsellos]" size="30" type="text"
-                oninput="this.value = this.value.toUpperCase()" formControlName="tsellos" [readonly]="isReadonly"
-                [ngClass]="{ 'is-invalid': submitBien && f.tsellos.errors }" />
-              <div *ngIf="submitBien && f.tsellos.errors" class="invalid-feedback">
-                <div *ngIf="f.tsellos.errors.required">Sello(s) es requerido</div>
-                <div *ngIf="f.tsellos.errors.pattern">Sello(s) captura no valido Ejemplo:sello1/sello2/sello3.
+              <label class="form-label required" for="tfactura">Factura</label>
+              <input class="form-control form-control-sm" id="tfactura" name="mercancia[tfactura]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tfactura"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tfactura.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.tfactura.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.tfactura.errors.required">Factura es requerido</div>
+              </div>
+            </div>-->
+              </div>
+              <div class='col-md-3 col-xs-3'>
+                <mat-form-field class="full-width">
+                  <mat-label>Marcas</mat-label>
+                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                    formControlName="tmarcas" name="tmarcas" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['tmarcas'].errors?.required">Marca es
+                    requerido</mat-error>
+                </mat-form-field>
+                <!--<div class='form-group'>
+              <label class="form-label required" for="tmarcas">Marcas</label>
+              <input class="form-control form-control-sm" id="tmarcas" name="mercancia[tmarcas]" size="30" type="text"
+                oninput="this.value = this.value.toUpperCase()" formControlName="tmarcas"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tmarcas.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.tmarcas.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.tmarcas.errors.required">Marca es requerido</div>
+              </div>
+            </div>-->
+              </div>
+              <div class='col-md-3 col-xs-3'>
+                <mat-form-field class="full-width">
+                  <mat-label>Descripción</mat-label>
+                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                    formControlName="tdescripcion" name="tdescripcion" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['tdescripcion'].errors?.required">Descripción es
+                    requerido</mat-error>
+                </mat-form-field>
+
+                <!--<div class='form-group'>
+              <label class="form-label required" for="tdescripcion">Descripcion</label>
+              <input class="form-control form-control-sm" id="tdescripcion" name="mercancia[tdescripcion]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tdescripcion"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tdescripcion.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.tdescripcion.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.tdescripcion.errors.required">Descripcion es requerido</div>
+              </div>
+            </div>-->
+              </div>
+              <div class='col-md-3 col-xs-3'>
+                <mat-form-field class="full-width">
+                  <mat-label>Bultos</mat-label>
+                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                    formControlName="ecantidad" name="ecantidad" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.required">Cantidad es
+                    requerido</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['number']">Cantidad valor
+                    numerico!</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['precision']">Cantidad maximo
+                    2
+                    decimales numerico!</mat-error>
+
+                </mat-form-field>
+                <!--<div class='form-group'>
+              <label class="form-label required" for="ecantidad">Bultos</label>
+              <input class="form-control form-control-sm" id="ecantidad" name="mercancia[ecantidad]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="ecantidad"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.ecantidad.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.ecantidad.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.ecantidad.errors.required">Cantidad es requerido</div>
+                <div *ngIf="fmercancia.ecantidad.errors?.['number']">Cantidad valor numerico!</div>
+                <div *ngIf="fmercancia.ecantidad.errors?.['precision']">Cantidad maximo 2 decimales numerico!
+                </div>
+              </div>
+            </div>-->
+              </div>
+
+            </div>
+            <div class="row">
+              <div class='col-md-3 col-xs-3'>
+                <mat-form-field class="full-width">
+                  <mat-label>Peso Bruto</mat-label>
+                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                    formControlName="epesobruto" name="epesobruto" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.required">Peso bruto es
+                    requerido</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
+                    numerico!</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['precision']">Peso bruto
+                    maximo
+                    2
+                    decimales</mat-error>
+                </mat-form-field>
+                <!--<div class='form-group'>
+              <label class="form-label required" for="epesobruto">Peso Bruto</label>
+              <input class="form-control form-control-sm" id="epesobruto" name="mercancia[epesobruto]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="epesobruto"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.epesobruto.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.epesobruto.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.epesobruto.errors.required">Peso bruto es requerido</div>
+                <div *ngIf="fmercancia.epesobruto.errors?.['number']">Peso bruto valor numerico!</div>
+                <div *ngIf="fmercancia.epesobruto.errors?.['precision']">Peso bruto maximo 2 decimales
+                  numerico!
                 </div>
               </div>
             </div>-->
@@ -421,465 +733,154 @@
                   <mat-label>Peso neto</mat-label>
                   <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
                     formControlName="epesoneto" name="epesoneto" required>
-                  <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.required">Peso neto es
-                    requerido</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.['number']">Peso neto valor
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.required">Peso neto es
+                    requerid</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['number']">Peso neto valor
                     numerico!</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['epesoneto'].errors?.['precision']">Peso neto maximo 2
-                    decimales
-                    numerico!</mat-error>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['precision']">Peso neto
+                    maximo 2
+                    decimales numerico!</mat-error>
                 </mat-form-field>
                 <!--<div class='form-group'>
               <label class="form-label required" for="epesoneto">Peso neto</label>
-              <input class="form-control form-control-sm" id="epesoneto" name="carga[epesoneto]" size="30" type="text"
-                oninput="this.value = this.value.toUpperCase()" formControlName="epesoneto"
-                [ngClass]="{ 'is-invalid': submitBien && f.epesoneto.errors }" />
-              <div *ngIf="submitBien && f.epesoneto.errors" class="invalid-feedback">
-                <div *ngIf="f.epesoneto.errors.required">Peso neto es requerido</div>
-                <div *ngIf="f.epesoneto.errors?.['number']">Peso neto valor numerico!</div>
-                <div *ngIf="f.epesoneto.errors?.['precision']">Peso neto maximo 2 decimales numerico!</div>
+              <input class="form-control form-control-sm" id="epesoneto" name="mercancia[epesoneto]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="epesoneto"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.epesoneto.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.epesoneto.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.epesoneto.errors.required">Peso neto es requerido</div>
+                <div *ngIf="fmercancia.epesoneto.errors?.['number']">Peso neto valor numerico!</div>
+                <div *ngIf="fmercancia.epesoneto.errors?.['precision']">Peso neto maximo 2 decimales numerico!
+                </div>
               </div>
             </div>-->
               </div>
-            </div>
-            <div class="row">
               <div class='col-md-3 col-xs-3'>
                 <mat-form-field class="full-width">
-                  <mat-label>Peso bruto</mat-label>
+                  <mat-label>Volumen</mat-label>
                   <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                    formControlName="epesobruto" name="epesobruto" required>
-                  <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.required">Peso bruto es
+                    formControlName="evolumen" name="evolumen" required>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.required">Volumen es
                     requerido</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['number']">Volumen valor
                     numerico!</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['epesobruto'].errors?.['precision']">Peso bruto maximo 2
-                    decimales numerico!</mat-error>
-
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['precision']">Volumen maximo 2
+                    decimales
+                    numerico!</mat-error>
                 </mat-form-field>
-                <!--<div class='form-group'>
-              <label class="form-label required" for="epesobruto">Peso bruto</label>
-              <input class="form-control form-control-sm" id="epesobruto" name="carga[epesobruto]" size="30" type="text"
-                oninput="this.value = this.value.toUpperCase()" formControlName="epesobruto"
-                [ngClass]="{ 'is-invalid': submitBien && f.epesobruto.errors }" />
-              <div *ngIf="submitBien && f.epesobruto.errors" class="invalid-feedback">
-                <div *ngIf="f.epesobruto.errors.required">Peso bruto es requerido</div>
-                <div *ngIf="f.epesobruto.errors?.['number']">Peso bruto valor numerico!</div>
-                <div *ngIf="f.epesobruto.errors?.['precision']">Peso bruto maximo 2 decimales numerico!</div>
+                <!-- <div class='form-group'>
+              <label class="form-label required" for="evolumen">Volumen</label>
+              <input class="form-control form-control-sm" id="evolumen" name="mercancia[evolumen]" size="30"
+                type="text" oninput="this.value = this.value.toUpperCase()" formControlName="evolumen"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.evolumen.errors }" />
+              <div *ngIf="submitDetalleBien && fmercancia.evolumen.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.evolumen.errors.required">Volumen es requerido</div>
+                <div *ngIf="fmercancia.evolumen.errors?.['number']">Volumen valor numerico!</div>
+                <div *ngIf="fmercancia.evolumen.errors?.['precision']">Volumen maximo 2 decimales numerico!
+                </div>
               </div>
             </div>-->
               </div>
               <div class='col-md-3 col-xs-3'>
                 <mat-form-field class="full-width">
-                  <mat-label>Bultos</mat-label>
-                  <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                    formControlName="ebultos" name="ebultos" required>
-                  <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.required">Bultos es requerido</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.['number']">Bultos valor
-                    numerico!</mat-error>
-                  <mat-error *ngIf="FormDatosBien.controls['ebultos'].errors?.['precision']">Bultos maximo 2 decimales
-                    numerico!</mat-error>
-
+                  <mat-label>Embalaje</mat-label>
+                  <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
+                    (change)="onChangeDetalleBien($event)">
+                    <mat-option>SELECCIONAR</mat-option>
+                    <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
+                      {{dato.tnombre}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="FormDatosDetallesBien.controls['ecodembalaje'].errors?.required">Embalaje es
+                    requerido</mat-error>
                 </mat-form-field>
                 <!--<div class='form-group'>
-              <label class="form-label required" for="ebultos">Bultos</label>
-              <input class="form-control form-control-sm" id="ebultos" name="carga[ebultos]" size="30" type="text"
-                oninput="this.value = this.value.toUpperCase()" formControlName="ebultos"
-                [ngClass]="{ 'is-invalid': submitBien && f.ebultos.errors }" />
-              <div *ngIf="submitBien && f.ebultos.errors" class="invalid-feedback">
-                <div *ngIf="f.ebultos.errors.required">Bultos es requerido</div>
-                <div *ngIf="f.ebultos.errors?.['number']">Bultos valor numerico!</div>
-                <div *ngIf="f.ebultos.errors?.['precision']">Bultos maximo 2 decimales numerico!</div>
+              <label class="form-label required" for="ecodembalaje">Embalaje</label>
+              <select class="custom-select form-control-sm" id="ecodembalaje" name="mercancia[ecodembalaje]"
+                [(ngModel)]="seleccion" (change)="onChangeDetalleBien($event)" formControlName="ecodembalaje"
+                [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.ecodembalaje.errors }">
+                <option *ngFor="let dato of datosEmbalaje" [ngValue]="dato.ecodembalaje"
+                  [selected]="dato.ecodembalaje == null">
+                  {{dato.tnombre}}
+                </option>
+              </select>
+              <div *ngIf="submitDetalleBien && fmercancia.ecodembalaje.errors" class="invalid-feedback">
+                <div *ngIf="fmercancia.ecodembalaje.errors.required">Embalaje es requerido</div>
               </div>
+              <input class="form-control form-control-sm" id="tembalaje" name="mercancia[tembalaje]" size="30"
+                type="hidden" formControlName="tembalaje" />
             </div>-->
               </div>
             </div>
             <div class="row">
-              <div class="text-center mt-4 mb-4">
+              <div class='text-center mt-4 mb-4'>
                 <div class='form-group'>
                   <button type="submit" mat-raised-button color="primary"
-                    (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
-                  <!--<button class="btn btn-xs btn-primary"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
-
-
+                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                  <!--<button type="button" mat-raised-button color="primary"
+                (click)="e_agregarDetalleBien(FormDatosDetallesBien.value)"><i
+                  class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
                 </div>
               </div>
             </div>
-
-            <div class="table-responsive">
-              <table class="table table-sm mg-b-0">
-                <tr>
-                  <th scope="col" colspan="2">Accciones</th>
-                  <th scope="col">#</th>
-                  <th scope="col">Trámite</th>
-                  <th scope="col">Carga</th>
-                  <th scope="col">Embalaje</th>
-                  <th scope="col">Naviera</th>
-                  <th scope="col">Contenedor</th>
-                  <th scope="col">Tipo</th>
-                  <th scope="col">Sello(s)</th>
-                  <th scope="col">Peso neto</th>
-                  <th scope="col">Peso bruto</th>
-                  <th scope="col">Bultos</th>
-                  <th scope="col">Mercancia(s)</th>
-                </tr>
-                <tbody>
-                  <tr *ngFor="let dato of bienes; let i = index">
-                    <td><button type="button" mat-raised-button color="primary"
-                        (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
-                    </td>
-                    <td><button type="button" mat-raised-button color="primary"
-                        (click)="e_editar(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
-                    </td>
-                    <td>{{i+ 1 }}</td>
-                    <td>{{dato.ttramite}}</td>
-                    <td>{{dato.ttipocarga}}</td>
-                    <td>{{dato.tembalaje}}</td>
-                    <td>{{dato.tnaviera}}</td>
-                    <td>{{dato.tmarcas}}</td>
-                    <td>{{dato.ttipocontenedor}}</td>
-                    <td>{{dato.tsellos}}</td>
-                    <td>{{dato.epesoneto}}</td>
-                    <td>{{dato.epesobruto}}</td>
-                    <td>{{dato.ebultos}}</td>
-                    <td><button type="button" mat-raised-button color="primary" (click)="e_mercancias(dato)">Mercancias
-                        [ + ]</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-          <!--BIENES-->
-
-          <!--Detalle(s)-->
-          <div *ngIf="divMercancia" class="col-sm-12">
-            <form [formGroup]="FormDatosDetallesBien">
-              <div class='row'>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                  <h6 class="mt-3 mb-2 text-primary">+ Mercancia(s)</h6>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-sm mg-b-0">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Trámite</th>
-                      <th scope="col">Embalaje</th>
-                      <th scope="col">Naviera</th>
-                      <th scope="col">Contenedor</th>
-                      <th scope="col">Tipo</th>
-                      <th scope="col">Peso neto</th>
-                      <th scope="col">Peso bruto</th>
-                      <th scope="col">Bultos</th>
-                      <th scope="col">Mercancia(s)</th>
-                    </tr>
-                    <tbody>
-                      <tr>
-                        <td>{{datosBien.econtadorRowBien }}</td>
-                        <td>{{datosBien.ttramite}}</td>
-                        <td>{{datosBien.tembalaje}}</td>
-                        <td>{{datosBien.tnaviera}}</td>
-                        <td>{{datosBien.tmarcas}}</td>
-                        <td>{{datosBien.ttipocontenedor}}</td>
-                        <td>{{datosBien.epesoneto}}</td>
-                        <td>{{datosBien.epesobruto}}</td>
-                        <td>{{datosBien.ebultos}}</td>
-                        <td><button type="button" mat-raised-button color="primary"
-                            (click)="e_carga(datosBien)">Mercancias
-                            [ - ]</button></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                  <h6 class="mt-3 mb-2 text-primary">+ Detalle(s) mercancia(s)</h6>
-                </div>
-              </div>
-
-              <div class="row" style="display: none;">
-                <div class='col-md-3 col-xs-3'>
-                  <input class="form-control form-control-sm" id="econtadorRow" name="econtadorRow"
-                    formControlName="econtadorRow" size="30" type="text" />
-                </div>
-              </div>
-
-              <div class='row'>
-
-                <!--<div class='col-xl-1' *ngIf="divDetalleBien">
-                <div class='form-group'>
-                  <label for="idSequenceDetalleBien"></label>
-                  <input class="form-control form-control-sm" id="idSequenceDetalleBien"
-                    name="mercancia[idSequenceDetalleBien]" size="30" type="text"
-                    oninput="this.value = this.value.toUpperCase()" formControlName="idSequenceDetalleBien" size="30"
-                    type="hidden" #idSequenceDetalleBien />
-                </div>
-              </div>-->
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Factura</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="tfactura" name="tfactura" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['tfactura'].errors?.required">Factura es
-                      requerido</mat-error>
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="tfactura">Factura</label>
-                <input class="form-control form-control-sm" id="tfactura" name="mercancia[tfactura]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tfactura"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tfactura.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.tfactura.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.tfactura.errors.required">Factura es requerido</div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Marcas</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="tmarcas" name="tmarcas" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['tmarcas'].errors?.required">Marca es
-                      requerido</mat-error>
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="tmarcas">Marcas</label>
-                <input class="form-control form-control-sm" id="tmarcas" name="mercancia[tmarcas]" size="30" type="text"
-                  oninput="this.value = this.value.toUpperCase()" formControlName="tmarcas"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tmarcas.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.tmarcas.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.tmarcas.errors.required">Marca es requerido</div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Descripción</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="tdescripcion" name="tdescripcion" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['tdescripcion'].errors?.required">Descripción es
-                      requerido</mat-error>
-                  </mat-form-field>
-
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="tdescripcion">Descripcion</label>
-                <input class="form-control form-control-sm" id="tdescripcion" name="mercancia[tdescripcion]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="tdescripcion"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.tdescripcion.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.tdescripcion.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.tdescripcion.errors.required">Descripcion es requerido</div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Bultos</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="ecantidad" name="ecantidad" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.required">Cantidad es
-                      requerido</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['number']">Cantidad valor
-                      numerico!</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['ecantidad'].errors?.['precision']">Cantidad maximo
-                      2
-                      decimales numerico!</mat-error>
-
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="ecantidad">Bultos</label>
-                <input class="form-control form-control-sm" id="ecantidad" name="mercancia[ecantidad]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="ecantidad"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.ecantidad.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.ecantidad.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.ecantidad.errors.required">Cantidad es requerido</div>
-                  <div *ngIf="fmercancia.ecantidad.errors?.['number']">Cantidad valor numerico!</div>
-                  <div *ngIf="fmercancia.ecantidad.errors?.['precision']">Cantidad maximo 2 decimales numerico!
-                  </div>
-                </div>
-              </div>-->
-                </div>
-
-              </div>
-              <div class="row">
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Peso Bruto</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="epesobruto" name="epesobruto" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.required">Peso bruto es
-                      requerido</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['number']">Peso bruto valor
-                      numerico!</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesobruto'].errors?.['precision']">Peso bruto
-                      maximo
-                      2
-                      decimales</mat-error>
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="epesobruto">Peso Bruto</label>
-                <input class="form-control form-control-sm" id="epesobruto" name="mercancia[epesobruto]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="epesobruto"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.epesobruto.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.epesobruto.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.epesobruto.errors.required">Peso bruto es requerido</div>
-                  <div *ngIf="fmercancia.epesobruto.errors?.['number']">Peso bruto valor numerico!</div>
-                  <div *ngIf="fmercancia.epesobruto.errors?.['precision']">Peso bruto maximo 2 decimales
-                    numerico!
-                  </div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Peso neto</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="epesoneto" name="epesoneto" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.required">Peso neto es
-                      requerid</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['number']">Peso neto valor
-                      numerico!</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['epesoneto'].errors?.['precision']">Peso neto
-                      maximo 2
-                      decimales numerico!</mat-error>
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="epesoneto">Peso neto</label>
-                <input class="form-control form-control-sm" id="epesoneto" name="mercancia[epesoneto]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="epesoneto"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.epesoneto.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.epesoneto.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.epesoneto.errors.required">Peso neto es requerido</div>
-                  <div *ngIf="fmercancia.epesoneto.errors?.['number']">Peso neto valor numerico!</div>
-                  <div *ngIf="fmercancia.epesoneto.errors?.['precision']">Peso neto maximo 2 decimales numerico!
-                  </div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Volumen</mat-label>
-                    <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                      formControlName="evolumen" name="evolumen" required>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.required">Volumen es
-                      requerido</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['number']">Volumen valor
-                      numerico!</mat-error>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['evolumen'].errors?.['precision']">Volumen maximo 2
-                      decimales
-                      numerico!</mat-error>
-                  </mat-form-field>
-                  <!-- <div class='form-group'>
-                <label class="form-label required" for="evolumen">Volumen</label>
-                <input class="form-control form-control-sm" id="evolumen" name="mercancia[evolumen]" size="30"
-                  type="text" oninput="this.value = this.value.toUpperCase()" formControlName="evolumen"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.evolumen.errors }" />
-                <div *ngIf="submitDetalleBien && fmercancia.evolumen.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.evolumen.errors.required">Volumen es requerido</div>
-                  <div *ngIf="fmercancia.evolumen.errors?.['number']">Volumen valor numerico!</div>
-                  <div *ngIf="fmercancia.evolumen.errors?.['precision']">Volumen maximo 2 decimales numerico!
-                  </div>
-                </div>
-              </div>-->
-                </div>
-                <div class='col-md-3 col-xs-3'>
-                  <mat-form-field class="full-width">
-                    <mat-label>Embalaje</mat-label>
-                    <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                      (change)="onChangeDetalleBien($event)">
-                      <mat-option>SELECCIONAR</mat-option>
-                      <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
-                        {{dato.tnombre}}
-                      </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="FormDatosDetallesBien.controls['ecodembalaje'].errors?.required">Embalaje es
-                      requerido</mat-error>
-                  </mat-form-field>
-                  <!--<div class='form-group'>
-                <label class="form-label required" for="ecodembalaje">Embalaje</label>
-                <select class="custom-select form-control-sm" id="ecodembalaje" name="mercancia[ecodembalaje]"
-                  [(ngModel)]="seleccion" (change)="onChangeDetalleBien($event)" formControlName="ecodembalaje"
-                  [ngClass]="{ 'is-invalid': submitDetalleBien && fmercancia.ecodembalaje.errors }">
-                  <option *ngFor="let dato of datosEmbalaje" [ngValue]="dato.ecodembalaje"
-                    [selected]="dato.ecodembalaje == null">
-                    {{dato.tnombre}}
-                  </option>
-                </select>
-                <div *ngIf="submitDetalleBien && fmercancia.ecodembalaje.errors" class="invalid-feedback">
-                  <div *ngIf="fmercancia.ecodembalaje.errors.required">Embalaje es requerido</div>
-                </div>
-                <input class="form-control form-control-sm" id="tembalaje" name="mercancia[tembalaje]" size="30"
-                  type="hidden" formControlName="tembalaje" />
-              </div>-->
-                </div>
-              </div>
-              <div class="row">
-                <div class='text-center mt-4 mb-4'>
-                  <div class='form-group'>
-                    <button type="submit" mat-raised-button color="primary"
-                      (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
-                    <!--<button type="button" mat-raised-button color="primary"
-                  (click)="e_agregarDetalleBien(FormDatosDetallesBien.value)"><i
-                    class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="table-responsive">
-                  <table class="table table-sm mg-b-0">
-                    <tr>
-                      <th scope="col" colspan="2">Accciones</th>
-                      <th scope="col">#</th>
-                      <th scope="col">Factura</th>
-                      <th scope="col">Marcas</th>
-                      <th scope="col">Descripcion</th>
-                      <th scope="col">Bultos</th>
-                      <th scope="col">Peso bruto</th>
-                      <th scope="col">Peso neto</th>
-                      <th scope="col">Volumen</th>
-                      <th scope="col">Embalajes</th>
-                    </tr>
-                    <tbody>
-                      <tr *ngFor="let dato of  listDetallesBien; let i = index">
-                        <td><button type="button" (click)="e_eliminarDetalleBien(dato)" mat-raised-button
-                            color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button></td>
-                        <td><button type="button" (click)="e_editarDetalleBien(dato)" mat-raised-button
-                            color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button></td>
-                        <td> {{i+ 1 }}</td>
-                        <td> {{dato.tfacturas}}</td>
-                        <td> {{dato.tmarcas}}</td>
-                        <td> {{dato.tdescripcion}}</td>
-                        <td> {{dato.ecantidad}}</td>
-                        <td> {{dato.epesobruto}}</td>
-                        <td> {{dato.epesoneto}}</td>
-                        <td> {{dato.evolumen}}</td>
-                        <td> {{dato.tembalaje}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </form>
-          </div>
-          <!--Detalle(s)-->
-
-        </form>
-        <!--DATOS BIENES-->
-
-        <!--BIENES-->
-        <div class="row">
-          <div class="col-xl-12">
-            <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
-          </div>
-          <div class="col-xl-12">
             <div class="row">
-              <label class="nopadding clrlbl"> Carácter restante: {{reglaLenght.length}}/{{maxCaracteres}}</label>
+              <div class="table-responsive">
+                <table class="table table-sm mg-b-0">
+                  <tr>
+                    <th scope="col" colspan="2">Accciones</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Factura</th>
+                    <th scope="col">Marcas</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Bultos</th>
+                    <th scope="col">Peso bruto</th>
+                    <th scope="col">Peso neto</th>
+                    <th scope="col">Volumen</th>
+                    <th scope="col">Embalajes</th>
+                  </tr>
+                  <tbody>
+                    <tr *ngFor="let dato of  listDetallesBien; let i = index">
+                      <td><button type="button" (click)="e_eliminarDetalleBien(dato)" mat-raised-button
+                          color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button></td>
+                      <td><button type="button" (click)="e_editarDetalleBien(dato)" mat-raised-button
+                          color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button></td>
+                      <td> {{i+ 1 }}</td>
+                      <td> {{dato.tfacturas}}</td>
+                      <td> {{dato.tmarcas}}</td>
+                      <td> {{dato.tdescripcion}}</td>
+                      <td> {{dato.ecantidad}}</td>
+                      <td> {{dato.epesobruto}}</td>
+                      <td> {{dato.epesoneto}}</td>
+                      <td> {{dato.evolumen}}</td>
+                      <td> {{dato.tembalaje}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div class='form-group'>
-              <textarea id="tobservaciones" placeholder="Por favor ingrese un máximo de {{maxCaracteres}} caracteres"
-                [maxlength]="maxCaracteres" [(ngModel)]="reglaLenght" oninput="this.value = this.value.toUpperCase()"
-                name="tobservaciones" ngModel #tobservaciones="ngModel" rows="4" style="width:100%;">
-                </textarea>
-            </div>
+          </form>
+        </div>
+        <!--Detalle(s)-->
+
+      </form>
+      <!--DATOS BIENES-->
+
+      <!--BIENES-->
+      <div class="row">
+        <div class="col-xl-12">
+          <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
+        </div>
+        <div class="col-xl-12">
+          <div class="row">
+            <label class="nopadding clrlbl"> Carácter restante: {{reglaLenght.length}}/{{maxCaracteres}}</label>
+          </div>
+          <div class='form-group'>
+            <textarea id="tobservaciones" placeholder="Por favor ingrese un máximo de {{maxCaracteres}} caracteres"
+              [maxlength]="maxCaracteres" [(ngModel)]="reglaLenght" oninput="this.value = this.value.toUpperCase()"
+              name="tobservaciones" ngModel #tobservaciones="ngModel" rows="4" style="width:100%;">
+              </textarea>
           </div>
         </div>
-      </form>
-    </mat-card>
-  </div>
-</div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

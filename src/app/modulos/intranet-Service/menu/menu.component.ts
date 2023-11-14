@@ -223,9 +223,7 @@ export class MenuComponent implements OnInit {
         items.child.forEach((opcion: any, index: any) => {
           this.myTemplate += ' <li style="font-size:12px;" > '
           //this.myTemplate += ' <a  href="javascript:void(0)"  routerLink="' + opcion.url + '" class="">' + opcion.descripcion + '</a> '
-
           this.myTemplate += ' <a style="cursor: pointer;" routerLink="' + opcion.url + '" >' + opcion.descripcion + '</a> ';
-
           this.myTemplate += ' </li>'
           this.myTemplate += ' <li class="divider"></li>'
 
