@@ -435,7 +435,7 @@
                                 <div class='col-md-3 col-xs-3'>
                                     <mat-form-field class="full-width">
                                         <mat-label>Tipo carga</mat-label>
-                                        <mat-select formControlName="ttipocarga" name="ttipocarga" required>
+                                        <mat-select formControlName="ttipocarga" name="ttipocarga" (ngModelChange)="onChangeTipoCarga($event)" required>
                                             <mat-option>SELECCIONAR</mat-option>
                                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                                             <mat-option value="LCL">LCL</mat-option>
@@ -488,7 +488,7 @@
                                     <mat-form-field class="full-width">
                                         <mat-label>{{lblSerieMarca}}</mat-label>
                                         <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                                            maxlength="4" formControlName="tmarcas" name="tmarcas" required size="30">
+                                        maxlength="{{maxCarateresMarcas}}" formControlName="tmarcas" name="tmarcas" required size="30">
                                         <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor
                                             es
                                             requerido</mat-error>

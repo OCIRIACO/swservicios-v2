@@ -26,6 +26,7 @@ export class CrearServiciosComponent implements OnInit {
 
   //Textarea *comentarion
   maxCaracteres: number = 256
+  maxCarateresMarcas: number = 0;
   reglaLenght: string = ''
 
 
@@ -556,12 +557,12 @@ export class CrearServiciosComponent implements OnInit {
       //Datos del usuaro por [local storage]
       let datosUsuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
 
-        //Parche buscar el id del cliente por el RFC
-        this.datosClientes.forEach((dato: any, valor: any) => {
-          if (dato.trfc == solicitud.value.trfc) {
-            solicitud.value.cliente = dato.ecliente;
-          }
-        })
+      //Parche buscar el id del cliente por el RFC
+      this.datosClientes.forEach((dato: any, valor: any) => {
+        if (dato.trfc == solicitud.value.trfc) {
+          solicitud.value.cliente = dato.ecliente;
+        }
+      })
 
       Isolicitud = {
         ecliente: solicitud.value.cliente,

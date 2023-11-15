@@ -10,7 +10,7 @@
     <button mat-button [matMenuTriggerFor]="userMenu">
       <mat-icon>person</mat-icon>&nbsp;
       <span fxShow fxHide.xs>
-        OSCAR HERNANDEZ CIRIACO
+        {{lblUsuario}}
       </span>
     </button>
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">

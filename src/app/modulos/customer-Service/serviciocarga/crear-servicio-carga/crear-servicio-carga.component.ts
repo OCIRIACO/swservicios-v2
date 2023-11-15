@@ -39,6 +39,7 @@ export class CrearServicioCargaComponent implements OnInit {
 
   //Textarea *comentarion
   maxCaracteres: number = 256
+  maxCarateresMarcas: number = 0;
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
@@ -824,7 +825,7 @@ export class CrearServicioCargaComponent implements OnInit {
   //////////////////////////////////// CONTACTO /////////////////////////////////////////
 
   // convenience getter for easy access to form fields
- // get fcontacto() { return this.FormSolicitudServicios.controls; }
+  // get fcontacto() { return this.FormSolicitudServicios.controls; }
 
 
   e_guardar(solicitud: NgForm) {
@@ -1003,7 +1004,7 @@ export class CrearServicioCargaComponent implements OnInit {
 
       datosParametros = { orden: Isolicitud }
 
-     console.log(JSON.stringify(Isolicitud));
+      console.log(JSON.stringify(Isolicitud));
 
       let alerta: any = {};
 
@@ -1231,7 +1232,11 @@ export class CrearServicioCargaComponent implements OnInit {
   }
 
   //Onchange tipo de carga
-  onChangeTipoCarga(datos: any) {
+  //Onchange tipo de carga
+onChangeTipoCarga(datos: any) {
+
+  //Reset
+  this.FormDatosBien.controls['tmarcas'].setValue('');
 
     let error: string = 'OK!';
     let mensaje: string = ''
@@ -1243,11 +1248,13 @@ export class CrearServicioCargaComponent implements OnInit {
 
       if (datos != 'CONTENERIZADA') {
         this.lblSerieMarca = 'Marca'
+        this.maxCarateresMarcas = 25
         this.isReadonly = true
         this.FormDatosBien.controls['ttipocontenedor'].setValue('NA');
         this.FormDatosBien.controls['tsellos'].setValue('NA');
       } else {
         this.lblSerieMarca = 'Contenedor'
+        this.maxCarateresMarcas = 11
         this.isReadonly = false
         this.FormDatosBien.controls['ttipocontenedor'].setValue('');
         this.FormDatosBien.controls['tsellos'].setValue('');

@@ -283,7 +283,7 @@ requerido</mat-error>-->
                 <div class='col-md-3'>
                     <mat-form-field class="full-width">
                         <mat-label>Carga</mat-label>
-                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel" required>
+                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel" (ngModelChange)="onChangeTipoCarga($event)" required>
                             <mat-option value="">SELECCIONAR</mat-option>
                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                             <mat-option value="GENERAL">GENERAL</mat-option>
@@ -548,7 +548,7 @@ requerido</mat-error>-->
                                 <div class='col-md-3 col-xs-3'>
                                     <mat-form-field class="full-width">
                                         <mat-label>Tipo carga</mat-label>
-                                        <mat-select formControlName="ttipocarga" name="ttipocarga" required>
+                                        <mat-select formControlName="ttipocarga" name="ttipocarga" (ngModelChange)="onChangeTipoCarga($event)" required>
                                             <mat-option>SELECCIONAR</mat-option>
                                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                                             <mat-option value="LCL">LCL</mat-option>
@@ -602,7 +602,7 @@ requerido</mat-error>-->
                                     <mat-form-field class="full-width">
                                         <mat-label>{{lblSerieMarca}}</mat-label>
                                         <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                                            maxlength="4" formControlName="tmarcas" name="tmarcas" required size="30">
+                                            maxlength="{{maxCarateresMarcas}}" formControlName="tmarcas" name="tmarcas" required size="30">
                                         <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor
                                             es
                                             requerido</mat-error>
@@ -833,7 +833,7 @@ requerido</mat-error>-->
                                             <mat-label>Marcas</mat-label>
                                             <input matInput placeholder=""
                                                 oninput="this.value = this.value.toUpperCase()"
-                                                formControlName="tmarcas" name="tmarcas" required>
+                                                formControlName="tmarcas" name="tmarcas" maxlength="50" required>
                                             <mat-error
                                                 *ngIf="FormDatosDetallesBien.controls['tmarcas'].errors?.required">Marca
                                                 es

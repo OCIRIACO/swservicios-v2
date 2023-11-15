@@ -23,6 +23,7 @@ export class EditarServiciosComponent implements OnInit {
 
   //Textarea *comentarion
   maxCaracteres: number = 256
+  maxCarateresMarcas: number = 0;
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página

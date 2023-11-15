@@ -49,6 +49,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
   //Textarea *comentarion
   maxCaracteres: number = 256
+  maxCarateresMarcas: number = 0;
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
@@ -731,26 +732,35 @@ export class EditarAutotransporteComponent implements OnInit {
   ////////////////////// ONCHANGE ////////////////////
 
   //Onchange tipo de carga
-  /*onChangeTipoCarga(datos: any) {
+  //Onchange tipo de carga
+onChangeTipoCarga(datos: any) {
+
+  //Reset
+  this.FormDatosBien.controls['tmarcas'].setValue('');
+
 
     let error: string = 'OK!';
     let mensaje: string = ''
     let alerta: any = {};
 
-
+    //console.log(datos)
 
     if (datos != null) {
 
       if (datos != 'CONTENERIZADA') {
         this.lblSerieMarca = 'Marca'
+this.maxCarateresMarcas = 25
         this.isReadonly = true
         this.FormDatosBien.controls['ttipocontenedor'].setValue('NA');
         this.FormDatosBien.controls['tsellos'].setValue('NA');
+        this.maxCarateresMarcas = 25;
       } else {
         this.lblSerieMarca = 'Contenedor'
+this.maxCarateresMarcas = 11
         this.isReadonly = false
         this.FormDatosBien.controls['ttipocontenedor'].setValue('');
         this.FormDatosBien.controls['tsellos'].setValue('');
+        this.maxCarateresMarcas = 11;
       }
 
 
@@ -775,10 +785,8 @@ export class EditarAutotransporteComponent implements OnInit {
       }
     }
 
-
-
   }
-*/
+
   onChangeDetalleBien(event: any) {
     let dato = event.target.options[event.target.options.selectedIndex].text;
     //this.FormDatosDetallesBien.get('tembalaje')?.setValue(dato);

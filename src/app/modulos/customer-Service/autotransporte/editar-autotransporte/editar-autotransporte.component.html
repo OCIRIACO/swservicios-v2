@@ -343,7 +343,7 @@
                                 <div class='col-md-3'>
                                     <mat-form-field class="full-width">
                                         <mat-label>Carga</mat-label>
-                                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel" required>
+                                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel" (ngModelChange)="onChangeTipoCarga($event)" required>
                                             <mat-option value="">SELECCIONAR</mat-option>
                                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                                             <mat-option value="GENERAL">GENERAL</mat-option>
@@ -677,7 +677,7 @@
                                                         <mat-label>{{lblSerieMarca}}</mat-label>
                                                         <input matInput placeholder=""
                                                             oninput="this.value = this.value.toUpperCase()"
-                                                            maxlength="4" formControlName="tmarcas" name="tmarcas"
+                                                             formControlName="tmarcas" name="tmarcas" maxlength="{{maxCarateresMarcas}}"
                                                             required size="30">
                                                         <mat-error
                                                             *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor
