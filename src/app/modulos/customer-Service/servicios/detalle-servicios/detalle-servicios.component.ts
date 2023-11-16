@@ -369,7 +369,7 @@ export class DetalleServiciosComponent implements OnInit {
       scale: 2
     };
 
-    html2canvas(data, options).then((canvas) => {
+    //html2canvas(data, options).then((canvas) => {
       var doc = new jsPDF('p', 'mm', 'a4');
 
 
@@ -673,7 +673,7 @@ export class DetalleServiciosComponent implements OnInit {
       this.addFooters(doc)
 
       doc.output('dataurlnewwindow', { filename: 'servicio.pdf' })
-    });
+    //});
 
   }
 

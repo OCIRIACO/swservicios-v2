@@ -210,14 +210,14 @@ export class MenuComponent implements OnInit {
         this.myTemplate += ' </div> ';
 
         this.myTemplate += ' <div class="row"> ';
-        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4 div-dif"><i class="fas ' + items.icono + ' fa-4x"></i> ';
+        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4"><i class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection"> <i class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection-over"></div> ';
         //this.myTemplate += ' </div> ';
 
 
         this.myTemplate += ' </div> ';
-        this.myTemplate += ' <div class="col-xs-6 col-sm-4 col-md-7 col-md-offset-1"> ';
+        this.myTemplate += ' <div class="col-xs-6 col-sm-4 col-md-7"> ';
         this.myTemplate += ' <ul class="list-unstyled"> ';
 
         items.child.forEach((opcion: any, index: any) => {

@@ -470,14 +470,18 @@ export class CrearAutotransporteComponent implements OnInit {
   ////////////////////// ONCHANGE ////////////////////
 
   //Onchange tipo de carga
-  onChangeTipoCarga(datos: any) {
+  //Onchange tipo de carga
+onChangeTipoCarga(datos: any) {
+
+  //Reset
+  this.FormDatosBien.controls['tmarcas'].setValue('');
 
 
     let error: string = 'OK!';
     let mensaje: string = ''
     let alerta: any = {};
 
-    //console.log(datos)
+
 
     if (datos != null) {
 
@@ -500,8 +504,6 @@ export class CrearAutotransporteComponent implements OnInit {
 
         this.bienes.forEach((dato: any, index: any) => {
           if (datos != dato.ttipocarga) {
-            //Reset
-            //this.FormDatosBien.controls['ttipocarga'].setValue(null);
             error = 'ERROR!'
           }
         })
@@ -879,8 +881,6 @@ export class CrearAutotransporteComponent implements OnInit {
     //Selected
     this.FormDatosBien.controls['ecodembalaje'].setValue(null);
 
-    ////console.log('Agregar detalles bien....')
-    ////console.log(datos)
 
     //Reset a los submit
     this.submitDetalleBien = false
@@ -1344,7 +1344,7 @@ export class CrearAutotransporteComponent implements OnInit {
 
   e_procesarDirecciones(datos: any) {
     //console.log('datos')
-    //console.log(datos)
+
     //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
