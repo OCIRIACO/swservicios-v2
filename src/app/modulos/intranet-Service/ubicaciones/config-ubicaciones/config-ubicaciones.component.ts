@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as $ from 'jquery';
 import 'jstree';
 import { from } from 'rxjs';
@@ -32,14 +32,14 @@ export class ConfigUbicacionesComponent implements OnInit {
   IdataZona: Array<any> = [];
 
   // Forms
-  FormUbicaciones = new UntypedFormGroup({
-    ecoddetubicacion: new UntypedFormControl(0, Validators.required),
-    ecodzona: new UntypedFormControl(null, Validators.required),
-    tbloque: new UntypedFormControl(null, Validators.required),
-    efilas: new UntypedFormControl(null, Validators.required),
-    ebahias: new UntypedFormControl(null, Validators.required),
-    ealturas: new UntypedFormControl(null, Validators.required),
-    testado: new UntypedFormControl(null, Validators.required)
+  FormUbicaciones = new FormGroup({
+    ecoddetubicacion: new FormControl(0, Validators.required),
+    ecodzona: new FormControl(null, Validators.required),
+    tbloque: new FormControl(null, Validators.required),
+    efilas: new FormControl(null, Validators.required),
+    ebahias: new FormControl(null, Validators.required),
+    ealturas: new FormControl(null, Validators.required),
+    testado: new FormControl(null, Validators.required)
   })
 
   //Submits
@@ -117,14 +117,14 @@ export class ConfigUbicacionesComponent implements OnInit {
     )
 
 
-    this.FormUbicaciones = new UntypedFormGroup({
-      ecoddetubicacion: new UntypedFormControl(0, Validators.required),
-      ecodzona: new UntypedFormControl(dato.ecodzona, Validators.required),
-      tbloque: new UntypedFormControl(null, Validators.required),
-      efilas: new UntypedFormControl(null, Validators.required),
-      ebahias: new UntypedFormControl(null, Validators.required),
-      ealturas: new UntypedFormControl(null, Validators.required),
-      testado: new UntypedFormControl(null, Validators.required)
+    this.FormUbicaciones = new FormGroup({
+      ecoddetubicacion: new FormControl(0, Validators.required),
+      ecodzona: new FormControl(dato.ecodzona, Validators.required),
+      tbloque: new FormControl(null, Validators.required),
+      efilas: new FormControl(null, Validators.required),
+      ebahias: new FormControl(null, Validators.required),
+      ealturas: new FormControl(null, Validators.required),
+      testado: new FormControl(null, Validators.required)
     })
 
 
@@ -295,14 +295,14 @@ export class ConfigUbicacionesComponent implements OnInit {
     //console.log(datos)
 
     // Valores form
-    this.FormUbicaciones = new UntypedFormGroup({
-      ecoddetubicacion: new UntypedFormControl(datos.ecoddetubicacion, Validators.required),
-      ecodzona: new UntypedFormControl(datos.ecodzona, Validators.required),
-      tbloque: new UntypedFormControl(datos.tbloque, Validators.required),
-      efilas: new UntypedFormControl(datos.efilas, Validators.required),
-      ebahias: new UntypedFormControl(datos.ebahias, Validators.required),
-      ealturas: new UntypedFormControl(datos.efilas, Validators.required),
-      testado: new UntypedFormControl(datos.testado, Validators.required)
+    this.FormUbicaciones = new FormGroup({
+      ecoddetubicacion: new FormControl(datos.ecoddetubicacion, Validators.required),
+      ecodzona: new FormControl(datos.ecodzona, Validators.required),
+      tbloque: new FormControl(datos.tbloque, Validators.required),
+      efilas: new FormControl(datos.efilas, Validators.required),
+      ebahias: new FormControl(datos.ebahias, Validators.required),
+      ealturas: new FormControl(datos.efilas, Validators.required),
+      testado: new FormControl(datos.testado, Validators.required)
     })
 
   }

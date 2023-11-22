@@ -1,7 +1,7 @@
 //import { importType, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 
-import { UntypedFormGroup, UntypedFormControl, Validator, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { classApiLogin } from '../../serviciosRest/api/api.service.login'
 import { IniciarSesion, Login, RootObject } from '../../modelos/longin.interfase'
 import { Router } from '@angular/router'
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
     usuario: new FormControl(),
-    password: new UntypedFormControl('', Validators.required)
+    password: new FormControl('', Validators.required)
   })
 
 

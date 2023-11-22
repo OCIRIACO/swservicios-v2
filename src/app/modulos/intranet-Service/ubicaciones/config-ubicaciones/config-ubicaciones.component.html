@@ -42,7 +42,7 @@
                                 <div class='col-sm-2 form-group'>
                                     <label for="ecodzona">ecodzona</label>
                                     <input class="form-control form-control-sm" id="ecodzona" formControlName="ecodzona"
-                                        name="ubicacion[ecodzona]" size="30" type="text"
+                                        name="ubicacion[ecodzona]" size="30" matInput
                                         oninput="this.value = this.value.toUpperCase()"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ecodzona.errors }" />
                                     <div *ngIf="submitUbicacion && getFormUbicaciones.ecodzona.errors"
@@ -60,14 +60,14 @@
                                     <label for="ecoddetubicacion">ecoddetubicacion</label>
                                     <input class="form-control form-control-sm" id="ecoddetubicacion"
                                         formControlName="ecoddetubicacion" name="ubicacion[ecoddetubicacion]" size="30"
-                                        type="text" oninput="this.value = this.value.toUpperCase()" maxlength="4"
+                                        matInput oninput="this.value = this.value.toUpperCase()" maxlength="4"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ecoddetubicacion.errors }" />
                                 </div>
 
                                 <div class='col-sm-2 form-group'>
                                     <label for="tbloque">Bloque</label>
                                     <input class="form-control form-control-sm" id="tbloque" formControlName="tbloque"
-                                        name="ubicacion[tbloque]" size="30" type="text"
+                                        name="ubicacion[tbloque]" size="30" matInput
                                         oninput="this.value = this.value.toUpperCase()" maxlength="4"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.tbloque.errors }" />
                                     <div *ngIf="submitUbicacion && getFormUbicaciones.tbloque.errors"
@@ -83,7 +83,7 @@
                                     <label for="efilas">Filas</label>
                                     <input class="form-control form-control-sm" id="efilas" formControlName="efilas"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.efilas.errors }"
-                                        name="ubicacion[efilas]" size="30" type="text"
+                                        name="ubicacion[efilas]" size="30" matInput
                                         oninput="this.value = this.value.toUpperCase()" maxlength="2" />
                                     <div *ngIf="submitUbicacion && getFormUbicaciones.efilas.errors"
                                         class="invalid-feedback">
@@ -97,7 +97,7 @@
                                     <label for="ebahias">Bahias</label>
                                     <input class="form-control form-control-sm" id="ebahias" formControlName="ebahias"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ebahias.errors }"
-                                        name="ubicacion[ebahias]" size="30" type="text"
+                                        name="ubicacion[ebahias]" size="30" matInput
                                         oninput="this.value = this.value.toUpperCase()" maxlength="2" />
                                     <div *ngIf="submitUbicacion && getFormUbicaciones.ebahias.errors"
                                         class="invalid-feedback">
@@ -111,7 +111,7 @@
                                     <label for="ealturas">Alturas</label>
                                     <input class="form-control form-control-sm" id="ealturas" formControlName="ealturas"
                                         [ngClass]="{ 'is-invalid': submitUbicacion && getFormUbicaciones.ealturas.errors }"
-                                        name="ubicacion[ealturas]" size="30" type="text"
+                                        name="ubicacion[ealturas]" size="30" matInput
                                         oninput="this.value = this.value.toUpperCase()" maxlength="2" />
                                     <div *ngIf="submitUbicacion && getFormUbicaciones.ealturas.errors"
                                         class="invalid-feedback">

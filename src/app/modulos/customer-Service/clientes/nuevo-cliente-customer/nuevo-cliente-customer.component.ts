@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-nuevo-cliente-customer',
@@ -552,10 +553,10 @@ export class NuevoClienteCustomerComponent implements OnInit {
   }
 
 
-  e_changeColonia(datos: MatSelectChange) {
+  e_changeColonia(datos: MatSelectModule) {
     console.log('*Colonia');
-    this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
-    console.log((datos.source.selected as MatOption).viewValue);
+    //this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
+    //console.log((datos.source.selected as MatOption).viewValue);
   }
 
 

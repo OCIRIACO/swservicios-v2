@@ -24,7 +24,7 @@
                 <div class="col-sm-3">
                     <mat-form-field class="example-full-width">
                         <mat-label>RFC</mat-label>
-                        <input type="text" matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto"
+                        <input matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto"
                             required>
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option (click)="e_seleccionarRfc(dato)"
@@ -523,12 +523,12 @@ requerido</mat-error>-->
                                 <div class='col-md-3 col-xs-3'>
                                     <input class="form-control form-control-sm" id="econtadorRowBien"
                                         name="econtadorRowBien" formControlName="econtadorRowBien" size="30"
-                                        type="text" />
+                                        matInput />
                                 </div>
 
                                 <div class='col-md-3 col-xs-3'>
                                     <input class="form-control form-control-sm" id="eguia" name="eguia"
-                                        formControlName="eguia" size="30" type="text" />
+                                        formControlName="eguia" size="30" matInput />
                                 </div>
 
                             </div>
@@ -813,7 +813,7 @@ requerido</mat-error>-->
                                 <div class="row">
                                     <div class='col-md-3 col-xs-3'>
                                         <input class="form-control form-control-sm" id="econtadorRow"
-                                            name="econtadorRow" formControlName="econtadorRow" size="30" type="text" />
+                                            name="econtadorRow" formControlName="econtadorRow" size="30" matInput />
                                     </div>
                                 </div>
                                 <div class='row'>
@@ -1085,11 +1085,11 @@ requerido</mat-error>-->
                         <div class="row" style="display: none;">
                             <div class='col-md-3 col-xs-3'>
                                 <input class="form-control form-control-sm" id="econtadorRow" name="econtadorRow"
-                                    formControlName="econtadorRow" size="30" type="text" />
+                                    formControlName="econtadorRow" size="30" matInput />
                             </div>
                             <div class='col-md-3 col-xs-3'>
                                 <input class="form-control form-control-sm" id="eguia" name="eguia"
-                                    formControlName="eguia" size="30" type="text" />
+                                    formControlName="eguia" size="30" matInput />
                             </div>
                         </div>
                         <div class='row'>

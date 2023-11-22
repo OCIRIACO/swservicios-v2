@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import 'jstree';
 import { ApiServiceZonas } from 'src/app/serviciosRest/Intranet/zonas/api.service.zonas';
-import { Form, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IdatosZonas, Imetadata, IdatosregistrarZona, IdatosActualizarZona } from 'src/app/modelos/zonas/zonas.interfase';
 import Swal from 'sweetalert2';
 import { GlobalConstants } from 'src/app/modelos/global';
@@ -27,15 +27,15 @@ export class ConfiguracionComponent implements OnInit {
   IdataZona: Array<any> = [];
   datoJstree: any;
 
-  FormDatosZonas = new UntypedFormGroup({
-    taccion: new UntypedFormControl('', Validators.required),
-    ecodzona: new UntypedFormControl('', Validators.required),
-    ecodzonapadre: new UntypedFormControl('', Validators.required),
-    tpath: new UntypedFormControl('', Validators.required),
-    ttipo: new UntypedFormControl('', Validators.required),
-    tsubtipo: new UntypedFormControl('', Validators.required),
-    testado: new UntypedFormControl('', Validators.required),
-    tdescripcion: new UntypedFormControl('', Validators.required),
+  FormDatosZonas = new FormGroup({
+    taccion: new FormControl('', Validators.required),
+    ecodzona: new FormControl('', Validators.required),
+    ecodzonapadre: new FormControl('', Validators.required),
+    tpath: new FormControl('', Validators.required),
+    ttipo: new FormControl('', Validators.required),
+    tsubtipo: new FormControl('', Validators.required),
+    testado: new FormControl('', Validators.required),
+    tdescripcion: new FormControl('', Validators.required),
   });
 
   // Div's Hide / Show
@@ -130,15 +130,15 @@ export class ConfiguracionComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         //RESET FORM'S
-        this.FormDatosZonas = new UntypedFormGroup({
-          taccion: new UntypedFormControl('', Validators.required),
-          ecodzona: new UntypedFormControl('', Validators.required),
-          ecodzonapadre: new UntypedFormControl('', Validators.required),
-          tpath: new UntypedFormControl('', Validators.required),
-          ttipo: new UntypedFormControl('', Validators.required),
-          tsubtipo: new UntypedFormControl('', Validators.required),
-          testado: new UntypedFormControl('', Validators.required),
-          tdescripcion: new UntypedFormControl('', Validators.required),
+        this.FormDatosZonas = new FormGroup({
+          taccion: new FormControl('', Validators.required),
+          ecodzona: new FormControl('', Validators.required),
+          ecodzonapadre: new FormControl('', Validators.required),
+          tpath: new FormControl('', Validators.required),
+          ttipo: new FormControl('', Validators.required),
+          tsubtipo: new FormControl('', Validators.required),
+          testado: new FormControl('', Validators.required),
+          tdescripcion: new FormControl('', Validators.required),
         });
       }
     })

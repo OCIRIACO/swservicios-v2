@@ -928,10 +928,10 @@ export class NotificamanifiestoComponent implements OnInit {
 
   //Onchange tipo de carga
   //Onchange tipo de carga
-onChangeTipoCarga(datos: any) {
+  onChangeTipoCarga(datos: any) {
 
-  //Reset
-  this.FormDatosBien.controls['tmarcas'].setValue('');
+    //Reset
+    this.FormDatosBien.controls['tmarcas'].setValue('');
 
     let error: string = 'OK!';
     let mensaje: string = ''

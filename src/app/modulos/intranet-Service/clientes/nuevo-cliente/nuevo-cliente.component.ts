@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { apiCodigosPostales } from 'src/app/serviciosRest/api/api.codigospostales';
@@ -28,26 +28,26 @@ export class NuevoClienteComponent implements OnInit {
   directorio: string = GlobalConstants.pathIntranet;
 
   //Form's
-  FormCliente = new UntypedFormGroup({
-    trazonsocial: new UntypedFormControl('', Validators.required),
-    trfc: new UntypedFormControl('', Validators.required),
+  FormCliente = new FormGroup({
+    trazonsocial: new FormControl('', Validators.required),
+    trfc: new FormControl('', Validators.required),
   })
 
-  FormDireccion = new UntypedFormGroup({
-    edireccion: new UntypedFormControl('', null),
-    ecodigopostal: new UntypedFormControl('', [Validators.required,
+  FormDireccion = new FormGroup({
+    edireccion: new FormControl('', null),
+    ecodigopostal: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
     ]),
-    tentidadfederativa: new UntypedFormControl('', Validators.required),
-    eestado: new UntypedFormControl('', Validators.required),
-    tmunicipio: new UntypedFormControl('', Validators.required),
-    emunicipio: new UntypedFormControl('', Validators.required),
-    tcolonia: new UntypedFormControl('', Validators.required),
-    tcalle: new UntypedFormControl('', Validators.required),
-    tnumexterior: new UntypedFormControl('', [Validators.required,
+    tentidadfederativa: new FormControl('', Validators.required),
+    eestado: new FormControl('', Validators.required),
+    tmunicipio: new FormControl('', Validators.required),
+    emunicipio: new FormControl('', Validators.required),
+    tcolonia: new FormControl('', Validators.required),
+    tcalle: new FormControl('', Validators.required),
+    tnumexterior: new FormControl('', [Validators.required,
     this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
     ]),
-    tnuminterior: new UntypedFormControl('', null),
+    tnuminterior: new FormControl('', null),
   });
 
   //Submit's
@@ -208,17 +208,17 @@ export class NuevoClienteComponent implements OnInit {
     this.submitDireccion = false;
 
     //Reset form
-    this.FormDireccion = new UntypedFormGroup({
-      edireccion: new UntypedFormControl('', null),
-      ecodigopostal: new UntypedFormControl('', Validators.required),
-      tentidadfederativa: new UntypedFormControl('', Validators.required),
-      eestado: new UntypedFormControl('', Validators.required),
-      tmunicipio: new UntypedFormControl('', Validators.required),
-      emunicipio: new UntypedFormControl('', Validators.required),
-      tcolonia: new UntypedFormControl('', Validators.required),
-      tcalle: new UntypedFormControl('', Validators.required),
-      tnumexterior: new UntypedFormControl('', Validators.required),
-      tnuminterior: new UntypedFormControl('', null),
+    this.FormDireccion = new FormGroup({
+      edireccion: new FormControl('', null),
+      ecodigopostal: new FormControl('', Validators.required),
+      tentidadfederativa: new FormControl('', Validators.required),
+      eestado: new FormControl('', Validators.required),
+      tmunicipio: new FormControl('', Validators.required),
+      emunicipio: new FormControl('', Validators.required),
+      tcolonia: new FormControl('', Validators.required),
+      tcalle: new FormControl('', Validators.required),
+      tnumexterior: new FormControl('', Validators.required),
+      tnuminterior: new FormControl('', null),
     });
 
 
@@ -238,21 +238,21 @@ export class NuevoClienteComponent implements OnInit {
     //console.log('Editar')
     //console.log(datos)
 
-    this.FormDireccion = new UntypedFormGroup({
-      edireccion: new UntypedFormControl(datos.edireccion, null),
-      ecodigopostal: new UntypedFormControl(datos.ecodigopostal, [Validators.required,
+    this.FormDireccion = new FormGroup({
+      edireccion: new FormControl(datos.edireccion, null),
+      ecodigopostal: new FormControl(datos.ecodigopostal, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
       ]),
-      tentidadfederativa: new UntypedFormControl(datos.tentidadfederativa, Validators.required),
-      eestado: new UntypedFormControl(datos.eestado, Validators.required),
-      tmunicipio: new UntypedFormControl(datos.tmunicipio, Validators.required),
-      emunicipio: new UntypedFormControl(datos.emunicipio, Validators.required),
-      tcolonia: new UntypedFormControl(datos.tcolonia, Validators.required),
-      tcalle: new UntypedFormControl(datos.tcalle, Validators.required),
-      tnumexterior: new UntypedFormControl(datos.tnumexterior, [Validators.required,
+      tentidadfederativa: new FormControl(datos.tentidadfederativa, Validators.required),
+      eestado: new FormControl(datos.eestado, Validators.required),
+      tmunicipio: new FormControl(datos.tmunicipio, Validators.required),
+      emunicipio: new FormControl(datos.emunicipio, Validators.required),
+      tcolonia: new FormControl(datos.tcolonia, Validators.required),
+      tcalle: new FormControl(datos.tcalle, Validators.required),
+      tnumexterior: new FormControl(datos.tnumexterior, [Validators.required,
       this.regexValidador(new RegExp(this.regNumerico), { 'number': true })
       ]),
-      tnuminterior: new UntypedFormControl(datos.tnuminterior, null)
+      tnuminterior: new FormControl(datos.tnuminterior, null)
     });
 
 

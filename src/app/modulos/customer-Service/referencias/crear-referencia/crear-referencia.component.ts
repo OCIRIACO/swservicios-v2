@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { IsolicitudReferencia } from 'src/app/modelos/interfaces/referencias.interfaces';
 import { serviceCatalogos } from 'src/app/service/service.catalogos'
@@ -27,12 +27,12 @@ export class CrearReferenciaComponent implements OnInit {
   directorio: string = GlobalConstants.pathCustomer;
 
   //Form's
-  formsolicitud = new UntypedFormGroup({
-    treferencia: new UntypedFormControl('', Validators.required),
-    epuerto: new UntypedFormControl('', Validators.required),
-    eagente: new UntypedFormControl('', Validators.required),
-    eanio: new UntypedFormControl('', Validators.required),
-    eaduana: new UntypedFormControl('', Validators.required),
+  formsolicitud = new FormGroup({
+    treferencia: new FormControl('', Validators.required),
+    epuerto: new FormControl('', Validators.required),
+    eagente: new FormControl('', Validators.required),
+    eanio: new FormControl('', Validators.required),
+    eaduana: new FormControl('', Validators.required),
   });
 
   //Submit's

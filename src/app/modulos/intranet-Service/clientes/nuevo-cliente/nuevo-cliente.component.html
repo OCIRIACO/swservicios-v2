@@ -42,7 +42,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label">Razón social</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trazonsocial"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trazonsocial"
                                 formControlName="trazonsocial" name="trazonsocial"
                                 [ngClass]="{ 'is-invalid': submitCliente && frmCliente.trazonsocial.errors }"
                                 maxlength="25">
@@ -54,7 +54,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label">RFC</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trfc" formControlName="trfc"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="trfc" formControlName="trfc"
                                 name="trfc" maxlength="13"
                                 [ngClass]="{ 'is-invalid': submitCliente && frmCliente.trfc.errors }">
                             <div *ngIf="submitCliente && frmCliente.trfc.errors" class="invalid-feedback">
@@ -80,7 +80,7 @@
 
                         <div class="form-group">
                             <label class="form-label">Cp</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="ecodigopostal"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="ecodigopostal"
                                 (change)="e_consultaCp($event)" formControlName="ecodigopostal"
                                 name="direccion[ecodigopostal]" maxlength="5"
                                 [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.ecodigopostal.errors }">
@@ -93,7 +93,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label">Estado</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tentidadfederativa"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tentidadfederativa"
                                 formControlName="tentidadfederativa" name="tentidadfederativa"
                                 [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tentidadfederativa.errors }"
                                 readonly>
@@ -108,7 +108,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label">Municipio</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tmunicipio"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tmunicipio"
                                 formControlName="tmunicipio" name="tmunicipio"
                                 [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tmunicipio.errors }"
                                 readonly>
@@ -137,7 +137,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label">Calle</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tcalle" formControlName="tcalle"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tcalle" formControlName="tcalle"
                                 name="tcalle"
                                 [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tcalle.errors }">
                             <div *ngIf="submitDireccion && frmdireccion.tcalle.errors" class="invalid-feedback">
@@ -148,7 +148,7 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label class="form-label">N° exterior</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnumexterior"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnumexterior"
                                 formControlName="tnumexterior" name="tnumexterior"
                                 [ngClass]="{ 'is-invalid': submitDireccion && frmdireccion.tnumexterior.errors }">
                             <div *ngIf="submitDireccion && frmdireccion.tnumexterior.errors" class="invalid-feedback">
@@ -159,7 +159,7 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label class="form-label">N° interior</label>
-                            <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnuminterior"
+                            <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" id="tnuminterior"
                                 formControlName="tnuminterior" name="tnuminterior">
                         </div>
                     </div>

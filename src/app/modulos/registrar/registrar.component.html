@@ -4,24 +4,24 @@
 </video>
 
 <div class="wrap contentVideo">
-    <form class="login-form" action="" [formGroup]="registrarForm" (ngSubmit)="e_registrar(registrarForm.value)">
+    <form class="login-form" [formGroup]="registrarForm" (ngSubmit)="e_registrar(registrarForm.value)">
         <div class="form-header">
             <h3>Registrar</h3>
         </div>
         
 
         <div class="form-group">
-            <input type="text" class="form-input" placeholder="RFC" id="trfc" 
+            <input matInput class="form-input" placeholder="RFC" id="trfc" 
                 formControlName="trfc">
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-input" placeholder="Razon social" id="trazonsocial" 
+            <input matInput class="form-input" placeholder="Razon social" id="trazonsocial" 
                 formControlName="trazonsocial">
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-input" placeholder="Correo electrónico" id="tcorreo" 
+            <input matInput class="form-input" placeholder="Correo electrónico" id="tcorreo" 
                 formControlName="tcorreo">
         </div>
 

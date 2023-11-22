@@ -34,7 +34,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label required">Referencia</label>
-                            <input class="form-control form-control-sm" type="text"
+                            <input class="form-control form-control-sm" matInput
                                 oninput="this.value = this.value.toUpperCase()" id="treferencia"
                                 name="referencia[treferencia]" maxlength="10" placeholder="AAA-0001"
                                 [ngClass]="{ 'is-invalid': submitGuardar && fguardar.treferencia.errors }" size="15"
@@ -66,7 +66,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label required">Agente</label>
-                            <!--<input class="form-control form-control-sm" type="text"
+                            <!--<input class="form-control form-control-sm" matInput
                                 oninput="this.value = this.value.toUpperCase()" id="eagente" 
                                 maxlength="50" placeholder="AGENTE"
                                 [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eagente.errors }" size="4"
@@ -89,7 +89,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label required">Año</label>
-                            <input class="form-control form-control-sm" type="text"
+                            <input class="form-control form-control-sm" matInput
                                 oninput="this.value = this.value.toUpperCase()" id="eanio" maxlength="4"
                                 placeholder="2023" [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eanio.errors }"
                                 size="4" formControlName="eanio">
@@ -102,7 +102,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="form-label required">Aduana</label>
-                            <!--<input class="form-control form-control-sm" type="text"
+                            <!--<input class="form-control form-control-sm" matInput
                                 oninput="this.value = this.value.toUpperCase()" id="eaduana" maxlength="4"
                                 placeholder="2023"
                                 [ngClass]="{ 'is-invalid': submitGuardar && fguardar.eaduana.errors }" size="4"

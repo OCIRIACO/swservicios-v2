@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -11,9 +11,9 @@ export class RegistrarComponent implements OnInit {
 
   mensaje: string = ""
 
-  registrarForm = new UntypedFormGroup({
-    usuario: new UntypedFormControl('', Validators.required),
-    password: new UntypedFormControl('', Validators.required)
+  registrarForm = new FormGroup({
+    usuario: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   })
 
 

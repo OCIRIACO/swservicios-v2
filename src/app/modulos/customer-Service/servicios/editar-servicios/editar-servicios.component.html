@@ -26,7 +26,7 @@
         <div class="col-md-3">
           <mat-form-field class="full-width">
             <mat-label>RFC</mat-label>
-            <input type="text" matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto" required>
+            <input matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto" required>
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option (click)="e_seleccionarRfc(dato)" *ngFor="let dato of filtrarOpcionesRfc  | async "
                 [value]="dato.trfc">
@@ -334,7 +334,7 @@ requerido</mat-error>-->
           <div class="col-md-12">
             <label class="form-label required">Valor</label>
             <div class="input-group">
-              <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm"
+              <input matInput oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm"
                 aria-describedby="btnBuscar" id="tvalor" formControlName="tvalor" name="tvalor"
                 [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tvalor.errors }">
               <div class="input-group-append">

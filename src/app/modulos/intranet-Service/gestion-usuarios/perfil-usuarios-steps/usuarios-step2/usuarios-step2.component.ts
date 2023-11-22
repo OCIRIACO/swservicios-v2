@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 // Service para usar datos en otro componente
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RenderAccionesUsuariosAsignados } from './render-acciones-asignados';
 import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
@@ -356,7 +356,7 @@ export class UsuariosStep2Component implements OnInit {
     let usuarioPendientes: any;
 
     if (dato2.checked) {
-      usuarioPendientes.push(new UntypedFormControl(dato1));
+      usuarioPendientes.push(new FormControl(dato1));
     } else {
       //const index = usuarioPendientes.controls.findIndex(x => x.value === dato1);
       //usuarioPendientes.removeAt(index);
@@ -375,7 +375,7 @@ export class UsuariosStep2Component implements OnInit {
     let usuariosAsignados : any;
 
     if (dato2.checked) {
-      usuariosAsignados.push(new UntypedFormControl(dato1));
+      usuariosAsignados.push(new FormControl(dato1));
     } else {
        null;
       //const index = usuariosAsignados.controls.findIndex(x => x.value === dato1);

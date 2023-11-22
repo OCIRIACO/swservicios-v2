@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, NgForm, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { apiCodigosPostales } from 'src/app/serviciosRest/api/api.codigospostales';
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import Swal from 'sweetalert2';
@@ -9,6 +9,8 @@ import { Observable, of } from 'rxjs';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
+
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -622,10 +624,10 @@ export class EditarClienteCustomerComponent implements OnInit {
   }
 
 
-  e_changeColonia(datos: MatSelectChange) {
+  e_changeColonia(datos: MatSelectModule) {
     console.log('*Colonia');
-    this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
-    console.log((datos.source.selected as MatOption).viewValue);
+    //this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
+    //console.log((datos.source.selected as MatOption).viewValue);
   }
 
 }
