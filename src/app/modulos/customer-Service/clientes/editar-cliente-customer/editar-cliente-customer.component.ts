@@ -7,8 +7,8 @@ import { GlobalConstants } from 'src/app/modelos/global';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
-import { MatSelectChange } from '@angular/material/select';
-import { MatOption } from '@angular/material/core';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 
 
 @Component({

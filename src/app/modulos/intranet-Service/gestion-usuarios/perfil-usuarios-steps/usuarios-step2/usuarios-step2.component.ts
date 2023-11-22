@@ -9,8 +9,8 @@ import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilU
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RenderAccionesUsuariosAsignados } from './render-acciones-asignados';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 
 export interface entidades {
   ecodusuario: number,

@@ -292,7 +292,7 @@
               <mat-form-field class="full-width">
                 <mat-label>Embalaje</mat-label>
                 <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                  (change)="onChangeEmbalajeBien($event)">
+                  (selectionChange)="onChangeEmbalajeBien($event)">
                   <mat-option>SELECCIONAR</mat-option>
                   <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
                     {{dato.tnombre}}
@@ -784,7 +784,7 @@
                 <mat-form-field class="full-width">
                   <mat-label>Embalaje</mat-label>
                   <mat-select formControlName="ecodembalaje" name="ecodembalaje" required
-                    (change)="onChangeDetalleBien($event)">
+                    (selectionChange)="onChangeDetalleBien($event)">
                     <mat-option>SELECCIONAR</mat-option>
                     <mat-option *ngFor="let dato of datosEmbalaje" [value]="dato.ecodembalaje">
                       {{dato.tnombre}}

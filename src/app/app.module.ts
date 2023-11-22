@@ -62,7 +62,7 @@ import { NuevoClienteCustomerComponent } from './modulos/customer-Service/client
 import { EditarClienteCustomerComponent } from './modulos/customer-Service/clientes/editar-cliente-customer/editar-cliente-customer.component';
 import { DetalleClienteCustomerComponent } from './modulos/customer-Service/clientes/detalle-cliente-customer/detalle-cliente-customer.component';
 import { ConsultarClienteCustomerComponent } from './modulos/customer-Service/clientes/consultar-cliente-customer/consultar-cliente-customer.component';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+//import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { CrearServiciosComponent } from './modulos/customer-Service/servicios/crear-servicios/crear-servicios.component';
 import { EditarServiciosComponent } from './modulos/customer-Service/servicios/editar-servicios/editar-servicios.component';
 import { DetalleServiciosComponent } from './modulos/customer-Service/servicios/detalle-servicios/detalle-servicios.component';
@@ -86,29 +86,29 @@ import { ConsultarReferenciasComponent } from './modulos/customer-Service/refere
 
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule } from '@angular/material/icon';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
+import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
+import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
 import {MatDividerModule} from '@angular/material/divider';
-import {MatMenuModule} from '@angular/material/menu';
+import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
+import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatTableModule } from '@angular/material/table'
-import { MatCardModule } from '@angular/material/card';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table'
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from "@angular/material/legacy-form-field";
 import {NgFor, AsyncPipe} from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from "@angular/material/legacy-progress-bar";
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatRadioModule} from '@angular/material/radio';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio';
+import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
 import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
-import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs'; 
 
 @NgModule({
   declarations: [
@@ -200,7 +200,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatInputModule,
     MatIconModule,
     MatDividerModule,
-    AutocompleteLibModule,
+    //AutocompleteLibModule,
     MatMenuModule,
     MatToolbarModule,
     MatSidenavModule,

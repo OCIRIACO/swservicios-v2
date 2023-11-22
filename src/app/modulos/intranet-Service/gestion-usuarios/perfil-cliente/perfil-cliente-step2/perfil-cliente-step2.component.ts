@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { FormArray, UntypedFormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 
 
 export interface entidades {

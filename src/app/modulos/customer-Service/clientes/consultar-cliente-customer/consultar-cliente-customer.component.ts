@@ -4,8 +4,8 @@ import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.c
 import { RenderAcciones } from './render-acciones';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 
 export interface Post {
   ecliente: number,

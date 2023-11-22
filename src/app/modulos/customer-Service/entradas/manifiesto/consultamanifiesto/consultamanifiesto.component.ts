@@ -6,8 +6,8 @@ import { GlobalConstants } from 'src/app/modelos/global';
 import { AgGridModule } from 'ag-grid-angular';
 import { RenderAcciones } from './render-acciones';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 
 
 export interface Post {

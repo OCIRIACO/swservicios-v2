@@ -7,8 +7,8 @@ import { apiCodigosPostales } from 'src/app/serviciosRest/api/api.codigospostale
 import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.cliente';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { Observable, of } from 'rxjs';
-import { MatSelectChange } from '@angular/material/select';
-import { MatOption } from '@angular/material/core';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 
 
 @Component({

@@ -1,5 +1,8 @@
 @use "@angular/material" as mat;
-@include mat.core();
+
+
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 $bright-navy-blue-palette: (
     50 : #e0e6ed,
@@ -96,7 +99,7 @@ $bluesky-theme: mat.define-light-theme((color: (primary: $bluesky-primary,
                 warn: $bluesky-warn,
             )));
 
-@include mat.all-component-themes($bluesky-theme);
+@include mat.all-legacy-component-themes($bluesky-theme);
 
 html,
 body {
