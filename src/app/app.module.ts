@@ -4,18 +4,18 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modulos/login/login.component';
-import { ReactiveFormsModule, FormsModule}  from '@angular/forms' // Validar Formularios // post
-import { HttpClientModule} from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms' // Validar Formularios // post
+import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './modulos/dashboard/dashboard.component';
 import { NotificamanifiestoComponent } from './modulos/customer-Service/entradas/manifiesto/notificamanifiesto/notificamanifiesto.component';
 import { EditarmanifiestoComponent } from './modulos/customer-Service/entradas/manifiesto/editarmanifiesto/editarmanifiesto.component';
 import { ConsultamanifiestoComponent } from './modulos/customer-Service/entradas/manifiesto/consultamanifiesto/consultamanifiesto.component'
 import { DataTablesModule } from 'angular-datatables';
-import { AsyncPipe, CommonModule, HashLocationStrategy, LocationStrategy, NgFor  } from '@angular/common';
+import { AsyncPipe, CommonModule, HashLocationStrategy, LocationStrategy, NgFor } from '@angular/common';
 import { PaginanoencontradaComponent } from './modulos/errores/paginanoencontrada/paginanoencontrada.component';
 import { RootmanifiestoComponent } from './modulos/customer-Service/entradas/manifiesto/rootmanifiesto/rootmanifiesto.component';
 import { NgxSpinnerModule } from "ngx-spinner";
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallemanifiestoComponent } from './modulos/customer-Service/entradas/manifiesto/detallemanifiesto/detallemanifiesto.component';
 import { MenuComponent } from './modulos/intranet-Service/menu/menu.component';
 import { ConfiguracionComponent } from './modulos/intranet-Service/zonas/configuracion/configuracion.component';
@@ -36,7 +36,7 @@ import { VistaComponent } from './modulos/intranet-Service/ubicaciones/ubicacion
 import { VistaUbicaciones2dComponent } from './modulos/intranet-Service/ubicaciones/ubicaciones-2d/vista-ubicaciones2d/vista-ubicaciones2d.component';
 import { UsersComponent } from './modulos/users/users.component';
 
-import { ModalModule  } from 'src/app/modelos/_modal';
+import { ModalModule } from 'src/app/modelos/_modal';
 import { InicioComponent } from './modulos/inicio/inicio.component';
 import { ConsultarSalidasComponent } from './modulos/intranet-Service/solicitudSalidas/consultar-salidas/consultar-salidas.component';
 import { VerificarSalidasComponent } from './modulos/intranet-Service/solicitudSalidas/verificar-salidas/verificar-salidas.component';
@@ -84,33 +84,7 @@ import { RegistrarComponent } from './modulos/registrar/registrar.component';
 import { CrearReferenciaComponent } from './modulos/customer-Service/referencias/crear-referencia/crear-referencia.component';
 import { ConsultarReferenciasComponent } from './modulos/customer-Service/referencias/consultar-referencias/consultar-referencias.component';
 
-/*
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatIconModule } from '@angular/material/icon';
-import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
-import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatLegacyListModule as MatListModule} from '@angular/material/legacy-list';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table'
-import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from "@angular/material/legacy-form-field";
-import {NgFor, AsyncPipe} from '@angular/common';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from "@angular/material/legacy-progress-bar";
-import { MatGridListModule } from '@angular/material/grid-list';
-import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio';
-import { MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
-import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
-import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
-import {MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs'; 
-import { MatCardModule } from '@angular/material/card';
-*/
+
 //import { NgModule } from '@angular/core';
 //import { CommonModule } from '@angular/common';
 //import { FormsModule } from '@angular/forms';
@@ -151,7 +125,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTableModule} from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
 import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
@@ -194,7 +169,8 @@ const MaterialComponents = [
   MatSnackBarModule,
   PortalModule,
   ScrollingModule,
-  MatTableModule
+  MatTableModule,
+  MatToolbarModule
 ]
 
 
@@ -282,20 +258,20 @@ const MaterialComponents = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-   // DataTablesModule,
+    // DataTablesModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
     NgFor,
     AsyncPipe,
   ],
   providers: [
-    {provide : LocationStrategy , useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     CanDeactivateGuard
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  exports: [ 
+  exports: [
     ConfigUbicacionesComponent,
     VerificarSalidasComponent
   ],

@@ -15,7 +15,7 @@
     </button>
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
-      <a mat-menu-item [routerLink]=""  (click)="e_cerrarSesion()" >
+      <a mat-menu-item [routerLink]="" (click)="e_cerrarSesion()">
         <mat-icon>exit_to_app</mat-icon>&nbsp;
         <span>Salir</span>
       </a>
@@ -36,21 +36,23 @@
           <mat-icon mat-list-icon>
             dashboard
           </mat-icon>&nbsp;
-          <p mat-line> Inicio </p>
+          <span> Inicio </span>
         </a>
 
-        <a mat-list-item [routerLink]="" (click)="e_operaciones('customer')" routerLinkActive="active"  *ngIf="opCustumer">
+        <a mat-list-item [routerLink]="" (click)="e_operaciones('customer')" routerLinkActive="active"
+          *ngIf="opCustumer">
           <mat-icon mat-list-icon>
             business
           </mat-icon>&nbsp;
-          <p mat-line> Operaciones </p>
+          <span> Operaciones </span>
         </a>
 
-        <a mat-list-item [routerLink]="" (click)="e_operaciones('intranet')" routerLinkActive="active"  *ngIf="OpcionIntranet" >
+        <a mat-list-item [routerLink]="" (click)="e_operaciones('intranet')" routerLinkActive="active"
+          *ngIf="OpcionIntranet">
           <mat-icon mat-list-icon>
             business
           </mat-icon>&nbsp;
-          <p mat-line> Intranet </p>
+          <span> Intranet </span>
         </a>
 
         <!--<a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
@@ -95,4 +97,3 @@
   </mat-sidenav-container>
 
 </div>
-
