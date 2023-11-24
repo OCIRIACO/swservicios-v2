@@ -10,10 +10,10 @@
     <mat-card-content>
         <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
             <!--Botones-->
-            <mat-card-actions>
+             <mat-card-actions class="button-group">
                 <button mat-raised-button color="primary" (click)="e_consulta()"
-                    title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                    title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
             </mat-card-actions>
             <hr>
             <!--CLIENTE-->
@@ -470,7 +470,7 @@ requerido</mat-error>-->
                     </div>-->
                     <div class="row">
                         <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
-                            <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                            <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>Agregar</button>
                         </div>
                     </div>
                 </div>
@@ -492,7 +492,7 @@ requerido</mat-error>-->
                             <tbody>
                                 <tr *ngFor="let dato of servicios; let i = index">
                                     <td> <button type="button" mat-raised-button color="primary"
-                                            (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                            (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                                     </td>
                                     <td> {{ i + 1}} </td>
                                     <td> {{ dato.ttipomercancia }}</td>
@@ -714,7 +714,7 @@ requerido</mat-error>-->
                             <div class="row">
                                 <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                     <button mat-raised-button color="primary"
-                                        (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                                        (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                                 </div>
                             </div>
 
@@ -739,10 +739,10 @@ requerido</mat-error>-->
                                     <tbody>
                                         <tr *ngFor="let dato of bienes; let i = index">
                                             <td><button type="button" mat-raised-button color="primary"
-                                                    (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                                    (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                                             </td>
                                             <td><button type="button" mat-raised-button color="primary"
-                                                    (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                                    (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>Editar</button>
                                             </td>
                                             <td>{{i+ 1 }}</td>
                                             <td>{{dato.ttramite}}</td>
@@ -988,7 +988,7 @@ requerido</mat-error>-->
                                 <div class="row">
                                     <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                         <button mat-raised-button color="primary"
-                                            (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                                            (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -1010,11 +1010,11 @@ requerido</mat-error>-->
                                                 <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                                     <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
                                                             mat-raised-button
-                                                            color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                                            color="primary"><mat-icon>delete</mat-icon>Eliminar</button>
                                                     </td>
                                                     <td><button type="button" (click)="e_editarDetalleBien(dato)"
                                                             mat-raised-button
-                                                            color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                                            color="primary"><mat-icon>edit</mat-icon>Editar</button>
                                                     </td>
                                                     <td> {{i+ 1 }}</td>
                                                     <td> {{dato.tfacturas}}</td>
@@ -1241,7 +1241,7 @@ requerido</mat-error>-->
                         <div class="row">
                             <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
                                 <button mat-raised-button color="primary"
-                                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                             </div>
                         </div>
 
@@ -1264,11 +1264,11 @@ requerido</mat-error>-->
                                         <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                             <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
                                                     mat-raised-button
-                                                    color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                                    color="primary"><mat-icon>delete</mat-icon>Eliminar</button>
                                             </td>
                                             <td><button type="button" (click)="e_editarDetalleBien(dato)"
                                                     mat-raised-button
-                                                    color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                                    color="primary"><mat-icon>edit</mat-icon>Editar</button>
                                             </td>
                                             <td> {{i+ 1 }}</td>
                                             <td> {{dato.tfacturas}}</td>

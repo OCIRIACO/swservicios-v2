@@ -9,10 +9,10 @@
     </mat-card-header>
     <mat-card-content>
         <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
-            <mat-card-actions>
+             <mat-card-actions class="button-group">
                 <button mat-raised-button color="primary" (click)="e_consulta()"
-                    title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                    title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
             </mat-card-actions>
             <hr>
             <!--CLIENTE-->
@@ -406,7 +406,7 @@
                         <div class="text-center mt-4 mb-4">
                             <div class='form-group'>
                                 <button type="submit" mat-raised-button color="primary"
-                                    (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;&nbsp;Agregar</button>
+                                    (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
                                 <!--<button class="btn btn-xs btn-primary"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
 
 
@@ -434,10 +434,10 @@
                             <tbody>
                                 <tr *ngFor="let dato of bienes; let i = index">
                                     <td><button type="button" mat-raised-button color="primary"
-                                            (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                            (click)="e_eliminarBien(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                                     </td>
                                     <td><button type="button" mat-raised-button color="primary"
-                                            (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                            (click)="e_editarBien(dato)"><mat-icon>edit</mat-icon>Editar</button>
                                     </td>
                                     <td>{{i+ 1 }}</td>
                                     <td>{{dato.ttramite}}</td>
@@ -752,7 +752,7 @@
                             <div class='text-center mt-4 mb-4'>
                                 <div class='form-group'>
                                     <button type="submit" mat-raised-button color="primary"
-                                        (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                                        (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                                 </div>
                             </div>
                         </div>
@@ -775,11 +775,11 @@
                                         <tr *ngFor="let dato of  listDetallesBien; let i = index">
                                             <td><button type="button" (click)="e_eliminarDetalleBien(dato)"
                                                     mat-raised-button
-                                                    color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                                                    color="primary"><mat-icon>delete</mat-icon>Eliminar</button>
                                             </td>
                                             <td><button type="button" (click)="e_editarDetalleBien(dato)"
                                                     mat-raised-button
-                                                    color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                                    color="primary"><mat-icon>edit</mat-icon>Editar</button>
                                             </td>
                                             <td> {{i+ 1 }}</td>
                                             <td> {{dato.tfacturas}}</td>

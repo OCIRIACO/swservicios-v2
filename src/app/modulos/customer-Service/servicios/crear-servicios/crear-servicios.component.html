@@ -10,10 +10,10 @@
   <mat-card-content>
     <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
       <!--ZONA BOTONES-->
-      <mat-card-actions>
+       <mat-card-actions class="button-group">
         <button mat-raised-button color="primary" (click)="e_consulta()"
-          title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+          title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
       </mat-card-actions>
       <hr>
       <!--CLIENTE-->
@@ -298,7 +298,7 @@
         </div>
         <div class="row">
           <div class="col-md-12 mt-4 mb-4" style="text-align: center;">
-            <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+            <button mat-raised-button color="primary"><mat-icon>add_box</mat-icon>Agregar</button>
           </div>
         </div>
       </form>
@@ -319,7 +319,7 @@
               <tbody>
                 <tr *ngFor="let dato of servicios; let i = index">
                   <td> <button type="button" mat-raised-button color="primary"
-                      (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                      (click)="e_eliminar_servicio(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                   </td>
                   <td> {{ i + 1}} </td>
                   <td> {{ dato.ttipomercancia }}</td>
@@ -450,7 +450,7 @@
             <tbody>
               <tr *ngFor="let dato of bienesServicios; let i = index">
                 <td> <button type="button" mat-raised-button color="primary"
-                    (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
+                    (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
                 <td> {{ i + 1}} </td>
                 <td> {{ dato.eguia }}</td>
                 <td> {{ dato.ttipocarga }}</td>

@@ -4,11 +4,11 @@
   <mat-toolbar class="navbar" color="primary">
 
     <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>&nbsp;
+      <mat-icon>menu</mat-icon>
     </button>
 
-    <button mat-button [matMenuTriggerFor]="userMenu">
-      <mat-icon>person</mat-icon>&nbsp;
+    <button mat-raised-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>person</mat-icon>
       <span fxShow fxHide.xs>
         {{lblUsuario}}
       </span>
@@ -16,7 +16,7 @@
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
       <a mat-menu-item [routerLink]="" (click)="e_cerrarSesion()">
-        <mat-icon>exit_to_app</mat-icon>&nbsp;
+        <mat-icon>exit_to_app</mat-icon>
         <span>Salir</span>
       </a>
 
@@ -35,7 +35,7 @@
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
-          </mat-icon>&nbsp;
+          </mat-icon>
           <span> Inicio </span>
         </a>
 
@@ -43,7 +43,7 @@
           *ngIf="opCustumer">
           <mat-icon mat-list-icon>
             business
-          </mat-icon>&nbsp;
+          </mat-icon>
           <span> Operaciones </span>
         </a>
 
@@ -51,27 +51,27 @@
           *ngIf="OpcionIntranet">
           <mat-icon mat-list-icon>
             business
-          </mat-icon>&nbsp;
+          </mat-icon>
           <span> Intranet </span>
         </a>
 
         <!--<a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
             <mat-icon mat-list-icon>
               people
-            </mat-icon>&nbsp;
+            </mat-icon>
             <p mat-line> Operaciones </p>
           </a>-->
 
         <!--
   <a mat-list-item [routerLink]="['/account/profile']">
-          <mat-icon mat-list-icon>person</mat-icon>&nbsp;
+          <mat-icon mat-list-icon>person</mat-icon>
           <p mat-line> Cuenta </p>
         </a>
           -->
 
 
         <!--<a mat-list-item [routerLink]="['/auth/login']">
-          <mat-icon mat-list-icon>exit_to_app</mat-icon>&nbsp;
+          <mat-icon mat-list-icon>exit_to_app</mat-icon>
           <p mat-line> Salir </p>
         </a>-->
 

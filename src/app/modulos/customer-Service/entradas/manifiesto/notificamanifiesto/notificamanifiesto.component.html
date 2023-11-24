@@ -5,14 +5,14 @@
     </mat-card-title>
     <mat-card-subtitle>
       Entradas
-  </mat-card-subtitle>
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
-      <mat-card-actions>
+      <mat-card-actions class="button-group">
         <button mat-raised-button color="primary" (click)="e_consulta()"
-          title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+          title="Consultar" ><mat-icon>list</mat-icon>Consultar</button>
+        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
       </mat-card-actions>
       <hr>
       <!--CLIENTE-->
@@ -266,7 +266,8 @@
             <div class='col-md-3 col-xs-3'>
               <mat-form-field class="full-width">
                 <mat-label>Tipo carga</mat-label>
-                <mat-select formControlName="ttipocarga" name="ttipocarga" (ngModelChange)="onChangeTipoCarga($event)" required>
+                <mat-select formControlName="ttipocarga" name="ttipocarga" (ngModelChange)="onChangeTipoCarga($event)"
+                  required>
                   <mat-option>SELECCIONAR</mat-option>
                   <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                   <mat-option value="LCL">LCL</mat-option>
@@ -357,8 +358,8 @@
             <div class='col-md-3 col-xs-3'>
               <mat-form-field class="full-width">
                 <mat-label>{{lblSerieMarca}}</mat-label>
-                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" maxlength="{{maxCarateresMarcas}}"
-                  formControlName="tmarcas" name="tmarcas" required size="30">
+                <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
+                  maxlength="{{maxCarateresMarcas}}" formControlName="tmarcas" name="tmarcas" required size="30">
                 <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor es
                   requerido</mat-error>
               </mat-form-field>
@@ -499,7 +500,7 @@
             <div class="text-center mt-4 mb-4">
               <div class='form-group'>
                 <button type="submit" mat-raised-button color="primary"
-                  (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                  (click)="e_agregarBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                 <!--<button class="btn btn-xs btn-primary"><i class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
 
 
@@ -527,10 +528,10 @@
               <tbody>
                 <tr *ngFor="let dato of bienes; let i = index">
                   <td><button type="button" mat-raised-button color="primary"
-                      (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button>
+                      (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button>
                   </td>
                   <td><button type="button" mat-raised-button color="primary"
-                      (click)="e_editar(dato)"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                      (click)="e_editar(dato)"><mat-icon>edit</mat-icon>Editar</button>
                   </td>
                   <td>{{i+ 1 }}</td>
                   <td>{{dato.ttramite}}</td>
@@ -815,7 +816,7 @@
               <div class='text-center mt-4 mb-4'>
                 <div class='form-group'>
                   <button type="submit" mat-raised-button color="primary"
-                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>&nbsp;Agregar</button>
+                    (click)="e_agregarDetalleBien()"><mat-icon>add_box</mat-icon>Agregar</button>
                   <!--<button type="button" mat-raised-button color="primary"
                 (click)="e_agregarDetalleBien(FormDatosDetallesBien.value)"><i
                   class="fas fa-plus mg-r-5 fa-1.5x"></i>Agregar</button>-->
@@ -840,9 +841,9 @@
                   <tbody>
                     <tr *ngFor="let dato of  listDetallesBien; let i = index">
                       <td><button type="button" (click)="e_eliminarDetalleBien(dato)" mat-raised-button
-                          color="primary"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button></td>
+                          color="primary"><mat-icon>delete</mat-icon>Eliminar</button></td>
                       <td><button type="button" (click)="e_editarDetalleBien(dato)" mat-raised-button
-                          color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button></td>
+                          color="primary"><mat-icon>edit</mat-icon>Editar</button></td>
                       <td> {{i+ 1 }}</td>
                       <td> {{dato.tfacturas}}</td>
                       <td> {{dato.tmarcas}}</td>

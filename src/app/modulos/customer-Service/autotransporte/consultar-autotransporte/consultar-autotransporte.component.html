@@ -8,9 +8,9 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-card-actions>
+         <mat-card-actions class="button-group">
             <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
-                    insert_drive_file</mat-icon>&nbsp;Nuevo</button>
+                    insert_drive_file</mat-icon>Nuevo</button>
         </mat-card-actions>
         
         <hr>
@@ -23,10 +23,10 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 <div style="text-align:center;">
-                                    <button mat-button color="primary" (click)="e_detalles(element.folioweb)">
-                                        <mat-icon>more_horiz</mat-icon>&nbsp;</button>
-                                    <button mat-button color="primary"
-                                        (click)="e_editar(element.folioweb)"><mat-icon>edit</mat-icon>&nbsp;</button>
+                                    <button mat-raised-button color="primary" (click)="e_detalles(element.folioweb)">
+                                        <mat-icon>more_horiz</mat-icon></button>
+                                    <button mat-raised-button color="primary"
+                                        (click)="e_editar(element.folioweb)"><mat-icon>edit</mat-icon></button>
                                 </div>
                             </mat-cell>
                         </ng-container>

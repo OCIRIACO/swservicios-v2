@@ -8,10 +8,10 @@
 
         <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
             <!--Botones-->
-            <mat-card-actions>
+             <mat-card-actions class="button-group">
                     <button mat-raised-button color="primary"
-                        title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-                    <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+                        title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                    <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
             </mat-card-actions>
 
             <!--Usuario-->
@@ -210,7 +210,7 @@
                             <tr *ngFor="let dato of usuariosList; let i = index">
                                 <td> {{ i + 1}} </td>
                                 <td><button type="button" (click)="editarUsuario(dato)" mat-raised-button
-                                        color="primary"><mat-icon>edit</mat-icon>&nbsp;Editar</button>
+                                        color="primary"><mat-icon>edit</mat-icon>Editar</button>
                                 <td> {{ dato.ecodusuario }} </td>
                                 <td> {{ dato.tnombre }} </td>
                                 <td> {{ dato.tdireccion }} </td>

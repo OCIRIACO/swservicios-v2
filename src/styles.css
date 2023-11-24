@@ -369,3 +369,8 @@ mat-card-content{
   margin-left: 10px;  
 }  
 
+
+.button-group button{ 
+  margin:0 2.5px; 
+} 
+

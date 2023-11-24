@@ -9,10 +9,10 @@
   </mat-card-header>
   <mat-card-content>
     <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
-      <mat-card-actions>
+       <mat-card-actions class="button-group">
         <button mat-raised-button color="primary" (click)="e_consulta()"
-          title="Consultar"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
-        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>&nbsp;Guardar</button>
+          title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+        <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
       </mat-card-actions>
       <hr>
       <!--CLIENTE-->
@@ -195,14 +195,14 @@ requerido</mat-error>-->
               <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()" name="tvalor" ngModel
                 #tvalor="ngModel" required>
 
-              <button mat-raised-button matSuffix mat-stroked-button color="primary"><mat-icon>search</mat-icon>&nbsp;
+              <button mat-raised-button matSuffix mat-stroked-button color="primary"><mat-icon>search</mat-icon>
               </button>
 
               <mat-error *ngIf="FormBusquedaBien.controls['tvalor'].errors?.required">Ingresa el valor
                 a buscar requerido</mat-error>
 
-              <!--<button mat-button matSuffix mat-stroked-button aria-label="search">
-                <mat-icon>Buscar</mat-icon>&nbsp;
+              <!--<button mat-raised-button matSuffix mat-stroked-button aria-label="search">
+                <mat-icon>Buscar</mat-icon>
               </button>-->
             </mat-form-field>
 
@@ -292,7 +292,7 @@ requerido</mat-error>-->
                   <tbody>
                     <tr *ngFor="let dato of datosBien; let i = index">
                       <td> <button type="button" mat-raised-button color="primary"
-                          (click)="e_agregar(dato)"><mat-icon>add_box</mat-icon>&nbsp; Agregar</button> </td>
+                          (click)="e_agregar(dato)"><mat-icon>add_box</mat-icon> Agregar</button> </td>
                       <td> {{ i + 1}} </td>
                       <td> {{ dato.eguia }}</td>
                       <td> {{ dato.ttipocarga }}</td>
@@ -339,7 +339,7 @@ requerido</mat-error>-->
             <tbody>
               <tr *ngFor="let dato of bienesLiberar; let i = index">
                 <td> <button type="button" mat-raised-button color="primary"
-                    (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>&nbsp;Eliminar</button> </td>
+                    (click)="e_eliminar(dato)"><mat-icon>delete</mat-icon>Eliminar</button> </td>
                 <td> {{ i + 1}} </td>
                 <td> {{ dato.eguia }}</td>
                 <td> {{ dato.ttipocarga }}</td>

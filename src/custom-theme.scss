@@ -112,3 +112,8 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+
+.mat-raised-button ~ .mat-raised-button {
+    margin-left: 10px;
+  }

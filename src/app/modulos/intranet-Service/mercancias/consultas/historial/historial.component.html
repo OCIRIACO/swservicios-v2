@@ -44,7 +44,7 @@
                                             <div class="col-md-12 col-sm-12 col-xs-12 mt-2">
                                                 <div class="button-row">
                                                     <button mat-raised-button color="primary" style="float:right;"
-                                                        (click)="e_buscar(FormBusqueda.value)"><mat-icon>search</mat-icon>&nbsp;Busqueda</button>
+                                                        (click)="e_buscar(FormBusqueda.value)"><mat-icon>search</mat-icon>Busqueda</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,8 +118,8 @@
                                             <th mat-header-cell *matHeaderCellDef style="text-align: center;"></th>
                                             <td mat-cell *matCellDef="let element">
                                                 <div style="text-align:center;">
-                                                    <button mat-button color="primary" (click)="e_verdetalle(element)">
-                                                        <mat-icon>more_horiz</mat-icon>&nbsp;</button>
+                                                    <button mat-raised-button color="primary" (click)="e_verdetalle(element)">
+                                                        <mat-icon>more_horiz</mat-icon></button>
                                                 </div>
                                             </td>
                                         </ng-container>

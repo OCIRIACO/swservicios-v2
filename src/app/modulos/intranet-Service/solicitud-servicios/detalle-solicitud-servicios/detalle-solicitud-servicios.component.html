@@ -5,33 +5,33 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-card-actions>
+         <mat-card-actions class="button-group">
             <button mat-raised-button color="primary" [disabled]="lblestatus == 'RECHAZADA'"
                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : '' "
                 [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' "
-                (click)="e_imprimir()"><mat-icon>print</mat-icon>&nbsp;Imprimir</button>
+                (click)="e_imprimir()"><mat-icon>print</mat-icon>Imprimir</button>
 
             <button mat-raised-button color="primary"
-                (click)="e_consulta()"><mat-icon>list</mat-icon>&nbsp;Consultar</button>
+                (click)="e_consulta()"><mat-icon>list</mat-icon>Consultar</button>
 
             <button mat-raised-button color="primary" (click)="e_autorizar()" [disabled]="lblestatus == 'AUTORIZADA'"
                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : '' "
                 [style.cursor]=" lblestatus == 'AUTORIZADA' ? 'not-allowed' : '' "
                 [style.pointer-events]=" lblestatus == 'AUTORIZADA' ? 'all !important' : '' ">
-                <mat-icon>done</mat-icon>&nbsp; Autorizar solicitud</button>
+                <mat-icon>done</mat-icon> Autorizar solicitud</button>
 
             <button mat-raised-button color="primary" (click)="e_rechazar()" [disabled]="lblestatus == 'RECHAZADA'"
                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : '' "
                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
                 [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' ">
-                <mat-icon>block</mat-icon>&nbsp;Rechazar solicitud</button>
+                <mat-icon>block</mat-icon>Rechazar solicitud</button>
 
             <button mat-raised-button color="primary" (click)="e_cancelar()" [disabled]="lblestatus == 'RECHAZADA'"
                 [style.display]=" lblestatus == 'CANCELADA' ? 'none' : '' "
                 [style.cursor]=" lblestatus == 'RECHAZADA' ? 'not-allowed' : '' "
                 [style.pointer-events]=" lblestatus == 'RECHAZADA' ? 'all !important' : '' ">
-                <mat-icon>clear</mat-icon>&nbsp;Eliminar solicitud</button>
+                <mat-icon>clear</mat-icon>Eliminar solicitud</button>
 
         </mat-card-actions>
 
