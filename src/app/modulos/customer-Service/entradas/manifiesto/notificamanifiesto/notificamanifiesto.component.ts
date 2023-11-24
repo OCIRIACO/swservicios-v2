@@ -242,8 +242,6 @@ export class NotificamanifiestoComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
     //Date
     const datePipe = new DatePipe('en-Us');
     this.nowFechaServicio = datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -978,6 +976,11 @@ export class NotificamanifiestoComponent implements OnInit {
       }
     }
 
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

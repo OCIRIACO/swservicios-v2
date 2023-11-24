@@ -24,7 +24,7 @@ export class PerfilClienteStep1Component implements OnInit {
   IdataPerfil: Array<any> = [];
 
   constructor(
-    private apiServiceUsuario: ApiServiceUsuario, 
+    private apiServiceUsuario: ApiServiceUsuario,
     private serviceDatosPerfilUsuario: serviceDatosPerfilUsuarios,
     private router: Router,) { }
 
@@ -41,17 +41,17 @@ export class PerfilClienteStep1Component implements OnInit {
   }
 
   //Asignar Cliente Directo 
-  e_asignarClienteDirecto(datos:any){
+  e_asignarClienteDirecto(datos: any) {
 
     $("#jstree").jstree("refresh");
-    
-    this.serviceDatosPerfilUsuario.datosPerfilUsuarios =  datos
+
+    this.serviceDatosPerfilUsuario.datosPerfilUsuarios = datos
 
     //this.router.navigate(['/dashboard/intranet/administracion/config/perfiles/cliente/step2']);
     window.location.href = "#/dashboard/intranet/administracion/config/perfiles/cliente/step2";
 
 
-   
+
   }
 
   //Consultar API de los PERFILES
@@ -135,8 +135,13 @@ export class PerfilClienteStep1Component implements OnInit {
   }
 
   //Regresar menu Inicio
-  e_inicio(){
+  e_inicio() {
     this.router.navigate(['dashboard/intranet/menu']);
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

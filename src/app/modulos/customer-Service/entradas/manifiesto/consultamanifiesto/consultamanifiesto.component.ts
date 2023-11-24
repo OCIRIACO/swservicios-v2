@@ -7,8 +7,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { RenderAcciones } from './render-acciones';
 import { Router } from '@angular/router';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 export interface Post {
   folioweb: number,
@@ -29,15 +30,19 @@ export interface Post {
 })
 export class ConsultamanifiestoComponent implements OnInit {
 
+  //@ViewChild(MatSort, { static: true }) sort!: MatSort;
+  //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
   displayedColumns: string[] = ['acciones', 'folioweb', 'tipoSolicitud', 'correoprogramo', 'fecharegistro', 'programo', 'totalcargas', 'tipocarga', 'testatus'];
   dataSource = new MatTableDataSource<Post>([]);
 
   constructor(
-    private apiManifiesto: ApiServiceManifiesto, 
-    private spinner: NgxSpinnerService, 
+    private apiManifiesto: ApiServiceManifiesto,
+    private spinner: NgxSpinnerService,
     private router: Router
-    ) {
+  ) {
 
   }
 
@@ -47,6 +52,9 @@ export class ConsultamanifiestoComponent implements OnInit {
   ngOnInit(): void {
     this.e_consultarSolicitudes();
     console.log('DataSource', this.dataSource)
+
+    this.dataSource.paginator = this.paginator;
+
 
   }
 
@@ -67,17 +75,19 @@ export class ConsultamanifiestoComponent implements OnInit {
   e_nuevo() {
     this.router.navigate(['dashboard/customer/entradas/nuevo']);
   }
-
   //Detalle
   e_detalles(etransaccion: number) {
     //console.log(etransaccion)
     this.router.navigate(['dashboard/customer/entradas/detalle', etransaccion]);  // nativo
   }
-
   //Editar
   e_editar(etransaccion: number) {
     //console.log(etransaccion)
     this.router.navigate(['dashboard/customer/entradas/editar', etransaccion]);  // nativo
+  }
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

@@ -5,7 +5,8 @@ import { RenderAcciones } from './render-acciones';
 import { serviceDatosUsuario } from 'src/app/service/service.datosUsuario'
 import { Router } from '@angular/router';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface Post {
   ecliente: number,
@@ -56,7 +57,7 @@ export class ConsultarClienteCustomerComponent implements OnInit {
 
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
-        
+
         //console.log(this.dataSource.data);
         //clientes =  response;
         this.e_procesarRespuesta(response.data);
@@ -65,27 +66,27 @@ export class ConsultarClienteCustomerComponent implements OnInit {
   }
 
   //Procesar respuesta
-  e_procesarRespuesta(clientes:any){
+  e_procesarRespuesta(clientes: any) {
 
     console.log(clientes);
 
-    let clientesList : any = []
+    let clientesList: any = []
 
     clientes.forEach((dato: any, index: any) => {
 
-      let datoCliente ={
-        ecliente          :  dato.ecliente,
-        trazonsocial      :  dato.trazonsocial,
-        trfc              :  dato.trfc,
-        testado           :  dato.testado,
-        fhfecharegistro   :  dato.fhfecharegistro,    
+      let datoCliente = {
+        ecliente: dato.ecliente,
+        trazonsocial: dato.trazonsocial,
+        trfc: dato.trfc,
+        testado: dato.testado,
+        fhfecharegistro: dato.fhfecharegistro,
       };
 
-       clientesList.push(datoCliente);      
+      clientesList.push(datoCliente);
     })
 
     this.dataSource.data = clientesList;
-    console.log(this.dataSource.data );
+    console.log(this.dataSource.data);
     this.dataSource.paginator = this.paginator;
 
   }
@@ -98,14 +99,17 @@ export class ConsultarClienteCustomerComponent implements OnInit {
   //Detalle
   e_detalles(etransaccion: number) {
     //console.log(etransaccion)
-    this.router.navigate(['dashboard/customer/clientes/detalle', etransaccion ]);  // nativo
+    this.router.navigate(['dashboard/customer/clientes/detalle', etransaccion]);  // nativo
   }
 
   //Editar
   e_editar(etransaccion: number) {
     //console.log(etransaccion)
-    this.router.navigate(['dashboard/customer/clientes/editar', etransaccion ]);  // nativo
+    this.router.navigate(['dashboard/customer/clientes/editar', etransaccion]);  // nativo
   }
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

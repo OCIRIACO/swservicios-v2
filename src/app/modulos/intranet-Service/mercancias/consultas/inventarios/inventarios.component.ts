@@ -8,7 +8,8 @@ import { ColDef } from 'ag-grid-community';
 import { HttpClient } from '@angular/common/http';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 
 export interface IdataInventario {

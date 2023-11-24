@@ -11,7 +11,7 @@ import { apiCliente } from 'src/app/serviciosRest/Customer/cliente/api.service.c
 })
 export class DetalleClienteCustomerComponent implements OnInit {
 
-  
+
   //Path base
   directorio: string = GlobalConstants.pathCustomer;
 
@@ -65,10 +65,13 @@ export class DetalleClienteCustomerComponent implements OnInit {
   }
 
   //Redireccionar para crear un nuevo cliente
-  e_nuevo(){
+  e_nuevo() {
     this.router.navigate(['dashboard/customer/clientes/nuevo']);
   }
 
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

@@ -544,7 +544,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     this.direcciones.forEach((dato: any, valor: any) => {
       let valorDireccion: any = {}
 
-      valorDireccion.edireccion =  dato.edireccion;
+      valorDireccion.edireccion = dato.edireccion;
       valorDireccion.ecodigopostal = dato.ecodigopostal;
       valorDireccion.tentidadfederativa = dato.tentidadfederativa;
       valorDireccion.tmunicipio = dato.tmunicipio;
@@ -560,7 +560,7 @@ export class EditarClienteCustomerComponent implements OnInit {
 
     parametros = {
       eperfil: this.datosUsuario.eperfil,
-      ecliente:solicitud.value.ecliente,
+      ecliente: solicitud.value.ecliente,
       trazonsocial: solicitud.value.trazonsocial,
       trfc: solicitud.value.trfc,
       direcciones: arrdireccion
@@ -628,6 +628,11 @@ export class EditarClienteCustomerComponent implements OnInit {
     console.log('*Colonia');
     //this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
     //console.log((datos.source.selected as MatOption).viewValue);
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

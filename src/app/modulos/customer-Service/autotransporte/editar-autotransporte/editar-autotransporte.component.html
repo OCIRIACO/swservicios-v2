@@ -21,7 +21,7 @@
                         [style.pointer-events]=" tingresoTotal == 'SI' ? 'all !important' : '' ">
                         Guardar</button>
                     <button mat-raised-button color="primary" (click)="e_consulta()"
-                        title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                        title="Consultar"><mat-icon>view_list</mat-icon>Consultar</button>
                     <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
                             insert_drive_file</mat-icon>Nuevo</button>
                 </div>
@@ -32,13 +32,18 @@
 
 
             <!--Botones-->
-             <mat-card-actions class="button-group">
+                <mat-card-actions class="button-group">
+                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+                    menu</mat-icon>Menu</button>
                 <button mat-raised-button color="primary" (click)="e_consulta()"
-                    title="Consultar"><mat-icon>list</mat-icon>Consultar</button>
+                    title="Consultar"><mat-icon>view_list</mat-icon>Consultar</button>
                 <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
             </mat-card-actions>
 
-
+            <div class="mt-2 mb-5">
+                <mat-divider> </mat-divider> 
+            </div>
+            
             <div class="alert alert-{{lbltipoAlerta}}" role="alert">
                 {{lblalert}}
             </div>

@@ -849,4 +849,9 @@ export class EditarServiciosComponent implements OnInit {
     }
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
+
 }

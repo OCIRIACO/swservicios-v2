@@ -1053,10 +1053,10 @@ export class EditarmanifiestoComponent implements OnInit {
 
   //Onchange tipo de carga
   //Onchange tipo de carga
-onChangeTipoCarga(datos: any) {
+  onChangeTipoCarga(datos: any) {
 
-  //Reset
-  this.FormDatosBien.controls['tmarcas'].setValue('');
+    //Reset
+    this.FormDatosBien.controls['tmarcas'].setValue('');
 
     let error: string = 'OK!';
     let mensaje: string = ''
@@ -1103,6 +1103,11 @@ onChangeTipoCarga(datos: any) {
       }
     }
 
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

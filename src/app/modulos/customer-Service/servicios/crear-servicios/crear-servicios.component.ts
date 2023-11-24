@@ -828,12 +828,12 @@ export class CrearServiciosComponent implements OnInit {
 
       //Reset
       this.FormServicios.reset();
-
     }
+  }
 
-
-
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

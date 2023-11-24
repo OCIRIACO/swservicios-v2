@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, Form, FormControl, FormGroup, NgForm,  ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormControl, FormGroup, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -1434,10 +1434,10 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
   //Onchange tipo de carga
   //Onchange tipo de carga
-onChangeTipoCarga(datos: any) {
+  onChangeTipoCarga(datos: any) {
 
-  //Reset
-  this.FormDatosBien.controls['tmarcas'].setValue('');
+    //Reset
+    this.FormDatosBien.controls['tmarcas'].setValue('');
 
     let error: string = 'OK!';
     let mensaje: string = ''
@@ -1505,5 +1505,9 @@ onChangeTipoCarga(datos: any) {
     this.router.navigate(['dashboard/customer/serviciocarga/nuevo']);
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

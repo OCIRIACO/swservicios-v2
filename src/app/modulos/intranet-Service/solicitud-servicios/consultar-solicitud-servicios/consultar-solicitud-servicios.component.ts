@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { RenderAcciones } from './render-acciones';
 import { apiSolicitudServicios } from 'src/app/serviciosRest/Intranet/servicios/api.service.servicios';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { MatLegacyRadioChange as MatRadioChange } from '@angular/material/legacy-radio';
 import { Router } from '@angular/router';
@@ -74,6 +75,10 @@ export class ConsultarSolicitudServiciosComponent implements OnInit {
     this.router.navigate(['/dashboard/intranet/menu']);
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 
 }

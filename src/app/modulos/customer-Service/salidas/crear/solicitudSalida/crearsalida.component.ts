@@ -44,7 +44,7 @@ export class CrearsalidaComponent implements OnInit {
 
   //Textarea *comentarion
   maxCaracteres: number = 256
-maxCarateresMarcas: number = 0;
+  maxCarateresMarcas: number = 0;
   reglaLenght: string = ''
 
   //Boolean para evitar que los usuarios abandonen accidentalmente una ruta / página
@@ -621,5 +621,9 @@ maxCarateresMarcas: number = 0;
     this.router.navigate(['dashboard/customer/salidas/consultar']);
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 }
 

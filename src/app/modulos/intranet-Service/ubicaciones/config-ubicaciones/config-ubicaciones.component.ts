@@ -358,5 +358,10 @@ export class ConfigUbicacionesComponent implements OnInit {
   e_inicio(){
     this.router.navigate(['/dashboard/intranet/menu']);
   }
+  //Menu
+  e_menu(){
+    this.router.navigate(['dashboard/customer/menu']);
+  }
+  
 
 }

@@ -11,7 +11,7 @@
                             <li class="breadcrumb-item active" aria-current="page">Inventarios</li>
                         </ol>
                     </nav>
-                    
+
                 </div>
             </div>
             <div class="content-body">
@@ -145,43 +145,41 @@
                         <hr>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
                             <div class="row">
-                                <div class="table-responsive">
-                                    <table mat-table [dataSource]="datosInvestario" class="mat-elevation-z8"
-                                        width="100%">
+                                <table mat-table [dataSource]="datosInvestario" class="mat-elevation-z8" width="100%">
 
-                                        <!-- NO.GUIA -->
-                                        <ng-container matColumnDef="eguia">
-                                            <th mat-header-cell *matHeaderCellDef> NO.GUIA </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.eguia}} </td>
-                                        </ng-container>
+                                    <!-- NO.GUIA -->
+                                    <ng-container matColumnDef="eguia">
+                                        <th mat-header-cell *matHeaderCellDef> NO.GUIA </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.eguia}} </td>
+                                    </ng-container>
 
-                                        <ng-container matColumnDef="ttipocarga">
-                                            <th mat-header-cell *matHeaderCellDef> TIPO DE CARGA </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.ttipocarga}} </td>
-                                        </ng-container>
+                                    <ng-container matColumnDef="ttipocarga">
+                                        <th mat-header-cell *matHeaderCellDef> TIPO DE CARGA </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ttipocarga}} </td>
+                                    </ng-container>
 
-                                        <ng-container matColumnDef="ttramite">
-                                            <th mat-header-cell *matHeaderCellDef> TRAMITE </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.ttramite}} </td>
-                                        </ng-container>
+                                    <ng-container matColumnDef="ttramite">
+                                        <th mat-header-cell *matHeaderCellDef> TRAMITE </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ttramite}} </td>
+                                    </ng-container>
 
-                                        <ng-container matColumnDef="ttipocontenedor">
-                                            <th mat-header-cell *matHeaderCellDef> TIPO DE CONTENEDOR </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.ttipocontenedor}} </td>
-                                        </ng-container>
+                                    <ng-container matColumnDef="ttipocontenedor">
+                                        <th mat-header-cell *matHeaderCellDef> TIPO DE CONTENEDOR </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.ttipocontenedor}} </td>
+                                    </ng-container>
 
-                                        <ng-container matColumnDef="tmarcas">
-                                            <th mat-header-cell *matHeaderCellDef> MARCAS/SERIES </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.tmarcas}} </td>
-                                        </ng-container>
+                                    <ng-container matColumnDef="tmarcas">
+                                        <th mat-header-cell *matHeaderCellDef> MARCAS/SERIES </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.tmarcas}} </td>
+                                    </ng-container>
 
-                                        <tr mat-header-row *matHeaderRowDef="columnasInventario, sticky: true"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: columnasInventario;"></tr>
+                                    <tr mat-header-row *matHeaderRowDef="columnasInventario, sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: columnasInventario;"></tr>
 
-                                    </table>
-                                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
-                                        showFirstLastButtons></mat-paginator>
-                                </div>
+                                </table>
+                                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
+                                    showFirstLastButtons></mat-paginator>
+
                             </div>
                         </div>
                     </div>

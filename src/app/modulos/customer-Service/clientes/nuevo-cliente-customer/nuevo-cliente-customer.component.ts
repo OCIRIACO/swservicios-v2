@@ -559,5 +559,9 @@ export class NuevoClienteCustomerComponent implements OnInit {
     //console.log((datos.source.selected as MatOption).viewValue);
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

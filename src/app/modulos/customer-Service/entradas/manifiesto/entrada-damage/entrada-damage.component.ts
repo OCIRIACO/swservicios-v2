@@ -97,13 +97,13 @@ export class EntradaDamageComponent implements OnInit {
 
 
   ngOnInit(): void {
- 
-  //Catalogos
-  this.datosNaviera = this.serviceCatalogos.catalogoNavieras
 
-  this.datosEmbalaje = this.serviceCatalogos.catalogoEmbalajes
+    //Catalogos
+    this.datosNaviera = this.serviceCatalogos.catalogoNavieras
 
- 
+    this.datosEmbalaje = this.serviceCatalogos.catalogoEmbalajes
+
+
 
     //Consultar
     this.id = this.route.snapshot.params['id'];
@@ -191,7 +191,7 @@ export class EntradaDamageComponent implements OnInit {
     this.lblusuarioperfil = datos.tperfilprogramo;
     this.lblusuarioautoriza = datos.tusuarioautoriza
     this.lblfhfechaautoriza = datos.fhfechaautoriza
-    this.lblestatus  =  datos.testatus
+    this.lblestatus = datos.testatus
 
 
     //Set de QR's
@@ -231,11 +231,11 @@ export class EntradaDamageComponent implements OnInit {
 
         // Busco los textos de los catalogos de la naviera ya los tengo a la mano
 
-      this.datosNaviera.forEach((naviera: any, navindex: any) => {
-        if (naviera['ecodnaviera'] == datocarga['ecodnaviera']) {
-          tnombreNaviera = naviera['tnombre']
-        }
-      })
+        this.datosNaviera.forEach((naviera: any, navindex: any) => {
+          if (naviera['ecodnaviera'] == datocarga['ecodnaviera']) {
+            tnombreNaviera = naviera['tnombre']
+          }
+        })
 
 
 
@@ -290,7 +290,7 @@ export class EntradaDamageComponent implements OnInit {
 
         Icarga = {
           eguia: datocarga['eguia'],
-          tembalaje:tnombreEmbalajeMercancia,
+          tembalaje: tnombreEmbalajeMercancia,
           ecodembalaje: datocarga['ecodembalaje'],
           tnaviera: tnombreNaviera,
           ecodnaviera: datocarga['ecodnaviera'],
@@ -446,26 +446,26 @@ export class EntradaDamageComponent implements OnInit {
     xHeader = 40
     xValor = 45
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('+ Usuarios', 10, xTitle)
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Programada', 15, xHeader)
-     doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(datoPdf.tusuarioprogramo, 15, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Perfil', 60, xHeader)
-     doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(datoPdf.tperfilprogramo, 60, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text(this.lblusuarioInterno, 120, xHeader)
-     doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(datoPdf.tusuarioautoriza, 120, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text(this.lblFechaInterno, 165, xHeader)
-     doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(datoPdf.fhfechaautoriza, 165, xValor)
 
 
@@ -477,55 +477,55 @@ export class EntradaDamageComponent implements OnInit {
     xValor = 60
 
     doc.setFontSize(8)
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('+ Cliente', 10, xTitle)
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('RFC', 15, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltrfc, 15, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Razon social', 50, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltrazonsocial, 50, xValor)
 
     xTitle = 63
     xHeader = 68
     xValor = 73
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Cp', 15, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lblecodigopostal, 15, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Entidad', 30, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltentidadfederativa, 30, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Municipio', 60, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltmunicipio, 60, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Colonia', 83, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltcolonia, 83, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('Calle', 120, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltcalle, 120, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('No.Interior', 160, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltnuminterior, 160, xValor)
 
-    doc.setFont(tfontname,tfontstylebold)
+    doc.setFont(tfontname, tfontstylebold)
     doc.text('No.Exterior', 180, xHeader)
-    doc.setFont(tfontname,"normal")
+    doc.setFont(tfontname, "normal")
     doc.text(this.lbltnumexterior, 180, xValor)
     /*------------------BIENES-----------------------*/
 
@@ -843,5 +843,9 @@ export class EntradaDamageComponent implements OnInit {
 
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

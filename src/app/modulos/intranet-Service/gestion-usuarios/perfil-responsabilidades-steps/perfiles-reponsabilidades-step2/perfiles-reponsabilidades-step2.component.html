@@ -5,13 +5,17 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-         <mat-card-actions class="button-group">
+            <mat-card-actions class="button-group">
+                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+                    menu</mat-icon>Menu</button>
             <button mat-raised-button color="primary"
                 (click)="e_regresar()"><mat-icon>arrow_back_ios</mat-icon>Regresar</button>
             <button mat-raised-button color="primary"
                 (click)="e_guardar()"><mat-icon>save</mat-icon>Guardar</button>
         </mat-card-actions>
-        <hr>
+        <div class="mt-2 mb-5">
+            <mat-divider> </mat-divider> 
+        </div>
         <div class="row">
             <div class="col-sm">
                 <div class="pd-y-10 pd-x-20 ">

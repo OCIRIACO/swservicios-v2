@@ -1361,5 +1361,8 @@ export class CrearAutotransporteComponent implements OnInit {
     this.router.navigate(['dashboard/customer/transporte/consultar']);
   }
 
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 }

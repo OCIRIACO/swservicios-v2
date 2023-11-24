@@ -733,10 +733,10 @@ export class EditarAutotransporteComponent implements OnInit {
 
   //Onchange tipo de carga
   //Onchange tipo de carga
-onChangeTipoCarga(datos: any) {
+  onChangeTipoCarga(datos: any) {
 
-  //Reset
-  this.FormDatosBien.controls['tmarcas'].setValue('');
+    //Reset
+    this.FormDatosBien.controls['tmarcas'].setValue('');
 
 
     let error: string = 'OK!';
@@ -749,14 +749,14 @@ onChangeTipoCarga(datos: any) {
 
       if (datos != 'CONTENERIZADA') {
         this.lblSerieMarca = 'Marca'
-this.maxCarateresMarcas = 25
+        this.maxCarateresMarcas = 25
         this.isReadonly = true
         this.FormDatosBien.controls['ttipocontenedor'].setValue('NA');
         this.FormDatosBien.controls['tsellos'].setValue('NA');
         this.maxCarateresMarcas = 25;
       } else {
         this.lblSerieMarca = 'Contenedor'
-this.maxCarateresMarcas = 11
+        this.maxCarateresMarcas = 11
         this.isReadonly = false
         this.FormDatosBien.controls['ttipocontenedor'].setValue('');
         this.FormDatosBien.controls['tsellos'].setValue('');
@@ -1636,6 +1636,9 @@ this.maxCarateresMarcas = 11
     this.router.navigate(['dashboard/customer/transporte/nuevo']);
   }
 
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

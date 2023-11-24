@@ -3,7 +3,8 @@ import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/sol
 import { Router } from '@angular/router';
 import { GlobalConstants } from 'src/app/modelos/global';
 import { RenderAcciones } from './render-acciones';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 
 export interface Post {
@@ -43,6 +44,8 @@ export class ConsultarAutotransporteComponent implements OnInit {
   ngOnInit(): void {
 
 
+
+
     //Parametros
     let parametros = {}
 
@@ -75,5 +78,10 @@ export class ConsultarAutotransporteComponent implements OnInit {
   e_editar(etransaccion: number) {
     //console.log(etransaccion)
     this.router.navigate(['dashboard/customer/transporte/editar', etransaccion]);  // nativo
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 }

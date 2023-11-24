@@ -136,4 +136,9 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
     this.router.navigate(['dashboard/intranet/menu']);
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
+
 }

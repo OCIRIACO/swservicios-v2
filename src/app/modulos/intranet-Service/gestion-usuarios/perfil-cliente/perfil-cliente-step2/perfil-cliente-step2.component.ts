@@ -6,7 +6,8 @@ import { FormArray, UntypedFormBuilder, FormControl, FormGroup, ValidatorFn } fr
 import Swal from 'sweetalert2';
 import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 export interface entidades {
@@ -15,8 +16,8 @@ export interface entidades {
   trazonsocial: string,
   trfc: string,
   ttipocliente: string,
-  testado:string,
-  fhfecharegistro:string
+  testado: string,
+  fhfecharegistro: string
 }
 
 
@@ -29,11 +30,11 @@ export class PerfilClienteStep2Component implements OnInit {
 
   //Table
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  displayedColumnsPendientes: string[] = ['acciones', 'ecodcliente','trazonsocial', 'trfc' ];
+  displayedColumnsPendientes: string[] = ['acciones', 'ecodcliente', 'trazonsocial', 'trfc'];
   dataSourceUsuariosPendientes = new MatTableDataSource<entidades>([]);
 
 
-  displayedColumnsAsignados: string[] = ['acciones', 'ecodcliente','trazonsocial', 'trfc' ];
+  displayedColumnsAsignados: string[] = ['acciones', 'ecodcliente', 'trazonsocial', 'trfc'];
   dataSourceUsuariosAsginados = new MatTableDataSource<entidades>([]);
 
 
@@ -107,10 +108,10 @@ export class PerfilClienteStep2Component implements OnInit {
     let parametros1 = {
       eperfil: this.serviceDatosPerfil.ecodperfil,
     }
-    
+
     this.apiCliente.postConsultarPerfilClientePendiente(parametros1).subscribe(
       (response) => {
-        this.dataSourceUsuariosPendientes.data = response as entidades [];
+        this.dataSourceUsuariosPendientes.data = response as entidades[];
         this.dataSourceUsuariosPendientes.paginator = this.paginator;
       }
     )
@@ -121,7 +122,7 @@ export class PerfilClienteStep2Component implements OnInit {
     }
     this.apiCliente.postConsultarPerfilCliente(parametros2).subscribe(
       (response) => {
-        this.dataSourceUsuariosAsginados.data = response as entidades [];
+        this.dataSourceUsuariosAsginados.data = response as entidades[];
         this.dataSourceUsuariosAsginados.paginator = this.paginator;
       }
     )
@@ -359,7 +360,10 @@ export class PerfilClienteStep2Component implements OnInit {
     }
   }
 
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }
 

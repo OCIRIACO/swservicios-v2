@@ -5,7 +5,9 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-         <mat-card-actions class="button-group">
+           <mat-card-actions class="button-group">
+                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+                    menu</mat-icon>Menu</button>
             <div class="btn-toolbar" role="group">
                 <div class="btn-group mr-5" role="group">
                     <button mat-raised-button color="primary" (click)="e_regresar()"><i
@@ -13,7 +15,9 @@
                 </div>
             </div>
         </mat-card-actions>
-        <hr>
+        <div class="mt-2 mb-5">
+            <mat-divider> </mat-divider>
+        </div>
         <div class="component mg-b-20 mg-t-10">
             {{lblpath}}
         </div>
@@ -30,86 +34,81 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <mat-table [dataSource]="listaUsuariosPendientes" class="mat-elevation-z8" width="100%">
-                            <!--Acciones -->
-                            <ng-container matColumnDef="acciones">
-                                <mat-header-cell *matHeaderCellDef style="text-align: center;">
-                                    S
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element">
-                                    <div style="text-align:center;">
-                                        <input type="radio" name="checkCliente" value="{{element.ecodusuario}}"
-                                            id="{{element.ecodusuario}}">
-                                    </div>
-                                </mat-cell>
-                            </ng-container>
-
-                            <!-- Id usuario -->
-                            <ng-container matColumnDef="ecodusuario">
-                                <mat-header-cell *matHeaderCellDef> NO.USUARIO </mat-header-cell>
-                                <mat-cell *matCellDef="let element">
-                                    {{element.ecodusuario}}
-                                </mat-cell>
-                            </ng-container>
-
-                            <!-- Nombre usuario -->
-                            <ng-container matColumnDef="tnombre">
-                                <mat-header-cell *matHeaderCellDef> USUARIO </mat-header-cell>
-                                <mat-cell *matCellDef="let element">
-                                    {{element.tnombre}}
-                                </mat-cell>
-                            </ng-container>
-
-                            <mat-header-row *matHeaderRowDef="displayedColumnsPendientes, sticky: true">
-                            </mat-header-row>
-                            <mat-row *matRowDef="let row; columns: displayedColumnsPendientes;">
-                            </mat-row>
-
-                        </mat-table>
-                    </div>
-                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-                </form>
-            </div>
-            <div class="col-xl-6">
-                <div class="table-responsive">
-
-                    <mat-table [dataSource]="listaUsuariosAsignados" class="mat-elevation-z8">
+                    <table mat-table [dataSource]="listaUsuariosPendientes" class="mat-elevation-z8" width="100%">
                         <!--Acciones -->
                         <ng-container matColumnDef="acciones">
-                            <mat-header-cell  *matHeaderCellDef style="text-align: center;">
+                            <mat-header-cell *matHeaderCellDef style="text-align: center;">
                                 S
                             </mat-header-cell>
-                            <mat-cell  *matCellDef="let element">
+                            <mat-cell *matCellDef="let element">
                                 <div style="text-align:center;">
                                     <input type="radio" name="checkCliente" value="{{element.ecodusuario}}"
                                         id="{{element.ecodusuario}}">
                                 </div>
-                            </mat-cell >
+                            </mat-cell>
                         </ng-container>
 
                         <!-- Id usuario -->
                         <ng-container matColumnDef="ecodusuario">
-                            <mat-header-cell  *matHeaderCellDef> NO.USUARIO </mat-header-cell>
-                            <mat-cell  *matCellDef="let element">
+                            <mat-header-cell *matHeaderCellDef> NO.USUARIO </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
                                 {{element.ecodusuario}}
-                            </mat-cell >
+                            </mat-cell>
                         </ng-container>
+
                         <!-- Nombre usuario -->
                         <ng-container matColumnDef="tnombre">
-                            <mat-header-cell  *matHeaderCellDef> USUARIO </mat-header-cell>
-                            <mat-cell  *matCellDef="let element">
+                            <mat-header-cell *matHeaderCellDef> USUARIO </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
                                 {{element.tnombre}}
-                            </mat-cell >
+                            </mat-cell>
                         </ng-container>
 
-                        <mat-header-row *matHeaderRowDef="displayedColumnsAsignados, sticky: true">
+                        <mat-header-row *matHeaderRowDef="displayedColumnsPendientes, sticky: true">
                         </mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumnsAsignados;">
+                        <mat-row *matRowDef="let row; columns: displayedColumnsPendientes;">
                         </mat-row>
-                    </mat-table>
 
-                </div>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+                </form>
+            </div>
+            <div class="col-xl-6">
+                <table mat-table [dataSource]="listaUsuariosAsignados" class="mat-elevation-z8">
+                    <!--Acciones -->
+                    <ng-container matColumnDef="acciones">
+                        <mat-header-cell *matHeaderCellDef style="text-align: center;">
+                            S
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <div style="text-align:center;">
+                                <input type="radio" name="checkCliente" value="{{element.ecodusuario}}"
+                                    id="{{element.ecodusuario}}">
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Id usuario -->
+                    <ng-container matColumnDef="ecodusuario">
+                        <mat-header-cell *matHeaderCellDef> NO.USUARIO </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element.ecodusuario}}
+                        </mat-cell>
+                    </ng-container>
+                    <!-- Nombre usuario -->
+                    <ng-container matColumnDef="tnombre">
+                        <mat-header-cell *matHeaderCellDef> USUARIO </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element.tnombre}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsAsignados, sticky: true">
+                    </mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsAsignados;">
+                    </mat-row>
+                </table>
                 <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
             </div>
         </div>

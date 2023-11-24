@@ -9,7 +9,8 @@ import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilU
 import { UntypedFormArray, UntypedFormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RenderAccionesUsuariosAsignados } from './render-acciones-asignados';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 
 export interface entidades {
@@ -174,7 +175,7 @@ export class UsuariosStep2Component implements OnInit {
       (response) => {
         //this.dataUsuario = response}
         console.log(response);
-        this.listaUsuariosPendientes.data = response as entidades [];
+        this.listaUsuariosPendientes.data = response as entidades[];
         this.listaUsuariosPendientes.paginator = this.paginator;
       }
     )
@@ -189,7 +190,7 @@ export class UsuariosStep2Component implements OnInit {
     this.apiServiceUsuario.postConsultarUsuariosPerfil(datoUsuariosAsginados).subscribe(
       (response) => {
         console.log(response);
-        this.listaUsuariosAsignados.data = response as entidades [];
+        this.listaUsuariosAsignados.data = response as entidades[];
         this.listaUsuariosAsignados.paginator = this.paginator;
       }
     )
@@ -249,7 +250,7 @@ export class UsuariosStep2Component implements OnInit {
     let arrdatosUsuarios: any = []
     let datoUsuario: any = {}
 
-    let arrUsuarios : any = []
+    let arrUsuarios: any = []
 
     //arrUsuarios = this.formUsuarioPendientes.value;
 
@@ -372,12 +373,12 @@ export class UsuariosStep2Component implements OnInit {
 
     //const usuariosAsignados = (this.formUsuarioAsignados.controls.value as UntypedFormArray);
 
-    let usuariosAsignados : any;
+    let usuariosAsignados: any;
 
     if (dato2.checked) {
       usuariosAsignados.push(new FormControl(dato1));
     } else {
-       null;
+      null;
       //const index = usuariosAsignados.controls.findIndex(x => x.value === dato1);
       //usuariosAsignados.removeAt(index);
     }
@@ -391,7 +392,7 @@ export class UsuariosStep2Component implements OnInit {
     let alerta: any = {};
 
     // arreglo
-    let arrUsuarios : any = []
+    let arrUsuarios: any = []
 
     // arreglo para el tratamiento y envio de datos
     let parametros: any = {}
@@ -484,4 +485,8 @@ export class UsuariosStep2Component implements OnInit {
     )
   }
 
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 }

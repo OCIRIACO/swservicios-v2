@@ -8,72 +8,74 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-         <mat-card-actions class="button-group">
+           <mat-card-actions class="button-group">
+                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+                    menu</mat-icon>Menu</button>
             <button mat-raised-button color="primary" (click)="e_nuevo()"><mat-icon>
                     insert_drive_file</mat-icon>Nuevo</button>
         </mat-card-actions>
-        
-        <hr>
+
+        <div class="mt-2 mb-5">
+            <mat-divider> </mat-divider>
+        </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="table-responsive">
-                    <mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
-                        <!--Acciones --> <ng-container matColumnDef="acciones">
-                            <mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
-                            </mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                                <div style="text-align:center;">
-                                    <button mat-raised-button color="primary" (click)="e_detalles(element.folioweb)">
-                                        <mat-icon>more_horiz</mat-icon></button>
-                                    <button mat-raised-button color="primary"
-                                        (click)="e_editar(element.folioweb)"><mat-icon>edit</mat-icon></button>
-                                </div>
-                            </mat-cell>
-                        </ng-container>
-                        <!-- Folio web -->
-                        <ng-container matColumnDef="folioweb">
-                            <mat-header-cell *matHeaderCellDef> FOLIO WEB </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.folioweb}} </mat-cell>
-                        </ng-container>
-                        <!-- Tpo de solicitud  -->
-                        <ng-container matColumnDef="tipoSolicitud">
-                            <mat-header-cell *matHeaderCellDef> TIPO SOLICITUD </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.tipoSolicitud}} </mat-cell>
-                        </ng-container>
-                        <!-- Correo  -->
-                        <ng-container matColumnDef="correoprogramo">
-                            <mat-header-cell *matHeaderCellDef> CORREO </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.correoprogramo}} </mat-cell>
-                        </ng-container>
-                        <!-- Fecha registro  -->
-                        <ng-container matColumnDef="fecharegistro">
-                            <mat-header-cell *matHeaderCellDef> FECHA REGISTRO </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.fecharegistro}} </mat-cell>
-                        </ng-container>
-                        <!-- Usuario programo  -->
-                        <ng-container matColumnDef="programo">
-                            <mat-header-cell *matHeaderCellDef> USUARIO PROGRAMO </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.programo}} </mat-cell>
-                        </ng-container>
-                        <!-- Total carga  -->
-                        <ng-container matColumnDef="totalcargas">
-                            <mat-header-cell *matHeaderCellDef> TOTAL CARGAS </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.totalcargas}} </mat-cell>
-                        </ng-container>
-                        <!-- Tipo de carga  -->
-                        <ng-container matColumnDef="tipocarga">
-                            <mat-header-cell *matHeaderCellDef> TIPO CARGA </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.tipocarga}} </mat-cell>
-                        </ng-container>
-                        <!-- Estatus  -->
-                        <ng-container matColumnDef="testatus">
-                            <mat-header-cell *matHeaderCellDef> ESTATUS </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.testatus}} </mat-cell>
-                        </ng-container>
-                        <mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                    </mat-table>
-                </div>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" width="100%">
+                    <!--Acciones --> <ng-container matColumnDef="acciones">
+                        <mat-header-cell *matHeaderCellDef style="text-align: center;"> ACCIONES
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <div style="text-align:center;">
+                                <button mat-icon-button color="primary" (click)="e_detalles(element.folioweb)">
+                                    <mat-icon>more_horiz</mat-icon></button>
+                                <button mat-icon-button color="primary"
+                                    (click)="e_editar(element.folioweb)"><mat-icon>edit</mat-icon></button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                    <!-- Folio web -->
+                    <ng-container matColumnDef="folioweb">
+                        <mat-header-cell *matHeaderCellDef> FOLIO WEB </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.folioweb}} </mat-cell>
+                    </ng-container>
+                    <!-- Tpo de solicitud  -->
+                    <ng-container matColumnDef="tipoSolicitud">
+                        <mat-header-cell *matHeaderCellDef> TIPO SOLICITUD </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.tipoSolicitud}} </mat-cell>
+                    </ng-container>
+                    <!-- Correo  -->
+                    <ng-container matColumnDef="correoprogramo">
+                        <mat-header-cell *matHeaderCellDef> CORREO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.correoprogramo}} </mat-cell>
+                    </ng-container>
+                    <!-- Fecha registro  -->
+                    <ng-container matColumnDef="fecharegistro">
+                        <mat-header-cell *matHeaderCellDef> FECHA REGISTRO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.fecharegistro}} </mat-cell>
+                    </ng-container>
+                    <!-- Usuario programo  -->
+                    <ng-container matColumnDef="programo">
+                        <mat-header-cell *matHeaderCellDef> USUARIO PROGRAMO </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.programo}} </mat-cell>
+                    </ng-container>
+                    <!-- Total carga  -->
+                    <ng-container matColumnDef="totalcargas">
+                        <mat-header-cell *matHeaderCellDef> TOTAL CARGAS </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.totalcargas}} </mat-cell>
+                    </ng-container>
+                    <!-- Tipo de carga  -->
+                    <ng-container matColumnDef="tipocarga">
+                        <mat-header-cell *matHeaderCellDef> TIPO CARGA </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.tipocarga}} </mat-cell>
+                    </ng-container>
+                    <!-- Estatus  -->
+                    <ng-container matColumnDef="testatus">
+                        <mat-header-cell *matHeaderCellDef> ESTATUS </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.testatus}} </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </table>
                 <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
             </div>
         </div>

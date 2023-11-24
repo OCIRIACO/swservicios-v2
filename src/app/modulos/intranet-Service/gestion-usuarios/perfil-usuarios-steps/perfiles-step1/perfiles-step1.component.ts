@@ -6,7 +6,7 @@ import 'jstree';
 import { Router } from '@angular/router';
 
 // Service para usar datos en otro componente
-import {serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
+import { serviceDatosPerfilUsuarios } from 'src/app/service/service.datosPerfilUsuarios'
 
 
 @Component({
@@ -50,7 +50,7 @@ export class PerfilesStep1Component implements OnInit {
   e_usuarioStep2(datos: any) {
     //console.log(datos)
 
-    this.serviceDatosPerfilUsuario.datosPerfilUsuarios =  datos
+    this.serviceDatosPerfilUsuario.datosPerfilUsuarios = datos
 
     // Router
     //this.router.navigate(['/dashboard/intranet/administracion/config/usuarios/step2']);
@@ -58,7 +58,7 @@ export class PerfilesStep1Component implements OnInit {
 
     // Simulate a mouse click:
 
-    
+
   }
   //Consultar API de los PERFILES
   e_consultarPerfiles() {
@@ -143,8 +143,12 @@ export class PerfilesStep1Component implements OnInit {
   }
 
   //Regresar menu Inicio
-  e_inicio(){
+  e_inicio() {
     this.router.navigate(['/dashboard/intranet/menu']);
+  }
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

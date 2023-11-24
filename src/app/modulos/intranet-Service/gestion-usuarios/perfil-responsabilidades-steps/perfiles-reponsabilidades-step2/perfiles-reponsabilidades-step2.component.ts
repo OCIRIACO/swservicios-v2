@@ -247,6 +247,9 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
   e_regresar() {
     this.router.navigate(['dashboard/intranet/administracion/config/perfiles/respons/step1']);
   }
-
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
+  }
 
 }

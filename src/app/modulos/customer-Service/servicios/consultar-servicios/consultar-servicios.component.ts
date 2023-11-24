@@ -5,7 +5,8 @@ import { RenderAcciones } from './render-acciones';
 
 import { apiServiceSolicitudServicios } from 'src/app/serviciosRest/Customer/solicitudServicios/api.service.servicios';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+//import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 export interface Post {
@@ -71,13 +72,18 @@ export class ConsultarServiciosComponent implements OnInit {
   //Detalle
   e_detalles(etransaccion: number) {
     //console.log(etransaccion)
-    this.router.navigate(['dashboard/customer/servicios/detalle',etransaccion ]);  // nativo
+    this.router.navigate(['dashboard/customer/servicios/detalle', etransaccion]);  // nativo
   }
 
   //Editar
   e_editar(etransaccion: number) {
     //console.log(etransaccion)
-    this.router.navigate(['dashboard/customer/servicios/editar',etransaccion ]);  // nativo
+    this.router.navigate(['dashboard/customer/servicios/editar', etransaccion]);  // nativo
+  }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/customer/menu']);
   }
 
 }

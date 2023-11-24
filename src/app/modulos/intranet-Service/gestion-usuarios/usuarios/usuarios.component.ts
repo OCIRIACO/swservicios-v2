@@ -5,6 +5,7 @@ import { GlobalConstants } from 'src/app/modelos/global';
 import { ApiServiceUsuario } from 'src/app/serviciosRest/Intranet/usuarios/api.service.usuario';
 import Swal from 'sweetalert2';
 import { RenderAcciones } from './render-acciones';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,7 +41,10 @@ export class UsuariosComponent implements OnInit {
   })
 
 
-  constructor(private apiServiceUsuario: ApiServiceUsuario) {
+  constructor(
+    private apiServiceUsuario: ApiServiceUsuario,
+    private router: Router
+    ) {
   }
 
 
@@ -324,5 +328,10 @@ export class UsuariosComponent implements OnInit {
       testado: new FormControl('', Validators.required),
     })
   }
+
+    //Menu
+    e_menu() {
+      this.router.navigate(['dashboard/customer/menu']);
+    }
 
 }
