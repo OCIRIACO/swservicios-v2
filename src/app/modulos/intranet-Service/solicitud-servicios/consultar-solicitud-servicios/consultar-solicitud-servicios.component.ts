@@ -25,7 +25,6 @@ export interface IdataServicios {
 })
 export class ConsultarSolicitudServiciosComponent implements OnInit {
 
-
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   columnasServicios: string[] = ['acciones', 'etransaccion', 'tcorreo', 'ttelefono', 'treferencia', 'fhfecharegistro', 'fhfechaservicio'];
   solicitudesServicos = new MatTableDataSource<IdataServicios>([]);
@@ -45,6 +44,8 @@ export class ConsultarSolicitudServiciosComponent implements OnInit {
     // let checkbox = document.getElementById('rdpendiente') as HTMLInputElement
     //checkbox.checked = true
     //checkbox.click()
+    this.solicitudesServicos.paginator = this.paginator;
+
   }
 
   e_opcion(event: MatRadioChange) {
@@ -77,7 +78,7 @@ export class ConsultarSolicitudServiciosComponent implements OnInit {
 
   //Menu
   e_menu() {
-    this.router.navigate(['dashboard/customer/menu']);
+    this.router.navigate(['dashboard/intranet/menu']);
   }
 
 

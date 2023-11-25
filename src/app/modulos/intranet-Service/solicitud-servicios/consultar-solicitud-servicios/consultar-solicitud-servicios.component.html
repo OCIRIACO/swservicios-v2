@@ -6,21 +6,14 @@
 
     </mat-card-header>
     <mat-card-content>
-           <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+        <mat-card-actions class="button-group">
+            <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
                     menu</mat-icon>Menu</button>
-            <button mat-raised-button color="primary" (click)="e_inicio()"
-                title="Menu"><mat-icon>list</mat-icon>Menu</button>
-
-            <!--
-<a type="button" routerLink={{directorio}} class="btn btn-xs btn-primary"><i
-                    class="fas fa-home  mg-r-5 fa-1x"></i>Inicio</a>
-            -->
-
         </mat-card-actions>
-           <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
-                    menu</mat-icon>Menu</button>
+        <div class="mt-2 mb-1">
+            <mat-divider> </mat-divider>
+        </div>
+        <mat-card-actions>
             <mat-radio-group (change)="e_opcion($event)" aria-label="Select an option">
                 <mat-radio-button value="PENDIENTE">PENDIENTE(S)</mat-radio-button>
                 <mat-radio-button value="AUTORIZADA">AUTORIZADA(S)</mat-radio-button>
@@ -31,9 +24,7 @@
         <div class="mt-2 mb-5">
             <mat-divider> </mat-divider>
         </div>
-           <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
-                    menu</mat-icon>Menu</button>
+       
             <table mat-table [dataSource]="solicitudesServicos" class="mat-elevation-z8" width="100%">
                 <!--Acciones -->
                 <ng-container matColumnDef="acciones">
@@ -84,11 +75,10 @@
                     <td mat-cell *matCellDef="let element"> {{element.fhfechaservicio}} </td>
                 </ng-container>
 
-
                 <tr mat-header-row *matHeaderRowDef="columnasServicios, sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: columnasServicios;"></tr>
             </table>
             <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-        </mat-card-actions>
+        
     </mat-card-content>
 </mat-card>

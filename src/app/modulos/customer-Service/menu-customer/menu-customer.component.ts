@@ -278,7 +278,7 @@ export class MenuCustomerComponent implements OnInit {
         this.myTemplate += ' </div> ';
 
         this.myTemplate += ' <div class="row"> ';
-        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4 mb-3"><i class="fas ' + items.icono + ' fa-6x"></i> ';
+        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4 mb-3"><i style="color:#002053" class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection"> <i class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection-over"></div> ';
         //this.myTemplate += ' </div> ';

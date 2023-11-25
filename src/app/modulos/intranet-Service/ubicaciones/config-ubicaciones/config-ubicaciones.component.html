@@ -3,30 +3,19 @@
         <mat-card-title>
             Configuración de ubicaciones
         </mat-card-title>
-       
+
     </mat-card-header>
     <mat-card-content>
-            <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+        <mat-card-actions class="button-group">
+            <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
                     menu</mat-icon>Menu</button>
-            <div class="row">
-                <div class='component mg-b-10'>
-
-                    <button mat-raised-button color="primary" routerLink={{directorio}}
-                        title="Menu"><mat-icon>list</mat-icon>Menu</button>
-
-
-                    <button mat-raised-button color="primary"
-                        (click)="e_guardar(FormUbicaciones.value)"><mat-icon>save</mat-icon>Guardar</button>
-                </div>
-            </div>
+            <button mat-raised-button color="primary"
+                (click)="e_guardar(FormUbicaciones.value)"><mat-icon>save</mat-icon>Guardar</button>
         </mat-card-actions>
         <div class="mt-2 mb-5">
-            <mat-divider> </mat-divider> 
+            <mat-divider> </mat-divider>
         </div>
-            <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
-                    menu</mat-icon>Menu</button>
+        <mat-card-actions>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-md-6">
@@ -186,6 +175,5 @@
                 </div>
             </div>
         </mat-card-actions>
-
     </mat-card-content>
 </mat-card>
