@@ -9,6 +9,7 @@ import { Injectable, Output } from '@angular/core';
 export class serviceUbicaciones2d {
     @Output() datosUbicaciones2d: any = {};
     @Output() datosFinalUbicaciones2d: any = [];
+    @Output() datosVistaAreaCarril: any;
 
     constructor() { }
 

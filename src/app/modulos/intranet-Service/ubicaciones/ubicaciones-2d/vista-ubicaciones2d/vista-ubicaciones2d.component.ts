@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, SecurityContext } from '@angular/core';
 import { Router } from '@angular/router';
 
 //Globales constante
@@ -9,7 +9,12 @@ import { serviceUbicaciones2d } from 'src/app/service/service.ubicaciones2d'
 import { ApiServiceUbicaciones } from 'src/app/serviciosRest/Intranet/ubicaciones/api.service.ubicaciones';
 import Swal from 'sweetalert2';
 
-import { ModalService } from 'src/app/modelos/_modal'
+//Dialogo
+import { DialogVistaCarrilComponent } from 'src/app/modulos/intranet-Service/ubicaciones/ubicaciones-2d/dialog-vista-carril/dialog-vista-carril.component'
+
+//import { ModalService } from 'src/app/modelos/_modal'
+import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-vista-ubicaciones2d',
@@ -24,10 +29,18 @@ export class VistaUbicaciones2dComponent implements OnInit {
   //ocupaciones
   ocupaciones: any = []
 
-  html_vista_contenedores :string = '';
+  html_vista_contenedores: string = '';
 
 
-  constructor(private router: Router, private serviceUbicaciones2d: serviceUbicaciones2d, private apiUbicacion: ApiServiceUbicaciones, private modalService: ModalService) { }
+  constructor(private router: Router,
+    private serviceUbicaciones2d: serviceUbicaciones2d,
+    private apiUbicacion: ApiServiceUbicaciones,
+    //private modalService: ModalService,
+    public dialogo: MatDialog,
+    private DomSanitizer: DomSanitizer
+  ) { }
+
+
 
   ngOnInit(): void {
 
@@ -40,19 +53,21 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
   }
 
-   ///  MODALES
+  ///  MODALES
   openModal(id: string) {
-    this.modalService.open(id);
+    //this.modalService.open(id);
+    null;
   }
 
   closeModal(id: string) {
-    this.modalService.close(id);
+    //this.modalService.close(id);
+    null;
   }
   ///////////////////////////////
 
   e_ocupacionUbicaciones(datos: any) {
 
-    let bloque : any = ''
+    let bloque: any = ''
 
 
     datos.forEach((dato: any, index: any) => {
@@ -67,13 +82,13 @@ export class VistaUbicaciones2dComponent implements OnInit {
         (response) => {
           ////console.log(response.bienes)
 
-          if (response == null){
+          if (response == null) {
             this.ocupaciones = []
-          }else{
+          } else {
             this.ocupaciones = response.bienes
           }
 
-           bloque +=  this.e_crearLayout(dato, this.ocupaciones)
+          bloque += this.e_crearLayout(dato, this.ocupaciones)
 
           //console.log(bloque)
           document.getElementById('htmlUbicaciones2d')!.innerHTML = bloque
@@ -85,7 +100,7 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
 
 
-   // document.getElementById('htmlUbicaciones2d')!.innerHTML = vistaFinal
+    // document.getElementById('htmlUbicaciones2d')!.innerHTML = vistaFinal
 
 
   }
@@ -384,7 +399,6 @@ export class VistaUbicaciones2dComponent implements OnInit {
           })
           /////////////////////////////////////////////////////
 
-
           if (y == 0) {
             html += x;
           }
@@ -392,12 +406,8 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
             if (y > 1) {
 
-
-
               html += (y + valorY)
-
               valorY = y
-
             } else {
 
               html += y
@@ -457,77 +467,63 @@ export class VistaUbicaciones2dComponent implements OnInit {
     if (dato.classList[1] == 'ocupado') {
       //console.log(dato.attributes.id)
 
-      let cadena:string =  dato.attributes.id.value
+      let cadena: string = dato.attributes.id.value
       let datosPost: any
-    
-
 
       const ocupacion = cadena.split('|');
- 
 
-      datosPost =  {
-            ecodzona:this.serviceUbicaciones2d.datosFinalUbicaciones2d[0].ecodzona,
-            tbloque: ocupacion[0],
-            efila:  ocupacion[1],
-            ebahia:  ocupacion[2]
+      datosPost = {
+        ecodzona: this.serviceUbicaciones2d.datosFinalUbicaciones2d[0].ecodzona,
+        tbloque: ocupacion[0],
+        efila: ocupacion[1],
+        ebahia: ocupacion[2]
       }
 
-     // //console.log(datosPost)
+      //Consumir servicio
+      this.apiUbicacion.postBienes(datosPost).subscribe(
+        (response) => {
+          this.e_crearlayoutBahia(response);
+        }
+      )
 
-
-        //Consumir servicio
-        this.apiUbicacion.postBienes(datosPost).subscribe(
-          (response) => {
-             this.e_crearlayoutBahia(response);
-          }
-        )
-
-
-
-     
     }
   }
 
 
   e_crearlayoutBahia(datos: any) {
 
-
-   //console.log(datos.length)
-
+    //console.log(datos.length)
     let altura: number = datos.length
     let defaultX: number = 2
-    let html: string = ''
+    let html: string = "PENDIENTE";
 
     html += '<table  id="div1"  class="tbUbicaciones" >'
-
     datos.forEach((bien: any, index: any) => {
 
-
       html += '<tr>'
-      html += '<td class="tblBahiaContFila"    style="width: 22px;">'+bien.ealtura+'</td>'
+      html += '<td class="tblBahiaContFila"    style="width: 22px;">' + bien.ealtura + '</td>'
       html += '<td class="tblBahiaCont-altura" style="width: 42px;">'
-        html += '<table  id="datosVistaBien" class="datosVistaBien">'
-        html += '<tr class="tblDatoVistaBien">'
-        html += '<td >'+bien.tmarcas+'</td>'
-        html += '</tr>'
-        html += '<tr class="tblDatoVistaBien">'
-        html += '<td >'+bien.ttipocontenedor+'</td>'
-        html += '</tr>'
-        html += '<tr class="tblDatoVistaBien">'
-        html += '<td >'+bien.epesorecibido+'</td>'
-        html += '</tr>'
-        html += '<tr class="tblDatoVistaBien">'
-        html += '<td >'+bien.ecantidadrecibido+'</td>'
-        html += '</tr>'
-        html += '<tr class="tblDatoVistaBien">'
-        html += '<td >'+bien.ttramite+'</td>'
-        html += '</tr>'
-        html += '</table>'
+      html += '<table  id="datosVistaBien" class="datosVistaBien">'
+      html += '<tr class="tblDatoVistaBien">'
+      html += '<td >' + bien.tmarcas + '</td>'
+      html += '</tr>'
+      html += '<tr class="tblDatoVistaBien">'
+      html += '<td >' + bien.ttipocontenedor + '</td>'
+      html += '</tr>'
+      html += '<tr class="tblDatoVistaBien">'
+      html += '<td >' + bien.epesorecibido + '</td>'
+      html += '</tr>'
+      html += '<tr class="tblDatoVistaBien">'
+      html += '<td >' + bien.ecantidadrecibido + '</td>'
+      html += '</tr>'
+      html += '<tr class="tblDatoVistaBien">'
+      html += '<td >' + bien.ttramite + '</td>'
+      html += '</tr>'
+      html += '</table>'
       html += '</td>'
       html += '</tr>'
 
     })
-
 
     /*for (let x = 0; x < altura; x++) {
       html += '<tr>'
@@ -537,15 +533,18 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
     }*/
 
-    html += '</table>'
+    html += '</table>';
 
-    this.html_vista_contenedores =  html;
+    //Vista carril
+    //this.serviceUbicaciones2d.datosVistaAreaCarril = html;
+    let dialogoConfig = this.dialogo.open(DialogVistaCarrilComponent);
+    dialogoConfig.componentInstance.htmlVistaCarril = html;
 
-    document.getElementById('vista_contenedor')!.innerHTML =   this.html_vista_contenedores 
+    //this.html_vista_contenedores = html;
+    //document.getElementById('vista_contenedor')!.innerHTML = this.html_vista_contenedores
+    //this.openModal('custom-modal-2')
 
-    this.openModal('custom-modal-2')
 
-  
   }
 
 
