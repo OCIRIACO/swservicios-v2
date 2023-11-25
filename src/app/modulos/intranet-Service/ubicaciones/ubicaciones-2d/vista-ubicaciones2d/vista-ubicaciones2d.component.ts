@@ -159,6 +159,15 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
 
 
+    html += " <style> ";
+      html += " .tbUbicaciones td { ";
+        html += " margin: 0px; ";
+        html += " padding: 5px; ";
+        html += " text-align: left; ";
+        html += " border:1px solid #080808; ";
+      html += " }     ";
+    html += " </style> ";
+
 
 
 
@@ -166,7 +175,7 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
     //CARRIL / RACK
 
-    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid">'
+    html += '<table  border="1" id="divCarril"  class="tbUbicaciones" style="width:100%; border-style:solid; border-collapse:collapse !important; ">'
     html += '<tbody style="border-width:1;">'
     html += '<tr>'
     html += '<td>' + bloque + '</td>'
@@ -175,8 +184,8 @@ export class VistaUbicaciones2dComponent implements OnInit {
     html += '</table>'
 
 
-    html += '<table  border="1" id="div1"  class="tbUbicaciones" style="width:100%;border-style:solid" >'
-    html += '<tbody style="border-width:1;">'
+    html += '<table  border="1" id="divUbicacion"  class="tbUbicaciones" style="width:100%; border-style:solid; border-collapse:collapse !important;" >'
+    html += '<tbody style="width:100%; border-style:solid; border-collapse:collapse !important;" >'
 
     for (let x = 0; x < bahias; x++) {
       html += '<tr>'
@@ -495,7 +504,18 @@ export class VistaUbicaciones2dComponent implements OnInit {
     //console.log(datos.length)
     let altura: number = datos.length
     let defaultX: number = 2
-    let html: string = "PENDIENTE";
+    let html: string = "";
+
+    html += " <style> ";
+    html += " .tbUbicaciones td { ";
+      html += " margin: 0px; ";
+      html += " padding: 5px; ";
+      html += " text-align: left; ";
+      html += " border:1px solid #080808; ";
+    html += " }     ";
+  html += " </style> ";
+
+
 
     html += '<table  id="div1"  class="tbUbicaciones" >'
     datos.forEach((bien: any, index: any) => {
