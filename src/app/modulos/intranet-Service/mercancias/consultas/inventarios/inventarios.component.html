@@ -1,190 +1,161 @@
-<div class="contenedor">
-    <div fxFlex="95%">
-        <mat-card>
-            <div class="content-header">
-                <div>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#/dashboard">Inicio</a></li>
-                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Intranet</a></li>
-                            <li class="breadcrumb-item"><a routerLink="{{directorio}}">Operaciones</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Inventarios</li>
-                        </ol>
-                    </nav>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Inventarios
+        </mat-card-title>
+        <mat-card-subtitle>
+            Entradas - Existencias - Salidas
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card-actions class="button-group">
+            <button mat-raised-button color="primary" (click)="e_inicio()"><mat-icon>
+                    menu</mat-icon>Menu</button>
+        </mat-card-actions>
+        <mat-divider></mat-divider>
+        <form #inventarioForm="ngForm" (ngSubmit)="e_buscar(inventarioForm)">
+            <div class="row">
+                <div class='form-group form-group col-sm-3'>
+                    <mat-form-field class="full-width">
+                        <mat-select (selectionChange)="e_tipoBusqueda($event)" name="ttipobusqueda" ngModel
+                            #ttipobusqueda="ngModel" required>
+                            <mat-option>SELECCIONAR</mat-option>
+                            <mat-option value="ENTRADAS">ENTRADAS</mat-option>
+                            <mat-option value="SALIDAS">SALIDAS</mat-option>
+                            <mat-option value="EXISTENCIAS">EXISTENCIAS</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="FormBusqueda.controls['ttipobusqueda'].errors?.required">*Tipo
+                            Inventario es
+                            requerido</mat-error>
 
-                </div>
-            </div>
-            <div class="content-body">
-                <div class="card card-invoice">
-                    <div class="card-header">
+                    </mat-form-field>
+
+                    <!--
+                    <span class="tx-danger">*</span><label for="ttipobusqueda">INVENTARIO</label>
+                    <select class="custom-select form-control-sm" id="ttipobusqueda"
+                        name="busqueda[ttipobusqueda]" formControlName="ttipobusqueda"
+                        [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.ttipobusqueda.errors }"
+                        (change)="e_tipoBusqueda(FormBusqueda.value)">
+                        <option value="ENTRADAS">ENTRADAS</option>
+                        <option value="SALIDAS">SALIDAS</option>
+                        <option value="EXISTENCIAS">EXISTENCIAS</option>
+                    </select>
+                    <div *ngIf="submitBusqueda && fbusqueda.ttipobusqueda.errors"
+                        class="invalid-feedback">
+                        <div *ngIf="fbusqueda.ttipobusqueda.errors.required">*Tipo Inventario es
+                            requerido</div>
                     </div>
-                    <div class="card-body">
-                        <div class="component mb-2">
-                            <div class="button-row">
-                                <button mat-raised-button color="primary"
-                                    (click)="e_inicio()"><mat-icon>home</mat-icon>Inicio</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
-                            <div class="row">
-                                <form #inventarioForm="ngForm" (ngSubmit)="e_buscar(inventarioForm)">
-                                    <div class="row">
-                                        <div class='form-group form-group col-sm-3'>
-                                            <mat-form-field class="full-width">
-                                                <mat-select (selectionChange)="e_tipoBusqueda($event)"
-                                                    name="ttipobusqueda" ngModel #ttipobusqueda="ngModel" required>
-                                                    <mat-option>SELECCIONAR</mat-option>
-                                                    <mat-option value="ENTRADAS">ENTRADAS</mat-option>
-                                                    <mat-option value="SALIDAS">SALIDAS</mat-option>
-                                                    <mat-option value="EXISTENCIAS">EXISTENCIAS</mat-option>
-                                                </mat-select>
-                                                <mat-error
-                                                    *ngIf="FormBusqueda.controls['ttipobusqueda'].errors?.required">*Tipo
-                                                    Inventario es
-                                                    requerido</mat-error>
-
-                                            </mat-form-field>
-
-                                            <!--
-                                            <span class="tx-danger">*</span><label for="ttipobusqueda">INVENTARIO</label>
-                                            <select class="custom-select form-control-sm" id="ttipobusqueda"
-                                                name="busqueda[ttipobusqueda]" formControlName="ttipobusqueda"
-                                                [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.ttipobusqueda.errors }"
-                                                (change)="e_tipoBusqueda(FormBusqueda.value)">
-                                                <option value="ENTRADAS">ENTRADAS</option>
-                                                <option value="SALIDAS">SALIDAS</option>
-                                                <option value="EXISTENCIAS">EXISTENCIAS</option>
-                                            </select>
-                                            <div *ngIf="submitBusqueda && fbusqueda.ttipobusqueda.errors"
-                                                class="invalid-feedback">
-                                                <div *ngIf="fbusqueda.ttipobusqueda.errors.required">*Tipo Inventario es
-                                                    requerido</div>
-                                            </div>
     
-                                            -->
+                    -->
 
-                                        </div>
-                                        <div class='form-group form-group col-sm-3' *ngIf="divFechas">
-                                            <mat-form-field class="full-width">
-                                                <mat-label>FECHA INICIO</mat-label>
-                                                <input matInput [matDatepicker]="picker" name="fhfechainicio" ngModel
-                                                    #fhfechainicio="ngModel" required>
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker></mat-datepicker>
+                </div>
+                <div class='form-group form-group col-sm-3' *ngIf="divFechas">
+                    <mat-form-field class="full-width">
+                        <mat-label>FECHA INICIO</mat-label>
+                        <input matInput [matDatepicker]="picker" name="fhfechainicio" ngModel #fhfechainicio="ngModel"
+                            required>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
 
-                                                <mat-error
-                                                    *ngIf="FormBusqueda.controls['fhfechainicio'].errors?.required">*Fecha
-                                                    Inicio es
-                                                    requerido</mat-error>
-
-
-                                            </mat-form-field>
-                                            <!--
-                                                <span class="tx-danger">*</span><label for="fhfechainicio">FECHA INICIO</label>
-                                                <input type="date" class="custom-select form-control-sm" placeholder=""
-                                                    id="fhfechainicio" name="busqueda[fhfechainicio]"
-                                                    formControlName="fhfechainicio"
-                                                    [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechainicio.errors }">
-                                                <div *ngIf="submitBusqueda && fbusqueda.fhfechainicio.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="fbusqueda.fhfechainicio.errors.required">*Fecha Inicio es
-                                                        requerido</div>
-                                                </div>
-                                            -->
-
-                                        </div>
-                                        <div class='form-group form-group col-sm-3' *ngIf="divFechas">
-                                            <mat-form-field class="full-width">
-                                                <mat-label>FECHA FIN</mat-label>
-                                                <input matInput [matDatepicker]="picker" name="fhfechafin" ngModel
-                                                    #fhfechafin="ngModel" required>
-                                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker></mat-datepicker>
-                                                <mat-error
-                                                    *ngIf="FormBusqueda.controls['fhfechafin'].errors?.required">*Fecha
-                                                    Fin
-                                                    es requerido</mat-error>
-                                            </mat-form-field>
-                                            <!--
-                                            <span class="tx-danger">*</span><label for="fhfechafin">FECHA INICIO</label>
-                                                <input type="date" class="custom-select form-control-sm" placeholder=""
-                                                    id="fhfechafin" name="busqueda[fhfechafin]" formControlName="fhfechafin"
-                                                    [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechafin.errors }">
-                                                <div *ngIf="submitBusqueda && fbusqueda.fhfechafin.errors"
-                                                    class="invalid-feedback">
-                                                    <div *ngIf="fbusqueda.fhfechafin.errors.required">*Fecha Fin es requerido
-                                                    </div>
-                                            </div>
-                                            -->
-
-                                        </div>
+                        <mat-error *ngIf="FormBusqueda.controls['fhfechainicio'].errors?.required">*Fecha
+                            Inicio es
+                            requerido</mat-error>
 
 
-
-                                    </div>
-                                    <div class="row">
-                                        <div class='form-group form-group col-sm-2'>
-                                            <div class="btn-group mr-2">
-                                                <button mat-raised-button
-                                                    color="primary"><mat-icon>search</mat-icon>Buscar</button>
-                                                <!--
-                                                <button type="button" class="btn btn-xs btn-primary pull-right"
-                                                    (click)="e_buscar(FormBusqueda.value)">
-                                                    <li class=" fas fa-search fa-1x mg-r-5"></li>Busqueda
-                                                </button>
-                                                -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    </mat-form-field>
+                    <!--
+                        <span class="tx-danger">*</span><label for="fhfechainicio">FECHA INICIO</label>
+                        <input type="date" class="custom-select form-control-sm" placeholder=""
+                            id="fhfechainicio" name="busqueda[fhfechainicio]"
+                            formControlName="fhfechainicio"
+                            [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechainicio.errors }">
+                        <div *ngIf="submitBusqueda && fbusqueda.fhfechainicio.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="fbusqueda.fhfechainicio.errors.required">*Fecha Inicio es
+                                requerido</div>
                         </div>
-                        <hr>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
-                            <div class="row">
-                                <table mat-table [dataSource]="datosInvestario" class="mat-elevation-z8" width="100%">
+                    -->
 
-                                    <!-- NO.GUIA -->
-                                    <ng-container matColumnDef="eguia">
-                                        <th mat-header-cell *matHeaderCellDef> NO.GUIA </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.eguia}} </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="ttipocarga">
-                                        <th mat-header-cell *matHeaderCellDef> TIPO DE CARGA </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.ttipocarga}} </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="ttramite">
-                                        <th mat-header-cell *matHeaderCellDef> TRAMITE </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.ttramite}} </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="ttipocontenedor">
-                                        <th mat-header-cell *matHeaderCellDef> TIPO DE CONTENEDOR </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.ttipocontenedor}} </td>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="tmarcas">
-                                        <th mat-header-cell *matHeaderCellDef> MARCAS/SERIES </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.tmarcas}} </td>
-                                    </ng-container>
-
-                                    <tr mat-header-row *matHeaderRowDef="columnasInventario, sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: columnasInventario;"></tr>
-
-                                </table>
-                                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
-                                    showFirstLastButtons></mat-paginator>
-
+                </div>
+                <div class='form-group form-group col-sm-3' *ngIf="divFechas">
+                    <mat-form-field class="full-width">
+                        <mat-label>FECHA FIN</mat-label>
+                        <input matInput [matDatepicker]="picker" name="fhfechafin" ngModel #fhfechafin="ngModel"
+                            required>
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="FormBusqueda.controls['fhfechafin'].errors?.required">*Fecha
+                            Fin
+                            es requerido</mat-error>
+                    </mat-form-field>
+                    <!--
+                    <span class="tx-danger">*</span><label for="fhfechafin">FECHA INICIO</label>
+                        <input type="date" class="custom-select form-control-sm" placeholder=""
+                            id="fhfechafin" name="busqueda[fhfechafin]" formControlName="fhfechafin"
+                            [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.fhfechafin.errors }">
+                        <div *ngIf="submitBusqueda && fbusqueda.fhfechafin.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="fbusqueda.fhfechafin.errors.required">*Fecha Fin es requerido
                             </div>
-                        </div>
+                    </div>
+                    -->
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class='form-group form-group col-sm-2'>
+                    <div class="btn-group mr-2">
+                        <button mat-raised-button color="primary"><mat-icon>search</mat-icon>Buscar</button>
+                        <!--
+                        <button type="button" class="btn btn-xs btn-primary pull-right"
+                            (click)="e_buscar(FormBusqueda.value)">
+                            <li class=" fas fa-search fa-1x mg-r-5"></li>Busqueda
+                        </button>
+                        -->
                     </div>
                 </div>
             </div>
-        </mat-card>
-    </div>
-</div>
+        </form>
+        <mat-divider> </mat-divider>
+        <div id="divInventario">
+            <table mat-table [dataSource]="datosInvestario" class="mat-elevation-z8" width="100%">
+
+                <!-- NO.GUIA -->
+                <ng-container matColumnDef="eguia">
+                    <th mat-header-cell *matHeaderCellDef> NO.GUIA </th>
+                    <td mat-cell *matCellDef="let element"> {{element.eguia}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ttipocarga">
+                    <th mat-header-cell *matHeaderCellDef> TIPO DE CARGA </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ttipocarga}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ttramite">
+                    <th mat-header-cell *matHeaderCellDef> TRAMITE </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ttramite}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ttipocontenedor">
+                    <th mat-header-cell *matHeaderCellDef> TIPO DE CONTENEDOR </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ttipocontenedor}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tmarcas">
+                    <th mat-header-cell *matHeaderCellDef> MARCAS/SERIES </th>
+                    <td mat-cell *matCellDef="let element"> {{element.tmarcas}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnasInventario, sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnasInventario;"></tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+        </div>
+    </mat-card-content>
+
+</mat-card>

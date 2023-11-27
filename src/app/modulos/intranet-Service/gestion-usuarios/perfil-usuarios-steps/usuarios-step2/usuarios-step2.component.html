@@ -5,8 +5,8 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-           <mat-card-actions class="button-group">
-                <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
+        <mat-card-actions class="button-group">
+            <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
                     menu</mat-icon>Menu</button>
             <div class="btn-toolbar" role="group">
                 <div class="btn-group mr-5" role="group">
@@ -15,13 +15,11 @@
                 </div>
             </div>
         </mat-card-actions>
-        <div class="mt-2 mb-5">
-            <mat-divider> </mat-divider>
-        </div>
+        <mat-divider> </mat-divider>
         <div class="component mg-b-20 mg-t-10">
             {{lblpath}}
         </div>
-        <hr>
+         <mat-divider> </mat-divider>
         <div class="row">
             <div class="col-xl-6">
                 <form [formGroup]="formUsuarioPendientes">

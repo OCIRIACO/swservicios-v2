@@ -29,17 +29,6 @@
                                 <mat-error *ngIf="FormBusqueda.controls['tvalor'].errors?.required">Valor de busqueda
                                     requerido</mat-error>
                             </mat-form-field>
-
-                            <!--
-                           <div class="col-md-12 col-sm-12 col-xs-12 mt-2">
-                                <input matInput oninput="this.value = this.value.toUpperCase()"
-                                    class="form-control form-control-sm" [placeholder]="PlaceholderBusqueda" id="tvalor"
-                                    name="busqueda[tvalor]" formControlName="tvalor"
-                                    [ngClass]="{ 'is-invalid': submitBusqueda && fbusqueda.tvalor.errors }">
-                            </div>
-                            -->
-
-
                         </div>
                         <div class='row'>
                             <div class="col-md-12 col-sm-12 col-xs-12 mt-2">
@@ -49,19 +38,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!--
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12 mt-2">
-                                <div *ngIf="submitBusqueda && fbusqueda.tvalor.errors" class="invalid-feedback">
-                                    <div *ngIf="fbusqueda.tvalor.errors.required">Ingresa tu número de
-                                        guía
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
                         <div class="row">
                             <div class='col-md-12 col-sm-12 col-xs-12 mt-2'>
                                 <span>{{informativo}}</span>
@@ -331,7 +307,6 @@
                         <tr mat-row *matRowDef="let row; columns: columnasSellos;"></tr>
                     </table>
                     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
                     <!--
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -352,7 +327,6 @@
                         </div>
                     </div>
                     -->
-
                 </mat-tab>
                 <mat-tab label="detalle">
                     <table mat-table [dataSource]="datosDetallesBiesn" class="mat-elevation-z8" width="100%">
@@ -384,8 +358,10 @@
                             <th mat-header-cell *matHeaderCellDef> Posicion </th>
                             <td mat-cell *matCellDef="let element"> {{element.tposicion}} </td>
                         </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnasDetallesBiesn, sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columnasDetallesBiesn;"></tr>
                     </table>
-
+                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
                     <!--
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 mt-4">
@@ -417,7 +393,6 @@
                             </div>
                         </div>
                      -->
-
                 </mat-tab>
             </mat-tab-group>
         </div>

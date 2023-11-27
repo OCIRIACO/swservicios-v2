@@ -10,16 +10,14 @@
     <mat-card-content>
         <form #solicitudForm="ngForm" (ngSubmit)="e_guardar(solicitudForm)">
             <!--Botones-->
-                <mat-card-actions class="button-group">
+            <mat-card-actions class="button-group">
                 <button mat-raised-button color="primary" (click)="e_menu()"><mat-icon>
-                    menu</mat-icon>Menu</button>
+                        menu</mat-icon>Menu</button>
                 <button mat-raised-button color="primary" (click)="e_consulta()"
                     title="Consultar"><mat-icon>view_list</mat-icon>Consultar</button>
                 <button mat-raised-button color="primary"><mat-icon>save</mat-icon>Guardar</button>
             </mat-card-actions>
-            <div class="mt-2 mb-5">
-                <mat-divider> </mat-divider> 
-            </div>
+            <mat-divider> </mat-divider>
             <!--CLIENTE-->
             <div class="row">
                 <div class="col-xl-12">
@@ -28,8 +26,7 @@
                 <div class="col-sm-3">
                     <mat-form-field class="example-full-width">
                         <mat-label>RFC</mat-label>
-                        <input matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto"
-                            required>
+                        <input matInput name="trfc" ngModel #trfc="ngModel" [matAutocomplete]="auto" required>
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option (click)="e_seleccionarRfc(dato)"
                                 *ngFor="let dato of filtrarOpcionesRfc  | async " [value]="dato.trfc">
@@ -70,7 +67,7 @@ formControlName="edireccion" [ngClass]="{ 'is-invalid': submitGuardar && fcontac
                 </div>
             </div>
             <!--CLIENTE-->
-            <hr>
+             <mat-divider> </mat-divider>
             <!--PAGO-->
             <div class="row">
                 <div class="col-xl-12">
@@ -162,7 +159,7 @@ requerido</mat-error>-->
                 </div>
             </div>
             <!--PAGO-->
-            <hr>
+             <mat-divider> </mat-divider>
             <!--CONTACTO-->
             <div class="row">
                 <div class="col-xl-12">
@@ -222,7 +219,7 @@ requerido</mat-error>-->
                 </div>
             </div>
             <!--CONTACTO-->
-            <hr>
+             <mat-divider> </mat-divider>
             <!--OPERACION(ES)-->
             <div class="row">
                 <!--<div *ngIf="divOperacion">-->
@@ -290,7 +287,8 @@ requerido</mat-error>-->
                 <div class='col-md-3'>
                     <mat-form-field class="full-width">
                         <mat-label>Carga</mat-label>
-                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel" (ngModelChange)="onChangeTipoCarga($event)" required>
+                        <mat-select name="ttipocarga" ngModel #ttipocarga="ngModel"
+                            (ngModelChange)="onChangeTipoCarga($event)" required>
                             <mat-option value="">SELECCIONAR</mat-option>
                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                             <mat-option value="GENERAL">GENERAL</mat-option>
@@ -353,7 +351,7 @@ requerido</mat-error>-->
             </div>
             <!--OPERACION(ES)-->
 
-            <hr>
+             <mat-divider> </mat-divider>
             <!---Tipo servicios-->
             <form #formServicios="ngForm" (ngSubmit)="e_agregarServicio(formServicios)">
                 <div class="row">
@@ -508,7 +506,7 @@ requerido</mat-error>-->
                     </div>
                 </div>
             </div>
-            <hr>
+             <mat-divider> </mat-divider>
             <div class="row">
                 <!--Carga(s)-->
                 <div *ngIf="divCarga" class="col-sm-12">
@@ -526,8 +524,7 @@ requerido</mat-error>-->
                             <div class="row" style="display: none;">
                                 <div class='col-md-3 col-xs-3'>
                                     <input class="form-control form-control-sm" id="econtadorRowBien"
-                                        name="econtadorRowBien" formControlName="econtadorRowBien" size="30"
-                                        matInput />
+                                        name="econtadorRowBien" formControlName="econtadorRowBien" size="30" matInput />
                                 </div>
 
                                 <div class='col-md-3 col-xs-3'>
@@ -555,7 +552,8 @@ requerido</mat-error>-->
                                 <div class='col-md-3 col-xs-3'>
                                     <mat-form-field class="full-width">
                                         <mat-label>Tipo carga</mat-label>
-                                        <mat-select formControlName="ttipocarga" name="ttipocarga" (ngModelChange)="onChangeTipoCarga($event)" required>
+                                        <mat-select formControlName="ttipocarga" name="ttipocarga"
+                                            (ngModelChange)="onChangeTipoCarga($event)" required>
                                             <mat-option>SELECCIONAR</mat-option>
                                             <mat-option value="CONTENERIZADA">CONTENERIZADA</mat-option>
                                             <mat-option value="LCL">LCL</mat-option>
@@ -609,7 +607,8 @@ requerido</mat-error>-->
                                     <mat-form-field class="full-width">
                                         <mat-label>{{lblSerieMarca}}</mat-label>
                                         <input matInput placeholder="" oninput="this.value = this.value.toUpperCase()"
-                                            maxlength="{{maxCarateresMarcas}}" formControlName="tmarcas" name="tmarcas" required size="30">
+                                            maxlength="{{maxCarateresMarcas}}" formControlName="tmarcas" name="tmarcas"
+                                            required size="30">
                                         <mat-error *ngIf="FormDatosBien.controls['tmarcas'].errors?.required">Contenedor
                                             es
                                             requerido</mat-error>
@@ -1293,7 +1292,7 @@ requerido</mat-error>-->
                 <!--Fin Mercancia(s)-->
 
             </div><!-- row -->
-            <hr>
+             <mat-divider> </mat-divider>
             <div class="row">
                 <div class="col-xl-12">
                     <h6 class="mt-3 mb-2 text-primary">+ Comentarios</h6>
