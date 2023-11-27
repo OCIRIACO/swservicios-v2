@@ -47,8 +47,6 @@ export class MenuComponent implements OnInit {
       }
     )*/
 
-    //console.log('Intranet')
-    //console.log(this.serviceCatalogos.arrIntranet)
     let respuesta = this.convertir_arbol(this.serviceCatalogos.arrIntranet);
     this.e_crearMenu(respuesta);
 
@@ -64,7 +62,6 @@ export class MenuComponent implements OnInit {
 
     for (i = 0; i < listado.length; i += 1) {
       map[listado[i].ecodmenu] = i;
-      //console.log(listado[i].ecodmenupadre)
       listado[i].children = [];
     }
 
@@ -109,7 +106,6 @@ export class MenuComponent implements OnInit {
             this.datosInicial['descripcion'] = item.tdescripcion;
             this.datosInicial['icono'] = item.ticono;
 
-            //console.log(this.html);
           } else {
             this.html += 'tipo2:' + item.tipo + ' descripcion:' + item.tdescripcion + '|';
 
@@ -121,15 +117,8 @@ export class MenuComponent implements OnInit {
 
             this.pullChild.push(this.datosChild);
 
-
-            /*this.datosInicial['tipo'] = item.tipo;
-            this.datosInicial['descripcion'] = item.tdescripcion;
-            this.pullInicial.push(this.datosInicial);*/
-
-            //console.log(this.html);
           }
 
-          //this.pullInicial.push(this.datosInicial);
         }
 
         if (item.children) {
@@ -138,18 +127,12 @@ export class MenuComponent implements OnInit {
 
         if (item.tipo != 'RAIZ' && item.tipo != 'SISTEMA') {
           if (auxecodmenu != item.ecodmenupadre) {
-            //this.datosFinales  = [];
-            //console.log(this.html+'/');
-            //this.datoFinal += this.html+'/';
             this.datosInicial['child'] = this.pullChild;
-            //console.log(this.datosInicial);
             this.datosFinales.push(this.datosInicial);
             this.pullChild = []
             this.datosInicial = {};
 
             this.html = '';
-            //this.e_crearDivDinamico('dato');
-            //console.log('---------------------------fin------------------------------------');
           }
         }
 
@@ -158,11 +141,7 @@ export class MenuComponent implements OnInit {
 
     recur(datos);
 
-    //console.log(JSON.stringify(this.datosFinales))
-
     this.e_crearDivDinamico(this.datosFinales);
-
-    // this.divHtmlIntranet =  this.myTemplate;
 
   }
 
@@ -193,7 +172,7 @@ export class MenuComponent implements OnInit {
 
 
     let grupos = this.e_chunkArrayInGroups(datos, 3);
-    console.log(grupos);
+
 
     grupos.forEach((dato: any, index: any) => {
 
@@ -210,7 +189,7 @@ export class MenuComponent implements OnInit {
         this.myTemplate += ' </div> ';
 
         this.myTemplate += ' <div class="row"> ';
-        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4"><i class="fas ' + items.icono + ' fa-6x"></i> ';
+        this.myTemplate += ' <div class="col-xs-4 col-sm-3 col-md-4"><i style="color: #002053;" class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection"> <i class="fas ' + items.icono + ' fa-6x"></i> ';
         //this.myTemplate += ' <div class="reflection-over"></div> ';
         //this.myTemplate += ' </div> ';
@@ -290,13 +269,13 @@ export class MenuComponent implements OnInit {
   }
 
   ngAfterContentChecked() {
-    //console.log('Entro!  ngAfterContentInit')
-    //console.log(this.myTemplate)
+
+
     document.getElementById('divHtmlIntranet')!.innerHTML = this.myTemplate;
   }
 
   @HostListener('click', ['$event.target']) clickShowHide(dato: any) {
-    console.log(dato);
+
 
     if (dato.nodeName == 'svg') {
       if (dato.id == 'more') {
@@ -305,9 +284,6 @@ export class MenuComponent implements OnInit {
     } else {
       if (dato.nodeName == 'circle') {
         if (dato.id == 'more') {
-          //this.e_ShowOrHide(dato.attributes[1].value )
-          //console.log('circle');
-          //console.log(dato.farthestViewportElement.attributes[1].value)
           this.e_ShowOrHide(dato.farthestViewportElement.attributes[1].value)
         }
       }
@@ -317,7 +293,6 @@ export class MenuComponent implements OnInit {
 
 
     if (dato.nodeName === 'A') {
-      //console.log(dato);
       let url = dato.getAttribute('routerlink');
       this.router.navigate([url]);
     }
@@ -338,7 +313,7 @@ export class MenuComponent implements OnInit {
   }
 
   e_link(dato: any) {
-    console.log(dato)
+    null;
   }
 
 

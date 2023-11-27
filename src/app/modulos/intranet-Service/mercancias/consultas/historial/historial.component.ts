@@ -5,25 +5,66 @@ import { GlobalConstants } from 'src/app/modelos/global';
 //import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { Router } from '@angular/router';
+import { MatRadioChange } from '@angular/material/radio';
 
 
 export interface IdataHistorico {
-    eguia : number,
-    ttipocarga: string,
-    ttramite: string,
-    tnaviera: string,
-    ttipocontendor: string,
-    tembalaje: string,
-    tmarcas: string,
-    epesorecibido: number,
-    ecantidadrecibido:number,
-    fhfechaentrada: string,
-    fhfechasalida: string,
-    tmovimiento: string,
-    sellos: Array<any>,
-    detallebienes: Array<any>,
-    bitacora: Array<any>
+  eguia: number,
+  ttipocarga: string,
+  ttramite: string,
+  tnaviera: string,
+  ttipocontendor: string,
+  tembalaje: string,
+  tmarcas: string,
+  epesorecibido: number,
+  ecantidadrecibido: number,
+  fhfechaentrada: string,
+  fhfechasalida: string,
+  tmovimiento: string,
+  sellos: Array<any>,
+  detallebienes: Array<any>,
+  bitacora: Array<any>
+}
 
+export interface IdataTracking {
+  ttipocarga: string,
+  ttramite: string,
+  tnombrecorto: string,
+  ttipocontenedor: string,
+  embalaje: number,
+  tmarcas: string,
+  epesomanifestado: number,
+  epesorecibido: number,
+  epesoliberado: number,
+  epesoentregado: number,
+  ecantidadmanifestado: number,
+  ecantidadrecibido: number,
+  ecantidadliberado: number,
+  ecantidadentregado: number,
+  fhfechaentrada: string,
+  fhfechasalida: string,
+  tmovimiento: string,
+  tposicion: string,
+  tdescripcion: string,
+  usuario: string,
+  fhfecharegistro: string,
+}
+
+export interface IdataSellos {
+  tsello: string,
+  ttiposello: string
+}
+
+
+export interface IdataDetallesBien {
+  tmarcas: string,
+  tdescripcion: string,
+  epesobruto: number,
+  epesoneto: number,
+  ecantidad: number,
+  evolumen: number,
+  tposicion: string,
 }
 
 @Component({
@@ -34,10 +75,21 @@ export interface IdataHistorico {
 export class HistorialComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  columnasHistorico: string[] = ['acciones','eguia','ttipocarga','ttramite','tnaviera','ttipocontendor','tembalaje','tmarcas','epesorecibido','ecantidadrecibido','fhfechaentrada','fhfechasalida','tmovimiento'];
+  columnasHistorico: string[] = ['acciones', 'eguia', 'ttipocarga', 'ttramite', 'tnaviera', 'ttipocontendor', 'tembalaje', 'tmarcas', 'epesorecibido', 'ecantidadrecibido', 'fhfechaentrada', 'fhfechasalida', 'tmovimiento'];
   datosHistorico = new MatTableDataSource<IdataHistorico>([]);
-  
-  constructor(private apiHistorial: ApiServiceHistorial) {
+
+  columnasTracking: string[] = ['ttipocarga', 'ttramite', 'tnombrecorto', 'ttipocontenedor', 'embalaje', 'tmarcas', 'epesomanifestado', 'epesorecibido', 'epesoliberado', 'epesoentregado', 'ecantidadmanifestado', 'ecantidadrecibido', 'ecantidadliberado', 'ecantidadentregado', 'fhfechaentrada', 'fhfechasalida', 'tmovimiento', 'tposicion', 'tdescripcion', 'usuario', 'fhfecharegistro'];
+  datosTracking = new MatTableDataSource<IdataTracking>([]);
+
+  columnasSellos: string[] = ['tsello', 'ttiposello'];
+  datosSellos = new MatTableDataSource<IdataSellos>([]);
+
+  columnasDetallesBiesn: string[] = ['tmarcas', 'tdescripcion', 'epesobruto', 'epesoneto', 'ecantidad', 'evolumen', 'tposicion'];
+  datosDetallesBiesn = new MatTableDataSource<IdataDetallesBien>([]);
+
+  constructor(private apiHistorial: ApiServiceHistorial,
+    private router: Router
+  ) {
   }
 
   //Path base
@@ -198,6 +250,9 @@ export class HistorialComponent implements OnInit {
       this.sellos.push(datosello);
     })
 
+    this.datosSellos.data = this.sellos as IdataSellos[]
+    this.datosSellos.paginator = this.paginator;
+
     //Detalle bienes
     let datoDetBienes: any = {}
     datos.detallebienes.forEach((dato: any, valor: any) => {
@@ -210,8 +265,11 @@ export class HistorialComponent implements OnInit {
       datoDetBienes['evolumen'] = dato.evolumen;
       datoDetBienes['tposicion'] = dato.tposicion;
       this.detallebienes.push(datoDetBienes);
-
     });
+    
+    this.datosDetallesBiesn.data = this.detallebienes as IdataDetallesBien[]
+    this.datosSellos.paginator = this.paginator;
+
 
     //Movimientos
     let datobitacora: any = {}
@@ -241,6 +299,10 @@ export class HistorialComponent implements OnInit {
       datobitacora['fhfecharegistro'] = dato.fhfecharegistro;
       this.movimientos.push(datobitacora);
     })
+
+    this.datosTracking.data = this.movimientos as IdataTracking[]
+    this.datosTracking.paginator = this.paginator;
+
   }
 
   e_opcionesBusqueda() {
@@ -254,22 +316,25 @@ export class HistorialComponent implements OnInit {
     }
   }
 
-  e_radioOpciones(dato: any) {
-
-    //console.log(dato.target.id);
+  e_radioOpciones(event: MatRadioChange) {
 
     this.PlaceholderBusqueda = ''
 
-    let tipoBusqueda = dato.target.id;
-
+    let tipoBusqueda = event.source.id;
     if (tipoBusqueda == 'tmarca') {
       this.PlaceholderBusqueda = 'Ingresar marca: TCLU1234567'     //Default cambia de valor con la interacción del formulario
     } else if (tipoBusqueda == 'eguia') {
       this.PlaceholderBusqueda = 'Ingresar número de guía'     //Default cambia de valor con la interacción del formulario
     } else if (tipoBusqueda == 'efolioweb') {
       this.PlaceholderBusqueda = 'Ingresar número de Folio Web'     //Default cambia de valor con la interacción del formulario
-
     }
 
   }
+
+  //Menu
+  e_menu() {
+    this.router.navigate(['dashboard/intranet/menu']);
+  }
+
+
 }

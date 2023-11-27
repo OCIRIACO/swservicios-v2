@@ -127,6 +127,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { PerfilClienteStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-cliente/perfil-cliente-step1/perfil-cliente-step1.component';
 import { PerfilesStep1Component } from './modulos/intranet-Service/gestion-usuarios/perfil-usuarios-steps/perfiles-step1/perfiles-step1.component';
@@ -170,7 +171,8 @@ const MaterialComponents = [
   PortalModule,
   ScrollingModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule
 ]
 
 
