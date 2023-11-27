@@ -58,7 +58,7 @@ export class ConsultarClienteCustomerComponent implements OnInit {
     this.apiCliente.postConsultarCarteraClientes(parametros).subscribe(
       (response) => {
 
-        //console.log(this.dataSource.data);
+        
         //clientes =  response;
         this.e_procesarRespuesta(response.data);
       }
@@ -68,7 +68,7 @@ export class ConsultarClienteCustomerComponent implements OnInit {
   //Procesar respuesta
   e_procesarRespuesta(clientes: any) {
 
-    console.log(clientes);
+    
 
     let clientesList: any = []
 
@@ -86,7 +86,7 @@ export class ConsultarClienteCustomerComponent implements OnInit {
     })
 
     this.dataSource.data = clientesList;
-    console.log(this.dataSource.data);
+    
     this.dataSource.paginator = this.paginator;
 
   }
@@ -98,13 +98,13 @@ export class ConsultarClienteCustomerComponent implements OnInit {
 
   //Detalle
   e_detalles(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/clientes/detalle', etransaccion]);  // nativo
   }
 
   //Editar
   e_editar(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/clientes/editar', etransaccion]);  // nativo
   }
   //Menu

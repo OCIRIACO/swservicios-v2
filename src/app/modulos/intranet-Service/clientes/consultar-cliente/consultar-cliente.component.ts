@@ -76,7 +76,7 @@ export class ConsultarClienteComponent implements OnInit {
         (response) => {
           this.e_procesar_datos(response)
           //this.rowData =  response
-          //console.log(response);
+          
 
         }
       )
@@ -93,11 +93,11 @@ export class ConsultarClienteComponent implements OnInit {
 
     })
 
-    //console.log(datos);
+    
 
     this.rowData = datoClientes
 
-      //console.log(this.rowData);
+      
 
   }
 

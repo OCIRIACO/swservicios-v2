@@ -69,7 +69,7 @@ export class ApiServiceMenu {
         this.spinner.show();
         return this.http.post<any>(direccion, this.datosPost).pipe(
             catchError(error => {
-                console.log('error occured:', error);
+                
                 throw error;
             }),
             finalize(() => {

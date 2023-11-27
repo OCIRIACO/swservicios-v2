@@ -76,8 +76,8 @@ export class ConfigUbicacionesComponent implements OnInit {
       var tree = $(this).jstree();
       var node = tree.get_node(event.target);
 
-      console.log('dato!')
-      console.log(node.original.metada)
+      
+      
 
       let tipo = node.original.metada.ttipo
 
@@ -199,7 +199,7 @@ export class ConfigUbicacionesComponent implements OnInit {
                 "separator_after": true,
                 "label": "Configurar " + item.original.metada.ttipo.toLowerCase(),
                 "action": function (obj: any) {
-                  console.log('Crear');
+                  
                   //trigger
                   $('#jstree').trigger('configurar', item.original.metada);
                   //e_crear(item.original.metada)
@@ -291,8 +291,8 @@ export class ConfigUbicacionesComponent implements OnInit {
 
   // Editar configuracion ubicaciones
   e_editar(datos: any) {
-    //console.log('Editar!')
-    //console.log(datos)
+    //
+    
 
     // Valores form
     this.FormUbicaciones = new FormGroup({
@@ -310,8 +310,6 @@ export class ConfigUbicacionesComponent implements OnInit {
   // Eliminar ubicaciones
   e_eliminar(datos: any) {
 
-    // console.log('Editar!')
-    // console.log(datos)
 
     let alerta: any = {};
     let parametros: any = {}

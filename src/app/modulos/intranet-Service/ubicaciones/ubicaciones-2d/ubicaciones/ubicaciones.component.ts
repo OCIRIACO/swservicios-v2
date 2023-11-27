@@ -65,7 +65,7 @@ export class UbicacionesComponent implements OnInit {
     // Numero de checkbox
     let elementos = document.getElementsByClassName("ubicaciones")
 
-    //console.log(elementos.length)
+    
 
 
     for (var i = 0; i < elementos.length; i++) {
@@ -81,7 +81,7 @@ export class UbicacionesComponent implements OnInit {
 
 
         this.datosConsultaDetUbicaciones.forEach((dato: any, index: any) => {
-          // console.log(dato.ecoddetubicacion)
+          
           if (value == dato.ecoddetubicacion) {
             this.datoFinalUbicaciones.push(dato)
           }
@@ -94,7 +94,7 @@ export class UbicacionesComponent implements OnInit {
     }
 
     // Final
-    //console.log(this.datoFinalUbicaciones)
+    
     this.serviceUbicaciones2d.datosFinalUbicaciones2d = this.datoFinalUbicaciones
 
     //// Validar

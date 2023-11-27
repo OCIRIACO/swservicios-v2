@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     let ttoken: any
 
-    console.log(form.usuario);
+    
 
     datologin = { usuario: form.usuario, password: form.password };
     datoIniciarsession = { login: datologin };
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       //let response : IdatosResponse = response;
 
 
-      //console.log(response);
+      
 
       // if(response.success == true){
 
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
       if (response.errors) {
         success = false
         response.errors.forEach((dato: any, index: any) => {
-          //console.log(dato.attributes.text)
+          
           text += dato.attributes.text + '\n'
         })
       }

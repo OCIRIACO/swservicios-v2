@@ -156,7 +156,7 @@ export class VerificarSalidasComponent implements OnInit {
 
     this.apiSolicitudServicios.postConsultarDetalleSolicitud(Iparametros).subscribe(
       data => {
-        //console.log(data);
+        ;
         this.arrDatosPdf = data  // arreglo con los datos paragenerar el pdf
         this.e_procesarDatos(data);
 
@@ -168,7 +168,7 @@ export class VerificarSalidasComponent implements OnInit {
   //Procesar los datos del reponse del api
   e_procesarDatos(datos: any) {
 
-    //console.log(datos);
+    
 
     //Carga(s)
     let Icarga: any;
@@ -246,8 +246,8 @@ export class VerificarSalidasComponent implements OnInit {
     //arreglo notificaciones
     arrNotificaciones = datos.notificaciones
 
-    //console.log('notificacione')
-    //console.log(arrNotificaciones.length)
+    
+    
 
     if (arrNotificaciones.length != 0) {
       this.divNotificacion = true
@@ -374,7 +374,7 @@ export class VerificarSalidasComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    ////console.log(JSON.stringify(this.listDatosMercancia));
+    //
 
 
   }
@@ -505,7 +505,7 @@ export class VerificarSalidasComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    ////console.log("Adding footers...");
+    //
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')

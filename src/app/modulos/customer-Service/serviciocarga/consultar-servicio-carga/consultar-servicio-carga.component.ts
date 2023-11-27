@@ -75,13 +75,13 @@ export class ConsultarServicioCargaComponent implements OnInit {
 
   //Detalle
   e_detalles(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/serviciocarga/detalle', etransaccion]);  // nativo
   }
 
   //Editar
   e_editar(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/serviciocarga/editar', etransaccion]);  // nativo
   }
 

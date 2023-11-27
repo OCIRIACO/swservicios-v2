@@ -156,7 +156,7 @@ export class CrearsalidaComponent implements OnInit {
 
     //Configurar select2
     $('#ecliente').on('eValorCliente', (ev, dato) => {
-      ////console.log('Datos:'+dato)
+      
       this.e_procesarDirecciones(dato)
     });
 
@@ -168,7 +168,7 @@ export class CrearsalidaComponent implements OnInit {
 
     $(".select2").on("select2:select", function (e) {
       let dato_rfc: any = $(e.currentTarget).val()!
-      //console.log(dato_rfc)
+      
       //$('#ecliente').val(dato_rfc).trigger("change");
       let parametros = {
         ecliente: dato_rfc
@@ -233,8 +233,8 @@ export class CrearsalidaComponent implements OnInit {
 
 
   e_seleccionarRfc(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
+    
+    
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
@@ -290,13 +290,13 @@ export class CrearsalidaComponent implements OnInit {
 
   ///Procesar direcciones
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     this.FormSolicitudServicios.controls.trfc.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })
@@ -307,15 +307,13 @@ export class CrearsalidaComponent implements OnInit {
 
   e_buscarInformacionBien(datos: NgForm) {
 
-    console.log('*Busqueda');
-    console.log(datos);
-
+   
     //Oculto el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
     this.informativo = ''
 
     if (datos.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -340,7 +338,7 @@ export class CrearsalidaComponent implements OnInit {
       }
     )
 
-    //console.log(datos);
+    
   }
 
   e_procesarBusqueda(datos: any) {
@@ -348,12 +346,12 @@ export class CrearsalidaComponent implements OnInit {
     //Hide el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
 
-    //console.log(datos)
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.bienesLiberar.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.data[0].eguia) {
         agregados = true
@@ -378,7 +376,7 @@ export class CrearsalidaComponent implements OnInit {
 
   e_guardar(solicitud: NgForm) {
 
-    console.log(solicitud);
+    
 
     //Alerta
     let alerta: any = {};
@@ -390,7 +388,7 @@ export class CrearsalidaComponent implements OnInit {
     this.submitGuardar = true;
     // Stop en caso de detectar error
     if (solicitud.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -492,7 +490,7 @@ export class CrearsalidaComponent implements OnInit {
         ecodusuario: datosUsuario.ecodusuario,
         bienes: arrBienes
       }
-      console.log(Isolicitud);
+      
 
 
       //Consumir el servicio api
@@ -512,7 +510,7 @@ export class CrearsalidaComponent implements OnInit {
           this.apiSalidas.postCrearSolicitudSalida(Isolicitud).subscribe(
             (response) => {
 
-              console.log(response)
+              
 
               if (response.data) {
                 success = true
@@ -532,7 +530,7 @@ export class CrearsalidaComponent implements OnInit {
 
                 })
 
-                console.log(text)
+               
               }
 
 
@@ -558,12 +556,12 @@ export class CrearsalidaComponent implements OnInit {
   ///////// Agregar /////////
   e_agregar(datos: any) {
 
-    //console.log(datos);
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.bienesLiberar.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.eguia) {
         agregados = true
@@ -585,7 +583,7 @@ export class CrearsalidaComponent implements OnInit {
       //Oculto el reporte de los bienes que se realizo con el boton [buscar]
       this.divBienes = false;
 
-      //console.log(datos);
+      
 
       //Reset
       this.FormBusquedaBien.reset();
@@ -600,14 +598,14 @@ export class CrearsalidaComponent implements OnInit {
 
     this.bienesLiberar.forEach((dato: any, valor: any) => {
       if (dato.eguia == datosBien.eguia) {
-        // console.log('eliminar!');
+        
         this.bienesLiberar.splice(valor, 1);
       }
     })
   }
 
   e_procesar_datos_clientes(datos: any) {
-    //console.log(datos.data)
+    
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);

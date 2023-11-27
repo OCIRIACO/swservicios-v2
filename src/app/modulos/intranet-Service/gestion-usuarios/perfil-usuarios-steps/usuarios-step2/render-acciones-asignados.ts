@@ -20,7 +20,7 @@ export class RenderAccionesUsuariosAsignados {
 
   agInit(parametros: any): void {
     this.parametros = parametros;
-    // console.log(parametros)
+    
     this.lblValue = this.parametros.data.ecodusuario
 
   }
@@ -30,7 +30,7 @@ export class RenderAccionesUsuariosAsignados {
   }
 
   e_editar() {
-    console.log(this.parametros.data)
+    
 
     //this.parametros.context.componentParent.editarUsuario(this.parametros.data);
   }

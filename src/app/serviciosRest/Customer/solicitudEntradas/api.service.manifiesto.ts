@@ -102,7 +102,7 @@ export class ApiServiceManifiesto {
 
     // Json final
     this.datosPost = JSON.stringify(RootRangosolicitudes)
-    //console.log(this.datosPost)
+    
 
     
      

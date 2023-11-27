@@ -199,7 +199,7 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
   //Procesar los datos del reponse del api
   e_procesarDatosPost(datos: any) {
 
-    //console.log(datos);
+    
 
     //Carga(s)
     let Icarga: any;
@@ -285,8 +285,8 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
     //arreglo notificaciones
     arrNotificaciones = datos.notificaciones
 
-    //console.log('notificacione')
-    //console.log(arrNotificaciones.length)
+    
+    
 
     if (arrNotificaciones.length != 0) {
 
@@ -409,7 +409,7 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    ////console.log(JSON.stringify(this.listDatosMercancia));
+    //
 
 
   }
@@ -428,7 +428,7 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    ////console.log("Adding footers...");
+    //
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')
@@ -810,7 +810,7 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
             if (response.errors) {
               success = false
               response.errors.forEach((dato: any, index: any) => {
-                ////console.log(dato.attributes.text)
+                //
                 text += dato.attributes.text + '\n'
               })
             }
@@ -861,7 +861,7 @@ export class DetalleSolicitudServiciosComponent implements OnInit {
             if (response.errors) {
               success = false
               response.errors.forEach((dato: any, index: any) => {
-                ////console.log(dato.attributes.text)
+                //
                 text += dato.attributes.text + '\n'
               })
             }

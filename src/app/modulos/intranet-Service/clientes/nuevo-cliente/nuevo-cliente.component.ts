@@ -124,7 +124,7 @@ export class NuevoClienteComponent implements OnInit {
     //Limpiar arreglo
     this.arrdatosColonia = []
 
-    console.log(datos.target.value)
+    
 
     let parametros = {
       ecodigopostal: datos.target.value
@@ -139,7 +139,7 @@ export class NuevoClienteComponent implements OnInit {
 
   //Procesar respuesta del Api de codigo postal
   e_procesarDatosCodigoPostal(datos: any) {
-    console.log(datos)
+    
 
     this.FormDireccion.controls['tentidadfederativa'].setValue(datos.tentidadfederativa);
     this.FormDireccion.controls['eestado'].setValue(datos.eestado);
@@ -158,12 +158,12 @@ export class NuevoClienteComponent implements OnInit {
 
   e_agregarDireccion(datos: any) {
 
-    ////console.log(form);
+    
     this.submitDireccion = true;
 
     //Validar form
     if (this.FormDireccion.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -173,19 +173,19 @@ export class NuevoClienteComponent implements OnInit {
       this.arrdatosDireccion.push(datos)
     } else {
 
-      //console.log('Nivel 2')
-      //console.log(datos)
-      //console.log(datos.edireccion)
+      
+      
+      
 
 
       if (datos.edireccion === '') {
         //Nuevo registro
-        //console.log('*Nuevo')
-        //console.log(datos.edireccion)
+        
+        
         datos.edireccion = (this.arrdatosDireccion.length)
         this.arrdatosDireccion.push(datos)
       } else {
-        //console.log('*Actualizar')
+        
         //Actualizar registro
         this.arrdatosDireccion[datos.edireccion].edireccion = datos.edireccion;
         this.arrdatosDireccion[datos.edireccion].ecodigopostal = datos.ecodigopostal;
@@ -202,7 +202,7 @@ export class NuevoClienteComponent implements OnInit {
     }
 
 
-    //console.log(this.arrdatosDireccion)
+    
 
     ////Submit's
     this.submitDireccion = false;
@@ -235,8 +235,8 @@ export class NuevoClienteComponent implements OnInit {
 
   //Editar direccion
   e_editarDireccion(datos: any) {
-    //console.log('Editar')
-    //console.log(datos)
+    
+    
 
     this.FormDireccion = new FormGroup({
       edireccion: new FormControl(datos.edireccion, null),
@@ -268,12 +268,12 @@ export class NuevoClienteComponent implements OnInit {
     let alerta: any = {};
 
 
-    ////console.log(form);
+    
     this.submitCliente = true;
 
     //Validar form
     if (this.FormCliente.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -318,7 +318,7 @@ export class NuevoClienteComponent implements OnInit {
     alerta['tipo'] = 'question';
     alerta['footer'] = '';
 
-    console.log(JSON.stringify(parametros))
+    
 
     this.alertaConfirm(alerta, (confirmed: boolean) => {
       if (confirmed == true) {
@@ -351,7 +351,7 @@ export class NuevoClienteComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }

@@ -66,7 +66,7 @@ export class ZonasComponent implements OnInit {
       var tree = $(this).jstree();
       var node = tree.get_node(event.target);
 
-      // console.log(node.original.metada);
+      // ;
 
       $('#jstree').trigger('configurar', node.original.metada);
 
@@ -78,7 +78,6 @@ export class ZonasComponent implements OnInit {
   // Consultar API de detalle de ubicaciones
   e_consultarDetalleUbicaciones(dato: any) {
 
-    // console.log(dato);
     //Peticion
     this.apiUbicacion.postConsultaDetallesUbicaciones(dato).subscribe(
       (response) => {
@@ -119,7 +118,6 @@ export class ZonasComponent implements OnInit {
 
       ];
 
-      console.log('filas:' + filas + ' bahias:' + bahias)
 
       html += '<table  id="div1"  class="tbUbicaciones" >'
       for (let x = 0; x < filas; x++) {
@@ -196,7 +194,7 @@ export class ZonasComponent implements OnInit {
             }
 
 
-            console.log(y + '%2 = ' + y % 2)
+            //console.log(y + '%2 = ' + y % 2)
           }
 
 
@@ -308,7 +306,7 @@ export class ZonasComponent implements OnInit {
                 "separator_after": true,
                 "label": "Ver " + item.original.metada.ttipo.toLowerCase() + ' ' + item.original.metada.tsubtipo.toLowerCase(),
                 "action": function (obj: any) {
-                  //console.log('Crear');
+                  //
                   //trigger
                   $('#jstree').trigger('configurar', item.original.metada);
                   //e_crear(item.original.metada)

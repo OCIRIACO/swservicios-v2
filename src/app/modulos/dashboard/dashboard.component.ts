@@ -54,10 +54,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //console.log( localStorage.getItem("token") );
+    
     this.dataService.e_validaLocalStorage();
-    // console.log('Datos usuario');
-    // console.log(this.serviceDatosUsuario.datosUsuario);
+    
+    
 
     // Datos de usurios
     let usuario = JSON.parse(this.serviceDatosUsuario.datosUsuario);
@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
 
     this.apiMenu.postConsultaMenuSistema('INTRANET').subscribe(
       (response) => {
-        console.log('Intranet');
+        
         this.serviceCatalogos.arrIntranet = response
         this.opIntranet = this.serviceCatalogos.arrIntranet
 

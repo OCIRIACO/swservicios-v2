@@ -200,8 +200,8 @@ export class DetallesSalidaComponent implements OnInit {
     //arreglo notificaciones
     arrNotificaciones = datos.notificaciones
 
-    //console.log('notificacione')
-    //console.log(arrNotificaciones.length)
+    
+    
 
     if (arrNotificaciones.length != 0) {
       this.divNotificacion = true
@@ -328,7 +328,7 @@ export class DetallesSalidaComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    //console.log(JSON.stringify(this.listDatosMercancia));
+    
 
 
   }
@@ -352,7 +352,7 @@ export class DetallesSalidaComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    //console.log("Adding footers...");
+    
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')

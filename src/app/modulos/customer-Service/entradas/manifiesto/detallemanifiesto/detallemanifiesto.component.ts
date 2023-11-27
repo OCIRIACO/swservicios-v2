@@ -130,7 +130,7 @@ export class DetallemanifiestoComponent implements OnInit {
         //Pdf's arrego para transformar los pdf
         this.arrDatosPdf = data
         //Datos pdf
-        //console.log(  JSON.stringify( this.arrDatosPdf) )
+       
         GlobalConstants.arrEntrada = datosEntrada
         this.e_procesarDatosPost(datosEntrada);
       }
@@ -140,7 +140,7 @@ export class DetallemanifiestoComponent implements OnInit {
 
   e_procesarDatosPost(datos?: any) {
 
-    ////console.log(datos);
+    ;
 
     //Carga(s)
     let Icarga: any = {};
@@ -299,7 +299,7 @@ export class DetallemanifiestoComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    //////console.log(JSON.stringify(this.listDatosBienes));
+    
 
 
   }
@@ -345,7 +345,7 @@ export class DetallemanifiestoComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    //console.log("Adding footers...");
+    
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')

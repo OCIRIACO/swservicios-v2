@@ -380,10 +380,10 @@ export class EditarmanifiestoComponent implements OnInit {
   //Procesar datos
   e_procesarConsultaSolicitud(datos: any) {
 
-    //console.log('*Datos de cliente')
-    //console.log(datos)
-    //console.log('*Cartera de clientes')
-    //console.log(this.datosClientes)
+    
+    
+    
+    
 
     //Procesar la busqueda de la direccion
     this.datosClientes.forEach((datocliente: any, index: any) => {
@@ -970,7 +970,7 @@ export class EditarmanifiestoComponent implements OnInit {
 
 
 
-        console.log(JSON.stringify(this.datosManifiesto));
+        
 
 
 

@@ -310,7 +310,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
 
     /* $('#ecliente').on('eValorCliente', (ev, dato) => {
-       ////console.log('Datos:'+dato)
+       
        this.e_procesarDirecciones(dato)
      });*/
 
@@ -322,7 +322,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
     $(".select2").on("select2:select", function (e) {
       let dato_rfc: any = $(e.currentTarget).val()!
-      console.log(dato_rfc)
+      
       //$('#ecliente').val(dato_rfc).trigger("change");
       let parametros = {
         ecliente: dato_rfc
@@ -443,7 +443,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
         this.e_procesarDatosServicios(response);
         // this.e_procesar_datos_clientes(response)
         //this.rowData =  response
-        //console.log(response);
+        
       }
     )
 
@@ -817,7 +817,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
   }
 
   e_eliminarBien(element: any) {
-    //////console.log(element);
+    
 
     this.bienes.forEach((value: any, index: any) => {
       if (value == element) {
@@ -1041,7 +1041,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
   e_guardar(solicitud: NgForm) {
 
-    //console.log(solicitud);
+    
 
 
     //Validar datos del contacto
@@ -1049,7 +1049,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
     // stop y valido
     if (solicitud.invalid) {
-      ////console.log('error.');
+      
       return;
     }
 
@@ -1067,8 +1067,8 @@ export class ActualizarServicioCargaComponent implements OnInit {
     }
 
 
-    ////console.log('Antes');
-    ////console.log(JSON.stringify(this.bienes));
+    
+    
 
 
     if (this.bienes.length != 0) {
@@ -1102,8 +1102,8 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
 
       this.bienes.forEach((dato: any, index: any) => {
-        ////console.log(index);
-        ////console.log(dato['idsequence']);
+        
+        
 
         //clear
         listaMercancias = []
@@ -1215,7 +1215,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
       //datosParametros = { orden: Isolicitud }
 
 
-      console.log(JSON.stringify(Isolicitud));
+      
 
       let alerta: any = {};
 
@@ -1226,7 +1226,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
       this.alertaConfirm(alerta, (confirmed: boolean) => {
         if (confirmed == true) {
-          //console.log(JSON.stringify(Isolicitud));
+          
           this.e_notificarSolicitudServicio(Isolicitud);
         }
       });
@@ -1260,7 +1260,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -1278,13 +1278,13 @@ export class ActualizarServicioCargaComponent implements OnInit {
   }
 
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })
@@ -1326,7 +1326,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
-          console.log(dato.servicios)
+          
           this.arrtiposolicitud = dato.servicios
         }*/
       })
@@ -1338,8 +1338,8 @@ export class ActualizarServicioCargaComponent implements OnInit {
 
     this.arrtiposolicitud = []
 
-    //console.log('Servicios')
-    //console.log(datos.servicios.length)
+    
+    
     this.arrtiposolicitud = []
 
     if (datos.value.childs) {
@@ -1360,7 +1360,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
   e_eliminar_servicio(datos: any) {
     this.servicios.forEach((servicio: any, valor: any) => {
       if (servicio.eservicio == datos.eservicio) {
-        // console.log('eliminar!');
+        
         this.servicios.splice(valor, 1);
       }
     })
@@ -1375,7 +1375,7 @@ export class ActualizarServicioCargaComponent implements OnInit {
     //this.submitServicios = true;
     // Stop en caso de detectar error
     if (datos.invalid) {
-      //console.log('error.');
+      
       return;
     }
 

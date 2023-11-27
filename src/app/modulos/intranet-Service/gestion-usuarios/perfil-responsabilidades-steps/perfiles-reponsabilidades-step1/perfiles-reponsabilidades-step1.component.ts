@@ -31,8 +31,8 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
 
     // Click
     $('#jstree').on('asignarResponsabilidades', (ev, dato) => {
-      //console.log('datos perfil')
-      //console.log(dato)
+      
+      
       this.e_responsabilidades(dato);
     });
   }
@@ -40,7 +40,7 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
 
   //Asignar usuario (redirect)
   e_responsabilidades(datos: any) {
-    //console.log(datos)
+    
 
     this.serviceDatosPerfilUsuario.datosPerfilUsuarios = datos
     // Router
@@ -114,7 +114,7 @@ export class PerfilesReponsabilidadesStep1Component implements OnInit {
               "separator_after": true,
               "label": "Asignar responsabilidades",
               "action": function (obj: any) {
-                ////console.log('nivel');
+                
                 //trigger
                 $('#jstree').trigger('asignarResponsabilidades', item.original.metada);
                 //e_crear(item.original.metada)

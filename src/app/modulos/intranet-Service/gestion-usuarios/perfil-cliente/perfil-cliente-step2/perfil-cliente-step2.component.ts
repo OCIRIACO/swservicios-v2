@@ -141,7 +141,7 @@ export class PerfilClienteStep2Component implements OnInit {
       confirmButtonColor: "#22bab7"
     }).then((result) => {
       //this.e_procesar_consultar_clientes()
-      console.log(result);
+      null;
     })
   }
 
@@ -178,7 +178,7 @@ export class PerfilClienteStep2Component implements OnInit {
       (response) => {
         this.e_procesar_datos(response)
         //this.rowData =  response
-        //console.log(response);
+        
       }
     )
 
@@ -278,7 +278,7 @@ export class PerfilClienteStep2Component implements OnInit {
               if (response.errors) {
                 success = false
                 response.errors.forEach((dato: any, index: any) => {
-                  //console.log(dato.attributes.text)
+                  
                   text += dato.attributes.text + '\n'
                 })
               }
@@ -296,8 +296,8 @@ export class PerfilClienteStep2Component implements OnInit {
   }
 
   e_eliminarClienteDirecto(datos: any) {
-    //console.log('Eliminar')
-    //console.log(this.eclienteAsignados)
+    
+    
 
     //Alerta
     let alerta: any = {};
@@ -343,7 +343,7 @@ export class PerfilClienteStep2Component implements OnInit {
               if (response.errors) {
                 success = false
                 response.errors.forEach((dato: any, index: any) => {
-                  //console.log(dato.attributes.text)
+                  
                   text += dato.attributes.text + '\n'
                 })
               }

@@ -33,8 +33,8 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('datos...')
-    console.log(this.serviceDatosPerfil)
+   
+   
 
     //Iniciar consultar los perfiles
     this.e_consultarOperaciones(this.serviceDatosPerfil)
@@ -112,15 +112,15 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
             metada: this.Imetadata
           }
 
-          console.log(dataPerfil)
+          
 
 
 
 
-          //console.log(dataPerfil)
+          
           this.IdataOperaciones.push(dataPerfil)
         })
-        console.log(this.IdataOperaciones)
+        
 
         //Procesar datos
         this.e_procesaDatos();
@@ -193,13 +193,6 @@ export class PerfilesReponsabilidadesStep2Component implements OnInit {
       selectedElmsIds.push(Ieresponsabilidad);
 
     });
-
-
-    console.log(selectedElmsIds)
-
-
-
-
 
 
     Iperfil = {

@@ -49,8 +49,8 @@ export class ConsultarSolicitudServiciosComponent implements OnInit {
   }
 
   e_opcion(event: MatRadioChange) {
-    //console.log(event.value);
-    // console.log(datos.target.attributes.value.value);
+    
+    
 
     let parametros = {
       ttiposolicitud: 'SERVICIO',

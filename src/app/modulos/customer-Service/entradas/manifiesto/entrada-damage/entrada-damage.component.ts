@@ -129,7 +129,7 @@ export class EntradaDamageComponent implements OnInit {
         //Pdf's arrego para transformar los pdf
         this.arrDatosPdf = data
         //Datos pdf
-        //console.log(  JSON.stringify( this.arrDatosPdf) )
+       
         this.e_procesarDatosPost(productos);
       }
     )*/
@@ -142,7 +142,7 @@ export class EntradaDamageComponent implements OnInit {
   //Procesar Datos
   e_procesarDatosPost(datos?: any) {
 
-    ////console.log(datos);
+    ;
 
     //Carga(s)
     let Icarga: any = {};
@@ -317,7 +317,7 @@ export class EntradaDamageComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    //console.log(JSON.stringify(this.listDatosBienes));
+    
 
 
   }
@@ -370,7 +370,7 @@ export class EntradaDamageComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    //console.log("Adding footers...");
+    
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')
@@ -620,10 +620,10 @@ export class EntradaDamageComponent implements OnInit {
 
     caras.forEach(async (dato: any, index: any) => {
 
-      //console.log(dato.cara)
+      
 
       this.e_control_damage(dato)
-      //console.log(this.html_cara)
+      
       //let div = this.html_cara
 
       div += this.html_cara + '<br>'
@@ -797,7 +797,7 @@ export class EntradaDamageComponent implements OnInit {
 
         let splitLetra = letra[(contador1 - 1)]
 
-        //console.log('letra:' + letra + ' contador:' + contador1);
+        
 
         for (let y = 1; y <= columnas; y++) {
           if (y == 1) {
@@ -833,13 +833,13 @@ export class EntradaDamageComponent implements OnInit {
     //html += '</tbody>';
     html += '</table>';
 
-    //console.log(html)
+    
 
     this.html_cara = html
 
     //this.htmlDamage = html;
     //document.getElementById('htmlDamage')!.innerHTML = html;
-    //console.log(html);
+    ;
 
   }
 

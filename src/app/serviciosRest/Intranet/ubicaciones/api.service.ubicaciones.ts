@@ -57,7 +57,7 @@ export class ApiServiceUbicaciones {
 
         parametros = JSON.stringify(IrootRegistrarUbicacion);
 
-        console.log(parametros);
+       
 
         this.spinner.show();
         return this.http.post<any[]>(direccion, parametros).pipe(finalize(() => {
@@ -70,7 +70,7 @@ export class ApiServiceUbicaciones {
     postConsultaDetallesUbicaciones(datos: any): Observable<any[]> {
         let direccion = this.url + "intranet/ubicaciones/consultar/detalleubicaciones";
 
-        console.log(datos);
+        ;
 
 
         let IrootConsultaZonaDetalleUbicaciones: IrootConsultaZonaDetalleUbicaciones;
@@ -137,7 +137,7 @@ export class ApiServiceUbicaciones {
 
         this.datosPost = JSON.stringify(rootEliminarUbicacion);
 
-        //console.log(this.datosPost)
+        
 
 
         this.spinner.show();
@@ -177,7 +177,7 @@ export class ApiServiceUbicaciones {
 
         this.datosPost = JSON.stringify(IrootOcupacionBienes);
 
-        console.log(this.datosPost)
+       
 
 
         this.spinner.show();

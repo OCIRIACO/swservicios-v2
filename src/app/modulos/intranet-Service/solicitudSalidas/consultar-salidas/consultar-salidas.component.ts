@@ -45,8 +45,8 @@ export class ConsultarSalidasComponent implements OnInit {
   }
 
   e_opcion(event: MatRadioChange) {
-    //console.log(datos.target.id);
-    // console.log(datos.target.attributes.value.value);
+    
+    
 
     let parametros = {
       ttiposolicitud: 'SALIDA',

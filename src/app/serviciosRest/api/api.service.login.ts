@@ -35,7 +35,7 @@ export class classApiLogin{
     }
 
     e_validaLocalStorage(){
-      //console.log('existe token:'+localStorage.getItem('token'));
+      
       if(localStorage.getItem('token') == null){
        this.router.navigate(['login']);
 

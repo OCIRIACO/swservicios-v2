@@ -235,7 +235,7 @@ export class InventariosComponent implements OnInit {
 
     // stop y valido
     if (dato.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -271,8 +271,8 @@ export class InventariosComponent implements OnInit {
   */
 
   e_tipoBusqueda(datos: any) {
-    console.log('tipo busqueda');
-    console.log(datos)
+    
+    
 
 
     if (datos.value == 'EXISTENCIAS') {

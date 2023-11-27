@@ -133,7 +133,7 @@ export class DetalleServiciosComponent implements OnInit {
   //Procesar los datos del reponse del api
   e_procesarDatosPost(datos: any) {
 
-    //console.log(datos);
+    
 
     //Carga(s)
     let Icarga: any;
@@ -213,8 +213,8 @@ export class DetalleServiciosComponent implements OnInit {
     //arreglo notificaciones
     arrNotificaciones = datos.notificaciones
 
-    //console.log('notificacione')
-    //console.log(arrNotificaciones.length)
+    
+    
 
     if (arrNotificaciones.length != 0) {
 
@@ -318,7 +318,7 @@ export class DetalleServiciosComponent implements OnInit {
 
     this.listDatosBienes = IListadoCargas;
 
-    //console.log(JSON.stringify(this.listDatosMercancia));
+    
 
 
   }
@@ -337,7 +337,7 @@ export class DetalleServiciosComponent implements OnInit {
   }
 
   addFooters = (doc: any) => {
-    //console.log("Adding footers...");
+    
     const pageCount = doc.internal.getNumberOfPages()
 
     doc.setFont('helvetica', 'italic')

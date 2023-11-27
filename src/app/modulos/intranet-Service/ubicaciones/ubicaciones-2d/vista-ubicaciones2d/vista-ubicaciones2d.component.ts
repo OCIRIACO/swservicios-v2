@@ -80,7 +80,7 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
       this.apiUbicacion.postOcupacionBienes(datosPost).subscribe(
         (response) => {
-          ////console.log(response.bienes)
+          
 
           if (response == null) {
             this.ocupaciones = []
@@ -109,7 +109,7 @@ export class VistaUbicaciones2dComponent implements OnInit {
   //Crear vista layout (vERTICAL)
   e_crearLayout(datos: any, ubicaciones: any) {
 
-    //console.log(datos)
+    
 
 
     let html = '';
@@ -143,7 +143,6 @@ export class VistaUbicaciones2dComponent implements OnInit {
     // var ocupaciones : any   = []
 
 
-    // //console.log('filas:' + filas + ' bahias:' + bahias)
 
     //Procesar los detalles de ubicacion
     //Crear el bloque
@@ -356,7 +355,6 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
       ];
 
-      //console.log('filas:' + filas + ' bahias:' + bahias)
 
       html += '<table  id="div1"  class="tbUbicaciones" >'
       for (let x = 0; x < filas; x++) {
@@ -471,10 +469,9 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
   //Listener
   @HostListener('click', ['$event.target']) clickShowHide(dato: any) {
-    ////console.log(dato.classList[1])
     //Identificar por el class
     if (dato.classList[1] == 'ocupado') {
-      //console.log(dato.attributes.id)
+      
 
       let cadena: string = dato.attributes.id.value
       let datosPost: any
@@ -501,7 +498,6 @@ export class VistaUbicaciones2dComponent implements OnInit {
 
   e_crearlayoutBahia(datos: any) {
 
-    //console.log(datos.length)
     let altura: number = datos.length
     let defaultX: number = 2
     let html: string = "";

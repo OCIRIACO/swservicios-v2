@@ -146,7 +146,7 @@ export class ConfiguracionComponent implements OnInit {
 
 
   e_procesaDatos() {
-    console.log(this.IdataZona);
+    
 
     $('#jstree').jstree("destroy").empty();
 
@@ -163,7 +163,7 @@ export class ConfiguracionComponent implements OnInit {
             "Create": {
               "label": "Crear " + item.original.metada.tcrearzona.toLowerCase(),
               "action": function (obj: any) {
-                //console.log('Crear');
+                //
                 //trigger
                 $('#jstree').trigger('crear', item.original.metada);
                 //e_crear(item.original.metada)
@@ -173,7 +173,7 @@ export class ConfiguracionComponent implements OnInit {
 
               "label": "Editar " + item.original.metada.ttipo.toLowerCase(),
               "action": function (obj: any) {
-                //console.log('Editar');
+                ;
                 //trigger
                 $('#jstree').trigger('editar', item.original.metada);
                 //e_editar(item.original.metada)
@@ -198,7 +198,7 @@ export class ConfiguracionComponent implements OnInit {
 
 
   e_ZonaEditar(dato: any) {
-    console.log(dato);
+    
 
     this.FormDatosZonas.reset();
 
@@ -230,7 +230,6 @@ export class ConfiguracionComponent implements OnInit {
 
   e_ZonaCrear(dato: any) {
 
-    //console.log(dato);
     let zonacrear: string = ""
 
     this.FormDatosZonas.reset();
@@ -282,7 +281,7 @@ export class ConfiguracionComponent implements OnInit {
 
   e_guardar(datos: any) {
 
-    console.log(datos);
+    ;
 
     if (datos.ttipo != 'ZONA') {
       this.FormDatosZonas.get('tsubtipo')?.disable();
@@ -304,7 +303,7 @@ export class ConfiguracionComponent implements OnInit {
 
     // stop y valido
     if (this.FormDatosZonas.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -406,12 +405,6 @@ export class ConfiguracionComponent implements OnInit {
     }
   }
 
-  ngOnChanges() {
-    console.log('OK!');
-  }
 
-  ngAfterViewInit() {
-    console.log('OK!');
-  }
 }
 

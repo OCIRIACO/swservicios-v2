@@ -292,7 +292,7 @@ export class NotificamanifiestoComponent implements OnInit {
     //Catalogo de Tipos de contenedores
     this.api.GetTipoContenedores().subscribe(data => {
 
-      //console.log(data)
+      
       let dato = {
         id: null,
         ttipo: 'SELECCIONAR'
@@ -332,7 +332,7 @@ export class NotificamanifiestoComponent implements OnInit {
         //this.rowData =  response
 
         this.options = response.data;
-        //console.log(this.options);
+        
 
         //Auto complete
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -417,8 +417,8 @@ export class NotificamanifiestoComponent implements OnInit {
   }
 
   OnHumanSelected(dato: any) {
-    console.log('### Trigger');
-    console.log(dato);
+    
+    
 
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudEntrada.get('cliente')?.setValue(dato);
@@ -427,7 +427,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
   ///
   e_procesar_datos_clientes(datos: any) {
-    ////console.log(datos.data)
+    //
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);
@@ -447,7 +447,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
 
     if (this.FormDatosBien.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -523,15 +523,15 @@ export class NotificamanifiestoComponent implements OnInit {
     //Nuevo
     this.FormDatosBien.get('econtadorRowBien')!.setValue(0);
 
-    console.log('*Bienes')
-    console.log(this.bienes);
+    
+    
 
 
   }
 
 
   e_eliminar(element: any) {
-    ////////console.log(element);
+    //
 
     this.bienes.forEach((value: any, index: any) => {
       if (value == element) {
@@ -580,15 +580,15 @@ export class NotificamanifiestoComponent implements OnInit {
   //agregar Detalles del bien
   e_agregarDetalleBien() {
 
-    console.log('*Datos bien');
-    console.log(this.datosBien);
+    
+    
 
-    console.log('*Detalles bienes');
-    console.log(this.FormDatosDetallesBien)
+    
+    
 
     // stop here if form is invalid
     if (this.FormDatosDetallesBien.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -651,8 +651,8 @@ export class NotificamanifiestoComponent implements OnInit {
   //Form para iniciar la captura de los detalles del bien
   e_mercancias(datos: any) {
 
-    console.log('* Detalles bien')
-    console.log(datos)
+    
+    
 
     //Cargas los datos
     this.datosBien = datos
@@ -732,11 +732,11 @@ export class NotificamanifiestoComponent implements OnInit {
 
     // stop y valido
     if (solicitud.invalid) {
-      console.log('*error');
+      
       return;
     }
 
-    console.log(solicitud);
+    
 
 
     if (this.bienes.length == 0) {
@@ -851,7 +851,7 @@ export class NotificamanifiestoComponent implements OnInit {
 
 
 
-        console.log(JSON.stringify(this.datosManifiesto));
+        
 
 
         datosParametros = { orden: this.datosManifiesto }
@@ -912,13 +912,13 @@ export class NotificamanifiestoComponent implements OnInit {
   }
 
   e_procesarDirecciones(datos: any) {
-    ////console.log('datos')
-    ////console.log(datos)
+    //
+    
     this.FormSolicitudEntrada.controls.cliente.setValue(datos.cliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.cliente == datos.cliente) {
-        ////console.log(dato.direcciones)
+        //
         this.datosDirecciones = dato.direcciones
       }
     })

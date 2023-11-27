@@ -172,11 +172,11 @@ export class HistorialComponent implements OnInit {
 
     // Stop en caso de detectar error
     if (this.FormBusqueda.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
-    //console.log(datos);
+    
 
     this.apiHistorial.postConsultaHistorial(datos).subscribe(
       (response) => {

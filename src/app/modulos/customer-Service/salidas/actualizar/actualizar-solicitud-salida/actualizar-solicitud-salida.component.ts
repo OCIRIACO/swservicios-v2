@@ -208,7 +208,7 @@ maxCarateresMarcas: number = 0;
     //// Configurar el select2
 
     /* $('#ecliente').on('eValorCliente', (ev, dato) => {
-       ////console.log('Datos:'+dato)
+       
        this.e_procesarDirecciones(dato)
      });
  
@@ -220,7 +220,7 @@ maxCarateresMarcas: number = 0;
  
      $(".select2").on("select2:select", function (e) {
        let dato_rfc: any = $(e.currentTarget).val()!
-       //console.log(dato_rfc)
+       
        //$('#ecliente').val(dato_rfc).trigger("change");
        let parametros = {
          ecliente: dato_rfc
@@ -304,12 +304,12 @@ maxCarateresMarcas: number = 0;
     this.apiSalidas.postConsultarSolicitudSalida(Iparametros).subscribe(
       data => {
         //this.arrDatosBienesLiberar = data.mercancias
-        //console.log(data.mercancias)
+        
         this.e_procesarConsultaSolicitud(data)
       }
     )
 
-    //console.log(this.arrDatosBienesLiberar)
+    
   }
 
   ////////// Procesar Datos (parseo) /////
@@ -385,7 +385,7 @@ maxCarateresMarcas: number = 0;
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.arrDatosBienesLiberar.forEach((bien: any, valor: any) => {
       if (bien.ebien == datos.ebien) {
         agregados = true
@@ -414,7 +414,7 @@ maxCarateresMarcas: number = 0;
       //Oculto el reporte de los bienes que se realizo con el boton [buscar]
       this.divBienes = false;
 
-      //console.log(datos);
+      
 
       //Reset
       this.FormBusqueda.reset();
@@ -441,14 +441,14 @@ maxCarateresMarcas: number = 0;
 
     // Stop en caso de detectar error
     if (this.FormBusqueda.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
     //Consumir el microservicio
     this.apiSalidas.postValidarSalidaBienes(datos).subscribe(
       (response) => {
-        //console.log(response);
+        
         if (response.success == false) {
           this.informativo = response.errors[0].detail;
         } else {
@@ -459,7 +459,7 @@ maxCarateresMarcas: number = 0;
       }
     )
 
-    //console.log(datos);
+    
   }
 
   e_procesarBusqueda(datos: any) {
@@ -467,12 +467,12 @@ maxCarateresMarcas: number = 0;
     //Hide el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
 
-    //console.log(datos)
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.arrDatosBienesLiberar.forEach((bien: any, valor: any) => {
       if (bien.ebien == datos.data[0].ebien) {
         agregados = true
@@ -499,8 +499,8 @@ maxCarateresMarcas: number = 0;
 
   e_guardar(solicitud: NgForm) {
 
-    //console.log('guardar');
-    //console.log(this.arrDatosBienesLiberar);
+    
+   
 
     //Alerta
     let alerta: any = {};
@@ -510,7 +510,7 @@ maxCarateresMarcas: number = 0;
     this.submitGuardar = true;
     // Stop en caso de detectar error
     if (solicitud.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -526,7 +526,7 @@ maxCarateresMarcas: number = 0;
 
     }
 
-    //console.log(this.bienesLiberar);
+    
 
     // Preparar los datos para el envio al API
 
@@ -537,7 +537,7 @@ maxCarateresMarcas: number = 0;
     let bienes: Ibienes
     let detBien: IdetalleBienes
 
-    //console.log(this.bienesLiberar);
+    
 
     this.arrDatosBienesLiberar.forEach((bien: any, valor: any) => {
       //Detalles Bienes
@@ -615,7 +615,7 @@ maxCarateresMarcas: number = 0;
       bienes: arrBienes
     }
 
-    //console.log(JSON.stringify(Isolicitud));
+    
 
 
     //Consumir el servicio api
@@ -674,7 +674,7 @@ maxCarateresMarcas: number = 0;
 
     this.arrDatosBienesLiberar.forEach((dato: any, valor: any) => {
       if (dato.ebien == datosBien.ebien) {
-        // console.log('eliminar!');
+        
         this.arrDatosBienesLiberar.splice(valor, 1);
       }
     })
@@ -687,7 +687,7 @@ maxCarateresMarcas: number = 0;
 
   // Procesar los datos del cliente
   e_procesar_datos_clientes(datos: any) {
-    //console.log(datos.data)
+    
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);
@@ -698,13 +698,13 @@ maxCarateresMarcas: number = 0;
 
 
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })

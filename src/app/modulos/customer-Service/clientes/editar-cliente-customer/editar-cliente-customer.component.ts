@@ -136,7 +136,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     let direccionesList: any = [];
 
     datos.data[0].direcciones.forEach((value: any, index: any) => {
-      console.log(value);
+      
 
       let direccion = {
         econtadorrow: this.contadorRow,
@@ -251,7 +251,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     //Limpiar arreglo
     this.arrdatosColonia = []
 
-    //console.log(datos.target.value)
+    
 
     let parametros = {
       ecodigopostal: datos.target.value
@@ -288,16 +288,16 @@ export class EditarClienteCustomerComponent implements OnInit {
 
 
     //Datos de la direccion
-    //console.log('Direcciones')
-    //console.log(datos)
+    
+    
 
 
-    ////console.log(form);
+    
     //this.submitDireccion = true;
 
     //Validar form
     if (datoDireccion.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -335,7 +335,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     //Contador++
     this.contadorRow++;
 
-    //console.log(datoDireccion);
+    
 
     //Get text select
     /*var sel = document.getElementById('ecolonia') as HTMLSelectElement | null;
@@ -348,20 +348,20 @@ export class EditarClienteCustomerComponent implements OnInit {
       this.direcciones.push(datos)
     } else {
 
-      //console.log('Nivel 2')
-      //console.log(datos)
-      //console.log(datos.edireccion)
+      
+      
+      
 
 
       if (datos.edireccion === '') {
         //Nuevo registro
-        //console.log('*Nuevo')
-        //console.log(datos.edireccion)
+        
+        
         datos.edireccion = (this.direcciones.length)
         datos.tcolonia = this.tcolonia
         this.direcciones.push(datos)
       } else {
-        //console.log('*Actualizar')
+        
         //Actualizar registro
         this.direcciones[datos.edireccion].edireccion = datos.edireccion;
         this.direcciones[datos.edireccion].ecodigopostal = datos.ecodigopostal;
@@ -379,7 +379,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     }
 
 
-    //console.log(this.direcciones)
+    
 
     ////Submit's
     this.submitDireccion = false;
@@ -432,8 +432,8 @@ export class EditarClienteCustomerComponent implements OnInit {
   //Editar direccion
   e_editarDireccion(datos: any) {
 
-    console.log('*Editar direccion');
-    console.log(datos);
+    
+    ;
 
     /////////////////
 
@@ -485,8 +485,8 @@ export class EditarClienteCustomerComponent implements OnInit {
      this.ngformDireccionRazonSocial.form.setValue(direccion)*/
 
 
-    //console.log('Editar')
-    //console.log(datos)
+    
+    
 
     /*this.FormDireccion = new FormGroup({
       edireccion: new FormControl(datos.edireccion, null),
@@ -518,12 +518,12 @@ export class EditarClienteCustomerComponent implements OnInit {
     let alerta: any = {};
 
 
-    ////console.log(form);
+    
     //this.submitCliente = true;
 
     //Validar form
     if (solicitud.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -572,7 +572,7 @@ export class EditarClienteCustomerComponent implements OnInit {
     alerta['tipo'] = 'question';
     alerta['footer'] = '';
 
-    //console.log(JSON.stringify(parametros))
+    
 
     this.alertaConfirm(alerta, (confirmed: boolean) => {
       if (confirmed == true) {
@@ -605,7 +605,7 @@ export class EditarClienteCustomerComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -625,9 +625,9 @@ export class EditarClienteCustomerComponent implements OnInit {
 
 
   e_changeColonia(datos: MatSelectModule) {
-    console.log('*Colonia');
+    
     //this.ngformDireccionRazonSocial.form.get('tcolonia')?.setValue((datos.source.selected as MatOption).viewValue);
-    //console.log((datos.source.selected as MatOption).viewValue);
+    
   }
 
   //Menu

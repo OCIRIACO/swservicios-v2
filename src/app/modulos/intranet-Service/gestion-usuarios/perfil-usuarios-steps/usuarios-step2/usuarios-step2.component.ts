@@ -155,8 +155,8 @@ export class UsuariosStep2Component implements OnInit {
     //this.dataUsuario = []
 
     //Datos del componenet origen perfiles step 1
-    //console.log('Datos origen:')
-    //console.log(this.serviceDatosPerfilUsuario.datosPerfilUsuarios)
+    
+    
 
     //let datosPerfil = this.serviceDatosPerfilUsuario.datosPerfilUsuarios
     //Parceo de datos
@@ -174,7 +174,7 @@ export class UsuariosStep2Component implements OnInit {
     this.apiServiceUsuario.postConsultarUsuariosPerfil(datoUsuariosPendiente).subscribe(
       (response) => {
         //this.dataUsuario = response}
-        console.log(response);
+        
         this.listaUsuariosPendientes.data = response as entidades[];
         this.listaUsuariosPendientes.paginator = this.paginator;
       }
@@ -189,7 +189,7 @@ export class UsuariosStep2Component implements OnInit {
     //POST servicio consultar usuario ASIGNADOS
     this.apiServiceUsuario.postConsultarUsuariosPerfil(datoUsuariosAsginados).subscribe(
       (response) => {
-        console.log(response);
+        
         this.listaUsuariosAsignados.data = response as entidades[];
         this.listaUsuariosAsignados.paginator = this.paginator;
       }
@@ -271,7 +271,7 @@ export class UsuariosStep2Component implements OnInit {
           eusuario: dato
         }
         arrdatosUsuarios.push(datoUsuario);
-        console.log(valor)
+        
 
       })
 
@@ -332,7 +332,7 @@ export class UsuariosStep2Component implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -350,7 +350,7 @@ export class UsuariosStep2Component implements OnInit {
 
   //Evrntos OnChange de las tablas
   e_onChangeRoot(dato1: any, dato2: any) {
-    //console.log(dato2.checked)
+    
 
     //const usuarioPendientes = (this.formUsuarioPendientes.controls.value as UntypedFormArray);
 
@@ -369,7 +369,7 @@ export class UsuariosStep2Component implements OnInit {
 
   //Root
   e_onChangeRootAsignados(dato1: any, dato2: any) {
-    //console.log(dato2.checked)
+    
 
     //const usuariosAsignados = (this.formUsuarioAsignados.controls.value as UntypedFormArray);
 
@@ -402,7 +402,7 @@ export class UsuariosStep2Component implements OnInit {
 
     arrUsuarios = this.formUsuarioAsignados.value;
 
-    console.log(arrUsuarios.value.length)
+    
 
     if (arrUsuarios.value.length == 0) {
       alerta['text'] = 'SELECCIONAR EL O LOS USUARIO(S) PARA ELIMINAR DEL PERFIL ASIGNADO'
@@ -422,7 +422,7 @@ export class UsuariosStep2Component implements OnInit {
           eusuario: dato
         }
         arrdatosUsuarios.push(datoUsuario);
-        console.log(valor)
+        
 
       })
 

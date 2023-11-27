@@ -52,7 +52,6 @@ export class PerfilesComponent implements OnInit {
       this.lblObservacionesPerfil = 'ATENCION! NUEVO NIVEL DEL PERFIL ORIGEN:' + dato.tdescripcion
       dato.tipo = 'NIVEL'
       this.datosPerfil = dato
-      console.log(dato)
       //this.e_crearperfil(dato);
     });
     //Crear nivel perfil jstree click derecho
@@ -60,7 +59,6 @@ export class PerfilesComponent implements OnInit {
       this.lblObservacionesPerfil = 'ATENCION! NUEVO SUB-NIVEL DEL PERFIL ORIGEN:' + dato.tdescripcion
       dato.tipo = 'SUB-NIVEL'
       this.datosPerfil = dato
-      console.log(dato)
       //this.e_crearperfil(dato);
     });
 
@@ -69,7 +67,7 @@ export class PerfilesComponent implements OnInit {
       dato.tipo = 'EDITAR'
       this.datosPerfil = dato
 
-      console.log('Editar!')
+      
 
       //Form's
       this.formPerfil = new FormGroup({
@@ -215,7 +213,7 @@ export class PerfilesComponent implements OnInit {
               "separator_after": true,
               "label": "Crear nivel",
               "action": function (obj: any) {
-                //console.log('nivel');
+                
                 //trigger
                 $('#jstree').trigger('crearNivel', item.original.metada);
                 //e_crear(item.original.metada)
@@ -226,7 +224,7 @@ export class PerfilesComponent implements OnInit {
               "separator_after": true,
               "label": "Crear sub-nivel",
               "action": function (obj: any) {
-                //console.log('subnivel');
+                
                 //trigger
                 $('#jstree').trigger('crearSubNivel', item.original.metada);
                 //e_crear(item.original.metada)
@@ -237,7 +235,7 @@ export class PerfilesComponent implements OnInit {
               "separator_after": true,
               "label": "Editar perfil",
               "action": function (obj: any) {
-                //console.log('subnivel');
+                
                 //trigger
                 $('#jstree').trigger('editarPerfil', item.original.metada);
                 //e_crear(item.original.metada)
@@ -268,7 +266,7 @@ export class PerfilesComponent implements OnInit {
 
     // Stop en caso de error
     if (this.formPerfil.invalid) {
-      //console.log('error');
+      
       return;
     }
 

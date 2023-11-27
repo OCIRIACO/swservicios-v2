@@ -18,7 +18,7 @@ export class DialogVistaCarrilComponent {
     private serviceUbicaciones2d: serviceUbicaciones2d,
   ) {
 
-    //console.log(this.serviceUbicaciones2d.datosVistaAreaCarril);
+    
 
     //this.htmlVistCarril =  this.serviceUbicaciones2d.datosVistaAreaCarril;
    }

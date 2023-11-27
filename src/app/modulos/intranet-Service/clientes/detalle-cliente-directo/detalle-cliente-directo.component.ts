@@ -46,7 +46,7 @@ export class DetalleClienteDirectoComponent implements OnInit {
 
   //Procesar consultar detalle del cliente
   e_procesar_datos(datos: any) {
-    //console.log( datos.data[0].direcciones)
+    
 
     this.lbltrazonsocial = datos.data[0].trazonsocial
     this.lbltrfc = datos.data[0].trfc

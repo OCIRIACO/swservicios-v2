@@ -45,7 +45,7 @@ export class SolicitudesSalidasComponent implements OnInit {
 
   ngOnInit(): void {
     this.e_consultarSolicitudSalidas();
-    console.log('DataSource', this.dataSource)
+    
     //Pagina
     this.dataSource.paginator = this.paginator;
   }
@@ -68,13 +68,13 @@ export class SolicitudesSalidasComponent implements OnInit {
 
   //Detalle
   e_detalles(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/salidas/detalles', etransaccion]);
   }
 
   //Editar
   e_editar(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/salidas/editar', etransaccion]);
   }
 

@@ -179,7 +179,7 @@ export class EditarServiciosComponent implements OnInit {
 
     /*
     $('#ecliente').on('eValorCliente', (ev, dato) => {
-      ////console.log('Datos:'+dato)
+      
       this.e_procesarDirecciones(dato)
     });
 
@@ -191,7 +191,7 @@ export class EditarServiciosComponent implements OnInit {
 
     $(".select2").on("select2:select", function (e) {
       let dato_rfc: any = $(e.currentTarget).val()!
-      console.log(dato_rfc)
+      
       //$('#ecliente').val(dato_rfc).trigger("change");
       let parametros = {
         ecliente: dato_rfc
@@ -211,7 +211,7 @@ export class EditarServiciosComponent implements OnInit {
         this.e_procesarDatosServicios(response);
         // this.e_procesar_datos_clientes(response)
         //this.rowData =  response
-        //console.log(response);
+        
       }
     )
 
@@ -236,8 +236,8 @@ export class EditarServiciosComponent implements OnInit {
 
 
   e_seleccionarRfc(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
+    
+    
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
@@ -295,14 +295,14 @@ export class EditarServiciosComponent implements OnInit {
 
     // Stop en caso de detectar error
     if (this.FormBusqueda.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
     //Consumir el microservicio
     this.apiServiceSolicitudServicios.postConsultarServicioBien(datos).subscribe(
       (response) => {
-        console.log(response);
+        ;
         if (response.success == false) {
           this.informativo = response.errors[0].detail;
         } else {
@@ -313,7 +313,7 @@ export class EditarServiciosComponent implements OnInit {
       }
     )
 
-    //console.log(datos);
+    
   }
 
   /// Procesar datos de la busquqeda
@@ -322,12 +322,12 @@ export class EditarServiciosComponent implements OnInit {
     //Hide el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
 
-    //console.log(datos)
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.bienesServicios.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.data[0].eguia) {
         agregados = true
@@ -353,7 +353,7 @@ export class EditarServiciosComponent implements OnInit {
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesLiberar);
+    
     this.bienesServicios.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.eguia) {
         agregados = true
@@ -373,7 +373,7 @@ export class EditarServiciosComponent implements OnInit {
       //Oculto el reporte de los bienes que se realizo con el boton [buscar]
       this.divBienes = false;
 
-      //console.log(datos);
+      
 
       //Reset
       this.FormBusqueda.reset();
@@ -389,8 +389,8 @@ export class EditarServiciosComponent implements OnInit {
 
   e_guardar(solicitud: NgForm) {
 
-    console.log('*Guardar');
-    console.log(solicitud);
+    
+    
 
     //Alerta
     let alerta: any = {};
@@ -403,7 +403,7 @@ export class EditarServiciosComponent implements OnInit {
     this.submitGuardar = true;
     // Stop en caso de detectar error
     if (solicitud.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -421,7 +421,7 @@ export class EditarServiciosComponent implements OnInit {
       mensaje += 'NO SE DETECTA SERVICIOS AGREGADO PARA ESTA OPERACIÓN\n';
     }
 
-    //console.log(this.bienesLiberar);
+    
 
     // Preparar los datos para el envio al API
 
@@ -501,8 +501,8 @@ export class EditarServiciosComponent implements OnInit {
 
 
       //Parche buscar el id del cliente por el RFC
-      console.log('*Cliente')
-      console.log(this.datosClientes)
+      
+      
 
       this.datosClientes.forEach((dato: any, valor: any) => {
         if (dato.trfc == solicitud.value.trfc) {
@@ -538,7 +538,7 @@ export class EditarServiciosComponent implements OnInit {
 
       this.alertaConfirm(alerta, (confirmed: boolean) => {
         if (confirmed == true) {
-          //console.log(JSON.stringify(Isolicitud));
+          
 
           this.e_actualizarSolicitudServicio(Isolicitud);
         }
@@ -569,7 +569,7 @@ export class EditarServiciosComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -588,7 +588,7 @@ export class EditarServiciosComponent implements OnInit {
 
     this.bienesServicios.forEach((dato: any, valor: any) => {
       if (dato.eguia == datosBien.eguia) {
-        // console.log('eliminar!');
+        
         this.bienesServicios.splice(valor, 1);
       }
     })
@@ -602,7 +602,7 @@ export class EditarServiciosComponent implements OnInit {
 
   // Procesar los datos del cliente
   e_procesar_datos_clientes(datos: any) {
-    //console.log(datos.data)
+    
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);
@@ -621,19 +621,18 @@ export class EditarServiciosComponent implements OnInit {
     this.apiServiceSolicitudServicios.postConsultarSolicitudServicio(Iparametros).subscribe(
       data => {
         //this.bienesServicios = data.mercancias
-        //console.log(data.mercancias)
+        
         this.e_procesarDatos(data)
       }
     )
 
-    //console.log(this.bienesServicios)
+    
   }
 
   ////////// Procesar Datos (parseo) /////
   e_procesarDatos(datos: any) {
 
-    console.log('*Solicitud');
-    console.log(datos);
+    
 
     this.etransaccion = datos.etransaccion  // Valor que no va cambiar nunca
 
@@ -669,7 +668,7 @@ export class EditarServiciosComponent implements OnInit {
     //this.bienesServicios = datos.mercancias
     this.bienesServicios = datos.bienes
 
-    console.log(this.bienesServicios);
+    
 
 
     //Servicios
@@ -688,13 +687,13 @@ export class EditarServiciosComponent implements OnInit {
   }
 
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     this.FormSolicitudServicios.controls.trfc.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })
@@ -726,20 +725,20 @@ export class EditarServiciosComponent implements OnInit {
 
   e_agregarServicio(datos: NgForm) {
 
-    console.log('Servicios');
-    console.log(datos);
+    
+    ;
 
     //Validamos el Forms
     //this.submitServicios = true;
     // Stop en caso de detectar error
     if (datos.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
     //servicios argregados
-    console.log('Servicios agregados')
-    console.log(this.servicios)
+    
+    
 
     let alerta: any = {}
     let exitencia: string = 'NO'
@@ -793,7 +792,7 @@ export class EditarServiciosComponent implements OnInit {
   e_eliminar_servicio(datos: any) {
     this.servicios.forEach((servicio: any, valor: any) => {
       if (servicio.eservicio == datos.eservicio) {
-        // console.log('eliminar!');
+        
         this.servicios.splice(valor, 1);
       }
     })
@@ -819,7 +818,7 @@ export class EditarServiciosComponent implements OnInit {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
-          console.log(dato.servicios)
+          
           this.arrtiposolicitud = dato.servicios
         }*/
       })
@@ -831,8 +830,8 @@ export class EditarServiciosComponent implements OnInit {
 
     this.arrtiposolicitud = []
 
-    //console.log('Servicios')
-    //console.log(datos.servicios.length)
+    
+    
     this.arrtiposolicitud = []
 
     if (datos.value.childs) {

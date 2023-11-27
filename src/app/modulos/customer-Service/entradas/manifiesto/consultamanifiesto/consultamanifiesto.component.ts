@@ -51,7 +51,7 @@ export class ConsultamanifiestoComponent implements OnInit {
 
   ngOnInit(): void {
     this.e_consultarSolicitudes();
-    console.log('DataSource', this.dataSource)
+    
 
     this.dataSource.paginator = this.paginator;
 
@@ -62,7 +62,7 @@ export class ConsultamanifiestoComponent implements OnInit {
     //POST
     this.apiManifiesto.postConsultManifPeriodo().subscribe(
       (response) => {
-        //console.log(response);
+        
         this.dataSource.data = response as Post[];
         this.dataSource.paginator = this.paginator;
       }
@@ -77,12 +77,12 @@ export class ConsultamanifiestoComponent implements OnInit {
   }
   //Detalle
   e_detalles(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/entradas/detalle', etransaccion]);  // nativo
   }
   //Editar
   e_editar(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/entradas/editar', etransaccion]);  // nativo
   }
   //Menu

@@ -222,7 +222,7 @@ export class CrearServiciosComponent implements OnInit {
         this.e_procesarDatosServicios(response);
         // this.e_procesar_datos_clientes(response)
         //this.rowData =  response
-        //console.log(response);
+        
       }
     )
 
@@ -247,8 +247,8 @@ export class CrearServiciosComponent implements OnInit {
 
 
   e_seleccionarRfc(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
+    
+    
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
@@ -296,13 +296,13 @@ export class CrearServiciosComponent implements OnInit {
 
   ///Procesar direcciones
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     this.FormSolicitudServicios.controls.trfc.setValue(datos.trfc);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.trfc == datos.trfc) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })
@@ -327,14 +327,14 @@ export class CrearServiciosComponent implements OnInit {
 
     // Stop en caso de detectar error
     if (this.FormBusqueda.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
     //Consumir el microservicio
     this.apiServiceSolicitudServicios.postConsultarServicioBien(datos).subscribe(
       (response) => {
-        //console.log(response);
+        
 
         if (response.data) {
           success = true
@@ -343,7 +343,7 @@ export class CrearServiciosComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -364,7 +364,7 @@ export class CrearServiciosComponent implements OnInit {
       }
     )
 
-    //console.log(datos);
+    
   }
 
   e_procesarBusqueda(datos: any) {
@@ -372,12 +372,12 @@ export class CrearServiciosComponent implements OnInit {
     //Hide el reporte de los bienes que se realizo con el boton [buscar]
     this.divBienes = false;
 
-    //console.log(datos)
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesServicios);
+    
     this.bienesServicios.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.data[0].eguia) {
         agregados = true
@@ -398,12 +398,12 @@ export class CrearServiciosComponent implements OnInit {
   ///////// Agregar /////////
   e_agregar(datos: any) {
 
-    //console.log(datos);
+    
 
     let agregados: any = false;
     //let datosbien: any = {};
 
-    //console.log(this.bienesServicios);
+    
     this.bienesServicios.forEach((bien: any, valor: any) => {
       if (bien.eguia == datos.eguia) {
         agregados = true
@@ -424,7 +424,7 @@ export class CrearServiciosComponent implements OnInit {
       //Oculto el reporte de los bienes que se realizo con el boton [buscar]
       this.divBienes = false;
 
-      //console.log(datos);
+      
 
       //Reset
       this.FormBusqueda.reset();
@@ -449,12 +449,12 @@ export class CrearServiciosComponent implements OnInit {
     //this.submitGuardar = true;
     // Stop en caso de detectar error
     if (solicitud.invalid) {
-      console.log('error.');
-      console.log(solicitud);
+      
+      
       return;
     }
-    //console.log(this.bienesLiberar);
-    console.log(solicitud);
+    
+    
 
     // Preparar los datos para el envio al API
 
@@ -499,7 +499,7 @@ export class CrearServiciosComponent implements OnInit {
 
     } else {
 
-      //console.log(this.bienesLiberar);
+      
 
       this.bienesServicios.forEach((datoBien: any, valor: any) => {
         //Detalles Bienes
@@ -583,7 +583,7 @@ export class CrearServiciosComponent implements OnInit {
         bienes: arrBienes
       }
 
-      console.log(JSON.stringify(Isolicitud));
+      
 
 
 
@@ -645,7 +645,7 @@ export class CrearServiciosComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -662,7 +662,7 @@ export class CrearServiciosComponent implements OnInit {
 
     this.bienesServicios.forEach((dato: any, valor: any) => {
       if (dato.eguia == datos.eguia) {
-        // console.log('eliminar!');
+        
         this.bienesServicios.splice(valor, 1);
       }
     })
@@ -670,7 +670,7 @@ export class CrearServiciosComponent implements OnInit {
 
 
   e_procesar_datos_clientes(datos: any) {
-    //console.log(datos.data)
+    
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);
@@ -688,8 +688,8 @@ export class CrearServiciosComponent implements OnInit {
   //Procesar los datos los servicios para el arragles
   e_procesarDatosServicios(datos: any) {
 
-    //console.log('datos')
-    console.log(datos)
+    
+    
     //Clear
     this.arrservicio = []
     this.arrtiposolicitud = []
@@ -705,7 +705,7 @@ export class CrearServiciosComponent implements OnInit {
   //Onchage tipo servicio
   e_onChangeTipoServicio(datos: any) {
 
-    console.log(datos);
+    ;
 
     //Ocultar especificacion del servicio
     this.divServicioEspecifico = false
@@ -724,7 +724,7 @@ export class CrearServiciosComponent implements OnInit {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
-          console.log(dato.servicios)
+          
           this.arrtiposolicitud = dato.servicios
         }*/
       })
@@ -736,8 +736,8 @@ export class CrearServiciosComponent implements OnInit {
 
     this.arrtiposolicitud = []
 
-    //console.log('Servicios')
-    //console.log(datos.servicios.length)
+    
+    
     this.arrtiposolicitud = []
 
     if (datos.value.childs) {
@@ -758,7 +758,7 @@ export class CrearServiciosComponent implements OnInit {
   e_eliminar_servicio(datos: any) {
     this.servicios.forEach((servicio: any, valor: any) => {
       if (servicio.eservicio == datos.eservicio) {
-        // console.log('eliminar!');
+        
         this.servicios.splice(valor, 1);
       }
     })
@@ -774,12 +774,12 @@ export class CrearServiciosComponent implements OnInit {
       return;
     }
 
-    console.log('Servicios');
-    console.log(datos);
+    
+    ;
 
     //servicios argregados
-    console.log('Servicios agregados')
-    console.log(this.servicios)
+    
+    
 
     let alerta: any = {}
     let exitencia: string = 'NO'

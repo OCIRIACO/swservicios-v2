@@ -57,7 +57,7 @@ export class serviceReferencia {
         }
 
 
-        console.log(JSON.stringify(rootReferencia));
+        
 
         let datospost = JSON.stringify(rootReferencia);
 

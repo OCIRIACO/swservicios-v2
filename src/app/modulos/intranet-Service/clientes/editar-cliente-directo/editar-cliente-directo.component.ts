@@ -150,7 +150,7 @@ export class EditarClienteDirectoComponent implements OnInit {
     //Limpiar arreglo
     this.arrdatosColonia = []
 
-    console.log(datos.target.value)
+    
 
     let parametros = {
       ecodigopostal: datos.target.value
@@ -165,7 +165,7 @@ export class EditarClienteDirectoComponent implements OnInit {
 
   //Procesar respuesta del Api de codigo postal
   e_procesarDatosCodigoPostal(datos: any) {
-    console.log(datos)
+    
 
     this.FormDireccion.controls['tentidadfederativa'].setValue(datos.tentidadfederativa);
     this.FormDireccion.controls['eestado'].setValue(datos.eestado);
@@ -184,14 +184,14 @@ export class EditarClienteDirectoComponent implements OnInit {
 
   e_agregarDireccion(datos: any) {
 
-    console.log(datos)
+    
 
-    ////console.log(form);
+    
     this.submitDireccion = true;
 
     //Validar form
     if (this.FormDireccion.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -201,19 +201,19 @@ export class EditarClienteDirectoComponent implements OnInit {
       this.arrdatosDireccion.push(datos)
     } else {
 
-      //console.log('Nivel 2')
-      //console.log(datos)
-      //console.log(datos.ecoddireccion)
+      
+      
+      
 
 
       if (datos.ecoddireccion === '') {
         //Nuevo registro
-        //console.log('*Nuevo')
-        //console.log(datos.ecoddireccion)
+        
+        
         datos.ecoddireccion = (this.arrdatosDireccion.length)
         this.arrdatosDireccion.push(datos)
       } else {
-        //console.log('*Actualizar')
+        
         //Actualizar registro
         this.arrdatosDireccion[datos.ecoddireccion].ecoddireccion = datos.ecoddireccion;
         this.arrdatosDireccion[datos.ecoddireccion].ecodigopostal = datos.ecodigopostal;
@@ -230,7 +230,7 @@ export class EditarClienteDirectoComponent implements OnInit {
     }
 
 
-    //console.log(this.arrdatosDireccion)
+    
 
     ////Submit's
     this.submitDireccion = false;
@@ -262,8 +262,8 @@ export class EditarClienteDirectoComponent implements OnInit {
 
   //Editar direccion
   e_editarDireccion(datos: any) {
-    //console.log('Editar')
-    //console.log(datos)
+    
+    
 
     /// Post Consulat APO de CP
     let parametros = {
@@ -308,12 +308,12 @@ export class EditarClienteDirectoComponent implements OnInit {
     let alerta: any = {};
 
 
-    ////console.log(form);
+    
     this.submitCliente = true;
 
     //Validar form
     if (this.FormCliente.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
@@ -358,7 +358,7 @@ export class EditarClienteDirectoComponent implements OnInit {
     alerta['tipo'] = 'question';
     alerta['footer'] = '';
 
-    console.log(JSON.stringify(parametros))
+    
 
     this.alertaConfirm(alerta, (confirmed: boolean) => {
       if (confirmed == true) {

@@ -276,8 +276,8 @@ export class EditarAutotransporteComponent implements OnInit {
 
 
   e_seleccionarRfc(dato: any) {
-    console.log('*Dato rfc');
-    console.log(dato);
+    
+    
     this.datosDirecciones = dato.direcciones
     this.FormSolicitudServicios.get('trfc')?.setValue(dato);
 
@@ -458,7 +458,7 @@ export class EditarAutotransporteComponent implements OnInit {
         this.e_procesarDatosServicios(response);
         // this.e_procesar_datos_clientes(response)
         //this.rowData =  response
-        //console.log(response);
+        
       }
     )
 
@@ -490,7 +490,7 @@ export class EditarAutotransporteComponent implements OnInit {
     this.apiServiceSolicitudServicios.postConsultarSolicitudTransporte(Iparametros).subscribe(
       data => {
         //this.bienesServicios = data.mercancias
-        ////console.log(data.mercancias)
+        
         this.e_procesarConsultaSolicitud(data)
       }
     )
@@ -536,8 +536,8 @@ export class EditarAutotransporteComponent implements OnInit {
       }
     })
 
-    //console.log('*Solicitud');
-    //console.log(datos);
+    
+    
 
     let solicitud = {
       trfc: datos.trfc,
@@ -558,7 +558,7 @@ export class EditarAutotransporteComponent implements OnInit {
       ttipotransporte: datos.operaciones[0].ttipotransporte,
     }
 
-    //console.log(solicitud);
+    
     this.ngformsolicitud.form.setValue(solicitud)
 
 
@@ -640,8 +640,8 @@ export class EditarAutotransporteComponent implements OnInit {
         // Nombre embalaje mercancia
         this.datosEmbalaje.forEach((embalaje: any, index: any) => {
           if (embalaje['ecodembalaje'] == datocarga['ecodembalaje']) {
-            // //console.log('Embalaje')
-            // //console.log(embalaje)
+            
+            
             tnombreEmbalajeMercancia = embalaje['tnombre']
           }
         });
@@ -650,7 +650,7 @@ export class EditarAutotransporteComponent implements OnInit {
         //Mercancia(s)
         datocarga['detallesbien'].forEach((datoMercancia: any, index: any) => {
 
-          //console.log(datoMercancia);
+          
 
           this.datosEmbalaje.forEach((embalaje: any, index: any) => {
             if (embalaje['ecodembalaje'] == datoMercancia['ecodembalaje']) {
@@ -722,8 +722,8 @@ export class EditarAutotransporteComponent implements OnInit {
 
     });
 
-    //console.log('*Resultado');
-    //console.log( this.bienes);
+    
+    
   }
 
 
@@ -743,7 +743,7 @@ export class EditarAutotransporteComponent implements OnInit {
     let mensaje: string = ''
     let alerta: any = {};
 
-    //console.log(datos)
+    
 
     if (datos != null) {
 
@@ -850,7 +850,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
   /////////////// CLIENTES ////////////////////////
   e_procesar_datos_clientes(datos: any) {
-    //console.log(datos.data)
+    
     let datoClientes: Array<any> = [];
     /*datos.forEach((dato: any, index: any) => {
       datoClientes.push(dato.data);
@@ -869,7 +869,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
 
     if (this.FormDatosBien.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -948,14 +948,14 @@ export class EditarAutotransporteComponent implements OnInit {
     this.FormDatosBien.get('econtadorRowBien')!.setValue(0);
     this.FormDatosBien.get('eguia')!.setValue(0);
 
-    console.log('*Bienes')
-    console.log(this.bienes);
+    
+    
 
 
   }
 
   e_eliminarBien(element: any) {
-    //////console.log(element);
+    
 
     this.bienes.forEach((value: any, index: any) => {
       if (value == element) {
@@ -1004,15 +1004,15 @@ export class EditarAutotransporteComponent implements OnInit {
   //agregar Detalles del bien
   e_agregarDetalleBien() {
 
-    console.log('*Datos bien');
-    console.log(this.datosBien);
+    
+    
 
-    console.log('*Detalles bienes');
-    console.log(this.FormDatosDetallesBien)
+    
+    
 
     // stop here if form is invalid
     if (this.FormDatosDetallesBien.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -1077,8 +1077,8 @@ export class EditarAutotransporteComponent implements OnInit {
   //Form para iniciar la captura de los detalles del bien
   e_capturarDetalleBien(datos: any) {
 
-    console.log('* Detalles bien')
-    console.log(datos)
+    
+    
 
     //Cargas los datos
     this.datosBien = datos
@@ -1097,7 +1097,7 @@ export class EditarAutotransporteComponent implements OnInit {
     // Set value del sequence
     //this.idSequenceDetalleBien.nativeElement.value = dato.idSequenceDetalleBien;
 
-    console.log(datos);
+    ;
 
     this.FormDatosDetallesBien = new FormGroup({
       econtadorRow: new FormControl(datos.econtadorRow, null),
@@ -1146,8 +1146,8 @@ export class EditarAutotransporteComponent implements OnInit {
     //Selected
     this.FormDatosBien.controls['ecodembalaje'].setValue(null);
 
-    ////console.log('Agregar detalles bien....')
-    ////console.log(datos)
+    
+    
 
     //Reset a los submit
     this.submitDetalleBien = false
@@ -1199,7 +1199,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
   e_guardar(solicitud: NgForm) {
 
-    console.log(solicitud);
+    
 
 
     //Validar datos del contacto
@@ -1207,7 +1207,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
     // stop y valido
     if (solicitud.invalid) {
-      ////console.log('error.');
+      
       return;
     }
 
@@ -1225,8 +1225,8 @@ export class EditarAutotransporteComponent implements OnInit {
     }
 
 
-    ////console.log('Antes');
-    ////console.log(JSON.stringify(this.bienes));
+    
+    
 
 
     if (this.bienes.length != 0) {
@@ -1259,8 +1259,8 @@ export class EditarAutotransporteComponent implements OnInit {
 
 
       this.bienes.forEach((dato: any, index: any) => {
-        ////console.log(index);
-        ////console.log(dato['idsequence']);
+        
+        
 
         //clear
         listaMercancias = []
@@ -1401,7 +1401,7 @@ export class EditarAutotransporteComponent implements OnInit {
 
       //datosParametros = { orden: Isolicitud }
 
-      console.log(JSON.stringify(Isolicitud));
+      
 
 
 
@@ -1446,7 +1446,7 @@ export class EditarAutotransporteComponent implements OnInit {
         if (response.errors) {
           success = false
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
@@ -1465,20 +1465,20 @@ export class EditarAutotransporteComponent implements OnInit {
 
   e_agregarServicio(datos: NgForm) {
 
-    console.log('Servicios');
-    console.log(datos);
+    
+    ;
 
     //Validamos el Forms
     //this.submitServicios = true;
     // Stop en caso de detectar error
     if (datos.invalid) {
-      //console.log('error.');
+      
       return;
     }
 
     //servicios argregados
-    console.log('Servicios agregados')
-    console.log(this.servicios)
+    
+    
 
     let alerta: any = {}
     let exitencia: string = 'NO'
@@ -1537,7 +1537,7 @@ export class EditarAutotransporteComponent implements OnInit {
   e_eliminar_servicio(datos: any) {
     this.servicios.forEach((servicio: any, valor: any) => {
       if (servicio.eservicio == datos.eservicio) {
-        // console.log('eliminar!');
+        
         this.servicios.splice(valor, 1);
       }
     })
@@ -1564,7 +1564,7 @@ export class EditarAutotransporteComponent implements OnInit {
         this.arrservicio.push(dato)
         /*if (dato.servicios.length > 0) {
           this.arrtiposolicitud = []
-          console.log(dato.servicios)
+          
           this.arrtiposolicitud = dato.servicios
         }*/
       })
@@ -1576,8 +1576,8 @@ export class EditarAutotransporteComponent implements OnInit {
 
     this.arrtiposolicitud = []
 
-    //console.log('Servicios')
-    //console.log(datos.servicios.length)
+    
+    
     this.arrtiposolicitud = []
 
     if (datos.value.childs) {
@@ -1613,13 +1613,13 @@ export class EditarAutotransporteComponent implements OnInit {
   /////////////////// DIRECCIONES ////////////////
 
   e_procesarDirecciones(datos: any) {
-    //console.log('datos')
-    //console.log(datos)
+    
+    
     //this.FormSolicitudServicios.controls.ecliente.setValue(datos.ecliente);
 
     this.datosClientes.forEach((dato: any, valor: any) => {
       if (dato.ecliente == datos.ecliente) {
-        //console.log(dato.direcciones)
+        
         this.datosDirecciones = dato.direcciones
       }
     })

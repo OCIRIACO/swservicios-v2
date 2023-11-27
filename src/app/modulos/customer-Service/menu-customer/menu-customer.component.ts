@@ -48,14 +48,14 @@ export class MenuCustomerComponent implements OnInit {
 
     //Catalogo de agentes aduanales
     this.apiCatalogo.GetAgentesAduanales().subscribe(data => {
-      //////console.log(data)
+
       //this.datosMetodoPago = data;
       this.serviceCatalogos.catalogoAgentesAduanales = data
     })
 
     //Catalogo de agentes aduanales
     this.apiCatalogo.GetAduanas().subscribe(data => {
-      //////console.log(data)
+
       //this.datosMetodoPago = data;
       this.serviceCatalogos.catalogoAduanas = data
     })
@@ -63,7 +63,7 @@ export class MenuCustomerComponent implements OnInit {
 
     //Catalogo de metodo de pago
     this.apiCatalogo.GetMetodoPago().subscribe(data => {
-      //////console.log(data)
+
       this.datosMetodoPago = data;
       this.serviceCatalogos.catalogoMetodoPago = this.datosMetodoPago
     })
@@ -114,12 +114,12 @@ export class MenuCustomerComponent implements OnInit {
       }
     )*/
 
-    //console.log(this.serviceCatalogos.arrCustomer)
+    
     let respuesta = this.convertir_arbol(this.serviceCatalogos.arrCustomer);
-    ////console.log(respuesta)
+    
     this.e_crearMenu(respuesta);
 
-    // ////console.log(this.serviceCatalogos.catalogoMetodoPago)
+    
   }
 
   //Convertir en arbol
@@ -161,7 +161,7 @@ export class MenuCustomerComponent implements OnInit {
   //Crear el Menu
   e_crearMenu(datos: any) {
 
-    //console.log('Datos');
+
     this.totalModulos = datos[0].children.length;
 
     this.datosFinales = [];
@@ -182,7 +182,7 @@ export class MenuCustomerComponent implements OnInit {
             this.datosInicial['descripcion'] = item.tdescripcion;
             this.datosInicial['icono'] = item.ticono;
 
-            //////console.log(this.html);
+
           } else {
             this.html += 'tipo2:' + item.tipo + ' descripcion:' + item.tdescripcion + '|';
 
@@ -195,25 +195,21 @@ export class MenuCustomerComponent implements OnInit {
             if (this.eauxmenu != auxecodmenu) {
               this.datosChild['divide'] = 'no';
               this.eauxmenu = auxecodmenu;
-              // console.log('Nuevo valor:'+this.eauxmenu )
+              
             } else {
               this.datosChild['divide'] = 'si';
             }
 
-            // console.log('x:'+auxecodmenu)
 
             this.datosChild['menu'] = item.ecodmenupadre;
             this.pullChild.push(this.datosChild);
-
-            //console.log('fin:' + auxecodmenu)
-
 
 
             /*this.datosInicial['tipo'] = item.tipo;
             this.datosInicial['descripcion'] = item.tdescripcion;
             this.pullInicial.push(this.datosInicial);*/
 
-            //////console.log(this.html);
+
           }
 
           //this.pullInicial.push(this.datosInicial);
@@ -226,13 +222,13 @@ export class MenuCustomerComponent implements OnInit {
         if (item.tipo != 'SUBSISTEMA') {
           if (auxecodmenu != item.ecodmenupadre) {
             //this.datosFinales  = [];
-            //////console.log(this.html+'/');
+            
             //this.datoFinal += this.html+'/';
             if (this.pullChild.length != 0) {
               this.datosInicial['child'] = this.pullChild;
               this.datosFinales.push(this.datosInicial);
             }
-            //////console.log(this.datosInicial);
+            
             this.pullChild = []
             this.datosInicial = {};
 
@@ -247,7 +243,7 @@ export class MenuCustomerComponent implements OnInit {
 
     recur(datos);
 
-    //console.log(JSON.stringify(this.datosFinales))
+    
 
     this.e_crearDivDinamico(this.datosFinales);
 
@@ -359,8 +355,8 @@ export class MenuCustomerComponent implements OnInit {
 
 
   ngAfterContentChecked() {
-    ////console.log('Entro!  ngAfterContentInit')
-    ////console.log(this.myTemplate)
+    
+    
     let html = "";
 
     html += '<div class="row">';
@@ -372,7 +368,7 @@ export class MenuCustomerComponent implements OnInit {
 
   //Listener
   @HostListener('click', ['$event.target']) clickShowHide(dato: any) {
-    //////console.log(dato);
+
 
     if (dato.nodeName == 'svg') {
       if (dato.id == 'more') {
@@ -382,8 +378,7 @@ export class MenuCustomerComponent implements OnInit {
       if (dato.nodeName == 'circle') {
         if (dato.id == 'more') {
           //this.e_ShowOrHide(dato.attributes[1].value )
-          //////console.log('circle');
-          //////console.log(dato.farthestViewportElement.attributes[1].value)
+
           this.e_ShowOrHide(dato.farthestViewportElement.attributes[1].value)
         }
       }

@@ -70,13 +70,13 @@ export class ConsultarAutotransporteComponent implements OnInit {
 
   //Detalle
   e_detalles(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/transporte/detalle', etransaccion]);  // nativo
   }
 
   //Editar
   e_editar(etransaccion: number) {
-    //console.log(etransaccion)
+    
     this.router.navigate(['dashboard/customer/transporte/editar', etransaccion]);  // nativo
   }
 

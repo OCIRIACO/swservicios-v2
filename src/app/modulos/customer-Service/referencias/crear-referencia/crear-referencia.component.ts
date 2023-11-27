@@ -68,7 +68,7 @@ export class CrearReferenciaComponent implements OnInit {
     $(".select2").on("select2:select", function (e) {
 
       let epuerto: any = $(e.currentTarget).val();
-      //console.log(datopuerto);
+      
       //(<HTMLInputElement>document.getElementById('epuerto')).value = epuerto;
 
       $('#epuerto').trigger('valor', epuerto);
@@ -78,7 +78,7 @@ export class CrearReferenciaComponent implements OnInit {
 
 
     $('#epuerto').on('valor', (ev, dato) => {
-      //console.log(dato)
+      
       this.formsolicitud.controls.epuerto.setValue(dato);
 
     });
@@ -89,8 +89,8 @@ export class CrearReferenciaComponent implements OnInit {
   e_adjuntarFile(event: any) {
 
 
-    console.log(event)
-    console.log(event.srcElement.attributes.ttipo.nodeValue);
+    
+    
     let text: String = "";
 
     let file: any = event.target;
@@ -114,21 +114,20 @@ export class CrearReferenciaComponent implements OnInit {
 
         if (response.errors) {
           response.errors.forEach((dato: any, index: any) => {
-            //console.log(dato.attributes.text)
+            
             text += dato.attributes.text + '\n'
           })
         }
 
       },
       (error) => {
-
-        console.log(error);
+        null;
       }
     )
 
 
 
-    //console.log(form)
+    
   }
 
 
@@ -136,7 +135,7 @@ export class CrearReferenciaComponent implements OnInit {
   get fguardar() { return this.formsolicitud.controls; }
 
   e_guardar(datos: any) {
-    //console.log(datos);
+    
 
     let Isolicitud: IsolicitudReferencia;
 
@@ -146,7 +145,7 @@ export class CrearReferenciaComponent implements OnInit {
     this.submitGuardar = true;
     // Stop en caso de detectar error
     if (this.formsolicitud.invalid) {
-      console.log('error.');
+      
       return;
     }
 
@@ -200,7 +199,7 @@ export class CrearReferenciaComponent implements OnInit {
         })
       }
 
-      //console.log(esolicitud);
+      
 
 
       //alerta['text'] = text;

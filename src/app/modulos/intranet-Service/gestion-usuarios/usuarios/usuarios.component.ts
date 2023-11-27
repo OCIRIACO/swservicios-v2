@@ -116,11 +116,10 @@ export class UsuariosComponent implements OnInit {
 
     //this.submitGuardar = true;
 
-    //console.log(datos);
+    
 
     // Stop en caso de error
-    if (datos.invalid) {
-      console.log('error');
+    if (datos.invalid) {  
       return;
     }
 
@@ -297,8 +296,7 @@ export class UsuariosComponent implements OnInit {
 
     /* 
     OLD BORRAR
-     console.log('datos....')
-     console.log(dato)
+     
  
      this.formUsuario = new FormGroup({
        ecodusuario: new FormControl(dato.ecodusuario, Validators.required),

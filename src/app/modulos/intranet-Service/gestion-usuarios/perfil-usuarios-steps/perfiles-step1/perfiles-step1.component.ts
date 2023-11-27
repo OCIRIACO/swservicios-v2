@@ -48,7 +48,7 @@ export class PerfilesStep1Component implements OnInit {
 
   //Asignar usuario (redirect)
   e_usuarioStep2(datos: any) {
-    //console.log(datos)
+    
 
     this.serviceDatosPerfilUsuario.datosPerfilUsuarios = datos
 
@@ -125,7 +125,7 @@ export class PerfilesStep1Component implements OnInit {
               "separator_after": true,
               "label": "Asignar usuario(s)",
               "action": function (obj: any) {
-                ////console.log('nivel');
+                
                 //trigger
                 $('#jstree').trigger('asignarUsuario', item.original.metada);
                 //e_crear(item.original.metada)
